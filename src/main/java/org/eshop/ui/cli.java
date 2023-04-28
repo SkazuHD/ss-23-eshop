@@ -1,24 +1,26 @@
 package org.eshop.ui;
 
 import org.eshop.exceptions.CustomerExistsException;
+import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.shop.Shop;
-
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class cli {
 
     Shop server;
     Scanner in = new Scanner(System.in);
+    boolean loggedIn = false;
     public cli(){
         server = new Shop();
         run();
     }
     public void run(){
-        showStartMenu();
-        int input = getNumericInput();
-        selectFromMenu(input);
+        do {
+            showStartMenu();
+            int input = getNumericInput();
+            selectFromMenu(input);
+        }while (!loggedIn);
+
 
     }
     public void showStartMenu(){
@@ -28,7 +30,7 @@ public class cli {
     public void selectFromMenu(int input){
         switch (input){
             case 1 -> {
-
+                loginUser();
             }
             case 2 -> {
                 registerUser();
@@ -58,14 +60,35 @@ public class cli {
         //GET PWD
         System.out.print("Enter Password:");
         String password = in.nextLine();
+
+        //GET NAME
+        System.out.print("Enter Name:");
+        String name = in.nextLine();
+
+        //GET ADDRESS
+        System.out.print("Enter Address:");
+        String address = in.nextLine();
+
         try {
-            server.registerUser(username, password);
+            server.registerUser(username, password, name, address);
         }catch (CustomerExistsException e){
             System.err.println(e.getMessage());
-            registerUser();
         }
-
     }
-
+    protected void loginUser(){
+        //GET USERNAME
+        System.out.print("Enter Username:");
+        String username = in.nextLine();
+        //GET PWD
+        System.out.print("Enter Password:");
+        String password = in.nextLine();
+        try {
+            server.loginUser(username, password);
+            loggedIn = true;
+        }catch (CustomerLoginFailed e){
+            System.err.println(e.getMessage());
+            System.out.flush();
+        }
+    }
 
 }

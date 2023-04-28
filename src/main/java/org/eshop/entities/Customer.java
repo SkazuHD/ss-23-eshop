@@ -1,19 +1,23 @@
 package org.eshop.entities;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Customer {
     private String uid;
     private String username;
     private String password;
-    private boolean isLoggedIn;
-    public Customer (String username, String password){
+    private String name;
+    private String address;
+
+    public Customer (String username, String password, String name, String address){
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.address = address;
     }
 
+
+    //Overrides of default Object Methods
     @Override
     public String toString(){
         return username;
@@ -29,6 +33,40 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(uid, username);
     }
+
+    //Basic Setter and Getter from here on
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getPassword() {
         return password;
     }
