@@ -21,23 +21,34 @@ public class cli {
             selectFromMenu(input);
         }while (!loggedIn);
 
+        System.err.println("TODO MAKE DIFFERENT MENUS FOR CUSTOMER AND EMPLOYEE");
+        do {
+            showMainMenu();
+            int input = getNumericInput();
+            selectFromMainMenu(input);
+        }while (loggedIn);
 
+        run();
     }
     public void showStartMenu(){
         System.out.println("1. Login");
         System.out.println("2. Register");
+        System.out.flush();
     }
     public void selectFromMenu(int input){
         switch (input){
-            case 1 -> {
-                loginUser();
-            }
-            case 2 -> {
-                registerUser();
-            }
-            default -> {
-                System.err.println("Invalid Selection!");
-            }
+            case 1 -> loginUser();
+            case 2 -> registerUser();
+            default -> System.err.println("Invalid Selection!");
+        }
+    }
+    public void selectFromMainMenu(int input) {
+        switch (input) {
+            case 1 -> showProducts();
+            case 2 -> System.out.println("TODO SHOW CART");
+            case 3 -> System.out.println("TODO SHOW ORDERS");
+            case 4 -> System.out.println("TODO LOGOUT");
+            default -> System.err.println("Invalid Selection!");
         }
     }
     public int getNumericInput(){
@@ -48,6 +59,7 @@ public class cli {
             value = Integer.parseInt(input);
         }catch (NumberFormatException e){
             System.err.println("Please enter a Numeric Value");
+            System.err.flush();
             getNumericInput();
         }
         return value;
@@ -73,6 +85,7 @@ public class cli {
             server.registerUser(username, password, name, address);
         }catch (CustomerExistsException e){
             System.err.println(e.getMessage());
+            System.err.flush();
         }
     }
     protected void loginUser(){
@@ -87,8 +100,19 @@ public class cli {
             loggedIn = true;
         }catch (CustomerLoginFailed e){
             System.err.println(e.getMessage());
-            System.out.flush();
+            System.err.flush();
         }
+    }
+    protected void showMainMenu(){
+        System.out.println("1. View Products");
+        System.out.println("2. View Cart");
+        System.out.println("3. View Orders");
+        System.out.println("4. Logout");
+
+    }
+
+    protected void showProducts(){
+        System.out.println("TODO SHOW PRODUCTS");
     }
 
 }
