@@ -6,8 +6,6 @@ public class Products {
       private int Price;
 
       private String name;
-
-
     //constructor für die Attribute
 
     public Products (int pNr, int price, String name ){

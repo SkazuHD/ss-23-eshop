@@ -1,5 +1,6 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Customer;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.shop.Shop;
@@ -10,6 +11,7 @@ public class cli {
     Shop server;
     Scanner in = new Scanner(System.in);
     boolean loggedIn = false;
+    Customer loggedInCustomer;
     public cli(){
         server = new Shop();
         run();
@@ -96,7 +98,7 @@ public class cli {
         System.out.print("Enter Password:");
         String password = in.nextLine();
         try {
-            server.loginUser(username, password);
+          loggedInCustomer = server.loginUser(username, password);
             loggedIn = true;
         }catch (CustomerLoginFailed e){
             System.err.println(e.getMessage());
@@ -113,6 +115,7 @@ public class cli {
 
     protected void showProducts(){
         System.out.println("TODO SHOW PRODUCTS");
+        server.getProducts().forEach(System.out::println);
     }
 
 }

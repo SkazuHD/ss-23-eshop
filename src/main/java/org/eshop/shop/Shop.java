@@ -1,7 +1,11 @@
 package org.eshop.shop;
 
+import org.eshop.entities.Customer;
+import org.eshop.entities.Products;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
+
+import java.util.Set;
 
 public class Shop {
 
@@ -15,16 +19,34 @@ public class Shop {
             throw new CustomerExistsException(username);
         }
     }
-    public void loginUser(String username, String password) throws CustomerLoginFailed{
-        if(!customerManager.login(username, password)){
-            throw new CustomerLoginFailed(username);
-        }
+    public Customer loginUser(String username, String password) throws CustomerLoginFailed{
+        return customerManager.login(username, password);
     }
 
 
     //Products
+    public Set<Products> getProducts() {
+        System.err.println("TODO IMPLEMENT GET PRODUCTS");
+        return null;
+        //return productManager.getProducts();
+    }
+    //CUSTOMER ONLY
+    public void addProductToCart(String name, int quantity){
 
+    }
+    public void removeProductFromCart(String name, int quantity){
 
+    }
+    public void checkout(){
+
+    }
+    //EMPLOYEE ONLY
+    public void addProduct(String name, double price, int quantity){
+
+    }
+    public void removeProduct(String name, int quantity){
+
+    }
     //Employees
 
 

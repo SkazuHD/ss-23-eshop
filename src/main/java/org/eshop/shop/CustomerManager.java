@@ -1,5 +1,7 @@
 package org.eshop.shop;
 import org.eshop.entities.Customer;
+import org.eshop.exceptions.CustomerLoginFailed;
+
 import java.util.*;
 
 public class CustomerManager{
@@ -13,16 +15,16 @@ public class CustomerManager{
         Customer c = new Customer(username, password, name, address);
         return customers.add(c);
     }
-    public boolean login(String username, String password){
+    public Customer login(String username, String password) throws CustomerLoginFailed {
         //Find User in Set
         for (Customer c : customers) {
             if (c.getUsername().equals(username)) {
                 //Check if password matches
                 if (c.getPassword().equals(password)) {
-                    return true;
+                    return c;
                 }
             }
         }
-        return false;
+        throw new CustomerLoginFailed(username);
     }
 }

@@ -31,7 +31,7 @@ public class Customer {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(uid, username);
+        return Objects.hash(username);
     }
 
     //Basic Setter and Getter from here on
