@@ -7,20 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Register Flow">
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="minor improvement">
       <change afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/ShoppingCartItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerLoginFailed.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerNotFound.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/customer/LoginTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/customer/RegisterTest.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/test/java/customer/ShoppingCartTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,9 +191,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'customer'" />
         <item itemvalue="Gradle.register.emptyRegistration" />
         <item itemvalue="Gradle.login" />
-        <item itemvalue="Gradle.Tests in 'customer'" />
         <item itemvalue="Gradle.Tests in 'eShop.test'" />
         <item itemvalue="Gradle.login.loginSuccesfully" />
       </list>
@@ -218,7 +209,9 @@
       <updated>1682595618787</updated>
       <workItem from="1682595620717" duration="13234000" />
       <workItem from="1682614956465" duration="2900000" />
-      <workItem from="1682681908085" duration="975000" />
+      <workItem from="1682681908085" duration="2190000" />
+      <workItem from="1682684144544" duration="966000" />
+      <workItem from="1683629527575" duration="278000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -227,7 +220,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682613841077</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Allow Registration and Login">
+      <created>1682682999011</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682682999011</updated>
+    </task>
+    <task id="LOCAL-00003" summary="minor improvement">
+      <created>1682685242862</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682685242862</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,6 +253,19 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Register Flow" />
-    <option name="LAST_COMMIT_MESSAGE" value="Register Flow" />
+    <MESSAGE value="Allow Registration and Login" />
+    <MESSAGE value="minor improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor improvement" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
