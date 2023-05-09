@@ -8,7 +8,13 @@ public class Customer {
     private String password;
     private String name;
     private String address;
-
+    /**
+     * Constructor for Customer
+     * @param username
+     * @param password
+     * @param name
+     * @param address
+     */
     public Customer (String username, String password, String name, String address){
         this.username = username;
         this.password = password;
@@ -22,6 +28,7 @@ public class Customer {
     public String toString(){
         return username;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,9 +80,4 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-
-
-
 }

@@ -15,6 +15,15 @@ public class CustomerManager{
         Customer c = new Customer(username, password, name, address);
         return customers.add(c);
     }
+
+    /**
+     * Login a Customer
+     *  checks if username exists and if password matches
+     * @param username
+     * @param password
+     * @return Customer
+     * @throws CustomerLoginFailed
+     */
     public Customer login(String username, String password) throws CustomerLoginFailed {
         //Find User in Set
         for (Customer c : customers) {

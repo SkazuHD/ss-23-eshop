@@ -7,17 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="minor improvement">
-      <change afterPath="$PROJECT_DIR$/src/test/java/Products/ProductTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Return Customer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Products.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Products.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/customer/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/customer/LoginTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +77,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.All in eShop.test">
+  <component name="RunManager">
     <configuration name="ProductTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -202,7 +195,7 @@
       <workItem from="1682684144544" duration="966000" />
       <workItem from="1683629527575" duration="1969000" />
       <workItem from="1683631673899" duration="924000" />
-      <workItem from="1683632649641" duration="4598000" />
+      <workItem from="1683632649641" duration="6103000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -232,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683629871884</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Return Customer">
+      <created>1683637624799</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683637624799</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,7 +253,8 @@
     <MESSAGE value="Register Flow" />
     <MESSAGE value="Allow Registration and Login" />
     <MESSAGE value="minor improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor improvement" />
+    <MESSAGE value="Return Customer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Return Customer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
