@@ -28,6 +28,21 @@ public class ProductManager {
     int pNrCounter = 1000;
 
     /**
+     * Instantiates a new Product manager.
+     */
+    public ProductManager() {
+    }
+
+    /**
+     * Instantiates a new Product manager with a Filled Set.
+     *
+     * @param productsSet the products set
+     */
+    public ProductManager(Set<Products> productsSet) {
+        this.productsSet = productsSet;
+    }
+
+    /**
      * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
      *
      * @param name     gibt dem Produckt einen Namen
