@@ -7,14 +7,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Shopping Cart Stuff">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/InvoiceTest/InvoiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="editor Config">
+      <change afterPath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Products.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Products.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/ShoppingCartItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerExistsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerLoginFailed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerLoginFailed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerNotFound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerNotFound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/ProductManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/ProductManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,11 +122,11 @@
     "project.structure.side.proportion": "0.2",
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "settings.sync",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.InvoiceTest.testInvoice">
+  <component name="RunManager" selected="Gradle.eShop [javadoc]">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.eshop.Main" />
       <module name="eShop.main" />
@@ -197,9 +204,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.eShop [javadoc]" />
         <item itemvalue="JUnit.InvoiceTest.testInvoice" />
         <item itemvalue="JUnit.ProductTests.addProduct" />
-        <item itemvalue="Gradle.eShop [javadoc]" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.All in eShop.test" />
       </list>
@@ -226,7 +233,7 @@
       <workItem from="1683714105200" duration="102000" />
       <workItem from="1683715139539" duration="1347000" />
       <workItem from="1683726217627" duration="330000" />
-      <workItem from="1683726562868" duration="2284000" />
+      <workItem from="1683726562868" duration="3260000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -284,7 +291,21 @@
       <option name="project" value="LOCAL" />
       <updated>1683713815530</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Invoice">
+      <created>1683729092297</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683729092297</updated>
+    </task>
+    <task id="LOCAL-00010" summary="editor Config">
+      <created>1683729147155</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683729147155</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,7 +330,9 @@
     <MESSAGE value="Comments" />
     <MESSAGE value="Show Products" />
     <MESSAGE value="Shopping Cart Stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Shopping Cart Stuff" />
+    <MESSAGE value="Invoice" />
+    <MESSAGE value="editor Config" />
+    <option name="LAST_COMMIT_MESSAGE" value="editor Config" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

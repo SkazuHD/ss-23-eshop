@@ -8,12 +8,27 @@ import org.eshop.exceptions.CustomerLoginFailed;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The type Shop.
+ */
 public class Shop {
 
+    /**
+     * The Customer manager.
+     */
     CustomerManager customerManager = new CustomerManager();
+    /**
+     * The Product manager.
+     */
     ProductManager productManager = new ProductManager();
+    /**
+     * The Employee manager.
+     */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    /**
+     * Instantiates a new Shop.
+     */
     public Shop() {
         customerManager.register("Peter", "peter", "peter", "peter");
 
@@ -24,47 +39,105 @@ public class Shop {
         productManager.addProduct("Käse", 4.99, 100);
     }
 
-    //Customer
+    /**
+     * Register user.
+     *
+     * @param username the username
+     * @param password the password
+     * @param name     the name
+     * @param address  the address
+     * @throws CustomerExistsException the customer exists exception
+     */
+//Customer
     public void registerUser(String username, String password, String name, String address) throws CustomerExistsException {
         if (!customerManager.register(username, password, name, address)) {
             throw new CustomerExistsException(username);
         }
     }
 
+    /**
+     * Login user customer.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the customer
+     * @throws CustomerLoginFailed the customer login failed
+     */
     public Customer loginUser(String username, String password) throws CustomerLoginFailed {
         return customerManager.login(username, password);
     }
 
 
-    //Products
+    /**
+     * Gets product set.
+     *
+     * @return the product set
+     */
+//Products
     public Set<Products> getProductSet() {
         return productManager.getProductsSet();
     }
 
-    //CUSTOMER ONLY
+    /**
+     * Add product to cart.
+     *
+     * @param name     the name
+     * @param quantity the quantity
+     * @param c        the c
+     */
+//CUSTOMER ONLY
     public void addProductToCart(String name, int quantity, Customer c) {
         Products p = productManager.getProduct(name);
         customerManager.buyProduct(p, quantity, c);
     }
 
+    /**
+     * Remove product from cart.
+     *
+     * @param name     the name
+     * @param quantity the quantity
+     * @param c        the c
+     */
     public void removeProductFromCart(String name, int quantity, Customer c) {
         Products p = productManager.getProduct(name);
         customerManager.removeProduct(p, quantity, c);
     }
 
+    /**
+     * Gets cart.
+     *
+     * @param c the c
+     * @return the cart
+     */
     public Map<Products, Integer> getCart(Customer c) {
         return c.getCart();
     }
 
+    /**
+     * Checkout.
+     */
     public void checkout() {
 
     }
 
-    //EMPLOYEE ONLY
+    /**
+     * Add product.
+     *
+     * @param name     the name
+     * @param price    the price
+     * @param quantity the quantity
+     */
+//EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity) {
 
     }
 
+    /**
+     * Remove product.
+     *
+     * @param name     the name
+     * @param quantity the quantity
+     */
     public void removeProduct(String name, int quantity) {
 
     }

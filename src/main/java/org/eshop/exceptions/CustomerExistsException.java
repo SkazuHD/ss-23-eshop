@@ -1,7 +1,15 @@
 package org.eshop.exceptions;
 
-public class CustomerExistsException extends Exception{
-    public CustomerExistsException(String username){
-        super(username+" Already exists!");
+/**
+ * The type Customer exists exception.
+ */
+public class CustomerExistsException extends Exception {
+    /**
+     * Instantiates a new Customer exists exception.
+     *
+     * @param username the username
+     */
+    public CustomerExistsException(String username) {
+        super(username + " Already exists!");
     }
 }

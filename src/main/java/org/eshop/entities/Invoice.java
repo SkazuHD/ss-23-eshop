@@ -8,17 +8,28 @@ import java.util.Map;
  * Contains the customer, date, items with quantity and price and total price of the invoice
  * Returns the invoice as a string
  */
+
 public class Invoice {
     Customer c;
     Map<Products, Integer> cart;
     Date date;
 
+    /**
+     * Constructor
+     *
+     * @param c Customer
+     */
     public Invoice(Customer c) {
         this.c = c;
         this.date = new Date();
         this.cart = c.getCart();
     }
 
+    /**
+     * Returns the invoice as a string
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
@@ -39,6 +50,11 @@ public class Invoice {
         return output.toString();
     }
 
+    /**
+     * Returns the total calculated price of the invoice
+     *
+     * @return double
+     */
     public double getTotalPrice() {
         double total = 0;
         for (Map.Entry<Products, Integer> entry : cart.entrySet()) {

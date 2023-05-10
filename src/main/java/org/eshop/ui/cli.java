@@ -9,18 +9,39 @@ import org.eshop.shop.Shop;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The type Cli.
+ */
 public class cli {
 
+    /**
+     * The Server.
+     */
     Shop server;
+    /**
+     * The In.
+     */
     Scanner in = new Scanner(System.in);
+    /**
+     * The Logged in.
+     */
     boolean loggedIn = false;
+    /**
+     * The Logged in customer.
+     */
     Customer loggedInCustomer;
 
+    /**
+     * Instantiates a new Cli.
+     */
     public cli() {
         server = new Shop();
         run();
     }
 
+    /**
+     * Run.
+     */
     public void run() {
         do {
             showStartMenu();
@@ -38,12 +59,20 @@ public class cli {
         run();
     }
 
+    /**
+     * Show start menu.
+     */
     public void showStartMenu() {
         System.out.println("1. Login");
         System.out.println("2. Register");
         System.out.flush();
     }
 
+    /**
+     * Select from menu.
+     *
+     * @param input the input
+     */
     public void selectFromMenu(int input) {
         switch (input) {
             case 1 -> loginUser();
@@ -52,6 +81,11 @@ public class cli {
         }
     }
 
+    /**
+     * Select from main menu.
+     *
+     * @param input the input
+     */
     public void selectFromMainMenu(int input) {
         switch (input) {
             case 1 -> showProducts();
@@ -62,6 +96,11 @@ public class cli {
         }
     }
 
+    /**
+     * Gets numeric input.
+     *
+     * @return the numeric input
+     */
     public int getNumericInput() {
         String input;
         int value = 0;
@@ -77,6 +116,9 @@ public class cli {
 
     }
 
+    /**
+     * Register user.
+     */
     protected void registerUser() {
         //GET USERNAME
         System.out.print("Enter Username:");
@@ -101,6 +143,9 @@ public class cli {
         }
     }
 
+    /**
+     * Login user.
+     */
     protected void loginUser() {
         //GET USERNAME
         System.out.print("Enter Username:");
@@ -117,6 +162,9 @@ public class cli {
         }
     }
 
+    /**
+     * Show main menu.
+     */
     protected void showMainMenu() {
         System.out.println("1. View Products");
         System.out.println("2 Buy Products");
@@ -126,10 +174,16 @@ public class cli {
 
     }
 
+    /**
+     * Show products.
+     */
     protected void showProducts() {
         server.getProductSet().forEach(System.out::println);
     }
 
+    /**
+     * Buy products.
+     */
     protected void buyProducts() {
         System.out.print("Prouct Name: ");
         String name = in.nextLine();
@@ -138,6 +192,9 @@ public class cli {
         server.addProductToCart(name, quantity, loggedInCustomer);
     }
 
+    /**
+     * Remove product.
+     */
     protected void removeProduct() {
         System.out.print("Prouct Name: ");
         String name = in.nextLine();
@@ -146,6 +203,9 @@ public class cli {
         server.removeProductFromCart(name, quantity, loggedInCustomer);
     }
 
+    /**
+     * Show cart.
+     */
     protected void showCart() {
         Map<Products, Integer> cart = server.getCart(loggedInCustomer);
         if (cart.size() == 0) {
