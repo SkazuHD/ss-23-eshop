@@ -32,6 +32,8 @@ public class ProductManager {
         Products p = new Products(pNrCounter,price, name, quantity);
         pNrCounter++;
         productsSet.add(p);
+
+        return true;
     }
 
     public void removeProduct(String name, int quantity ){

@@ -105,14 +105,17 @@ public class cli {
     }
     protected void showMainMenu(){
         System.out.println("1. View Products");
+        System.out.println("Buy Products");
         System.out.println("2. View Cart");
         System.out.println("3. View Orders");
         System.out.println("4. Logout");
-
     }
 
     protected void showProducts(){
-        System.out.println("TODO SHOW PRODUCTS");
+        server.getProductSet().forEach(System.out::println);
+    }
+    protected void buyProducts(){
+
     }
 
 }

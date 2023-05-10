@@ -8,6 +8,16 @@ import java.util.Set;
 
 public class Shop {
 
+    public Shop() {
+        customerManager.register("Peter", "peter", "peter", "peter");
+
+        productManager.addProduct("Brot", 1.99, 100);
+        productManager.addProduct("Milch", 0.99, 100);
+        productManager.addProduct("Eier", 2.99, 100);
+        productManager.addProduct("Wurst", 3.99, 100);
+        productManager.addProduct("Käse", 4.99, 100);
+    }
+
     CustomerManager customerManager = new CustomerManager();
     ProductManager productManager = new ProductManager();
     EmployeeManager employeeManager = new EmployeeManager();
@@ -34,9 +44,9 @@ public class Shop {
 
 
     }
-}
+
 
     //Employees
 
 
-}
+
