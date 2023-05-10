@@ -1,7 +1,10 @@
 package org.eshop.shop;
 
+import org.eshop.entities.Products;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
+
+import java.util.Set;
 
 public class Shop {
 
@@ -23,7 +26,15 @@ public class Shop {
 
 
     //Products
+    public Set<Products> getProductSet(){
+        return productManager.getProductsSet();
+    }
 
+
+
+
+    }
+}
 
     //Employees
 

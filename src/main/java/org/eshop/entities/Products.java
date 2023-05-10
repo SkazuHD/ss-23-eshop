@@ -3,17 +3,20 @@ package org.eshop.entities;
 public class Products {
     //Attribute  Price, Nem und Producktnumber für das Product
       private int Productnumber;
-      private int Price;
+      private double Price;
 
       private String name;
+      private int quantity;
+
 
 
     //constructor für die Attribute
 
-    public Products (int pNr, int price, String name ){
+    public Products (int pNr, double price, String name , int quantity){
        Productnumber = pNr;
        Price = price;
        this.name = name;
+       this.quantity = quantity;
 
     }
     // Getter und setter für die Attribute
@@ -25,11 +28,11 @@ public class Products {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return Price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         Price = price;
     }
 
@@ -41,6 +44,13 @@ public class Products {
         Productnumber = productnumber;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 
     public String toString() {
         return ("name: " + name +"Productnumber: " + Productnumber+ " / Price: " + Price );}
