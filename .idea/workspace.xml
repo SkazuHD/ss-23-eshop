@@ -7,7 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Base JavaDoc Comments" />
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="testcase test">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/eshop/util/IoReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +115,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.eShop [javadoc]">
+  <component name="RunManager" selected="JUnit.RegisterTest.PreventEmptyRegistration">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.eshop.Main" />
       <module name="eShop.main" />
@@ -147,14 +151,6 @@
       <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="All in eShop.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="eShop.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="InvoiceTest.testInvoice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="eShop.test" />
       <extension name="coverage">
@@ -187,13 +183,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RegisterTest.PreventEmptyRegistration" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eShop.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="customer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="customer" />
+      <option name="MAIN_CLASS_NAME" value="customer.RegisterTest" />
+      <option name="METHOD_NAME" value="PreventEmptyRegistration" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RegisterTest.PreventEmptyRegistration" />
         <item itemvalue="Gradle.eShop [javadoc]" />
         <item itemvalue="JUnit.InvoiceTest.testInvoice" />
         <item itemvalue="JUnit.ProductTests.addProduct" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.All in eShop.test" />
       </list>
     </recent_temporary>
   </component>
@@ -219,6 +231,7 @@
       <workItem from="1683715139539" duration="1347000" />
       <workItem from="1683726217627" duration="330000" />
       <workItem from="1683726562868" duration="3546000" />
+      <workItem from="1683730126880" duration="1532000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -304,7 +317,28 @@
       <option name="project" value="LOCAL" />
       <updated>1683730008517</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="workspace">
+      <created>1683730166750</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1683730166750</updated>
+    </task>
+    <task id="LOCAL-00014" summary="make it executable">
+      <created>1683730299270</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1683730299270</updated>
+    </task>
+    <task id="LOCAL-00015" summary="testcase test">
+      <created>1683730427427</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1683730427427</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +366,10 @@
     <MESSAGE value="Invoice" />
     <MESSAGE value="editor Config" />
     <MESSAGE value="Base JavaDoc Comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Base JavaDoc Comments" />
+    <MESSAGE value="workspace" />
+    <MESSAGE value="make it executable" />
+    <MESSAGE value="testcase test" />
+    <option name="LAST_COMMIT_MESSAGE" value="testcase test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
