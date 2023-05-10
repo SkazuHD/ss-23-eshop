@@ -191,6 +191,40 @@ public class cli {
      * Employee menu.
      */
     protected void employeeMenu() {
+        //TODO: Implement Employee Menu
+        System.out.println("EMPLOYEE MENU");
+        System.out.println("1. Register new Employee");
+        System.out.println("2. View Products");
+        System.out.println("3. Add Product");
+        System.out.println("4. Remove Product");
+        System.out.println("5. Logout");
+
+        int input = reader.getNumericInput("Enter Selection: ");
+        //TODO IMPLEMENT EMPLOYEE MENU OPTIONS
+        switch (input) {
+            case 1 -> {
+                //registerUser();
+            }
+            case 2 -> showProducts();
+            case 3 -> {
+                //addProduct();
+            }
+            case 4 -> {
+                //removeProduct();
+            }
+            case 5 -> {
+                loggedIn = false;
+                //TODO USE GENERIC USER CLASS
+                loggedInCustomer = null;
+                startMenu();
+            }
+            default -> {
+                System.err.println("Invalid Selection!");
+                employeeMenu();
+            }
+        }
+
+        employeeMenu();
 
     }
 
