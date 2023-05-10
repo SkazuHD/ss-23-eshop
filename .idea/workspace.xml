@@ -8,13 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Shopping Cart Stuff">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/InvoiceTest/InvoiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +101,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "products-cli",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -115,34 +115,23 @@
     "project.structure.side.proportion": "0.2",
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "settings.sync",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="ProductTests.addProduct" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;Products.ProductTests.addProduct&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
+  <component name="RunManager" selected="JUnit.InvoiceTest.testInvoice">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.eshop.Main" />
+      <module name="eShop.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.eshop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="eShop [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -166,28 +155,6 @@
       <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="eShop [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="testClasses" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
     <configuration name="All in eShop.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="eShop.test" />
       <option name="PACKAGE_NAME" value="" />
@@ -196,7 +163,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InvoiceTest.testInvoice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eShop.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="InvoiceTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="InvoiceTest" />
+      <option name="MAIN_CLASS_NAME" value="InvoiceTest.InvoiceTest" />
+      <option name="METHOD_NAME" value="testInvoice" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductTests.addProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="eShop.test" />
       <extension name="coverage">
         <pattern>
@@ -206,18 +189,19 @@
       </extension>
       <option name="PACKAGE_NAME" value="Products" />
       <option name="MAIN_CLASS_NAME" value="Products.ProductTests" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="addProduct" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in eShop.test" />
+        <item itemvalue="JUnit.InvoiceTest.testInvoice" />
+        <item itemvalue="JUnit.ProductTests.addProduct" />
         <item itemvalue="Gradle.eShop [javadoc]" />
-        <item itemvalue="Gradle.eShop [testClasses]" />
-        <item itemvalue="JUnit.ProductTests" />
-        <item itemvalue="Gradle.ProductTests.addProduct" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.All in eShop.test" />
       </list>
     </recent_temporary>
   </component>
@@ -241,6 +225,8 @@
       <workItem from="1683710462335" duration="158000" />
       <workItem from="1683714105200" duration="102000" />
       <workItem from="1683715139539" duration="1347000" />
+      <workItem from="1683726217627" duration="330000" />
+      <workItem from="1683726562868" duration="2284000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
