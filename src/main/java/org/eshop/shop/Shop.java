@@ -120,6 +120,7 @@ public class Shop {
      * Checkout.
      *
      * @param c the Customer
+     * @return the string
      */
     public String checkout(Customer c) {
         Invoice i = customerManager.checkout(c);

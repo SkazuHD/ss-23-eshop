@@ -172,7 +172,7 @@ public class cli {
             case 2 -> buyProducts();
             case 3 -> {
                 showCart();
-                productMenu();
+                shoppingCartMenu();
             }
 
 
@@ -232,12 +232,13 @@ public class cli {
 
     }
 
-    protected void productMenu() {
+
+    protected void shoppingCartMenu() {
 
 
         System.out.println("1. Remove Product from Cart");
-        System.out.println("2. Exit ");
-        System.out.println("3. Logout ");
+        System.out.println("2. Checkout ");
+        System.out.println("3. Exit");
 
 
         int input = reader.getNumericInput("Enter Selection: ");
@@ -246,11 +247,12 @@ public class cli {
 
 
             case 1 -> removeProduct();
-            case 2 -> customerMenu();
+            case 2 -> {
+                String invoice = server.checkout(loggedInCustomer);
+                System.out.println(invoice);
+            }
             case 3 -> {
-                loggedIn = false;
-                loggedInCustomer = null;
-                startMenu();
+                return;
             }
 
             default -> {
@@ -259,7 +261,7 @@ public class cli {
             }
         }
 
-        productMenu();
+        shoppingCartMenu();
     }
 
 }

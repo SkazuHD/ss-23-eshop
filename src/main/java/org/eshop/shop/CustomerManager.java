@@ -102,6 +102,12 @@ public class CustomerManager {
         return c.getCart();
     }
 
+    /**
+     * Checkout invoice.
+     *
+     * @param c the c
+     * @return the invoice
+     */
     public Invoice checkout(Customer c) {
         return new Invoice(c);
     }
