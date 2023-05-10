@@ -162,17 +162,21 @@ public class cli {
         System.out.println("1. View Products");
         System.out.println("2. Buy Products");
         System.out.println("3. View Cart");
-        System.out.println("4. Remove Product from Cart");
-        System.out.println("5. Logout");
+
+        System.out.println("4. Logout");
 
         int input = reader.getNumericInput("Enter Selection: ");
 
         switch (input) {
             case 1 -> showProducts();
             case 2 -> buyProducts();
-            case 3 -> showCart();
-            case 4 -> removeProduct();
-            case 5 -> {
+            case 3 -> {
+                showCart();
+                productMenu();
+            }
+
+
+            case 4 -> {
                 loggedIn = false;
                 loggedInCustomer = null;
                 startMenu();
@@ -226,6 +230,36 @@ public class cli {
 
         employeeMenu();
 
+    }
+
+    protected void productMenu() {
+
+
+        System.out.println("1. Remove Product from Cart");
+        System.out.println("2. Exit ");
+        System.out.println("3. Logout ");
+
+
+        int input = reader.getNumericInput("Enter Selection: ");
+
+        switch (input) {
+
+
+            case 1 -> removeProduct();
+            case 2 -> customerMenu();
+            case 3 -> {
+                loggedIn = false;
+                loggedInCustomer = null;
+                startMenu();
+            }
+
+            default -> {
+                System.err.println("Invalid Selection!");
+                customerMenu();
+            }
+        }
+
+        productMenu();
     }
 
 }
