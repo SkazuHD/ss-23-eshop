@@ -47,7 +47,9 @@ public class Shop {
         customerManager.buyProduct(p, quantity, c);
     }
 
-    public void removeProductFromCart(String name, int quantity) {
+    public void removeProductFromCart(String name, int quantity, Customer c) {
+        Products p = productManager.getProduct(name);
+        customerManager.removeProduct(p, quantity, c);
     }
 
     public Map<Products, Integer> getCart(Customer c) {

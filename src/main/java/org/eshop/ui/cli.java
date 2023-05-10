@@ -57,7 +57,7 @@ public class cli {
             case 1 -> showProducts();
             case 2 -> buyProducts();
             case 3 -> showCart();
-            case 4 -> System.out.println("TODO LOGOUT");
+            case 4 -> removeProduct();
             default -> System.err.println("Invalid Selection!");
         }
     }
@@ -121,7 +121,7 @@ public class cli {
         System.out.println("1. View Products");
         System.out.println("2 Buy Products");
         System.out.println("3. View Cart");
-        System.out.println("4. View Orders");
+        System.out.println("4. Remove Product from Cart");
         System.out.println("5. Logout");
 
     }
@@ -131,16 +131,28 @@ public class cli {
     }
 
     protected void buyProducts() {
-        System.out.println("Prouct Number: ");
+        System.out.print("Prouct Name: ");
         String name = in.nextLine();
-        System.out.println("Quantity: ");
+        System.out.print("Quantity: ");
         int quantity = getNumericInput();
         server.addProductToCart(name, quantity, loggedInCustomer);
     }
 
+    protected void removeProduct() {
+        System.out.print("Prouct Name: ");
+        String name = in.nextLine();
+        System.out.print("Quantity: ");
+        int quantity = getNumericInput();
+        server.removeProductFromCart(name, quantity, loggedInCustomer);
+    }
+
     protected void showCart() {
         Map<Products, Integer> cart = server.getCart(loggedInCustomer);
-
+        if (cart.size() == 0) {
+            System.out.println("Cart is Empty!");
+            return;
+        }
         cart.forEach((k, v) -> System.out.println(k + " " + v));
     }
+
 }

@@ -50,19 +50,8 @@ public class CustomerManager {
         c.addToCart(p, anzahl);
     }
 
-    public void loeschen(Products p, int anzahl) {
-        int size = gekaufteProdListe.length + anzahl;
-
-        Products[] neu = new Products[size];
-        if (anzahl < gekaufteProdListe.length) {
-            if (-gekaufteProdListe.length >= 0)
-                System.arraycopy(gekaufteProdListe, gekaufteProdListe.length + 1, neu, gekaufteProdListe.length + 1, -gekaufteProdListe.length);
-        }
-        for (int i = gekaufteProdListe.length; i > neu.length; i--)
-            neu[i] = p;
-
-        gekaufteProdListe = neu;
-
+    public void removeProduct(Products p, int anzahl, Customer c) {
+        c.removeFromCart(p, anzahl);
     }
 
     public Map<Products, Integer> getCart(Customer c) {

@@ -95,4 +95,12 @@ public class Customer {
     public void addToCart(Products product, int quantity) {
         cart.put(product, quantity);
     }
+
+    public void removeFromCart(Products product, int quantity) {
+        if (quantity >= cart.get(product)) {
+            cart.remove(product);
+        } else {
+            cart.put(product, cart.get(product) - quantity);
+        }
+    }
 }
