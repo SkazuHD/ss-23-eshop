@@ -22,7 +22,7 @@ public class IoReader {
                 readLine(prompt);
             }
         } while (input.equals(""));
-        return input;
+        return input.trim();
     }
 
     public int getNumericInput(String prompt) {
