@@ -2,7 +2,6 @@ package org.eshop.shop;
 
 import org.eshop.entities.Products;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,37 +13,66 @@ import java.util.Set;
 //product wird gekauft
 
 
-
-
-
+/**
+ * The type Product manager.
+ */
 public class ProductManager {
 
+    /**
+     * The Products set.
+     */
     public Set<Products> productsSet = new HashSet<>();
+    /**
+     * The P nr counter.
+     */
     int pNrCounter = 1000;
 
     /**
-     * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
-     * @param name  gibt dem Produckt einen Namen
-     * @param price gibt dem Prodcukt einen Preis
-     * @param quantity gibt dem Produckt eine Mengenanzahl
+     * Instantiates a new Product manager.
      */
-    public boolean addProduct(String name, double price, int quantity ){
-        Products p = new Products(pNrCounter,price, name, quantity);
+    public ProductManager() {
+    }
+
+    /**
+     * Instantiates a new Product manager with a Filled Set.
+     *
+     * @param productsSet the products set
+     */
+    public ProductManager(Set<Products> productsSet) {
+        this.productsSet = productsSet;
+    }
+
+    /**
+     * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
+     *
+     * @param name     gibt dem Produckt einen Namen
+     * @param price    gibt dem Prodcukt einen Preis
+     * @param quantity gibt dem Produckt eine Mengenanzahl
+     * @return the boolean
+     */
+    public boolean addProduct(String name, double price, int quantity) {
+        Products p = new Products(pNrCounter, price, name, quantity);
         pNrCounter++;
         productsSet.add(p);
 
         return true;
     }
 
-    public void removeProduct(String name, int quantity ){
+    /**
+     * Remove product.
+     *
+     * @param name     the name
+     * @param quantity the quantity
+     */
+    public void removeProduct(String name, int quantity) {
 
         Iterator<Products> it = productsSet.iterator();
 
-        while (it.hasNext()){
+        while (it.hasNext()) {
             Products p = it.next();
-            if (p.getName().equals(name)){
-                p.setQuantity(p.getQuantity()-quantity);
-                if (p.getQuantity()<=0){
+            if (p.getName().equals(name)) {
+                p.setQuantity(p.getQuantity() - quantity);
+                if (p.getQuantity() <= 0) {
                     productsSet.remove(p);
                 }
                 break;
@@ -52,13 +80,20 @@ public class ProductManager {
         }
 
     }
-    public Products getProduct(String name){
+
+    /**
+     * Get product products.
+     *
+     * @param name the name
+     * @return the products
+     */
+    public Products getProduct(String name) {
 
         Iterator<Products> it = productsSet.iterator();
 
-        while (it.hasNext()){
+        while (it.hasNext()) {
             Products p = it.next();
-            if (p.getName().equals(name)){
+            if (p.getName().equals(name)) {
                 return p;
             }
         }
@@ -66,7 +101,12 @@ public class ProductManager {
 
     }
 
-    public Set<Products> getProductsSet(){
+    /**
+     * Get products set set.
+     *
+     * @return the set
+     */
+    public Set<Products> getProductsSet() {
         return productsSet;
     }
 

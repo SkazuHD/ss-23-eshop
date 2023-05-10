@@ -8,16 +8,40 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The type Customer manager.
+ */
 public class CustomerManager {
+    /**
+     * The Customers.
+     */
     Set<Customer> customers = new HashSet<>();
+    /**
+     * The Gesamt rechnung.
+     */
     float gesamtRechnung;
-    //  erstellt ein Array mit dem Namen gekaufteProdListe in dem Producte angelegt werden aber bisher keine drin sind
+    /**
+     * The Gekaufte prod liste.
+     */
+//  erstellt ein Array mit dem Namen gekaufteProdListe in dem Producte angelegt werden aber bisher keine drin sind
     Products[] gekaufteProdListe = new Products[0];
 
+    /**
+     * Instantiates a new Customer manager.
+     */
     public CustomerManager() {
 
     }
 
+    /**
+     * Register boolean.
+     *
+     * @param username the username
+     * @param password the password
+     * @param name     the name
+     * @param address  the address
+     * @return the boolean
+     */
     public boolean register(String username, String password, String name, String address) {
         Customer c = new Customer(username, password, name, address);
         return customers.add(c);
@@ -27,10 +51,10 @@ public class CustomerManager {
      * Login a Customer
      * checks if username exists and if password matches
      *
-     * @param username
-     * @param password
-     * @return Customer
-     * @throws CustomerLoginFailed
+     * @param username the username
+     * @param password the password
+     * @return Customer customer
+     * @throws CustomerLoginFailed the customer login failed
      */
     public Customer login(String username, String password) throws CustomerLoginFailed {
         //Find User in Set
@@ -45,15 +69,34 @@ public class CustomerManager {
         throw new CustomerLoginFailed(username);
     }
 
-    // der Methode einkaufen werden die parameter Products übergeben und der param. anzahl erstellt
+    /**
+     * Buy product.
+     *
+     * @param p      the Products
+     * @param anzahl the Quantity
+     * @param c      the Customer
+     */
     public void buyProduct(Products p, int anzahl, Customer c) {
         c.addToCart(p, anzahl);
     }
 
+    /**
+     * Remove product.
+     *
+     * @param p      the Products
+     * @param anzahl the Quantity
+     * @param c      the Customer
+     */
     public void removeProduct(Products p, int anzahl, Customer c) {
         c.removeFromCart(p, anzahl);
     }
 
+    /**
+     * Gets cart.
+     *
+     * @param c the Customer
+     * @return the cart of the Customer
+     */
     public Map<Products, Integer> getCart(Customer c) {
         return c.getCart();
     }
