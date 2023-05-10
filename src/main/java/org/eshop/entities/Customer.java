@@ -1,15 +1,26 @@
 package org.eshop.entities;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Customer {
+    private final Map<Products, Integer> cart = new HashMap<>();
     private String uid;
     private String username;
     private String password;
     private String name;
     private String address;
 
-    public Customer (String username, String password, String name, String address){
+    /**
+     * Constructor for Customer
+     *
+     * @param username
+     * @param password
+     * @param name
+     * @param address
+     */
+    public Customer(String username, String password, String name, String address) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -19,9 +30,10 @@ public class Customer {
 
     //Overrides of default Object Methods
     @Override
-    public String toString(){
+    public String toString() {
         return username;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,9 +41,10 @@ public class Customer {
         Customer customer = (Customer) o;
         return username.equals(customer.username);
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(uid, username);
+        return Objects.hash(username);
     }
 
     //Basic Setter and Getter from here on
@@ -70,12 +83,24 @@ public class Customer {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public Map<Products, Integer> getCart() {
+        return cart;
+    }
 
+    public void addToCart(Products product, int quantity) {
+        cart.put(product, quantity);
+    }
 
-
-
+    public void removeFromCart(Products product, int quantity) {
+        if (quantity >= cart.get(product)) {
+            cart.remove(product);
+        } else {
+            cart.put(product, cart.get(product) - quantity);
+        }
+    }
 }

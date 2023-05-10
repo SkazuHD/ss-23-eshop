@@ -11,6 +11,7 @@ public class LoginTest {
     void loginWithNewUser() throws CustomerExistsException, CustomerLoginFailed {
         shop.registerUser("test","test","test","test");
         shop.loginUser("test","test");
+
     }
     @Test
     void loginWithNonExistingUser(){

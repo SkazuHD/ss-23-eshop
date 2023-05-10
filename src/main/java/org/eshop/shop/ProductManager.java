@@ -2,6 +2,11 @@ package org.eshop.shop;
 
 import org.eshop.entities.Products;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 // producte hinzufügen
 // löschen
 // Mitarbeiter soll den bestand ändern
@@ -13,46 +18,56 @@ import org.eshop.entities.Products;
 
 
 public class ProductManager {
-    float gesamtRechnung;
-     //  erstellt ein Array mit dem Namen gekaufteProdListe in dem Producte angelegt werden aber bisher keine drin sind
-    Products[] gekaufteProdListe = new Products[0];
-    // der Methode einkaufen werden die parameter Products übergeben und der param. anzahl erstellt
-    public void einkaufen(Products p, int anzahl) {
-        //es wird ein int namens size angelegt in dem die anzahl auf die länge der ProdListe drauf gerechnet wird
-        int size = gekaufteProdListe.length + anzahl;
-//  // Das array bekommt size als parameter übergeben wodurch die Größe variabel ist und nicht auf eine größe begrenzt
-        Products[] neu = new Products[size];
-   //Array wird mit jedem Produkt größer?
-        if (gekaufteProdListe.length > 0) {
-            for (int i = 0; i < gekaufteProdListe.length; i++) {
-                neu[i] = gekaufteProdListe[i];
+
+    public Set<Products> productsSet = new HashSet<>();
+    int pNrCounter = 1000;
+
+    /**
+     * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
+     * @param name  gibt dem Produckt einen Namen
+     * @param price gibt dem Prodcukt einen Preis
+     * @param quantity gibt dem Produckt eine Mengenanzahl
+     */
+    public boolean addProduct(String name, double price, int quantity ){
+        Products p = new Products(pNrCounter,price, name, quantity);
+        pNrCounter++;
+        productsSet.add(p);
+
+        return true;
+    }
+
+    public void removeProduct(String name, int quantity ){
+
+        Iterator<Products> it = productsSet.iterator();
+
+        while (it.hasNext()){
+            Products p = it.next();
+            if (p.getName().equals(name)){
+                p.setQuantity(p.getQuantity()-quantity);
+                if (p.getQuantity()<=0){
+                    productsSet.remove(p);
+                }
+                break;
             }
         }
-//Product wird dem Array hinzugefügt?
-        for (int i = gekaufteProdListe.length; i < neu.length; i++)
-            neu[i] = p;
 
-        gekaufteProdListe = neu;
-
-        float preis = p.getPrice();
-
-// Rechnung wird erstellt
-        float gesamt = preis * anzahl;
-        gesamtRechnung += gesamt;
     }
-    public void loeschen(Products p, int anzahl) {
-        int size = gekaufteProdListe.length + anzahl;
+    public Products getProduct(String name){
 
-        Products[] neu = new Products[size];
-        if (anzahl < gekaufteProdListe.length) {
-            for (int i = 0; i > gekaufteProdListe.length; i--) {
-                neu[i] = gekaufteProdListe[i];
+        Iterator<Products> it = productsSet.iterator();
+
+        while (it.hasNext()){
+            Products p = it.next();
+            if (p.getName().equals(name)){
+                return p;
             }
         }
-        for (int i = gekaufteProdListe.length; i > neu.length; i--)
-            neu[i] = p;
-
-        gekaufteProdListe = neu;
+        return null;
 
     }
+
+    public Set<Products> getProductsSet(){
+        return productsSet;
+    }
+
 }
