@@ -8,7 +8,6 @@ import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * The type Cli.
@@ -19,13 +18,13 @@ public class cli {
      * The Server.
      */
     Shop server;
+
     /**
-     * The In.
+     * The Reader custom IoReader.
      */
-    Scanner in = new Scanner(System.in);
     IoReader reader = new IoReader();
     /**
-     * The Logged in.
+     * The Logged in Status.
      */
     boolean loggedIn = false;
     /**
@@ -48,32 +47,6 @@ public class cli {
 
         startMenu();
     }
-
-    /**
-     * Show start menu.
-     */
-
-
-    /**
-     * Select from menu.
-     *
-     * @param input the input
-     */
-
-
-    /**
-     * Select from main menu.
-     *
-     * @param input the input
-     */
-
-
-    /**
-     * Gets numeric input.
-     *
-     * @return the numeric input
-     */
-
 
     /**
      * Register user.
@@ -114,11 +87,6 @@ public class cli {
     }
 
     /**
-     * Show main menu.
-     */
-
-
-    /**
      * Show products.
      */
     protected void showProducts() {
@@ -129,8 +97,7 @@ public class cli {
      * Buy products.
      */
     protected void buyProducts() {
-        System.out.print("Prouct Name: ");
-        String name = in.nextLine();
+        String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
         server.addProductToCart(name, quantity, loggedInCustomer);
@@ -140,8 +107,7 @@ public class cli {
      * Remove product.
      */
     protected void removeProduct() {
-        System.out.print("Prouct Name: ");
-        String name = in.nextLine();
+        String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
         server.removeProductFromCart(name, quantity, loggedInCustomer);
@@ -159,6 +125,9 @@ public class cli {
         cart.forEach((k, v) -> System.out.println(k + " " + v));
     }
 
+    /**
+     * Start menu.
+     */
     protected void startMenu() {
         System.out.println("1. Login");
         System.out.println("2. Register");
@@ -186,6 +155,9 @@ public class cli {
 
     }
 
+    /**
+     * Customer menu.
+     */
     protected void customerMenu() {
         System.out.println("1. View Products");
         System.out.println("2. Buy Products");
@@ -215,6 +187,9 @@ public class cli {
 
     }
 
+    /**
+     * Employee menu.
+     */
     protected void employeeMenu() {
 
     }
