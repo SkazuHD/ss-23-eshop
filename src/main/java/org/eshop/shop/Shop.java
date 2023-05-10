@@ -30,6 +30,8 @@ public class Shop {
      * Instantiates a new Shop.
      */
     public Shop() {
+
+        //TODO: REMOVE TEST DATA WHEN PERSISTENCE IS IMPLEMENTED
         customerManager.register("Peter", "peter", "peter", "peter");
 
         productManager.addProduct("Brot", 1.99, 100);

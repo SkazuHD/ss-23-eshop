@@ -5,6 +5,7 @@ import org.eshop.entities.Products;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.shop.Shop;
+import org.eshop.util.IoReader;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -22,6 +23,7 @@ public class cli {
      * The In.
      */
     Scanner in = new Scanner(System.in);
+    IoReader reader = new IoReader();
     /**
      * The Logged in.
      */
@@ -43,97 +45,48 @@ public class cli {
      * Run.
      */
     public void run() {
-        do {
-            showStartMenu();
-            int input = getNumericInput();
-            selectFromMenu(input);
-        } while (!loggedIn);
 
-        System.err.println("TODO MAKE DIFFERENT MENUS FOR CUSTOMER AND EMPLOYEE");
-        do {
-            showMainMenu();
-            int input = getNumericInput();
-            selectFromMainMenu(input);
-        } while (loggedIn);
-
-        run();
+        startMenu();
     }
 
     /**
      * Show start menu.
      */
-    public void showStartMenu() {
-        System.out.println("1. Login");
-        System.out.println("2. Register");
-        System.out.flush();
-    }
+
 
     /**
      * Select from menu.
      *
      * @param input the input
      */
-    public void selectFromMenu(int input) {
-        switch (input) {
-            case 1 -> loginUser();
-            case 2 -> registerUser();
-            default -> System.err.println("Invalid Selection!");
-        }
-    }
+
 
     /**
      * Select from main menu.
      *
      * @param input the input
      */
-    public void selectFromMainMenu(int input) {
-        switch (input) {
-            case 1 -> showProducts();
-            case 2 -> buyProducts();
-            case 3 -> showCart();
-            case 4 -> removeProduct();
-            default -> System.err.println("Invalid Selection!");
-        }
-    }
+
 
     /**
      * Gets numeric input.
      *
      * @return the numeric input
      */
-    public int getNumericInput() {
-        String input;
-        int value = 0;
-        input = in.nextLine();
-        try {
-            value = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            System.err.println("Please enter a Numeric Value");
-            System.err.flush();
-            getNumericInput();
-        }
-        return value;
 
-    }
 
     /**
      * Register user.
      */
     protected void registerUser() {
         //GET USERNAME
-        System.out.print("Enter Username:");
-        String username = in.nextLine();
+        String username = reader.readLine("Enter Username:");
         //GET PWD
-        System.out.print("Enter Password:");
-        String password = in.nextLine();
-
+        String password = reader.readLine("Enter Password:");
         //GET NAME
-        System.out.print("Enter Name:");
-        String name = in.nextLine();
-
+        String name = reader.readLine("Enter Name:");
         //GET ADDRESS
-        System.out.print("Enter Address:");
-        String address = in.nextLine();
+        String address = reader.readLine("Enter Address:");
 
         try {
             server.registerUser(username, password, name, address);
@@ -148,11 +101,9 @@ public class cli {
      */
     protected void loginUser() {
         //GET USERNAME
-        System.out.print("Enter Username:");
-        String username = in.nextLine();
+        String username = reader.readLine("Enter Username:");
         //GET PWD
-        System.out.print("Enter Password:");
-        String password = in.nextLine();
+        String password = reader.readLine("Enter Password:");
         try {
             loggedInCustomer = server.loginUser(username, password);
             loggedIn = true;
@@ -165,14 +116,7 @@ public class cli {
     /**
      * Show main menu.
      */
-    protected void showMainMenu() {
-        System.out.println("1. View Products");
-        System.out.println("2 Buy Products");
-        System.out.println("3. View Cart");
-        System.out.println("4. Remove Product from Cart");
-        System.out.println("5. Logout");
 
-    }
 
     /**
      * Show products.
@@ -188,7 +132,7 @@ public class cli {
         System.out.print("Prouct Name: ");
         String name = in.nextLine();
         System.out.print("Quantity: ");
-        int quantity = getNumericInput();
+        int quantity = reader.getNumericInput("");
         server.addProductToCart(name, quantity, loggedInCustomer);
     }
 
@@ -199,7 +143,7 @@ public class cli {
         System.out.print("Prouct Name: ");
         String name = in.nextLine();
         System.out.print("Quantity: ");
-        int quantity = getNumericInput();
+        int quantity = reader.getNumericInput("");
         server.removeProductFromCart(name, quantity, loggedInCustomer);
     }
 
@@ -213,6 +157,66 @@ public class cli {
             return;
         }
         cart.forEach((k, v) -> System.out.println(k + " " + v));
+    }
+
+    protected void startMenu() {
+        System.out.println("1. Login");
+        System.out.println("2. Register");
+        System.out.println("3. Exit");
+        System.out.flush();
+
+        int input = reader.getNumericInput("Enter Selection: ");
+        switch (input) {
+            case 1 -> loginUser();
+            case 2 -> registerUser();
+            case 3 -> System.exit(0);
+            default -> {
+                System.err.println("Invalid Selection!");
+                startMenu();
+            }
+        }
+        if (!loggedIn) {
+            startMenu();
+        }
+        if (loggedInCustomer instanceof Customer) {
+            customerMenu();
+        } else {
+            employeeMenu();
+        }
+
+    }
+
+    protected void customerMenu() {
+        System.out.println("1. View Products");
+        System.out.println("2. Buy Products");
+        System.out.println("3. View Cart");
+        System.out.println("4. Remove Product from Cart");
+        System.out.println("5. Logout");
+
+        int input = reader.getNumericInput("Enter Selection: ");
+
+        switch (input) {
+            case 1 -> showProducts();
+            case 2 -> buyProducts();
+            case 3 -> showCart();
+            case 4 -> removeProduct();
+            case 5 -> {
+                loggedIn = false;
+                loggedInCustomer = null;
+                startMenu();
+            }
+            default -> {
+                System.err.println("Invalid Selection!");
+                customerMenu();
+            }
+        }
+
+        customerMenu();
+
+    }
+
+    protected void employeeMenu() {
+
     }
 
 }
