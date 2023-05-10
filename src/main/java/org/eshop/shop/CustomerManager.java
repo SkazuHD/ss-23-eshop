@@ -1,6 +1,7 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.exceptions.CustomerLoginFailed;
 
@@ -99,5 +100,9 @@ public class CustomerManager {
      */
     public Map<Products, Integer> getCart(Customer c) {
         return c.getCart();
+    }
+
+    public Invoice checkout(Customer c) {
+        return new Invoice(c);
     }
 }

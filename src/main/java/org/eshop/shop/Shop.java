@@ -1,6 +1,7 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
@@ -108,7 +109,7 @@ public class Shop {
     /**
      * Gets cart.
      *
-     * @param c the c
+     * @param c the Customer
      * @return the cart
      */
     public Map<Products, Integer> getCart(Customer c) {
@@ -117,9 +118,12 @@ public class Shop {
 
     /**
      * Checkout.
+     *
+     * @param c the Customer
      */
-    public void checkout() {
-
+    public String checkout(Customer c) {
+        Invoice i = customerManager.checkout(c);
+        return i.toString();
     }
 
     /**

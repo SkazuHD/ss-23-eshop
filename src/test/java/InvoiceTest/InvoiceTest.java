@@ -1,7 +1,6 @@
 package InvoiceTest;
 
 import org.eshop.entities.Customer;
-import org.eshop.entities.Invoice;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.shop.Shop;
@@ -17,8 +16,8 @@ public class InvoiceTest {
         shop.addProductToCart("Milch", 5, c);
         shop.addProductToCart("Brot", 5, c);
         shop.addProductToCart("Eier", 5, c);
-        Invoice invoice = new Invoice(c);
-        
-        System.out.println(invoice);
+
+
+        System.out.println(shop.checkout(c));
     }
 }
