@@ -7,22 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="editor Config">
-      <change afterPath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Invoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Products.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Products.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/ShoppingCartItem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerLoginFailed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerLoginFailed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerNotFound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/exceptions/CustomerNotFound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/CustomerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/ProductManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/ProductManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/cli.java" afterDir="false" />
-    </list>
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Base JavaDoc Comments" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,31 +86,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "rearrange.code.on.save": "true",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Gradle.eShop [javadoc]">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.eshop.Main" />
@@ -233,7 +218,7 @@
       <workItem from="1683714105200" duration="102000" />
       <workItem from="1683715139539" duration="1347000" />
       <workItem from="1683726217627" duration="330000" />
-      <workItem from="1683726562868" duration="3260000" />
+      <workItem from="1683726562868" duration="3546000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -305,7 +290,21 @@
       <option name="project" value="LOCAL" />
       <updated>1683729147155</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Base JavaDoc Comments">
+      <created>1683729881627</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1683729881627</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Base JavaDoc Comments">
+      <created>1683730008517</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1683730008517</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +331,8 @@
     <MESSAGE value="Shopping Cart Stuff" />
     <MESSAGE value="Invoice" />
     <MESSAGE value="editor Config" />
-    <option name="LAST_COMMIT_MESSAGE" value="editor Config" />
+    <MESSAGE value="Base JavaDoc Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Base JavaDoc Comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
