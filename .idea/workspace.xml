@@ -127,7 +127,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.eShop [javadoc]">
+  <component name="RunManager">
     <configuration name="eShop [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -264,7 +264,8 @@
       <workItem from="1683715139539" duration="1347000" />
       <workItem from="1683726217627" duration="330000" />
       <workItem from="1683726562868" duration="3546000" />
-      <workItem from="1683730126880" duration="4310000" />
+      <workItem from="1683730126880" duration="3781000" />
+      <workItem from="1683737845624" duration="1194000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
