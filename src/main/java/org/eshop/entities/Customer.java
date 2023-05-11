@@ -7,8 +7,9 @@ import java.util.Objects;
 /**
  * The type Customer.
  */
-public class Customer {
+public class Customer implements User {
     private final Map<Products, Integer> cart = new HashMap<>();
+    private boolean loggedIn = false;
     private String uid;
     private String username;
     private String password;
@@ -71,7 +72,7 @@ public class Customer {
      *
      * @return String uid
      */
-    public String getUid() {
+    public String getID() {
         return uid;
     }
 
@@ -80,7 +81,7 @@ public class Customer {
      *
      * @param uid String
      */
-    public void setUid(String uid) {
+    public void setID(String uid) {
         this.uid = uid;
     }
 
@@ -155,6 +156,18 @@ public class Customer {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLoggedin() {
+        return loggedIn;
+    }
+
+    public void login() {
+        this.loggedIn = true;
+    }
+
+    public void logout() {
+        this.loggedIn = false;
     }
 
     /**

@@ -63,6 +63,7 @@ public class CustomerManager {
             if (c.getUsername().equals(username)) {
                 //Check if password matches
                 if (c.getPassword().equals(password)) {
+                    c.login();
                     return c;
                 }
             }
