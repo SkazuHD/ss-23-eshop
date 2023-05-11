@@ -50,7 +50,7 @@ public class CustomerManager {
      *
      * @param username the username
      * @param password the password
-     * @return Customer customer
+     * @return User customer
      * @throws CustomerLoginFailed the customer login failed
      */
     public User login(String username, String password) throws CustomerLoginFailed {

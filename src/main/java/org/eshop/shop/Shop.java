@@ -7,8 +7,8 @@ import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The type Shop.
@@ -77,7 +77,7 @@ public class Shop {
      * @return the product set
      */
 //Products
-    public Set<Products> getProductSet() {
+    public Collection<Products> getProductSet() {
         return productManager.getProductsSet();
     }
 
@@ -136,7 +136,7 @@ public class Shop {
      */
 //EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity) {
-
+        productManager.addProduct(name, price, quantity);
     }
 
     /**
