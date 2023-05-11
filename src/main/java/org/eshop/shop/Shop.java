@@ -52,7 +52,6 @@ public class Shop {
      * @param address  the address
      * @throws CustomerExistsException the customer exists exception
      */
-//Customer
     public void registerUser(String username, String password, String name, String address) throws CustomerExistsException {
         if (!customerManager.register(username, password, name, address)) {
             throw new CustomerExistsException(username);

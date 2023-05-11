@@ -234,6 +234,9 @@ public class Cli {
     }
 
 
+    /**
+     * Shopping cart menu.
+     */
     protected void shoppingCartMenu() {
 
 
