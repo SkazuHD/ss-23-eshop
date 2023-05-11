@@ -3,6 +3,7 @@ package org.eshop.shop;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
+import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 
@@ -66,7 +67,7 @@ public class Shop {
      * @return the customer
      * @throws CustomerLoginFailed the customer login failed
      */
-    public Customer loginUser(String username, String password) throws CustomerLoginFailed {
+    public User loginUser(String username, String password) throws CustomerLoginFailed {
         return customerManager.login(username, password);
     }
 

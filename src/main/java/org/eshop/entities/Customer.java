@@ -7,12 +7,8 @@ import java.util.Objects;
 /**
  * The type Customer.
  */
-public class Customer implements User {
+public class Customer extends User {
     private final Map<Products, Integer> cart = new HashMap<>();
-    private boolean loggedIn = false;
-    private String uid;
-    private String username;
-    private String password;
     private String name;
     private String address;
 
@@ -25,8 +21,7 @@ public class Customer implements User {
      * @param address  the address
      */
     public Customer(String username, String password, String name, String address) {
-        this.username = username;
-        this.password = password;
+        super(username, password);
         this.name = name;
         this.address = address;
     }
@@ -39,7 +34,7 @@ public class Customer implements User {
      */
     @Override
     public String toString() {
-        return username;
+        return getUsername() + " " + getName() + " " + getAddress();
     }
 
 
@@ -54,7 +49,7 @@ public class Customer implements User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return username.equals(customer.username);
+        return getUsername().equals(customer.getUsername());
     }
 
     /**
@@ -64,45 +59,9 @@ public class Customer implements User {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(username);
+        return Objects.hash(getUsername());
     }
 
-    /**
-     * Returns the uid of the customer
-     *
-     * @return String uid
-     */
-    public String getID() {
-        return uid;
-    }
-
-    /**
-     * Sets the uid of the customer
-     *
-     * @param uid String
-     */
-    public void setID(String uid) {
-        this.uid = uid;
-    }
-
-
-    /**
-     * Gets username.
-     *
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Sets the username of the customer
-     *
-     * @param username String
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     /**
      * Gets name.
@@ -140,35 +99,6 @@ public class Customer implements User {
         this.address = address;
     }
 
-    /**
-     * Gets password.
-     *
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Sets password.
-     *
-     * @param password the password
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isLoggedin() {
-        return loggedIn;
-    }
-
-    public void login() {
-        this.loggedIn = true;
-    }
-
-    public void logout() {
-        this.loggedIn = false;
-    }
 
     /**
      * Gets cart.

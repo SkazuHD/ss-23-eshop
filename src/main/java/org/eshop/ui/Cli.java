@@ -2,6 +2,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.Products;
+import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.shop.Shop;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * The type Cli.
  */
-public class cli {
+public class Cli {
 
     /**
      * The Server.
@@ -30,12 +31,12 @@ public class cli {
     /**
      * The Logged in customer.
      */
-    Customer loggedInCustomer;
+    User loggedInUser;
 
     /**
      * Instantiates a new Cli.
      */
-    public cli() {
+    public Cli() {
         server = new Shop();
         run();
     }
@@ -78,7 +79,7 @@ public class cli {
         //GET PWD
         String password = reader.readLine("Enter Password:");
         try {
-            loggedInCustomer = server.loginUser(username, password);
+            loggedInUser = server.loginUser(username, password);
             loggedIn = true;
         } catch (CustomerLoginFailed e) {
             System.err.println(e.getMessage());
@@ -100,7 +101,7 @@ public class cli {
         String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
-        server.addProductToCart(name, quantity, loggedInCustomer);
+        server.addProductToCart(name, quantity, (Customer) loggedInUser);
     }
 
     /**
@@ -110,14 +111,14 @@ public class cli {
         String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
-        server.removeProductFromCart(name, quantity, loggedInCustomer);
+        server.removeProductFromCart(name, quantity, (Customer) loggedInUser);
     }
 
     /**
      * Show cart.
      */
     protected void showCart() {
-        Map<Products, Integer> cart = server.getCart(loggedInCustomer);
+        Map<Products, Integer> cart = server.getCart((Customer) loggedInUser);
         if (cart.size() == 0) {
             System.out.println("Cart is Empty!");
             return;
@@ -147,7 +148,7 @@ public class cli {
         if (!loggedIn) {
             startMenu();
         }
-        if (loggedInCustomer instanceof Customer) {
+        if (loggedInUser instanceof Customer) {
             customerMenu();
         } else {
             employeeMenu();
@@ -178,7 +179,7 @@ public class cli {
 
             case 4 -> {
                 loggedIn = false;
-                loggedInCustomer = null;
+                loggedInUser = null;
                 startMenu();
             }
             default -> {
@@ -219,7 +220,7 @@ public class cli {
             case 5 -> {
                 loggedIn = false;
                 //TODO USE GENERIC USER CLASS
-                loggedInCustomer = null;
+                loggedInUser = null;
                 startMenu();
             }
             default -> {
@@ -248,7 +249,7 @@ public class cli {
 
             case 1 -> removeProduct();
             case 2 -> {
-                String invoice = server.checkout(loggedInCustomer);
+                String invoice = server.checkout((Customer) loggedInUser);
                 System.out.println(invoice);
             }
             case 3 -> {

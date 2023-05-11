@@ -1,10 +1,10 @@
 package org.eshop;
 
 
-import org.eshop.ui.cli;
+import org.eshop.ui.Cli;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
-        cli cli = new cli();
+    public static void main(String[] args) throws Exception {
+        Cli cli = new Cli();
     }
 }

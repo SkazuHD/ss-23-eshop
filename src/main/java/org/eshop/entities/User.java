@@ -1,22 +1,50 @@
 package org.eshop.entities;
 
-public interface User {
+public abstract class User {
+    protected String uid;
+    protected String username;
+    protected String password;
+    protected boolean loggedIn = false;
 
-    String getUsername();
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-    void setUsername(String username);
+    public String getUsername() {
+        return this.username;
+    }
 
-    String getPassword();
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    void setPassword(String password);
+    public String getPassword() {
+        return this.password;
+    }
 
-    String getID();
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    void setID(String id);
+    public String getID() {
+        return this.uid;
+    }
 
-    boolean isLoggedin();
+    public void setID(String id) {
+        this.uid = id;
+    }
 
-    void login();
+    public boolean isLoggedIn() {
+        return this.loggedIn;
 
-    void logout();
+    }
+
+    public void login() {
+        this.loggedIn = true;
+    }
+
+    public void logout() {
+        this.loggedIn = false;
+    }
 }

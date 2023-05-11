@@ -3,6 +3,7 @@ package org.eshop.shop;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
+import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerLoginFailed;
 
 import java.util.HashSet;
@@ -57,7 +58,7 @@ public class CustomerManager {
      * @return Customer customer
      * @throws CustomerLoginFailed the customer login failed
      */
-    public Customer login(String username, String password) throws CustomerLoginFailed {
+    public User login(String username, String password) throws CustomerLoginFailed {
         //Find User in Set
         for (Customer c : customers) {
             if (c.getUsername().equals(username)) {
