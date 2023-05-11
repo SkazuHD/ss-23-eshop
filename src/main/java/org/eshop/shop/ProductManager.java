@@ -56,6 +56,7 @@ public class ProductManager {
             //Increase Quantity of existing Product
             Products p = products.get(name);
             p.setQuantity(p.getQuantity() + quantity);
+            p.setPrice(price);
         } else {
             //Create new Product
             Products p = new Products(pNrCounter, price, name, quantity);
