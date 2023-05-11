@@ -146,7 +146,7 @@ public class Shop {
      * @param quantity the quantity
      */
     public void removeProduct(String name, int quantity) {
-
+        productManager.removeProduct(name, quantity);
     }
 }
 //Employees
