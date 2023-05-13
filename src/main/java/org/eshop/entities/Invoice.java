@@ -47,7 +47,7 @@ public class Invoice {
         }
         output.append("Total: ")
                 .append(String.format("%.2f", getTotalPrice()))
-                .append(" EURO");
+                .append(" EURO\n");
         output.append("--------------------\n");
         return output.toString();
     }

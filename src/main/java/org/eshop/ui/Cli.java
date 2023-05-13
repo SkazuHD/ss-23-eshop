@@ -6,6 +6,7 @@ import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.exceptions.NotInStockException;
+import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
@@ -104,7 +105,7 @@ public class Cli {
         int quantity = reader.getNumericInput("");
         try {
             server.addProductToCart(name, quantity, (Customer) loggedInUser);
-        } catch (NotInStockException e) {
+        } catch (ProductNotFound | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }

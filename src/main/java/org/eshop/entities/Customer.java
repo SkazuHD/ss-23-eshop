@@ -119,7 +119,7 @@ public class Customer extends User {
         //Check if product is in stock
         if (product.getQuantity() < quantity) {
             cart.put(product, product.getQuantity());
-            return quantity - product.getQuantity();
+            return product.getQuantity();
         }
         cart.put(product, quantity);
         return quantity;
