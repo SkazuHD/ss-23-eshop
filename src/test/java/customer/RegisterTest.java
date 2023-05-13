@@ -9,7 +9,7 @@ public class RegisterTest {
     @Test
     void testRegistration() throws CustomerExistsException {
         Shop shop = new Shop();
-        shop.registerUser("test", "test", "test", "test");
+        shop.registerUser("TA", "test", "test", "test");
     }
 
     @Test

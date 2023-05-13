@@ -38,8 +38,18 @@ public class Shop {
      * Instantiates a new Shop.
      */
     public Shop() {
-
+        load();
         //TODO: REMOVE TEST DATA WHEN PERSISTENCE IS IMPLEMENTED
+
+
+        productManager.addProduct("Brot", 1.99, 100);
+        productManager.addProduct("Milch", 0.99, 100);
+        productManager.addProduct("Eier", 2.99, 100);
+        productManager.addProduct("Wurst", 3.99, 100);
+        productManager.addProduct("Käse", 4.99, 100);
+    }
+
+    public void load() {
         try {
             persistence.openForReading("customers.csv");
             Customer c;
@@ -51,16 +61,9 @@ public class Shop {
             } while (c != null);
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-
-        productManager.addProduct("Brot", 1.99, 100);
-        productManager.addProduct("Milch", 0.99, 100);
-        productManager.addProduct("Eier", 2.99, 100);
-        productManager.addProduct("Wurst", 3.99, 100);
-        productManager.addProduct("Käse", 4.99, 100);
     }
-
 
     /**
      * Register user.
