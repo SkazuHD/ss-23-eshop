@@ -107,9 +107,13 @@ public class Shop {
      * @param quantity the quantity
      * @param c        the c
      */
-    public void removeProductFromCart(String name, int quantity, Customer c) {
+    public void removeProductFromCart(String name, int quantity, Customer c) throws ProductNotFound {
         Products p = productManager.getProduct(name);
-        customerManager.removeProduct(p, quantity, c);
+        if (p != null) {
+            customerManager.removeProduct(p, quantity, c);
+        } else {
+            throw new ProductNotFound(name);
+        }
     }
 
     /**
@@ -153,6 +157,10 @@ public class Shop {
      */
     public void removeProduct(String name, int quantity) {
         productManager.removeProduct(name, quantity);
+    }
+
+    public Products getProduct(String name) {
+        return productManager.getProduct(name);
     }
 }
 //Employees

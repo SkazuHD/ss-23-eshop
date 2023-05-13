@@ -117,12 +117,20 @@ public class Customer extends User {
      */
     public int addToCart(Products product, int quantity) {
         //Check if product is in stock
-        if (product.getQuantity() < quantity) {
-            cart.put(product, product.getQuantity());
-            return product.getQuantity();
+        if (cart.containsKey(product)) {
+            if (quantity + cart.get(product) >= product.getQuantity()) {
+                int diffrence = product.getQuantity() - cart.get(product);
+                cart.put(product, product.getQuantity());
+                return diffrence;
+            } else {
+                cart.put(product, quantity + cart.get(product));
+                return quantity;
+            }
+        } else {
+            cart.put(product, quantity);
+            return quantity;
         }
-        cart.put(product, quantity);
-        return quantity;
+
     }
 
     /**

@@ -114,7 +114,7 @@ public class Cli {
     /**
      * Remove product.
      */
-    protected void removeProduct() {
+    protected void removeProduct() throws ProductNotFound {
         String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
@@ -257,7 +257,14 @@ public class Cli {
         switch (input) {
 
 
-            case 1 -> removeProduct();
+            case 1 -> {
+                try {
+                    removeProduct();
+                } catch (ProductNotFound e) {
+                    System.err.println(e.getMessage());
+                    System.err.flush();
+                }
+            }
             case 2 -> {
                 String invoice = server.checkout((Customer) loggedInUser);
                 System.out.println(invoice);
