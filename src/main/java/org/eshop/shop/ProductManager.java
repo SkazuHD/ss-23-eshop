@@ -91,9 +91,7 @@ public class ProductManager {
      * @return the products
      */
     public Products getProduct(String name) {
-
         return products.get(name);
-
     }
 
     /**

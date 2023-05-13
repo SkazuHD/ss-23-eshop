@@ -115,8 +115,14 @@ public class Customer extends User {
      * @param product  the product
      * @param quantity the quantity
      */
-    public void addToCart(Products product, int quantity) {
+    public int addToCart(Products product, int quantity) {
+        //Check if product is in stock
+        if (product.getQuantity() < quantity) {
+            cart.put(product, product.getQuantity());
+            return quantity - product.getQuantity();
+        }
         cart.put(product, quantity);
+        return quantity;
     }
 
     /**

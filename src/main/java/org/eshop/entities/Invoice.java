@@ -33,6 +33,7 @@ public class Invoice {
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
+        output.append("--------------------\n");
         output.append("Invoice for ").append(c.getName()).append("\n");
         output.append("Date: ").append(date.toString()).append("\n");
         output.append("Items:\n");
@@ -47,6 +48,7 @@ public class Invoice {
         output.append("Total: ")
                 .append(String.format("%.2f", getTotalPrice()))
                 .append(" EURO");
+        output.append("--------------------\n");
         return output.toString();
     }
 

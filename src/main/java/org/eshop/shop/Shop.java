@@ -6,6 +6,7 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.NotInStockException;
 
 import java.util.Collection;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class Shop {
      * @param c        the c
      */
 //CUSTOMER ONLY
-    public void addProductToCart(String name, int quantity, Customer c) {
+    public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException {
         Products p = productManager.getProduct(name);
         customerManager.buyProduct(p, quantity, c);
     }
