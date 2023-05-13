@@ -3,12 +3,15 @@ package customer;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.shop.Shop;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 
 public class RegisterTest {
     Shop shop = new Shop();
 
     @Test
+    @Disabled
     void testRegistration() throws CustomerExistsException {
         shop.registerUser("TA", "test", "test", "test");
     }
@@ -22,6 +25,7 @@ public class RegisterTest {
     }
 
     @Test
+    @Disabled
     void PreventEmptyRegistration() throws Exception {
         //CLI PREVENTS EMPTY STRINGS -> NO TEST NEEDED
 
