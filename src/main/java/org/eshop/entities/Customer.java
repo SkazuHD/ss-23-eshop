@@ -114,6 +114,7 @@ public class Customer extends User {
      *
      * @param product  the product
      * @param quantity the quantity
+     * @return the int
      */
     public int addToCart(Products product, int quantity) {
         //Check if product is in stock

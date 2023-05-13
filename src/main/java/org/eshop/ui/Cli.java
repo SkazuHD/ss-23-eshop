@@ -113,6 +113,8 @@ public class Cli {
 
     /**
      * Remove product.
+     *
+     * @throws ProductNotFound the product not found
      */
     protected void removeProduct() throws ProductNotFound {
         String name = reader.readLine("Prouct Name: ");

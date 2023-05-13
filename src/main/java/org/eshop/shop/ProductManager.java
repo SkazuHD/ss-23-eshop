@@ -48,7 +48,6 @@ public class ProductManager {
      * @param name     gibt dem Produckt einen Namen
      * @param price    gibt dem Prodcukt einen Preis
      * @param quantity gibt dem Produckt eine Mengenanzahl
-     * @return the boolean
      */
     public void addProduct(String name, double price, int quantity) {
 

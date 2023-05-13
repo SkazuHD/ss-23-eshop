@@ -89,6 +89,8 @@ public class Shop {
      * @param name     the name
      * @param quantity the quantity
      * @param c        the c
+     * @throws NotInStockException the not in stock exception
+     * @throws ProductNotFound     the product not found
      */
 //CUSTOMER ONLY
     public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
@@ -106,6 +108,7 @@ public class Shop {
      * @param name     the name
      * @param quantity the quantity
      * @param c        the c
+     * @throws ProductNotFound the product not found
      */
     public void removeProductFromCart(String name, int quantity, Customer c) throws ProductNotFound {
         Products p = productManager.getProduct(name);
@@ -159,6 +162,12 @@ public class Shop {
         productManager.removeProduct(name, quantity);
     }
 
+    /**
+     * Gets product.
+     *
+     * @param name the name
+     * @return the product
+     */
     public Products getProduct(String name) {
         return productManager.getProduct(name);
     }

@@ -72,6 +72,7 @@ public class CustomerManager {
      * @param p      the Products
      * @param anzahl the Quantity
      * @param c      the Customer
+     * @throws NotInStockException the not in stock exception
      */
     public void buyProduct(Products p, int anzahl, Customer c) throws NotInStockException {
         int addedAmount = c.addToCart(p, anzahl);
