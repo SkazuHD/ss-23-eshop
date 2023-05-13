@@ -8,6 +8,8 @@ import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
+import org.eshop.persistence.FileManager;
+import org.eshop.persistence.ShopPersistence;
 
 import java.util.Collection;
 import java.util.Map;
@@ -30,13 +32,27 @@ public class Shop {
      */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    ShopPersistence persistence = new FileManager();
+
     /**
      * Instantiates a new Shop.
      */
     public Shop() {
 
         //TODO: REMOVE TEST DATA WHEN PERSISTENCE IS IMPLEMENTED
-        customerManager.register("Peter", "peter", "peter", "peter");
+        try {
+            persistence.openForReading("customers.csv");
+            Customer c;
+            do {
+                c = persistence.readCustomer();
+                if (c != null) {
+                    customerManager.register(c.getUsername(), c.getPassword(), c.getName(), c.getAddress());
+                }
+            } while (c != null);
+
+        } catch (Exception e) {
+
+        }
 
         productManager.addProduct("Brot", 1.99, 100);
         productManager.addProduct("Milch", 0.99, 100);
@@ -44,6 +60,7 @@ public class Shop {
         productManager.addProduct("Wurst", 3.99, 100);
         productManager.addProduct("Käse", 4.99, 100);
     }
+
 
     /**
      * Register user.
@@ -58,6 +75,17 @@ public class Shop {
         if (!customerManager.register(username, password, name, address)) {
             throw new CustomerExistsException(username);
         }
+        //Try Saveing to File
+        try {
+            persistence.openForWriting("customers.csv");
+            Customer c = customerManager.getCustomer(username);
+            persistence.writeCustomer(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
+        }
+
     }
 
     /**

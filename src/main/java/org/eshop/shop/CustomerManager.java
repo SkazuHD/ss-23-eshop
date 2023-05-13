@@ -66,6 +66,10 @@ public class CustomerManager {
         throw new CustomerLoginFailed(username);
     }
 
+    public Customer getCustomer(String username) {
+        return customer.get(username);
+    }
+
     /**
      * Buy product.
      *
