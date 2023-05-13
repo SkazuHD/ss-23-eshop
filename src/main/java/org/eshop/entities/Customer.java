@@ -126,6 +126,9 @@ public class Customer extends User {
                 cart.put(product, quantity + cart.get(product));
                 return quantity;
             }
+        } else if (quantity + cart.get(product) >= product.getQuantity()) {
+            cart.put(product, product.getQuantity());
+            return product.getQuantity();
         } else {
             cart.put(product, quantity);
             return quantity;

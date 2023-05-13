@@ -13,7 +13,7 @@ public class ShoppingCartTest {
     Customer customer = new Customer("test", "test", "test", "test");
 
     @Test
-    public void cartTooMuch() throws ProductNotFound, NotInStockException {
+    public void cartTooMuch() {
         Products p = shop.getProduct("Milch");
         Assertions.assertThrows(NotInStockException.class, () -> {
             shop.addProductToCart("Milch", 10000, customer);
