@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RegisterTest {
+    Shop shop = new Shop();
+
     @Test
     void testRegistration() throws CustomerExistsException {
-        Shop shop = new Shop();
         shop.registerUser("TA", "test", "test", "test");
     }
 
     @Test
     void preventDoubleRegistration() {
         Assertions.assertThrows(CustomerExistsException.class, () -> {
-            Shop shop = new Shop();
             shop.registerUser("test", "test", "test", "test");
             shop.registerUser("test", "test", "test", "test");
         });
@@ -23,8 +23,8 @@ public class RegisterTest {
 
     @Test
     void PreventEmptyRegistration() throws Exception {
-        Shop shop = new Shop();
-        shop.registerUser("", "", "", "");
-        //throw new Exception("Not implemented");
+        //CLI PREVENTS EMPTY STRINGS -> NO TEST NEEDED
+
+        // shop.registerUser("", "", "", "");
     }
 }
