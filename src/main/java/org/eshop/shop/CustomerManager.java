@@ -5,10 +5,10 @@ import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.NotInStockException;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The type Customer manager.
@@ -17,16 +17,7 @@ public class CustomerManager {
     /**
      * The Customers.
      */
-    Set<Customer> customers = new HashSet<>();
-    /**
-     * The Gesamt rechnung.
-     */
-    float gesamtRechnung;
-    /**
-     * The Gekaufte prod liste.
-     */
-//  erstellt ein Array mit dem Namen gekaufteProdListe in dem Producte angelegt werden aber bisher keine drin sind
-    Products[] gekaufteProdListe = new Products[0];
+    Map<String, Customer> customer = new HashMap<>();
 
     /**
      * Instantiates a new Customer manager.
@@ -45,8 +36,13 @@ public class CustomerManager {
      * @return the boolean
      */
     public boolean register(String username, String password, String name, String address) {
-        Customer c = new Customer(username, password, name, address);
-        return customers.add(c);
+        if (customer.containsKey(username)) {
+            return false;
+        } else {
+            Customer c = new Customer(username, password, name, address);
+            customer.put(username, c);
+            return true;
+        }
     }
 
     /**
@@ -55,21 +51,23 @@ public class CustomerManager {
      *
      * @param username the username
      * @param password the password
-     * @return Customer customer
+     * @return User customer
      * @throws CustomerLoginFailed the customer login failed
      */
     public User login(String username, String password) throws CustomerLoginFailed {
         //Find User in Set
-        for (Customer c : customers) {
-            if (c.getUsername().equals(username)) {
-                //Check if password matches
-                if (c.getPassword().equals(password)) {
-                    c.login();
-                    return c;
-                }
+        User u = customer.get(username);
+        if (u != null) {
+            if (u.getPassword().equals(password)) {
+                u.login();
+                return u;
             }
         }
         throw new CustomerLoginFailed(username);
+    }
+
+    public Customer getCustomer(String username) {
+        return customer.get(username);
     }
 
     /**
@@ -78,9 +76,13 @@ public class CustomerManager {
      * @param p      the Products
      * @param anzahl the Quantity
      * @param c      the Customer
+     * @throws NotInStockException the not in stock exception
      */
-    public void buyProduct(Products p, int anzahl, Customer c) {
-        c.addToCart(p, anzahl);
+    public void buyProduct(Products p, int anzahl, Customer c) throws NotInStockException {
+        int addedAmount = c.addToCart(p, anzahl);
+        if (addedAmount != anzahl) {
+            throw new NotInStockException(addedAmount);
+        }
     }
 
     /**

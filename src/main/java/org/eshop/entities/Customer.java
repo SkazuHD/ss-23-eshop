@@ -114,9 +114,27 @@ public class Customer extends User {
      *
      * @param product  the product
      * @param quantity the quantity
+     * @return the int
      */
-    public void addToCart(Products product, int quantity) {
-        cart.put(product, quantity);
+    public int addToCart(Products product, int quantity) {
+        //Check if product is in stock
+        if (cart.containsKey(product)) {
+            if (quantity + cart.get(product) >= product.getQuantity()) {
+                int diffrence = product.getQuantity() - cart.get(product);
+                cart.put(product, product.getQuantity());
+                return diffrence;
+            } else {
+                cart.put(product, quantity + cart.get(product));
+                return quantity;
+            }
+        } else if (quantity >= product.getQuantity()) {
+            cart.put(product, product.getQuantity());
+            return product.getQuantity();
+        } else {
+            cart.put(product, quantity);
+            return quantity;
+        }
+
     }
 
     /**

@@ -7,24 +7,28 @@ import org.junit.jupiter.api.Test;
 
 public class ProductTest {
 
-    @Test  void testProduckt() {
+    @Test
+    void testProduckt() {
         ProductManager productManger = new ProductManager();
-        productManger.addProduct( "Horst", 3.99, 4 );
-        Assertions.assertEquals(1,productManger.productsSet.size());
+        productManger.addProduct("Horst", 3.99, 4);
+        Assertions.assertEquals(1, productManger.products.size());
     }
 
-    @Test void removeProductQuantiy(){
+    @Test
+    void removeProductQuantiy() {
         ProductManager productManger = new ProductManager();
-        productManger.addProduct( "Horst", 3.99, 4 );
+        productManger.addProduct("Horst", 3.99, 4);
         Products p = productManger.getProduct("Horst");
         productManger.removeProduct("Horst", 2);
         Assertions.assertEquals(2, p.getQuantity());
     }
-    @Test void  removeProductComplete(){
+
+    @Test
+    void removeProductComplete() {
         ProductManager productManger = new ProductManager();
-        productManger.addProduct( "Horst", 3.99, 4 );
+        productManger.addProduct("Horst", 3.99, 4);
         productManger.removeProduct("Horst", 4);
-        Assertions.assertEquals(0,productManger.productsSet.size());
+        Assertions.assertEquals(0, productManger.products.size());
 
     }
 

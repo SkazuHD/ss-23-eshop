@@ -7,7 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="employee &amp; manager">
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="FIXED NULLPOINTER">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +28,29 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="eShop" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="eShop" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="eShop" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="eShop" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="documentation" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -49,7 +71,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="products-cli" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,7 +95,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;11.05&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
@@ -87,11 +109,33 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager" selected="Gradle.eShop [javadoc]">
+    <configuration name="eShop [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="eShop [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -114,91 +158,48 @@
       <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="ss-23-eshop [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="ss-23-eshop [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="ss-23-eshop [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="testClasses" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="All in eShop.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ShoppingCartTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="eShop.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="customer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="customer" />
+      <option name="MAIN_CLASS_NAME" value="customer.ShoppingCartTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InvoiceTest.testInvoice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ShoppingCartTest.cartTooMuch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="eShop.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="InvoiceTest.*" />
+          <option name="PATTERN" value="customer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="InvoiceTest" />
-      <option name="MAIN_CLASS_NAME" value="InvoiceTest.InvoiceTest" />
-      <option name="METHOD_NAME" value="testInvoice" />
+      <option name="PACKAGE_NAME" value="customer" />
+      <option name="MAIN_CLASS_NAME" value="customer.ShoppingCartTest" />
+      <option name="METHOD_NAME" value="cartTooMuch" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingCartTest.increaseQuantityOverStock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eShop.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="customer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="customer" />
+      <option name="MAIN_CLASS_NAME" value="customer.ShoppingCartTest" />
+      <option name="METHOD_NAME" value="increaseQuantityOverStock" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -206,11 +207,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in eShop.test" />
-        <item itemvalue="Gradle.ss-23-eshop [testClasses]" />
-        <item itemvalue="JUnit.InvoiceTest.testInvoice" />
         <item itemvalue="Gradle.eShop [javadoc]" />
-        <item itemvalue="Gradle.ss-23-eshop [jar]" />
+        <item itemvalue="Gradle.eShop [build]" />
+        <item itemvalue="JUnit.ShoppingCartTest" />
+        <item itemvalue="JUnit.ShoppingCartTest.cartTooMuch" />
+        <item itemvalue="JUnit.ShoppingCartTest.increaseQuantityOverStock" />
       </list>
     </recent_temporary>
   </component>
@@ -244,10 +245,12 @@
       <workItem from="1683748737267" duration="47000" />
       <workItem from="1683749069982" duration="3000" />
       <workItem from="1683749294272" duration="20000" />
-      <workItem from="1683807306119" duration="5365000" />
-      <workItem from="1683889861468" duration="51000" />
-      <workItem from="1684317962971" duration="2963000" />
-      <workItem from="1684751936951" duration="965000" />
+      <workItem from="1683805471282" duration="7183000" />
+      <workItem from="1683815713102" duration="161000" />
+      <workItem from="1683896788335" duration="288000" />
+      <workItem from="1683968204935" duration="5561000" />
+      <workItem from="1683973771471" duration="88000" />
+      <workItem from="1683973868303" duration="292000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -417,14 +420,91 @@
       <option name="project" value="LOCAL" />
       <updated>1683735932466</updated>
     </task>
-    <task id="LOCAL-00025" summary="employee &amp; manager">
-      <created>1684752592147</created>
+    <task id="LOCAL-00025" summary="User Interface">
+      <created>1683805829361</created>
       <option name="number" value="00025" />
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
-      <updated>1684752592147</updated>
+      <updated>1683805829361</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Abstract User">
+      <created>1683807748717</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1683807748717</updated>
+    </task>
+    <task id="LOCAL-00027" summary="HashMap">
+      <created>1683808920589</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1683808920589</updated>
+    </task>
+    <task id="LOCAL-00028" summary="HashMap">
+      <created>1683810794197</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1683810794197</updated>
+    </task>
+    <task id="LOCAL-00029" summary="fuck off">
+      <created>1683810807919</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1683810807919</updated>
+    </task>
+    <task id="LOCAL-00030" summary="remove product">
+      <created>1683812075259</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1683812075259</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Set Price">
+      <created>1683812221627</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1683812221627</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Prevent over carting">
+      <created>1683968971037</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1683968971037</updated>
+    </task>
+    <task id="LOCAL-00033" summary="ProductNotFound Exception added">
+      <created>1683969716169</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1683969716169</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Reinforce Error Handling for ShoppingCart">
+      <created>1683973300180</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1683973300180</updated>
+    </task>
+    <task id="LOCAL-00035" summary="FIXED">
+      <created>1683973604333</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1683973604333</updated>
+    </task>
+    <task id="LOCAL-00036" summary="FIXED NULLPOINTER">
+      <created>1683973702756</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1683973702756</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -445,12 +525,6 @@
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Project Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Register Flow" />
-    <MESSAGE value="Allow Registration and Login" />
-    <MESSAGE value="minor improvement" />
-    <MESSAGE value="Return Customer" />
-    <MESSAGE value="Comments" />
-    <MESSAGE value="Show Products" />
     <MESSAGE value="Shopping Cart Stuff" />
     <MESSAGE value="Invoice" />
     <MESSAGE value="editor Config" />
@@ -465,8 +539,18 @@
     <MESSAGE value="Placeholder for employee Menu" />
     <MESSAGE value="workspace.xml" />
     <MESSAGE value="Integrate Invoice" />
-    <MESSAGE value="employee &amp; manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="employee &amp; manager" />
+    <MESSAGE value="User Interface" />
+    <MESSAGE value="Abstract User" />
+    <MESSAGE value="HashMap" />
+    <MESSAGE value="fuck off" />
+    <MESSAGE value="remove product" />
+    <MESSAGE value="Set Price" />
+    <MESSAGE value="Prevent over carting" />
+    <MESSAGE value="ProductNotFound Exception added" />
+    <MESSAGE value="Reinforce Error Handling for ShoppingCart" />
+    <MESSAGE value="FIXED" />
+    <MESSAGE value="FIXED NULLPOINTER" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIXED NULLPOINTER" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
