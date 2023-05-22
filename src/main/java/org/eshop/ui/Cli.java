@@ -123,6 +123,7 @@ public class Cli {
         server.removeProductFromCart(name, quantity, (Customer) loggedInUser);
     }
 
+
     /**
      * Show cart.
      */
@@ -268,8 +269,10 @@ public class Cli {
                 }
             }
             case 2 -> {
-                String invoice = server.checkout((Customer) loggedInUser);
+                String invoice = server.getInvoice((Customer) loggedInUser);
                 System.out.println(invoice);
+                server.checkout((Customer) loggedInUser);
+                customerMenu();
             }
             case 3 -> {
                 return;
