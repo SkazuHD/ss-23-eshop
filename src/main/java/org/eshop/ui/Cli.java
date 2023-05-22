@@ -5,6 +5,8 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.NotInStockException;
+import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
@@ -101,13 +103,20 @@ public class Cli {
         String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
-        server.addProductToCart(name, quantity, (Customer) loggedInUser);
+        try {
+            server.addProductToCart(name, quantity, (Customer) loggedInUser);
+        } catch (ProductNotFound | NotInStockException e) {
+            System.err.println(e.getMessage());
+            System.err.flush();
+        }
     }
 
     /**
      * Remove product.
+     *
+     * @throws ProductNotFound the product not found
      */
-    protected void removeProduct() {
+    protected void removeProduct() throws ProductNotFound {
         String name = reader.readLine("Prouct Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
@@ -250,7 +259,14 @@ public class Cli {
         switch (input) {
 
 
-            case 1 -> removeProduct();
+            case 1 -> {
+                try {
+                    removeProduct();
+                } catch (ProductNotFound e) {
+                    System.err.println(e.getMessage());
+                    System.err.flush();
+                }
+            }
             case 2 -> {
                 String invoice = server.checkout((Customer) loggedInUser);
                 System.out.println(invoice);

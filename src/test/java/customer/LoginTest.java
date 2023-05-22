@@ -10,8 +10,7 @@ public class LoginTest {
     Shop shop = new Shop();
 
     @Test
-    void loginWithNewUser() throws CustomerExistsException, CustomerLoginFailed {
-        shop.registerUser("test", "test", "test", "test");
+    void loginUser() throws CustomerExistsException, CustomerLoginFailed {
         shop.loginUser("test", "test");
     }
 

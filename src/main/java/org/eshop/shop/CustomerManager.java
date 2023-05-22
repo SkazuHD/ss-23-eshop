@@ -5,6 +5,7 @@ import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.NotInStockException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,15 +66,23 @@ public class CustomerManager {
         throw new CustomerLoginFailed(username);
     }
 
+    public Customer getCustomer(String username) {
+        return customer.get(username);
+    }
+
     /**
      * Buy product.
      *
      * @param p      the Products
      * @param anzahl the Quantity
      * @param c      the Customer
+     * @throws NotInStockException the not in stock exception
      */
-    public void buyProduct(Products p, int anzahl, Customer c) {
-        c.addToCart(p, anzahl);
+    public void buyProduct(Products p, int anzahl, Customer c) throws NotInStockException {
+        int addedAmount = c.addToCart(p, anzahl);
+        if (addedAmount != anzahl) {
+            throw new NotInStockException(addedAmount);
+        }
     }
 
     /**

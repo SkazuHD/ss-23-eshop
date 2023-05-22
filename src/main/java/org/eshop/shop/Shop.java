@@ -6,6 +6,10 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CustomerExistsException;
 import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.NotInStockException;
+import org.eshop.exceptions.ProductNotFound;
+import org.eshop.persistence.FileManager;
+import org.eshop.persistence.ShopPersistence;
 
 import java.util.Collection;
 import java.util.Map;
@@ -28,19 +32,37 @@ public class Shop {
      */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    ShopPersistence persistence = new FileManager();
+
     /**
      * Instantiates a new Shop.
      */
     public Shop() {
-
+        load();
         //TODO: REMOVE TEST DATA WHEN PERSISTENCE IS IMPLEMENTED
-        customerManager.register("Peter", "peter", "peter", "peter");
+
 
         productManager.addProduct("Brot", 1.99, 100);
         productManager.addProduct("Milch", 0.99, 100);
         productManager.addProduct("Eier", 2.99, 100);
         productManager.addProduct("Wurst", 3.99, 100);
         productManager.addProduct("Käse", 4.99, 100);
+    }
+
+    public void load() {
+        try {
+            persistence.openForReading("customers.csv");
+            Customer c;
+            do {
+                c = persistence.readCustomer();
+                if (c != null) {
+                    customerManager.register(c.getUsername(), c.getPassword(), c.getName(), c.getAddress());
+                }
+            } while (c != null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -56,6 +78,17 @@ public class Shop {
         if (!customerManager.register(username, password, name, address)) {
             throw new CustomerExistsException(username);
         }
+        //Try Saveing to File
+        try {
+            persistence.openForWriting("customers.csv");
+            Customer c = customerManager.getCustomer(username);
+            persistence.writeCustomer(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
+        }
+
     }
 
     /**
@@ -87,11 +120,17 @@ public class Shop {
      * @param name     the name
      * @param quantity the quantity
      * @param c        the c
+     * @throws NotInStockException the not in stock exception
+     * @throws ProductNotFound     the product not found
      */
 //CUSTOMER ONLY
-    public void addProductToCart(String name, int quantity, Customer c) {
+    public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
         Products p = productManager.getProduct(name);
-        customerManager.buyProduct(p, quantity, c);
+        if (p != null) {
+            customerManager.buyProduct(p, quantity, c);
+        } else {
+            throw new ProductNotFound(name);
+        }
     }
 
     /**
@@ -100,10 +139,15 @@ public class Shop {
      * @param name     the name
      * @param quantity the quantity
      * @param c        the c
+     * @throws ProductNotFound the product not found
      */
-    public void removeProductFromCart(String name, int quantity, Customer c) {
+    public void removeProductFromCart(String name, int quantity, Customer c) throws ProductNotFound {
         Products p = productManager.getProduct(name);
-        customerManager.removeProduct(p, quantity, c);
+        if (p != null) {
+            customerManager.removeProduct(p, quantity, c);
+        } else {
+            throw new ProductNotFound(name);
+        }
     }
 
     /**
@@ -147,6 +191,16 @@ public class Shop {
      */
     public void removeProduct(String name, int quantity) {
         productManager.removeProduct(name, quantity);
+    }
+
+    /**
+     * Gets product.
+     *
+     * @param name the name
+     * @return the product
+     */
+    public Products getProduct(String name) {
+        return productManager.getProduct(name);
     }
 }
 //Employees
