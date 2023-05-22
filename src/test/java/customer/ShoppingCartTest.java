@@ -14,9 +14,9 @@ public class ShoppingCartTest {
 
     @Test
     public void cartTooMuch() {
-        Products p = shop.getProduct("Milch");
+        Products p = shop.getProduct("TestProduct");
         Assertions.assertThrows(NotInStockException.class, () -> {
-            shop.addProductToCart("Milch", 10000, customer);
+            shop.addProductToCart("TestProduct", 10000, customer);
         });
         Assertions.assertEquals(100, customer.getCart().get(p));
 
@@ -24,44 +24,44 @@ public class ShoppingCartTest {
 
     @Test
     public void addProduct() throws ProductNotFound, NotInStockException {
-        shop.addProductToCart("Milch", 1, customer);
+        shop.addProductToCart("TestProduct", 1, customer);
     }
 
     @Test
     public void removeProductComplete() throws ProductNotFound, NotInStockException {
-        shop.addProductToCart("Milch", 1, customer);
+        shop.addProductToCart("TestProduct", 1, customer);
         Assertions.assertEquals(1, customer.getCart().size());
-        shop.removeProductFromCart("Milch", 1, customer);
+        shop.removeProductFromCart("TestProduct", 1, customer);
         Assertions.assertEquals(0, customer.getCart().size());
     }
 
     @Test
     public void decreaseQuantity() throws ProductNotFound, NotInStockException {
-        shop.addProductToCart("Milch", 2, customer);
-        Products p = shop.getProduct("Milch");
+        shop.addProductToCart("TestProduct", 2, customer);
+        Products p = shop.getProduct("TestProduct");
         Assertions.assertEquals(2, customer.getCart().get(p));
-        shop.removeProductFromCart("Milch", 1, customer);
+        shop.removeProductFromCart("TestProduct", 1, customer);
         Assertions.assertEquals(1, customer.getCart().get(p));
     }
 
     @Test
     public void increaseQuantity() throws ProductNotFound, NotInStockException {
-        shop.addProductToCart("Milch", 2, customer);
-        Products p = shop.getProduct("Milch");
+        shop.addProductToCart("TestProduct", 2, customer);
+        Products p = shop.getProduct("TestProduct");
         Assertions.assertEquals(2, customer.getCart().get(p));
-        shop.addProductToCart("Milch", 1, customer);
+        shop.addProductToCart("TestProduct", 1, customer);
         Assertions.assertEquals(3, customer.getCart().get(p));
     }
 
     @Test
     public void increaseQuantityOverStock() throws ProductNotFound, NotInStockException {
-        Products p = shop.getProduct("Milch");
-        shop.addProductToCart("Milch", 49, customer);
+        Products p = shop.getProduct("TestProduct");
+        shop.addProductToCart("TestProduct", 49, customer);
         Assertions.assertEquals(49, customer.getCart().get(p));
-        shop.addProductToCart("Milch", 49, customer);
+        shop.addProductToCart("TestProduct", 49, customer);
         Assertions.assertEquals(49 * 2, customer.getCart().get(p));
         Assertions.assertThrows(NotInStockException.class, () -> {
-            shop.addProductToCart("Milch", 3, customer);
+            shop.addProductToCart("TestProduct", 3, customer);
         });
         Assertions.assertEquals(p.getQuantity(), customer.getCart().get(p));
     }
@@ -76,7 +76,7 @@ public class ShoppingCartTest {
     @Test
     public void removeProductNotExistent() throws ProductNotFound {
         Assertions.assertThrows(ProductNotFound.class, () -> {
-            shop.removeProductFromCart("Milch die 2TE", 20, customer);
+            shop.removeProductFromCart("TestProduct die 2TE", 20, customer);
         });
     }
 }
