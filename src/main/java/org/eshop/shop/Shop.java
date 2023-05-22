@@ -120,11 +120,11 @@ public class Shop {
     /**
      * Add product to cart.
      *
-     * @param name     the name
+     * @param name     the name of the product
      * @param quantity the quantity
-     * @param c        the c
-     * @throws NotInStockException the not in stock exception
-     * @throws ProductNotFound     the product not found
+     * @param c        the Customer
+     * @throws NotInStockException Exception thrown when the product is not in stock
+     * @throws ProductNotFound     Exception thrown when the product is not found
      */
 //CUSTOMER ONLY
     public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
@@ -174,10 +174,10 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            productManager.removeProduct(key.getName(), cart.get(key));
-            customerManager.removeProduct(key, cart.get(key), c);
             Loger.log(key + " " + cart.get(key));
+            productManager.removeProduct(key.getName(), cart.get(key));
         }
+        cart.clear();
 
 
     }
