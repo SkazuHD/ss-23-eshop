@@ -7,13 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Integrate Invoice">
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="employee &amp; manager">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/Cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/Cli.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/util/IoReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/util/IoReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +247,7 @@
       <workItem from="1683807306119" duration="5365000" />
       <workItem from="1683889861468" duration="51000" />
       <workItem from="1684317962971" duration="2963000" />
-      <workItem from="1684751936951" duration="442000" />
+      <workItem from="1684751936951" duration="965000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -422,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683735932466</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="employee &amp; manager">
+      <created>1684752592147</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1684752592147</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -463,7 +465,8 @@
     <MESSAGE value="Placeholder for employee Menu" />
     <MESSAGE value="workspace.xml" />
     <MESSAGE value="Integrate Invoice" />
-    <option name="LAST_COMMIT_MESSAGE" value="Integrate Invoice" />
+    <MESSAGE value="employee &amp; manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="employee &amp; manager" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
