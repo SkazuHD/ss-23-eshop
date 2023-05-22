@@ -153,14 +153,6 @@ public class Shop {
         }
     }
 
-   /* public void removeProductAfterCheckout(String name, int quantity) {
-        Products p = productManager.getProduct(name);
-        if (quantity == 0) {
-            productManager.removeProduct(name, quantity);
-
-
-        }
-    }*/
 
     /**
      * }
