@@ -104,6 +104,6 @@ public class Products {
     }
 
     public String toString() {
-        return ("name: " + name + "Productnumber: " + Productnumber + " / Price: " + Price);
+        return (name + " | " + Productnumber + " | " + Price + " EURO");
     }
 }

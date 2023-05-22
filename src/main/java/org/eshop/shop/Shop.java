@@ -175,10 +175,9 @@ public class Shop {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
             productManager.removeProduct(key.getName(), cart.get(key));
-            customerManager.removeProduct(key, cart.get(key), c);
-            Loger.log(key + " " + cart.get(key));
+            Loger.log(key + " | " + cart.get(key) + " | " + "Customer:" + c.getName());
         }
-
+        cart.clear();
 
     }
 
