@@ -73,6 +73,27 @@ public class Cli {
     }
 
     /**
+     * register employee
+     */
+    protected void registerEmployee() {
+        //GET USERNAME
+        String username = reader.readLine("Enter Username:");
+        //GET PERSONR
+        int persoNr = reader.getNumericInput("Enter PersoNr:");
+        //GET NAME
+        String name = reader.readLine("Enter Name:");
+        //GET PWD
+        String password = reader.readLine("Enter Password:");
+
+        try {
+            server.registerEmployee(username, persoNr, name, password);
+        } catch (CustomerExistsException e) {
+            System.err.println(e.getMessage());
+            System.err.flush();
+        }
+    }
+
+    /**
      * Login user.
      */
     protected void loginUser() {
@@ -121,6 +142,28 @@ public class Cli {
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
         server.removeProductFromCart(name, quantity, (Customer) loggedInUser);
+    }
+
+    /**
+     * add new product
+     */
+    protected void addProduct() {
+        String name = reader.readLine("Product Name: ");
+        System.out.print("Quantity: ");
+        int quantity = reader.getNumericInput("");
+        System.out.print("Preis: ");
+        double price = reader.getDoubleInput(" ");
+        server.addProduct(name, price, quantity);
+    }
+
+    /**
+     * remove product from stock
+     */
+    protected void deleteProduct() {
+        String name = reader.readLine("Product Name: ");
+        System.out.print("Quantity: ");
+        int quantity = reader.getNumericInput("");
+        server.removeProduct(name, quantity);
     }
 
 
@@ -215,18 +258,11 @@ public class Cli {
         System.out.println("5. Logout");
 
         int input = reader.getNumericInput("Enter Selection: ");
-        //TODO IMPLEMENT EMPLOYEE MENU OPTIONS
         switch (input) {
-            case 1 -> {
-                //registerUser();
-            }
+            case 1 -> registerEmployee();
             case 2 -> showProducts();
-            case 3 -> {
-                //addProduct();
-            }
-            case 4 -> {
-                //removeProduct();
-            }
+            case 3 -> addProduct();
+            case 4 -> deleteProduct();
             case 5 -> {
                 loggedIn = false;
                 //TODO USE GENERIC USER CLASS
