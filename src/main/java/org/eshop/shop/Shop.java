@@ -43,25 +43,19 @@ public class Shop {
      */
     public Shop() {
         load();
+    }
 
+    public void saveAsync() {
         new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            try {
+                persistence.openForWriting("products.csv", false);
+                Collection<Products> products = productManager.getProductsSet();
+                for (Products p : products) {
+                    persistence.writeProducts(p);
                 }
-                //Saves Data to File in a new Thread every few Seconds
-                try {
-                    persistence.openForWriting("products.csv", false);
-                    Collection<Products> products = productManager.getProductsSet();
-                    for (Products p : products) {
-                        persistence.writeProducts(p);
-                    }
-                    persistence.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                persistence.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
@@ -208,6 +202,7 @@ public class Shop {
             Loger.log(key + " " + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
+        saveAsync();
         cart.clear();
 
 
@@ -234,6 +229,7 @@ public class Shop {
 //EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity) {
         productManager.addProduct(name, price, quantity);
+        saveAsync();
     }
 
     /**
@@ -244,6 +240,7 @@ public class Shop {
      */
     public void removeProduct(String name, int quantity) {
         productManager.removeProduct(name, quantity);
+        saveAsync();
     }
 
     /**
