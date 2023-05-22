@@ -33,25 +33,42 @@ public class Shop {
      */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    /**
+     * The Persistence.
+     */
     ShopPersistence persistence = new FileManager();
-
-    Loger loger = new Loger();
 
     /**
      * Instantiates a new Shop.
      */
     public Shop() {
         load();
-        //TODO: REMOVE TEST DATA WHEN PERSISTENCE IS IMPLEMENTED
 
-
-        productManager.addProduct("Brot", 1.99, 100);
-        productManager.addProduct("Milch", 0.99, 100);
-        productManager.addProduct("Eier", 2.99, 100);
-        productManager.addProduct("Wurst", 3.99, 100);
-        productManager.addProduct("Käse", 4.99, 100);
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //Saves Data to File in a new Thread every few Seconds
+                try {
+                    persistence.openForWriting("products.csv", false);
+                    Collection<Products> products = productManager.getProductsSet();
+                    for (Products p : products) {
+                        persistence.writeProducts(p);
+                    }
+                    persistence.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
+    /**
+     * Load.
+     */
     public void load() {
         try {
             persistence.openForReading("customers.csv");
@@ -65,6 +82,21 @@ public class Shop {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        try {
+            persistence.openForReading("products.csv");
+            Products p;
+            do {
+                p = persistence.readProducts();
+                if (p != null) {
+                    productManager.addProduct(p.getName(), p.getPrice(), p.getQuantity());
+                }
+            } while (p != null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
         }
     }
 
@@ -83,7 +115,7 @@ public class Shop {
         }
         //Try Saveing to File
         try {
-            persistence.openForWriting("customers.csv");
+            persistence.openForWriting("customers.csv", true);
             Customer c = customerManager.getCustomer(username);
             persistence.writeCustomer(c);
         } catch (Exception e) {
@@ -120,11 +152,11 @@ public class Shop {
     /**
      * Add product to cart.
      *
-     * @param name     the name
+     * @param name     the name of the product
      * @param quantity the quantity
-     * @param c        the c
-     * @throws NotInStockException the not in stock exception
-     * @throws ProductNotFound     the product not found
+     * @param c        the Customer
+     * @throws NotInStockException Exception thrown when the product is not in stock
+     * @throws ProductNotFound     Exception thrown when the product is not found
      */
 //CUSTOMER ONLY
     public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
@@ -169,19 +201,24 @@ public class Shop {
      * Checkout.
      *
      * @param c the Customer
-     * @return the string
      */
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            productManager.removeProduct(key.getName(), cart.get(key));
-            customerManager.removeProduct(key, cart.get(key), c);
             Loger.log(key + " " + cart.get(key));
+            productManager.removeProduct(key.getName(), cart.get(key));
         }
+        cart.clear();
 
 
     }
 
+    /**
+     * Gets invoice.
+     *
+     * @param c the c
+     * @return the invoice
+     */
     public String getInvoice(Customer c) {
         Invoice i = customerManager.checkout(c);
         return i.toString();

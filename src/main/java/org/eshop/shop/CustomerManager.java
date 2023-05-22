@@ -66,6 +66,12 @@ public class CustomerManager {
         throw new CustomerLoginFailed(username);
     }
 
+    /**
+     * Gets customer.
+     *
+     * @param username the username
+     * @return the customer
+     */
     public Customer getCustomer(String username) {
         return customer.get(username);
     }
