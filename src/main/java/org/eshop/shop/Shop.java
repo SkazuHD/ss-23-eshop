@@ -35,8 +35,6 @@ public class Shop {
 
     ShopPersistence persistence = new FileManager();
 
-    Loger loger = new Loger();
-
     /**
      * Instantiates a new Shop.
      */
