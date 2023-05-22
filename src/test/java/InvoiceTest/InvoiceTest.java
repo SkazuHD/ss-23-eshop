@@ -20,6 +20,5 @@ public class InvoiceTest {
         shop.addProductToCart("Eier", 5, (Customer) c);
 
 
-        System.out.println(shop.checkout((Customer) c));
     }
 }

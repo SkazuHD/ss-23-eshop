@@ -10,6 +10,7 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
+import org.eshop.util.Loger;
 
 import java.util.Collection;
 import java.util.Map;
@@ -33,6 +34,8 @@ public class Shop {
     EmployeeManager employeeManager = new EmployeeManager();
 
     ShopPersistence persistence = new FileManager();
+
+    Loger loger = new Loger();
 
     /**
      * Instantiates a new Shop.
@@ -150,7 +153,9 @@ public class Shop {
         }
     }
 
+
     /**
+     * }
      * Gets cart.
      *
      * @param c the Customer
@@ -166,7 +171,18 @@ public class Shop {
      * @param c the Customer
      * @return the string
      */
-    public String checkout(Customer c) {
+    public void checkout(Customer c) {
+        Map<Products, Integer> cart = c.getCart();
+        for (Products key : cart.keySet()) {
+            productManager.removeProduct(key.getName(), cart.get(key));
+            customerManager.removeProduct(key, cart.get(key), c);
+            Loger.log(key + " " + cart.get(key));
+        }
+
+
+    }
+
+    public String getInvoice(Customer c) {
         Invoice i = customerManager.checkout(c);
         return i.toString();
     }
