@@ -33,6 +33,9 @@ public class Shop {
      */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    /**
+     * The Persistence.
+     */
     ShopPersistence persistence = new FileManager();
 
     /**
@@ -63,6 +66,9 @@ public class Shop {
         }).start();
     }
 
+    /**
+     * Load.
+     */
     public void load() {
         try {
             persistence.openForReading("customers.csv");
@@ -207,6 +213,12 @@ public class Shop {
 
     }
 
+    /**
+     * Gets invoice.
+     *
+     * @param c the c
+     * @return the invoice
+     */
     public String getInvoice(Customer c) {
         Invoice i = customerManager.checkout(c);
         return i.toString();

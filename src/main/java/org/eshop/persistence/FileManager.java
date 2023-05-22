@@ -6,10 +6,22 @@ import org.eshop.entities.Products;
 
 import java.io.*;
 
+/**
+ * The type File manager.
+ */
 public class FileManager implements ShopPersistence {
+    /**
+     * The Reader.
+     */
     BufferedReader reader = null;
+    /**
+     * The Writer.
+     */
     PrintWriter writer = null;
 
+    /**
+     * Instantiates a new File manager.
+     */
     public FileManager() {
     }
 
