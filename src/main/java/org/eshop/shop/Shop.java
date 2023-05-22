@@ -169,7 +169,6 @@ public class Shop {
      * Checkout.
      *
      * @param c the Customer
-     * @return the string
      */
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
