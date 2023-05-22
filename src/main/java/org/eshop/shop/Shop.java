@@ -137,7 +137,7 @@ public class Shop {
      */
 //EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity) {
-
+        productManager.addProduct(name, price, quantity);
     }
 
     /**
@@ -147,10 +147,25 @@ public class Shop {
      * @param quantity the quantity
      */
     public void removeProduct(String name, int quantity) {
+        productManager.removeProduct(name, quantity);
+    }
 
+    /**
+     * Register employee.
+     *
+     * @param username the username
+     * @param persoNr  the Personalnummmer
+     * @param name     the name
+     * @param password the password
+     * @throws CustomerExistsException the customer exists exception
+     */
+    //Employees
+    public void registerEmployee(String username, int persoNr, String name, String password) throws CustomerExistsException {
+        if (!employeeManager.register(username, persoNr, name, password)) {
+            throw new CustomerExistsException(username);
+        }
     }
 }
-//Employees
 
 
 

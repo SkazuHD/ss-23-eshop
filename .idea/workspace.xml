@@ -9,6 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Integrate Invoice">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/ui/Cli.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/ui/Cli.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/util/IoReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/util/IoReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +96,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.eShop [javadoc]">
     <configuration name="eShop [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -244,6 +249,10 @@
       <workItem from="1683748737267" duration="47000" />
       <workItem from="1683749069982" duration="3000" />
       <workItem from="1683749294272" duration="20000" />
+      <workItem from="1683807306119" duration="5365000" />
+      <workItem from="1683889861468" duration="51000" />
+      <workItem from="1684317962971" duration="2963000" />
+      <workItem from="1684751936951" duration="442000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
