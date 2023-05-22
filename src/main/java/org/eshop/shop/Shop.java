@@ -53,14 +53,17 @@ public class Shop {
      */
     public void saveAsync() {
 
-        //Test if file is in use
-
-        File file = new File("products.csv");
-        if (!file.renameTo(file)) {
-            return;
-        }
 
         new Thread(() -> {
+            //Test if file is in use
+            File file = new File("products.csv");
+            while (!file.renameTo(file)) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             try {
                 persistence.openForWriting("products.csv", false);
                 Collection<Products> products = productManager.getProductsSet();
