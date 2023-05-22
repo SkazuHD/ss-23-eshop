@@ -12,6 +12,7 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 import org.eshop.util.Loger;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
@@ -40,12 +41,25 @@ public class Shop {
 
     /**
      * Instantiates a new Shop.
+     * and loads the data from the csv files
      */
     public Shop() {
         load();
     }
 
+    /**
+     * Save async.
+     * Saves products to csv file Async
+     */
     public void saveAsync() {
+
+        //Test if file is in use
+
+        File file = new File("products.csv");
+        if (!file.renameTo(file)) {
+            return;
+        }
+
         new Thread(() -> {
             try {
                 persistence.openForWriting("products.csv", false);
@@ -62,9 +76,11 @@ public class Shop {
 
     /**
      * Load.
+     * Loads the data from the csv files using the persistence Module
      */
     public void load() {
         try {
+
             persistence.openForReading("customers.csv");
             Customer c;
             do {
