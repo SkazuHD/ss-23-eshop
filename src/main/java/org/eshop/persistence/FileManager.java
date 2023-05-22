@@ -18,8 +18,8 @@ public class FileManager implements ShopPersistence {
         return reader != null;
     }
 
-    public boolean openForWriting(String datei) throws IOException {
-        writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, true)));
+    public boolean openForWriting(String datei, boolean append) throws IOException {
+        writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, append)));
         return writer != null;
     }
 
@@ -54,12 +54,21 @@ public class FileManager implements ShopPersistence {
 
     @Override
     public void writeProducts(Products products) {
-
+        writer.print(products.getProductnumber() + ";");
+        writer.print(products.getPrice() + ";");
+        writer.print(products.getName() + ";");
+        writer.print(products.getQuantity() + ";");
+        writer.println();
     }
 
     @Override
-    public Products readProducts() {
-        return null;
+    public Products readProducts() throws IOException {
+        String serial = reader.readLine();
+        if (serial == null) {
+            return null;
+        }
+        String[] parts = serial.split(";");
+        return new Products(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]));
     }
 
     public void close() {

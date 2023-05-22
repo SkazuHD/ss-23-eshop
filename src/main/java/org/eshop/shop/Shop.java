@@ -42,6 +42,27 @@ public class Shop {
      */
     public Shop() {
         load();
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //Saves Data to File in a new Thread every few Seconds
+                try {
+                    persistence.openForWriting("products.csv", false);
+                    Collection<Products> products = productManager.getProductsSet();
+                    for (Products p : products) {
+                        persistence.writeProducts(p);
+                    }
+                    persistence.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         //TODO: REMOVE TEST DATA WHEN PERSISTENCE IS IMPLEMENTED
 
 
@@ -66,6 +87,21 @@ public class Shop {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            persistence.openForReading("products.csv");
+            Products p;
+            do {
+                p = persistence.readProducts();
+                if (p != null) {
+                    productManager.addProduct(p.getName(), p.getPrice(), p.getQuantity());
+                }
+            } while (p != null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
+        }
     }
 
     /**
@@ -83,7 +119,7 @@ public class Shop {
         }
         //Try Saveing to File
         try {
-            persistence.openForWriting("customers.csv");
+            persistence.openForWriting("customers.csv", true);
             Customer c = customerManager.getCustomer(username);
             persistence.writeCustomer(c);
         } catch (Exception e) {

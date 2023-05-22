@@ -1,2 +1,2 @@
-Mon May 22 12:34:35 CEST 2023
-ÃnderungenTest
+Mon May 22 12:57:00 CEST 2023
+Änderungenname: EierProductnumber: 1002 / Price: 2.99 2

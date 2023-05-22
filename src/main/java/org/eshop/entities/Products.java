@@ -29,7 +29,7 @@ public class Products {
         this.quantity = quantity;
 
     }
-
+    
     /**
      * Gets name.
      *

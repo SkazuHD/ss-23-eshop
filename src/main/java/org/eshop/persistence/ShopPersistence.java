@@ -11,7 +11,7 @@ public interface ShopPersistence {
 
     boolean openForReading(String datei) throws FileNotFoundException;
 
-    boolean openForWriting(String datei) throws IOException;
+    boolean openForWriting(String datei, boolean append) throws IOException;
 
     Customer readCustomer() throws IOException;
 
@@ -21,7 +21,7 @@ public interface ShopPersistence {
 
     void writeEmployee(Employee employee);
 
-    Products readProducts();
+    Products readProducts() throws IOException;
 
     void writeProducts(Products products);
 
