@@ -1,9 +1,6 @@
 package org.eshop.shop;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.Invoice;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
+import org.eshop.entities.*;
 import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
@@ -45,7 +42,6 @@ public class Shop {
      */
     public Shop() {
         load();
-        employeeManager.register("admin", 1234, "admin", "admin");
     }
 
     /**
@@ -53,7 +49,6 @@ public class Shop {
      * Saves products to csv file Async
      */
     public void saveAsync() {
-
         // Parallel Process
         new Thread(() -> {
 
@@ -97,6 +92,23 @@ public class Shop {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            persistence.close();
+        }
+        try {
+            persistence.openForReading("employees.csv");
+            Employee e;
+            do {
+                e = persistence.readEmployee();
+                if (e != null) {
+                    employeeManager.register(e.getUsername(), e.getPersoNr(), e.getName(), e.getPassword());
+                }
+            } while (e != null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
         }
         try {
             persistence.openForReading("products.csv");
@@ -280,6 +292,16 @@ public class Shop {
     public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
         if (!employeeManager.register(username, persoNr, name, password)) {
             throw new UserExistsException(username);
+        }
+        //Try Saveing to File
+        try {
+            persistence.openForWriting("employees.csv", true);
+            Employee e = employeeManager.getEmployee(username);
+            persistence.writeEmployee(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
         }
     }
 

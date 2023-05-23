@@ -56,12 +56,21 @@ public class FileManager implements ShopPersistence {
 
     @Override
     public void writeEmployee(Employee employee) {
-
+        writer.print(employee.getName() + ";");
+        writer.print(employee.getPersoNr() + ";");
+        writer.print(employee.getUsername() + ";");
+        writer.print(employee.getPassword() + ";");
+        writer.println();
     }
 
     @Override
-    public Employee readEmployee() {
-        return null;
+    public Employee readEmployee() throws IOException {
+        String serial = reader.readLine();
+        if (serial == null) {
+            return null;
+        }
+        String[] parts = serial.split(";");
+        return new Employee(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3]);
     }
 
     @Override

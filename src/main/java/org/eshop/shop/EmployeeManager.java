@@ -33,4 +33,8 @@ public class EmployeeManager {
         }
 
     }
+
+    public Employee getEmployee(String username) {
+        return employees.get(username);
+    }
 }

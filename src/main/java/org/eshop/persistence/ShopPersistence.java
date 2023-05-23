@@ -51,7 +51,7 @@ public interface ShopPersistence {
      *
      * @return the employee
      */
-    Employee readEmployee();
+    Employee readEmployee() throws IOException;
 
     /**
      * Write employee.
