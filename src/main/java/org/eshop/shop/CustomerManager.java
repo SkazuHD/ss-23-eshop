@@ -48,6 +48,10 @@ public class CustomerManager {
 
     public void loadCustomer(Customer c) {
         customer.put(c.getUsername(), c);
+        //Update ID counter
+        id = Integer.parseInt(c.getID().substring(1)) + 1; //increment it by 1
+
+
     }
 
     /**
