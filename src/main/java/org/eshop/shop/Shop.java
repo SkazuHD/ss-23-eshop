@@ -53,8 +53,9 @@ public class Shop {
      */
     public void saveAsync() {
 
-
+        // Parallel Process
         new Thread(() -> {
+
             //Test if file is in use
             File file = new File("products.csv");
             while (!file.renameTo(file)) {
