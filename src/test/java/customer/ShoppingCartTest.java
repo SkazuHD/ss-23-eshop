@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class ShoppingCartTest {
     Shop shop = new Shop();
-    Customer customer = new Customer("test", "test", "test", "test");
+    Customer customer = new Customer("test", "test", "test", "test", 1111);
 
     @Test
     public void cartTooMuch() {

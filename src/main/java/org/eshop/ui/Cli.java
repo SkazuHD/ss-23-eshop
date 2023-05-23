@@ -120,6 +120,8 @@ public class Cli {
      * Show products.
      */
     protected void showProducts() {
+        System.out.println("ID    Preis      Name            Bestand");
+        System.out.println("----------------------------------------");
         server.getProductSet().forEach(System.out::println);
     }
 

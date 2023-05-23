@@ -18,6 +18,7 @@ public class CustomerManager {
      * The Customers.
      */
     Map<String, Customer> customer = new HashMap<>();
+    int id = 3000;
 
     /**
      * Instantiates a new Customer manager.
@@ -39,10 +40,14 @@ public class CustomerManager {
         if (customer.containsKey(username)) {
             return false;
         } else {
-            Customer c = new Customer(username, password, name, address);
+            Customer c = new Customer(username, password, name, address, "C" + id++);
             customer.put(username, c);
             return true;
         }
+    }
+
+    public void loadCustomer(Customer c) {
+        customer.put(c.getUsername(), c);
     }
 
     /**

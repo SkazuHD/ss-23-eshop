@@ -47,6 +47,7 @@ public class FileManager implements ShopPersistence {
         writer.print(customer.getPassword() + ";");
         writer.print(customer.getName() + ";");
         writer.print(customer.getAddress() + ";");
+        writer.print(customer.getID() + ";");
         writer.println();
     }
 
@@ -57,7 +58,7 @@ public class FileManager implements ShopPersistence {
             return null;
         }
         String[] parts = serial.split(";");
-        return new Customer(parts[0], parts[1], parts[2], parts[3]);
+        return new Customer(parts[0], parts[1], parts[2], parts[3], parts[4]);
     }
 
     @Override

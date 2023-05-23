@@ -86,7 +86,7 @@ public class Shop {
             do {
                 c = persistence.readCustomer();
                 if (c != null) {
-                    customerManager.register(c.getUsername(), c.getPassword(), c.getName(), c.getAddress());
+                    customerManager.loadCustomer(c);
                 }
             } while (c != null);
 
