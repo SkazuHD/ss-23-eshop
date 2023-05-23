@@ -116,7 +116,7 @@ public class Shop {
             do {
                 p = persistence.readProducts();
                 if (p != null) {
-                    productManager.addProduct(p.getName(), p.getPrice(), p.getQuantity());
+                    productManager.loadProduct(p);
                 }
             } while (p != null);
 

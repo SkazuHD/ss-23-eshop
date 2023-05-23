@@ -158,6 +158,7 @@ public class Cli {
     protected void addProduct() {
         String name = reader.readLine("Product Name: ");
         System.out.print("Quantity: ");
+        //TODO check if product already exists
         int quantity = reader.getNumericInput("");
         System.out.print("Preis: ");
         double price = reader.getDoubleInput(" ");

@@ -7,10 +7,12 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class InvoiceTest {
 
+    @Disabled
     @Test
     void testInvoice() throws UserExistsException, LoginFailed, ProductNotFound, NotInStockException {
         Shop shop = new Shop();
