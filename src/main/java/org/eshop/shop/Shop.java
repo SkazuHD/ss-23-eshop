@@ -224,7 +224,7 @@ public class Shop {
      * @return the cart
      */
     public Map<Products, Integer> getCart(Customer c) {
-        return c.getCart();
+        return customerManager.getCart(c);
     }
 
     /**
