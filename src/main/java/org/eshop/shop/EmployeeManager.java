@@ -23,7 +23,14 @@ public class EmployeeManager {
     }
 
     public boolean register(String username, int persoNr, String name, String password) {
-        Employee e = new Employee(username, persoNr, name, password);
-        return employees.add(e);
+
+        if(employees.containsKey(username)){
+            return false;
+        }else{
+            Employee e = new Employee(username, persoNr, name, password);
+            employees.put(username, e);
+            return true;
+        }
+
     }
 }
