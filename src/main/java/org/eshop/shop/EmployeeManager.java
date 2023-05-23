@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class EmployeeManager {
 
-    Map<Employee> employees = new HashMap<>();
+    Map<String, Employee> employees = new HashMap<>();
 
     public User login(String username, String password) throws CustomerLoginFailed {
         User u = employees.get(username);
