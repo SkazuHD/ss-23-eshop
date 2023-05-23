@@ -15,9 +15,9 @@ public class InvoiceTest {
     void testInvoice() throws CustomerExistsException, CustomerLoginFailed, ProductNotFound, NotInStockException {
         Shop shop = new Shop();
         User c = shop.loginUser("test", "test");
-        shop.addProductToCart("Milch", 5, (Customer) c);
-        shop.addProductToCart("Brot", 5, (Customer) c);
-        shop.addProductToCart("Eier", 5, (Customer) c);
+        shop.addProductToCart("test0", 5, (Customer) c);
+        shop.addProductToCart("test1", 5, (Customer) c);
+        shop.addProductToCart("test2", 5, (Customer) c);
 
 
     }
