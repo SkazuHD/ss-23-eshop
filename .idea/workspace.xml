@@ -7,14 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="FIXED NULLPOINTER">
-      <change afterPath="$PROJECT_DIR$/employees.csv" afterDir="false" />
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="Save Employees persistent">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products.csv" beforeDir="false" afterPath="$PROJECT_DIR$/products.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/persistence/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/persistence/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/persistence/ShopPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/persistence/ShopPersistence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/Shop.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -524,7 +522,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683973702756</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Save Employees persistent">
+      <created>1684857476021</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1684857476021</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,7 +550,6 @@
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Project Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Shopping Cart Stuff" />
     <MESSAGE value="Invoice" />
     <MESSAGE value="editor Config" />
     <MESSAGE value="Base JavaDoc Comments" />
@@ -570,7 +574,8 @@
     <MESSAGE value="Reinforce Error Handling for ShoppingCart" />
     <MESSAGE value="FIXED" />
     <MESSAGE value="FIXED NULLPOINTER" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIXED NULLPOINTER" />
+    <MESSAGE value="Save Employees persistent" />
+    <option name="LAST_COMMIT_MESSAGE" value="Save Employees persistent" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

@@ -25,14 +25,20 @@ public class FileManager implements ShopPersistence {
     public FileManager() {
     }
 
-    public boolean openForReading(String datei) throws FileNotFoundException {
-        reader = new BufferedReader(new FileReader(datei));
-        return reader != null;
+    public void openForReading(String file) throws FileNotFoundException {
+        reader = new BufferedReader(new FileReader(file));
     }
 
-    public boolean openForWriting(String datei, boolean append) throws IOException {
+    public void openForWriting(String datei, boolean append) throws IOException {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, append)));
-        return writer != null;
+    }
+
+    protected String readLine() {
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
@@ -45,8 +51,8 @@ public class FileManager implements ShopPersistence {
     }
 
     @Override
-    public Customer readCustomer() throws IOException {
-        String serial = reader.readLine();
+    public Customer readCustomer() {
+        String serial = readLine();
         if (serial == null) {
             return null;
         }
@@ -64,8 +70,8 @@ public class FileManager implements ShopPersistence {
     }
 
     @Override
-    public Employee readEmployee() throws IOException {
-        String serial = reader.readLine();
+    public Employee readEmployee() {
+        String serial = readLine();
         if (serial == null) {
             return null;
         }
@@ -83,8 +89,8 @@ public class FileManager implements ShopPersistence {
     }
 
     @Override
-    public Products readProducts() throws IOException {
-        String serial = reader.readLine();
+    public Products readProducts() {
+        String serial = readLine();
         if (serial == null) {
             return null;
         }
