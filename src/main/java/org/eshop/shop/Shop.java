@@ -4,10 +4,10 @@ import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.exceptions.CustomerExistsException;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
+import org.eshop.exceptions.UserExistsException;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 import org.eshop.util.Loger;
@@ -45,6 +45,7 @@ public class Shop {
      */
     public Shop() {
         load();
+        employeeManager.register("admin", 1234, "admin", "admin");
     }
 
     /**
@@ -121,11 +122,11 @@ public class Shop {
      * @param password the password
      * @param name     the name
      * @param address  the address
-     * @throws CustomerExistsException the customer exists exception
+     * @throws UserExistsException the customer exists exception
      */
-    public void registerUser(String username, String password, String name, String address) throws CustomerExistsException {
+    public void registerUser(String username, String password, String name, String address) throws UserExistsException {
         if (!customerManager.register(username, password, name, address)) {
-            throw new CustomerExistsException(username);
+            throw new UserExistsException(username);
         }
         //Try Saveing to File
         try {
@@ -146,12 +147,15 @@ public class Shop {
      * @param username the username
      * @param password the password
      * @return the customer
-     * @throws CustomerLoginFailed the customer login failed
+     * @throws LoginFailed the customer login failed
      */
-    public User loginUser(String username, String password) throws CustomerLoginFailed {
+    public User loginUser(String username, String password) throws LoginFailed {
         return customerManager.login(username, password);
     }
 
+    public User loginEmployee(String username, String password) throws LoginFailed {
+        return employeeManager.login(username, password);
+    }
 
     /**
      * Gets product set.
@@ -270,12 +274,12 @@ public class Shop {
      * @param persoNr  the Personalnummmer
      * @param name     the name
      * @param password the password
-     * @throws CustomerExistsException the customer exists exception
+     * @throws UserExistsException the customer exists exception
      */
     //Employees
-    public void registerEmployee(String username, int persoNr, String name, String password) throws CustomerExistsException {
+    public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
         if (!employeeManager.register(username, persoNr, name, password)) {
-            throw new CustomerExistsException(username);
+            throw new UserExistsException(username);
         }
     }
 

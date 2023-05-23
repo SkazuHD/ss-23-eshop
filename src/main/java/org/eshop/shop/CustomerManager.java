@@ -4,7 +4,7 @@ import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 
 import java.util.HashMap;
@@ -52,9 +52,9 @@ public class CustomerManager {
      * @param username the username
      * @param password the password
      * @return User customer
-     * @throws CustomerLoginFailed the customer login failed
+     * @throws LoginFailed the customer login failed
      */
-    public User login(String username, String password) throws CustomerLoginFailed {
+    public User login(String username, String password) throws LoginFailed {
         //Find User in Set
         User u = customer.get(username);
         if (u != null) {
@@ -63,7 +63,7 @@ public class CustomerManager {
                 return u;
             }
         }
-        throw new CustomerLoginFailed(username);
+        throw new LoginFailed(username);
     }
 
     /**

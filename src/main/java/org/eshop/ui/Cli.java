@@ -3,10 +3,10 @@ package org.eshop.ui;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.exceptions.CustomerExistsException;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
+import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
@@ -66,7 +66,7 @@ public class Cli {
 
         try {
             server.registerUser(username, password, name, address);
-        } catch (CustomerExistsException e) {
+        } catch (UserExistsException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
@@ -87,7 +87,7 @@ public class Cli {
 
         try {
             server.registerEmployee(username, persoNr, name, password);
-        } catch (CustomerExistsException e) {
+        } catch (UserExistsException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
@@ -103,10 +103,16 @@ public class Cli {
         String password = reader.readLine("Enter Password:");
         try {
             loggedInUser = server.loginUser(username, password);
-            loggedIn = true;
-        } catch (CustomerLoginFailed e) {
-            System.err.println(e.getMessage());
-            System.err.flush();
+            loggedIn = loggedInUser.isLoggedIn();
+        } catch (LoginFailed e) {
+            try {
+                loggedInUser = server.loginEmployee(username, password);
+                loggedIn = loggedInUser.isLoggedIn();
+            } catch (LoginFailed loginFailed) {
+                System.err.println(loginFailed.getMessage());
+                System.err.flush();
+            }
+
         }
     }
 
