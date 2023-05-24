@@ -20,3 +20,7 @@ Wed May 24 14:10:53 CEST 2023 | Änderungen: 1234|admin|Removed:Kuchen|10
 144|2023-05-24 17:07:09|User:ID:1234 Username:admin admin|Changes: Added:  Eis|3.69|50
 144|2023-05-24 17:07:31|User:ID:C3000 Username:test test test|Changes: 1000  3,69   Eis                    91 5
 144|2023-05-24 17:10:57|Changes: Test
+144|2023-05-24 17:15:13|User:ID:C3000 Username:test test test|Changes: Milch|1.99|40
+144|2023-05-24 17:15:13|User:ID:C3000 Username:test test test|Changes: Eis|3.69|5
+144|2023-05-24 17:15:47|User:ID:1234 Username:admin admin|Changes: Added:  Eis|3.69|25
+144|2023-05-24 17:15:54|User:ID:1234 Username:admin admin|Changes: Removed: Milch|50

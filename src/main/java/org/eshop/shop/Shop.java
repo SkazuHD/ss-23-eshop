@@ -247,7 +247,7 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            Logger.log(c, key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
+            Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
         saveAsync();
