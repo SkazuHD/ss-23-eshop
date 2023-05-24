@@ -269,9 +269,11 @@ public class Shop {
      * @param quantity the quantity
      */
 //EMPLOYEE ONLY
-    public void addProduct(String name, double price, int quantity) {
+    public void addProduct(String name, double price, int quantity, Employee e) {
         productManager.addProduct(name, price, quantity);
         saveAsync();
+
+        Loger.log(e + "|" + "Added: " + " " + name + "|" + price + "|" + quantity);
     }
 
     /**
@@ -280,9 +282,12 @@ public class Shop {
      * @param name     the name
      * @param quantity the quantity
      */
-    public void removeProduct(String name, int quantity) {
+    public void removeProduct(String name, int quantity, User user) {
         productManager.removeProduct(name, quantity);
         saveAsync();
+        if (user instanceof Employee) {
+            Loger.log(((Employee) user).getPersoNr() + "|" + user.getUsername() + "|" + "Removed: " + name + "|" + quantity);
+        }
     }
 
     /**
