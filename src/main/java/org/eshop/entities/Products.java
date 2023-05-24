@@ -104,6 +104,6 @@ public class Products {
     }
 
     public String toString() {
-        return (name + " | " + Productnumber + " | " + Price + " EURO");
+        return String.format("%-5d %-6.2f %-22s %d", this.getProductnumber(), this.getPrice(), this.getName(), this.getQuantity());
     }
 }

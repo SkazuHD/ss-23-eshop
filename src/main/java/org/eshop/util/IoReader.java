@@ -59,4 +59,18 @@ public class IoReader {
         } while (input == 0);
         return input;
     }
+
+    public double getDoubleInput(String prompt) {
+        System.out.print(prompt);
+        double d = 0;
+        do {
+            try {
+                d = Double.parseDouble(reader.readLine());
+            } catch (Exception e) {
+                System.err.println("Error reading input:" + e.getMessage());
+                getDoubleInput(prompt);
+            }
+        } while (d == 0);
+        return d;
+    }
 }

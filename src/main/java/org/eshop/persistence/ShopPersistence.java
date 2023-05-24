@@ -7,23 +7,72 @@ import org.eshop.entities.Products;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * The interface Shop persistence.
+ */
 public interface ShopPersistence {
 
-    boolean openForReading(String datei) throws FileNotFoundException;
+    /**
+     * Open for reading boolean.
+     *
+     * @param file the file
+     * @throws FileNotFoundException the file not found exception
+     */
+    void openForReading(String file) throws FileNotFoundException;
 
-    boolean openForWriting(String datei) throws IOException;
+    /**
+     * Open for writing boolean.
+     *
+     * @param file   the file
+     * @param append if true content will be appended to the file, otherwise the file will be overwritten
+     * @throws IOException the io exception
+     */
+    void openForWriting(String file, boolean append) throws IOException;
 
-    Customer readCustomer() throws IOException;
+    /**
+     * Read customer customer.
+     *
+     * @return the customer
+     */
+    Customer readCustomer();
 
+    /**
+     * Write customer.
+     *
+     * @param customer the customer
+     */
     void writeCustomer(Customer customer);
 
+    /**
+     * Read employee employee.
+     *
+     * @return the employee
+     */
     Employee readEmployee();
 
+    /**
+     * Write employee.
+     *
+     * @param employee the employee
+     */
     void writeEmployee(Employee employee);
 
+    /**
+     * Read products products.
+     *
+     * @return the products
+     */
     Products readProducts();
 
+    /**
+     * Write products.
+     *
+     * @param products the products
+     */
     void writeProducts(Products products);
 
+    /**
+     * Close.
+     */
     void close();
 }
