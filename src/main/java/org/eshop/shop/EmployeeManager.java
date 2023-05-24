@@ -9,28 +9,28 @@ import java.util.Map;
 
 public class EmployeeManager {
 
-    Map<String, Employee> employee = new HashMap<>();
+    Map<String, Employee> employees = new HashMap<>();
 
     public User login(String username, String password) throws CustomerLoginFailed {
-        for (Employee e : employee) {
-            // check if usernam & password match
-            if (e.getUsername().equals(username)) {
-                if (e.getPassword().equals(password)) {
-                    e.login();
-                    return e;
-                }
+        User u = employees.get(username);
+        if (u != null) {
+            if (u.getPassword().equals(password)) {
+                u.login();
+                return u;
             }
         }
         throw new CustomerLoginFailed(username);
     }
 
     public boolean register(String username, int persoNr, String name, String password) {
-        if (employee.containsKey(username)) {
+
+        if(employees.containsKey(username)){
             return false;
-        } else {
+        }else{
             Employee e = new Employee(username, persoNr, name, password);
-            employee.put(username, e);
+            employees.put(username, e);
             return true;
         }
+
     }
 }

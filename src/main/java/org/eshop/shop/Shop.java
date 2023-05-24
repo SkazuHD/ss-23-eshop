@@ -12,6 +12,7 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 import org.eshop.util.Loger;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
@@ -40,37 +41,49 @@ public class Shop {
 
     /**
      * Instantiates a new Shop.
+     * and loads the data from the csv files
      */
     public Shop() {
         load();
+    }
+
+    /**
+     * Save async.
+     * Saves products to csv file Async
+     */
+    public void saveAsync() {
+
 
         new Thread(() -> {
-            while (true) {
+            //Test if file is in use
+            File file = new File("products.csv");
+            while (!file.renameTo(file)) {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //Saves Data to File in a new Thread every few Seconds
-                try {
-                    persistence.openForWriting("products.csv", false);
-                    Collection<Products> products = productManager.getProductsSet();
-                    for (Products p : products) {
-                        persistence.writeProducts(p);
-                    }
-                    persistence.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            }
+            try {
+                persistence.openForWriting("products.csv", false);
+                Collection<Products> products = productManager.getProductsSet();
+                for (Products p : products) {
+                    persistence.writeProducts(p);
                 }
+                persistence.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
 
     /**
      * Load.
+     * Loads the data from the csv files using the persistence Module
      */
     public void load() {
         try {
+
             persistence.openForReading("customers.csv");
             Customer c;
             do {
@@ -208,6 +221,7 @@ public class Shop {
             Loger.log(key + " " + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
+        saveAsync();
         cart.clear();
 
 
@@ -234,6 +248,7 @@ public class Shop {
 //EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity) {
         productManager.addProduct(name, price, quantity);
+        saveAsync();
     }
 
     /**
@@ -244,6 +259,7 @@ public class Shop {
      */
     public void removeProduct(String name, int quantity) {
         productManager.removeProduct(name, quantity);
+        saveAsync();
     }
 
     /**
