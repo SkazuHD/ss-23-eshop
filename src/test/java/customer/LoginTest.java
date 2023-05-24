@@ -1,7 +1,7 @@
 package customer;
 
-import org.eshop.exceptions.CustomerExistsException;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.LoginFailed;
+import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,20 +10,20 @@ public class LoginTest {
     Shop shop = new Shop();
 
     @Test
-    void loginUser() throws CustomerExistsException, CustomerLoginFailed {
+    void loginUser() throws UserExistsException, LoginFailed {
         shop.loginUser("test", "test");
     }
 
     @Test
     void loginWithNonExistingUser() {
-        Assertions.assertThrows(CustomerLoginFailed.class, () -> {
+        Assertions.assertThrows(LoginFailed.class, () -> {
             shop.loginUser("doesNotExistLoL", "test");
         });
     }
 
     @Test
     void loginWithWrongPassword() {
-        Assertions.assertThrows(CustomerLoginFailed.class, () -> {
+        Assertions.assertThrows(LoginFailed.class, () -> {
             shop.loginUser("test", "wrongPassword");
         });
     }

@@ -1,13 +1,10 @@
 package org.eshop.shop;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.Invoice;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
-import org.eshop.exceptions.CustomerExistsException;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.entities.*;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
+import org.eshop.exceptions.UserExistsException;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 import org.eshop.util.Loger;
@@ -52,9 +49,9 @@ public class Shop {
      * Saves products to csv file Async
      */
     public void saveAsync() {
-
-
+        // Parallel Process
         new Thread(() -> {
+
             //Test if file is in use
             File file = new File("products.csv");
             while (!file.renameTo(file)) {
@@ -89,12 +86,29 @@ public class Shop {
             do {
                 c = persistence.readCustomer();
                 if (c != null) {
-                    customerManager.register(c.getUsername(), c.getPassword(), c.getName(), c.getAddress());
+                    customerManager.loadCustomer(c);
                 }
             } while (c != null);
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            persistence.close();
+        }
+        try {
+            persistence.openForReading("employees.csv");
+            Employee e;
+            do {
+                e = persistence.readEmployee();
+                if (e != null) {
+                    employeeManager.register(e.getUsername(), e.getPersoNr(), e.getName(), e.getPassword());
+                }
+            } while (e != null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
         }
         try {
             persistence.openForReading("products.csv");
@@ -102,7 +116,7 @@ public class Shop {
             do {
                 p = persistence.readProducts();
                 if (p != null) {
-                    productManager.addProduct(p.getName(), p.getPrice(), p.getQuantity());
+                    productManager.loadProduct(p);
                 }
             } while (p != null);
 
@@ -120,11 +134,11 @@ public class Shop {
      * @param password the password
      * @param name     the name
      * @param address  the address
-     * @throws CustomerExistsException the customer exists exception
+     * @throws UserExistsException the customer exists exception
      */
-    public void registerUser(String username, String password, String name, String address) throws CustomerExistsException {
+    public void registerUser(String username, String password, String name, String address) throws UserExistsException {
         if (!customerManager.register(username, password, name, address)) {
-            throw new CustomerExistsException(username);
+            throw new UserExistsException(username);
         }
         //Try Saveing to File
         try {
@@ -145,12 +159,20 @@ public class Shop {
      * @param username the username
      * @param password the password
      * @return the customer
-     * @throws CustomerLoginFailed the customer login failed
+     * @throws LoginFailed the customer login failed
      */
-    public User loginUser(String username, String password) throws CustomerLoginFailed {
+    public User loginUser(String username, String password) throws LoginFailed {
         return customerManager.login(username, password);
     }
 
+    public User loginEmployee(String username, String password) throws LoginFailed {
+        return employeeManager.login(username, password);
+    }
+
+    public boolean logOutUser(User u) {
+        u.logout();
+        return u.isLoggedIn();
+    }
 
     /**
      * Gets product set.
@@ -207,7 +229,7 @@ public class Shop {
      * @return the cart
      */
     public Map<Products, Integer> getCart(Customer c) {
-        return c.getCart();
+        return customerManager.getCart(c);
     }
 
     /**
@@ -269,12 +291,22 @@ public class Shop {
      * @param persoNr  the Personalnummmer
      * @param name     the name
      * @param password the password
-     * @throws CustomerExistsException the customer exists exception
+     * @throws UserExistsException the customer exists exception
      */
     //Employees
-    public void registerEmployee(String username, int persoNr, String name, String password) throws CustomerExistsException {
+    public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
         if (!employeeManager.register(username, persoNr, name, password)) {
-            throw new CustomerExistsException(username);
+            throw new UserExistsException(username);
+        }
+        //Try Saveing to File
+        try {
+            persistence.openForWriting("employees.csv", true);
+            Employee e = employeeManager.getEmployee(username);
+            persistence.writeEmployee(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            persistence.close();
         }
     }
 

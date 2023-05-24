@@ -3,10 +3,10 @@ package org.eshop.ui;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.exceptions.CustomerExistsException;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.ProductNotFound;
+import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
@@ -66,7 +66,7 @@ public class Cli {
 
         try {
             server.registerUser(username, password, name, address);
-        } catch (CustomerExistsException e) {
+        } catch (UserExistsException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
@@ -87,7 +87,7 @@ public class Cli {
 
         try {
             server.registerEmployee(username, persoNr, name, password);
-        } catch (CustomerExistsException e) {
+        } catch (UserExistsException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
@@ -103,10 +103,16 @@ public class Cli {
         String password = reader.readLine("Enter Password:");
         try {
             loggedInUser = server.loginUser(username, password);
-            loggedIn = true;
-        } catch (CustomerLoginFailed e) {
-            System.err.println(e.getMessage());
-            System.err.flush();
+            loggedIn = loggedInUser.isLoggedIn();
+        } catch (LoginFailed e) {
+            try {
+                loggedInUser = server.loginEmployee(username, password);
+                loggedIn = loggedInUser.isLoggedIn();
+            } catch (LoginFailed loginFailed) {
+                System.err.println(loginFailed.getMessage());
+                System.err.flush();
+            }
+
         }
     }
 
@@ -114,6 +120,8 @@ public class Cli {
      * Show products.
      */
     protected void showProducts() {
+        System.out.println("ID    Preis      Name            Bestand");
+        System.out.println("----------------------------------------");
         server.getProductSet().forEach(System.out::println);
     }
 
@@ -121,7 +129,7 @@ public class Cli {
      * Buy products.
      */
     protected void buyProducts() {
-        String name = reader.readLine("Prouct Name: ");
+        String name = reader.readLine("Product Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
         try {
@@ -148,11 +156,9 @@ public class Cli {
      * add new product
      */
     protected void addProduct() {
-        String name = reader.readLine("Product Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
-        System.out.print("Preis: ");
-        double price = reader.getDoubleInput(" ");
+        String name = reader.readLine("Product Name:");
+        int quantity = reader.getNumericInput("Quantity:");
+        double price = server.getProduct(name) == null ? reader.getDoubleInput("Price:") : server.getProduct(name).getPrice();
         server.addProduct(name, price, quantity);
     }
 
@@ -228,10 +234,8 @@ public class Cli {
                 showCart();
                 shoppingCartMenu();
             }
-
-
             case 4 -> {
-                loggedIn = false;
+                loggedIn = server.logOutUser(loggedInUser);
                 loggedInUser = null;
                 startMenu();
             }
@@ -249,8 +253,8 @@ public class Cli {
      * Employee menu.
      */
     protected void employeeMenu() {
-        //TODO: Implement Employee Menu
         System.out.println("EMPLOYEE MENU");
+        System.out.println("-------------");
         System.out.println("1. Register new Employee");
         System.out.println("2. View Products");
         System.out.println("3. Add Product");
@@ -264,8 +268,7 @@ public class Cli {
             case 3 -> addProduct();
             case 4 -> deleteProduct();
             case 5 -> {
-                loggedIn = false;
-                //TODO USE GENERIC USER CLASS
+                loggedIn = server.logOutUser(loggedInUser);
                 loggedInUser = null;
                 startMenu();
             }
