@@ -60,6 +60,12 @@ public class IoReader {
         return input;
     }
 
+    /**
+     * Gets double input.
+     *
+     * @param prompt the prompt
+     * @return the double input
+     */
     public double getDoubleInput(String prompt) {
         System.out.print(prompt);
         double d = 0;
