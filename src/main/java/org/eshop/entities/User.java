@@ -32,6 +32,11 @@ public abstract class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "ID:" + getID() + " Username:" + getUsername();
+    }
+
     /**
      * Gets username.
      *

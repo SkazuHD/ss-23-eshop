@@ -25,7 +25,7 @@ public class Employee extends User {
 
     @Override
     public String toString() {
-        return getID() + " " + getName();
+        return super.toString() + " " + getName();
     }
 
     /**
@@ -50,6 +50,6 @@ public class Employee extends User {
      *
      * @return the perso nr
      */
-    
+
 
 }

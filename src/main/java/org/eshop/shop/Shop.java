@@ -7,7 +7,7 @@ import org.eshop.exceptions.ProductNotFound;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
-import org.eshop.util.Loger;
+import org.eshop.util.Logger;
 
 import java.io.File;
 import java.util.Collection;
@@ -247,7 +247,7 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            Loger.log(c.getName() + key + " " + cart.get(key));
+            Logger.log(c, key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
         saveAsync();
@@ -280,7 +280,7 @@ public class Shop {
         productManager.addProduct(name, price, quantity);
         saveAsync();
 
-        Loger.log(e + "|" + "Added: " + " " + name + "|" + price + "|" + quantity);
+        Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
     }
 
     /**
@@ -294,7 +294,7 @@ public class Shop {
         productManager.removeProduct(name, quantity);
         saveAsync();
         if (user instanceof Employee) {
-            Loger.log(user.getID() + "|" + user.getUsername() + "|" + "Removed: " + name + "|" + quantity);
+            Logger.log(user, "Removed: " + name + "|" + quantity);
         }
     }
 

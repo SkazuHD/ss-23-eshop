@@ -36,7 +36,7 @@ public class Customer extends User {
      */
     @Override
     public String toString() {
-        return getUsername() + " " + getName() + " " + getAddress();
+        return super.toString() + " " + getName() + " " + getAddress();
     }
 
 
