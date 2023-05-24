@@ -65,6 +65,10 @@ public class ProductManager {
 
     }
 
+    public void loadProduct(Products p) {
+        products.put(p.getName(), p);
+    }
+
     /**
      * Remove product.
      *

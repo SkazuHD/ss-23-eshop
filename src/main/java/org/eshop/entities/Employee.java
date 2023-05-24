@@ -3,8 +3,6 @@ package org.eshop.entities;
 public class Employee extends User {
     String name;
     int persoNr;
-    String username;
-    String password;
 
     public Employee(String name, int persoNr, String username, String password) {
         super(username, password);

@@ -20,10 +20,11 @@ public class Customer extends User {
      * @param name     the name
      * @param address  the address
      */
-    public Customer(String username, String password, String name, String address) {
+    public Customer(String username, String password, String name, String address, String id) {
         super(username, password);
         this.name = name;
         this.address = address;
+        this.setID(id);
     }
 
 

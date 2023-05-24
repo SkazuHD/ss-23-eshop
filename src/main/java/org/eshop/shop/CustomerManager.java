@@ -4,7 +4,7 @@ import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.exceptions.CustomerLoginFailed;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 
 import java.util.HashMap;
@@ -18,6 +18,7 @@ public class CustomerManager {
      * The Customers.
      */
     Map<String, Customer> customer = new HashMap<>();
+    int id = 3000;
 
     /**
      * Instantiates a new Customer manager.
@@ -39,10 +40,18 @@ public class CustomerManager {
         if (customer.containsKey(username)) {
             return false;
         } else {
-            Customer c = new Customer(username, password, name, address);
+            Customer c = new Customer(username, password, name, address, "C" + id++);
             customer.put(username, c);
             return true;
         }
+    }
+
+    public void loadCustomer(Customer c) {
+        customer.put(c.getUsername(), c);
+        //Update ID counter
+        id = Integer.parseInt(c.getID().substring(1)) + 1; //increment it by 1
+
+
     }
 
     /**
@@ -52,9 +61,9 @@ public class CustomerManager {
      * @param username the username
      * @param password the password
      * @return User customer
-     * @throws CustomerLoginFailed the customer login failed
+     * @throws LoginFailed the customer login failed
      */
-    public User login(String username, String password) throws CustomerLoginFailed {
+    public User login(String username, String password) throws LoginFailed {
         //Find User in Set
         User u = customer.get(username);
         if (u != null) {
@@ -63,7 +72,7 @@ public class CustomerManager {
                 return u;
             }
         }
-        throw new CustomerLoginFailed(username);
+        throw new LoginFailed(username);
     }
 
     /**

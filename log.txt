@@ -1,2 +1,2 @@
-Mon May 22 20:23:21 CEST 2023
-Ã„nderungenTest
+Wed May 24 11:59:29 CEST 2023
+Änderungen1000  4,99   testProd               1 1

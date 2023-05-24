@@ -25,14 +25,20 @@ public class FileManager implements ShopPersistence {
     public FileManager() {
     }
 
-    public boolean openForReading(String datei) throws FileNotFoundException {
-        reader = new BufferedReader(new FileReader(datei));
-        return reader != null;
+    public void openForReading(String file) throws FileNotFoundException {
+        reader = new BufferedReader(new FileReader(file));
     }
 
-    public boolean openForWriting(String datei, boolean append) throws IOException {
+    public void openForWriting(String datei, boolean append) throws IOException {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, append)));
-        return writer != null;
+    }
+
+    protected String readLine() {
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
@@ -41,27 +47,37 @@ public class FileManager implements ShopPersistence {
         writer.print(customer.getPassword() + ";");
         writer.print(customer.getName() + ";");
         writer.print(customer.getAddress() + ";");
+        writer.print(customer.getID() + ";");
         writer.println();
     }
 
     @Override
-    public Customer readCustomer() throws IOException {
-        String serial = reader.readLine();
+    public Customer readCustomer() {
+        String serial = readLine();
         if (serial == null) {
             return null;
         }
         String[] parts = serial.split(";");
-        return new Customer(parts[0], parts[1], parts[2], parts[3]);
+        return new Customer(parts[0], parts[1], parts[2], parts[3], parts[4]);
     }
 
     @Override
     public void writeEmployee(Employee employee) {
-
+        writer.print(employee.getName() + ";");
+        writer.print(employee.getPersoNr() + ";");
+        writer.print(employee.getUsername() + ";");
+        writer.print(employee.getPassword() + ";");
+        writer.println();
     }
 
     @Override
     public Employee readEmployee() {
-        return null;
+        String serial = readLine();
+        if (serial == null) {
+            return null;
+        }
+        String[] parts = serial.split(";");
+        return new Employee(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3]);
     }
 
     @Override
@@ -74,8 +90,8 @@ public class FileManager implements ShopPersistence {
     }
 
     @Override
-    public Products readProducts() throws IOException {
-        String serial = reader.readLine();
+    public Products readProducts() {
+        String serial = readLine();
         if (serial == null) {
             return null;
         }
