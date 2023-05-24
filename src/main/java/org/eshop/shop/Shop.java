@@ -196,6 +196,8 @@ public class Shop {
 //EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity) {
         productManager.addProduct(name, price, quantity);
+
+
     }
 
     /**
