@@ -7,10 +7,24 @@ import org.eshop.exceptions.LoginFailed;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Employee manager.
+ */
 public class EmployeeManager {
 
+    /**
+     * The Employees.
+     */
     Map<String, Employee> employees = new HashMap<>();
 
+    /**
+     * Login user.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the user
+     * @throws LoginFailed the login failed
+     */
     public User login(String username, String password) throws LoginFailed {
         User u = employees.get(username);
         if (u != null) {
@@ -22,6 +36,15 @@ public class EmployeeManager {
         throw new LoginFailed(username);
     }
 
+    /**
+     * Register boolean.
+     *
+     * @param username the username
+     * @param persoNr  the perso nr
+     * @param name     the name
+     * @param password the password
+     * @return the boolean
+     */
     public boolean register(String username, int persoNr, String name, String password) {
 
         if (employees.containsKey(username)) {
@@ -34,6 +57,12 @@ public class EmployeeManager {
 
     }
 
+    /**
+     * Gets employee.
+     *
+     * @param username the username
+     * @return the employee
+     */
     public Employee getEmployee(String username) {
         return employees.get(username);
     }

@@ -170,6 +170,12 @@ public class Shop {
     }
 
 
+    /**
+     * Log out user boolean.
+     *
+     * @param u the u
+     * @return the boolean
+     */
     public boolean logOutUser(User u) {
         u.logout();
         return u.isLoggedIn();
@@ -267,6 +273,7 @@ public class Shop {
      * @param name     the name
      * @param price    the price
      * @param quantity the quantity
+     * @param e        the e
      */
 //EMPLOYEE ONLY
     public void addProduct(String name, double price, int quantity, Employee e) {
@@ -281,6 +288,7 @@ public class Shop {
      *
      * @param name     the name
      * @param quantity the quantity
+     * @param user     the user
      */
     public void removeProduct(String name, int quantity, User user) {
         productManager.removeProduct(name, quantity);
@@ -299,7 +307,7 @@ public class Shop {
      * @param password the password
      * @throws UserExistsException the customer exists exception
      */
-    //Employees
+//Employees
     public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
         if (!employeeManager.register(username, persoNr, name, password)) {
             throw new UserExistsException(username);

@@ -33,6 +33,11 @@ public class FileManager implements ShopPersistence {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, append)));
     }
 
+    /**
+     * Read line string.
+     *
+     * @return the string
+     */
     protected String readLine() {
         try {
             return reader.readLine();
