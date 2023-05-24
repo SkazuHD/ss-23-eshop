@@ -12,22 +12,6 @@ public class Employee extends User {
         this.persoNr = persoNr;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPersoNr() {
-        return persoNr;
-    }
-
-    public void setPersoNr(int persoNr) {
-        this.persoNr = persoNr;
-    }
-
     public String getUsername() {
         return username;
     }

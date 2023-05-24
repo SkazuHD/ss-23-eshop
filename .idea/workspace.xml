@@ -7,8 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="FIXED NULLPOINTER">
+    <list default="true" id="42df8955-b781-453a-89d8-8544d9d48323" name="Changes" comment="added employee &amp; employee manager">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/entities/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/eshop/shop/EmployeeManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,10 +73,29 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="products-cli" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="SkazuHD" />
+        <option name="repository" value="ss-23-eshop" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="1d71aa3c-1fe4-4049-a0d6-e6e6784445f2" />
+        <option name="url" value="https://github.com/SkazuHD/ss-23-eshop.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -251,7 +272,8 @@
       <workItem from="1683968204935" duration="5561000" />
       <workItem from="1683973771471" duration="88000" />
       <workItem from="1683973868303" duration="292000" />
-      <workItem from="1684765344680" duration="46000" />
+      <workItem from="1684765344680" duration="1364000" />
+      <workItem from="1684920502195" duration="615000" />
     </task>
     <task id="LOCAL-00001" summary="Register Flow">
       <created>1682613841077</created>
@@ -505,7 +527,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683973702756</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="added employee &amp; employee manager">
+      <created>1684766131866</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1684766131866</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -526,7 +555,6 @@
     <option name="CODE_SMELLS_PROFILE" value="Project Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Project Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Shopping Cart Stuff" />
     <MESSAGE value="Invoice" />
     <MESSAGE value="editor Config" />
     <MESSAGE value="Base JavaDoc Comments" />
@@ -551,7 +579,8 @@
     <MESSAGE value="Reinforce Error Handling for ShoppingCart" />
     <MESSAGE value="FIXED" />
     <MESSAGE value="FIXED NULLPOINTER" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIXED NULLPOINTER" />
+    <MESSAGE value="added employee &amp; employee manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="added employee &amp; employee manager" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
