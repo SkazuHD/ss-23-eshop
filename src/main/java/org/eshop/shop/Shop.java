@@ -162,12 +162,13 @@ public class Shop {
      * @throws LoginFailed the customer login failed
      */
     public User loginUser(String username, String password) throws LoginFailed {
-        return customerManager.login(username, password);
+        try {
+            return customerManager.login(username, password);
+        } catch (LoginFailed e) {
+            return employeeManager.login(username, password);
+        }
     }
 
-    public User loginEmployee(String username, String password) throws LoginFailed {
-        return employeeManager.login(username, password);
-    }
 
     public boolean logOutUser(User u) {
         u.logout();

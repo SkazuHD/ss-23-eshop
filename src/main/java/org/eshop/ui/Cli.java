@@ -102,18 +102,15 @@ public class Cli {
         String username = reader.readLine("Enter Username:");
         //GET PWD
         String password = reader.readLine("Enter Password:");
+        // Login Customer First else try Employee login
+        // throws LoginFailed if no user is found with the given username
+        // Potential ERROR: if a customer and an employee have the same username -> Customer is logged in
         try {
             loggedInUser = server.loginUser(username, password);
             loggedIn = loggedInUser.isLoggedIn();
         } catch (LoginFailed e) {
-            try {
-                loggedInUser = server.loginEmployee(username, password);
-                loggedIn = loggedInUser.isLoggedIn();
-            } catch (LoginFailed loginFailed) {
-                System.err.println(loginFailed.getMessage());
-                System.err.flush();
-            }
-
+            System.err.println(e.getMessage());
+            System.err.flush();
         }
     }
 
