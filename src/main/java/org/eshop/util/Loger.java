@@ -18,10 +18,10 @@ public class Loger {
      */
     public static void log(String logText) {
         try (PrintWriter pw = new PrintWriter(new FileWriter("log.txt", true))) {
-            pw.println(getDayOfYear() + "|" + timestamp() + " | " + "Änderungen:" + " " + logText);
-        } catch (IOException e) {
-        }
+            pw.println(getDayOfYear() + "|" + timestamp() + "|" + "Changes: " + logText);
+        } catch (IOException ignored) {
 
+        }
     }
 
     public static String timestamp() {

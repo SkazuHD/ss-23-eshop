@@ -101,7 +101,7 @@ public class Shop {
             do {
                 e = persistence.readEmployee();
                 if (e != null) {
-                    employeeManager.register(e.getUsername(), e.getPersoNr(), e.getName(), e.getPassword());
+                    employeeManager.register(e.getUsername(), Integer.parseInt(e.getID()), e.getName(), e.getPassword());
                 }
             } while (e != null);
 
@@ -247,7 +247,7 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            Loger.log(key + " " + cart.get(key));
+            Loger.log(c.getName() + key + " " + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
         saveAsync();
@@ -294,7 +294,7 @@ public class Shop {
         productManager.removeProduct(name, quantity);
         saveAsync();
         if (user instanceof Employee) {
-            Loger.log(((Employee) user).getPersoNr() + "|" + user.getUsername() + "|" + "Removed: " + name + "|" + quantity);
+            Loger.log(user.getID() + "|" + user.getUsername() + "|" + "Removed: " + name + "|" + quantity);
         }
     }
 
