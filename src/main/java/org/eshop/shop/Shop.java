@@ -169,6 +169,11 @@ public class Shop {
         return employeeManager.login(username, password);
     }
 
+    public boolean logOutUser(User u) {
+        u.logout();
+        return u.isLoggedIn();
+    }
+
     /**
      * Gets product set.
      *

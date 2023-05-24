@@ -1,2 +1,2 @@
-Wed May 24 00:29:42 CEST 2023
-Änderungen1002  1,99   Milch                  70 5
+Wed May 24 11:59:29 CEST 2023
+Änderungen1000  4,99   testProd               1 1

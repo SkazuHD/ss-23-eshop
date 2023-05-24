@@ -129,7 +129,7 @@ public class Cli {
      * Buy products.
      */
     protected void buyProducts() {
-        String name = reader.readLine("Prouct Name: ");
+        String name = reader.readLine("Product Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
         try {
@@ -156,12 +156,9 @@ public class Cli {
      * add new product
      */
     protected void addProduct() {
-        String name = reader.readLine("Product Name: ");
-        System.out.print("Quantity: ");
-        //TODO check if product already exists
-        int quantity = reader.getNumericInput("");
-        System.out.print("Preis: ");
-        double price = reader.getDoubleInput(" ");
+        String name = reader.readLine("Product Name:");
+        int quantity = reader.getNumericInput("Quantity:");
+        double price = server.getProduct(name) == null ? reader.getDoubleInput("Price:") : server.getProduct(name).getPrice();
         server.addProduct(name, price, quantity);
     }
 
@@ -237,10 +234,8 @@ public class Cli {
                 showCart();
                 shoppingCartMenu();
             }
-
-
             case 4 -> {
-                loggedIn = false;
+                loggedIn = server.logOutUser(loggedInUser);
                 loggedInUser = null;
                 startMenu();
             }
@@ -258,8 +253,8 @@ public class Cli {
      * Employee menu.
      */
     protected void employeeMenu() {
-        //TODO: Implement Employee Menu
         System.out.println("EMPLOYEE MENU");
+        System.out.println("-------------");
         System.out.println("1. Register new Employee");
         System.out.println("2. View Products");
         System.out.println("3. Add Product");
@@ -273,8 +268,7 @@ public class Cli {
             case 3 -> addProduct();
             case 4 -> deleteProduct();
             case 5 -> {
-                loggedIn = false;
-                //TODO USE GENERIC USER CLASS
+                loggedIn = server.logOutUser(loggedInUser);
                 loggedInUser = null;
                 startMenu();
             }
