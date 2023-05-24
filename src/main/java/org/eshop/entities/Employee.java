@@ -10,6 +10,11 @@ public class Employee extends User {
         this.persoNr = persoNr;
     }
 
+    @Override
+    public String toString() {
+        return getPersoNr() + " " + getName();
+    }
+
     public String getName() {
         return name;
     }

@@ -1,6 +1,6 @@
 1087;2.99;Hühnerflügel;40;
 1089;3.49;Grüne Bohnen;95;
-1022;2.49;Kekse;110;
+1022;2.49;Kekse;210;
 1029;3.99;Paprika;85;
 1015;0.99;Apfel;180;
 1056;2.49;Eiscreme;50;
@@ -76,6 +76,7 @@
 1036;4.99;Kartoffelchips;70;
 1066;1.99;Pfirsiche;80;
 1074;2.99;Putenaufschnitt;40;
+1000;1.0;Kuchen;150;
 1035;5.49;Thunfisch;30;
 1078;1.99;Melonen;80;
 1033;0.99;Mango;180;
@@ -84,6 +85,7 @@
 1005;7.99;Fleisch;15;
 1016;1.99;Salat;100;
 1037;2.99;Hähnchenschenkel;40;
+1000;0.5;Muffins;100;
 1039;3.49;Karotten;95;
 1084;1.99;Knoblauch;120;
 1042;7.99;Scampi;15;

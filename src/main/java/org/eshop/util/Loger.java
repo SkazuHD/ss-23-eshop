@@ -18,7 +18,7 @@ public class Loger {
 
         try (PrintWriter pw =
                      new PrintWriter(
-                             new FileWriter("log.txt"))) {
+                             new FileWriter("log.txt", true))) {
 
             pw.println(new Date() + " | " + "Änderungen:" + " " + logText);
         } catch (IOException e) {
