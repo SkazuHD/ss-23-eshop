@@ -33,6 +33,11 @@ public class FileManager implements ShopPersistence {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, append)));
     }
 
+    /**
+     * Read line string.
+     *
+     * @return the string
+     */
     protected String readLine() {
         try {
             return reader.readLine();
@@ -47,7 +52,7 @@ public class FileManager implements ShopPersistence {
         writer.print(customer.getPassword() + ";");
         writer.print(customer.getName() + ";");
         writer.print(customer.getAddress() + ";");
-        writer.print(customer.getID() + ";");
+        writer.print(customer.getID());
         writer.println();
     }
 
@@ -64,9 +69,9 @@ public class FileManager implements ShopPersistence {
     @Override
     public void writeEmployee(Employee employee) {
         writer.print(employee.getName() + ";");
-        writer.print(employee.getPersoNr() + ";");
+        writer.print(employee.getID() + ";");
         writer.print(employee.getUsername() + ";");
-        writer.print(employee.getPassword() + ";");
+        writer.print(employee.getPassword());
         writer.println();
     }
 
@@ -85,7 +90,7 @@ public class FileManager implements ShopPersistence {
         writer.print(products.getProductnumber() + ";");
         writer.print(products.getPrice() + ";");
         writer.print(products.getName() + ";");
-        writer.print(products.getQuantity() + ";");
+        writer.print(products.getQuantity());
         writer.println();
     }
 

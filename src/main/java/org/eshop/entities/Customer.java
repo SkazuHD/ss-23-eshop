@@ -19,6 +19,7 @@ public class Customer extends User {
      * @param password the password
      * @param name     the name
      * @param address  the address
+     * @param id       the id
      */
     public Customer(String username, String password, String name, String address, String id) {
         super(username, password);
@@ -35,7 +36,7 @@ public class Customer extends User {
      */
     @Override
     public String toString() {
-        return getUsername() + " " + getName() + " " + getAddress();
+        return super.toString() + " " + getName() + " " + getAddress();
     }
 
 

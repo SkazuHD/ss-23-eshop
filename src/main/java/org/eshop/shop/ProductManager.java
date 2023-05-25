@@ -65,6 +65,11 @@ public class ProductManager {
 
     }
 
+    /**
+     * Load product.
+     *
+     * @param p the p
+     */
     public void loadProduct(Products p) {
         products.put(p.getName(), p);
     }

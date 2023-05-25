@@ -18,6 +18,9 @@ public class CustomerManager {
      * The Customers.
      */
     Map<String, Customer> customer = new HashMap<>();
+    /**
+     * The Id.
+     */
     int id = 3000;
 
     /**
@@ -46,6 +49,11 @@ public class CustomerManager {
         }
     }
 
+    /**
+     * Load customer.
+     *
+     * @param c the c
+     */
     public void loadCustomer(Customer c) {
         customer.put(c.getUsername(), c);
         //Update ID counter

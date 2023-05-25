@@ -1,6 +1,7 @@
 package org.eshop.ui;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.Employee;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
@@ -101,18 +102,15 @@ public class Cli {
         String username = reader.readLine("Enter Username:");
         //GET PWD
         String password = reader.readLine("Enter Password:");
+        // Login Customer First else try Employee login
+        // throws LoginFailed if no user is found with the given username
+        // Potential ERROR: if a customer and an employee have the same username -> Customer is logged in
         try {
             loggedInUser = server.loginUser(username, password);
             loggedIn = loggedInUser.isLoggedIn();
         } catch (LoginFailed e) {
-            try {
-                loggedInUser = server.loginEmployee(username, password);
-                loggedIn = loggedInUser.isLoggedIn();
-            } catch (LoginFailed loginFailed) {
-                System.err.println(loginFailed.getMessage());
-                System.err.flush();
-            }
-
+            System.err.println(e.getMessage());
+            System.err.flush();
         }
     }
 
@@ -159,7 +157,7 @@ public class Cli {
         String name = reader.readLine("Product Name:");
         int quantity = reader.getNumericInput("Quantity:");
         double price = server.getProduct(name) == null ? reader.getDoubleInput("Price:") : server.getProduct(name).getPrice();
-        server.addProduct(name, price, quantity);
+        server.addProduct(name, price, quantity, (Employee) loggedInUser);
     }
 
     /**
@@ -169,7 +167,7 @@ public class Cli {
         String name = reader.readLine("Product Name: ");
         System.out.print("Quantity: ");
         int quantity = reader.getNumericInput("");
-        server.removeProduct(name, quantity);
+        server.removeProduct(name, quantity, loggedInUser);
     }
 
 

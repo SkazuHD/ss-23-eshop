@@ -7,7 +7,7 @@ import org.eshop.exceptions.ProductNotFound;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
-import org.eshop.util.Loger;
+import org.eshop.util.Logger;
 
 import java.io.File;
 import java.util.Collection;
@@ -101,7 +101,7 @@ public class Shop {
             do {
                 e = persistence.readEmployee();
                 if (e != null) {
-                    employeeManager.register(e.getUsername(), e.getPersoNr(), e.getName(), e.getPassword());
+                    employeeManager.register(e.getUsername(), Integer.parseInt(e.getID()), e.getName(), e.getPassword());
                 }
             } while (e != null);
 
@@ -162,13 +162,20 @@ public class Shop {
      * @throws LoginFailed the customer login failed
      */
     public User loginUser(String username, String password) throws LoginFailed {
-        return customerManager.login(username, password);
+        try {
+            return customerManager.login(username, password);
+        } catch (LoginFailed e) {
+            return employeeManager.login(username, password);
+        }
     }
 
-    public User loginEmployee(String username, String password) throws LoginFailed {
-        return employeeManager.login(username, password);
-    }
 
+    /**
+     * Log out user boolean.
+     *
+     * @param u the u
+     * @return the boolean
+     */
     public boolean logOutUser(User u) {
         u.logout();
         return u.isLoggedIn();
@@ -240,7 +247,7 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            Loger.log(key + " " + cart.get(key));
+            Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
         saveAsync();
@@ -266,11 +273,14 @@ public class Shop {
      * @param name     the name
      * @param price    the price
      * @param quantity the quantity
+     * @param e        the e
      */
 //EMPLOYEE ONLY
-    public void addProduct(String name, double price, int quantity) {
+    public void addProduct(String name, double price, int quantity, Employee e) {
         productManager.addProduct(name, price, quantity);
         saveAsync();
+
+        Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
     }
 
     /**
@@ -278,10 +288,14 @@ public class Shop {
      *
      * @param name     the name
      * @param quantity the quantity
+     * @param user     the user
      */
-    public void removeProduct(String name, int quantity) {
+    public void removeProduct(String name, int quantity, User user) {
         productManager.removeProduct(name, quantity);
         saveAsync();
+        if (user instanceof Employee) {
+            Logger.log(user, "Removed: " + name + "|" + quantity);
+        }
     }
 
     /**
@@ -293,7 +307,7 @@ public class Shop {
      * @param password the password
      * @throws UserExistsException the customer exists exception
      */
-    //Employees
+//Employees
     public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
         if (!employeeManager.register(username, persoNr, name, password)) {
             throw new UserExistsException(username);
