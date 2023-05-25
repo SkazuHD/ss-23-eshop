@@ -24,7 +24,7 @@ public class Event {
 
     public Event(User user, Products p, int quantity) {
         this.userId = user.getID();
-        this.productId = p.getProductnumber();
+        this.productId = p.getId();
         this.quantity = quantity;
         this.dayInYear = LocalDate.now().getDayOfYear();
     }

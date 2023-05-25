@@ -1,17 +1,9 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Products;
+import org.eshop.exceptions.ProductNotFound;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-// producte hinzufügen
-// löschen
-// Mitarbeiter soll den bestand ändern
-// exeption
-//product wird gekauft
-
+import java.util.*;
 
 /**
  * The type Product manager.
@@ -22,6 +14,12 @@ public class ProductManager {
      * The Products set.
      */
     public Map<String, Products> products = new HashMap<String, Products>();
+    //Maps the Product Name to a List of Product Numbers
+    //Used to find a Product Number by Name or to find all Product Numbers of a Products with the same Name
+    public Map<String, List<Integer>> productMap = new HashMap<String, List<Integer>>();
+    //Maps the Product Number to a Product
+    //Find a specific Product by its Product Number
+    public Map<Integer, Products> productNrMap = new HashMap<Integer, Products>();
     /**
      * The P nr counter.
      */
@@ -34,21 +32,13 @@ public class ProductManager {
     }
 
     /**
-     * Instantiates a new Product manager with a Filled Set.
-     *
-     * @param productsMap the products set
-     */
-    public ProductManager(Map<String, Products> productsMap) {
-        this.products = productsMap;
-    }
-
-    /**
      * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
      *
      * @param name     gibt dem Produckt einen Namen
      * @param price    gibt dem Prodcukt einen Preis
      * @param quantity gibt dem Produckt eine Mengenanzahl
      */
+    @Deprecated
     public void addProduct(String name, double price, int quantity) {
 
         if (products.containsKey(name)) {
@@ -65,13 +55,24 @@ public class ProductManager {
 
     }
 
+
     /**
      * Load product.
      *
      * @param p the p
      */
     public void loadProduct(Products p) {
-        products.put(p.getName(), p);
+        String name = p.getName();
+        int id = p.getId();
+        if (productMap.containsKey(name)) {
+            productMap.get(name).add(id);
+        } else {
+            // Else add new Entry
+            List<Integer> idList = new ArrayList<>();
+            idList.add(id);
+            productMap.put(name, idList);
+        }
+        productNrMap.put(id, p);
     }
 
     /**
@@ -107,8 +108,56 @@ public class ProductManager {
      *
      * @return the set
      */
-    public Collection<Products> getProductsSet() {
-        return products.values();
+    public Collection<Products> getProducts() {
+        return productNrMap.values();
+    }
+
+    public List<Products> getProductByName(String name) {
+        List<Products> result = new ArrayList<>();
+        List<Integer> ids = productMap.get(name);
+        if (ids == null) {
+            return result;
+        }
+        //Add all Products to result
+        for (int id : ids) {
+            result.add(productNrMap.get(id));
+        }
+        return result;
+    }
+
+    public Products getProductById(int id) throws ProductNotFound {
+        if (productNrMap.containsKey(id)) {
+            return productNrMap.get(id);
+        } else {
+            throw new ProductNotFound(id);
+        }
+    }
+
+    public void createProduct(String name, double price, int quantity) {
+        //Generate id
+        int id = pNrCounter;
+        while (productNrMap.containsKey(id)) {
+            pNrCounter++;
+            id = pNrCounter;
+        }
+        Products p = new Products(id, price, name, quantity);
+
+        // Check if name already exist in Map and add id to List
+        if (productMap.containsKey(name)) {
+            productMap.get(name).add(id);
+        } else {
+            // Else add new Entry
+            List<Integer> idList = new ArrayList<>();
+            idList.add(id);
+            productMap.put(name, idList);
+        }
+        productNrMap.put(id, p);
+
+    }
+
+    public void increaseQuantity(int id, int quantity) throws ProductNotFound {
+        Products p = getProductById(id);
+        p.setQuantity(p.getQuantity() + quantity);
     }
 
 }

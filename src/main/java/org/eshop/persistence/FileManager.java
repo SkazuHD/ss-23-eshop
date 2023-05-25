@@ -87,7 +87,7 @@ public class FileManager implements ShopPersistence {
 
     @Override
     public void writeProducts(Products products) {
-        writer.print(products.getProductnumber() + ";");
+        writer.print(products.getId() + ";");
         writer.print(products.getPrice() + ";");
         writer.print(products.getName() + ";");
         writer.print(products.getQuantity());

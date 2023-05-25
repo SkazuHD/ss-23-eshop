@@ -11,6 +11,7 @@ import org.eshop.util.Logger;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +37,6 @@ public class Shop {
      * The Persistence.
      */
     ShopPersistence persistence = new FileManager();
-
 
 
     /**
@@ -66,7 +66,7 @@ public class Shop {
             }
             try {
                 persistence.openForWriting("products.csv", false);
-                Collection<Products> products = productManager.getProductsSet();
+                Collection<Products> products = productManager.getProducts();
                 for (Products p : products) {
                     persistence.writeProducts(p);
                 }
@@ -191,7 +191,7 @@ public class Shop {
      */
 //Products
     public Collection<Products> getProductSet() {
-        return productManager.getProductsSet();
+        return productManager.getProducts();
     }
 
     /**
@@ -280,12 +280,36 @@ public class Shop {
      * @param e        the e
      */
 //EMPLOYEE ONLY
+    @Deprecated
     public void addProduct(String name, double price, int quantity, Employee e) {
-        productManager.addProduct(name, price, quantity);
-        saveAsync();
 
+        productManager.getProductByName(name).size();
+
+        productManager.addProduct(name, price, quantity);
+
+        saveAsync();
         Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
         eventManager.addEvent(new Event(e, productManager.getProduct(name), quantity));
+    }
+
+    public void increaseQuantity(int id, int quantity) throws ProductNotFound {
+        productManager.increaseQuantity(id, quantity);
+        saveAsync();
+
+    }
+
+    public void createProduct(String name, double price, int quantity) {
+        productManager.createProduct(name, price, quantity);
+        saveAsync();
+
+    }
+
+    public List<Products> findProducts(String name) {
+        return productManager.getProductByName(name);
+    }
+
+    public Products findProduct(int id) throws ProductNotFound {
+        return productManager.getProductById(id);
     }
 
     /**

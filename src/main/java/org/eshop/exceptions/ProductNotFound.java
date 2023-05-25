@@ -10,6 +10,11 @@ public class ProductNotFound extends Exception {
      * @param name the name
      */
     public ProductNotFound(String name) {
-        super("Product " + name + " not found.");
+        super("Product with name:" + name + " not found.");
     }
+
+    public ProductNotFound(int id) {
+        super("Product with ID:" + id + " not found.");
+    }
+
 }

@@ -1,7 +1,6 @@
 package org.eshop.ui;
 
 import org.eshop.entities.Customer;
-import org.eshop.entities.Employee;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
@@ -11,6 +10,7 @@ import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -117,6 +117,7 @@ public class Cli {
     /**
      * Show products.
      */
+    //TODO Update to new ID version
     protected void showProducts() {
         System.out.println("ID    Preis      Name            Bestand");
         System.out.println("----------------------------------------");
@@ -155,14 +156,43 @@ public class Cli {
      */
     protected void addProduct() {
         String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        if (result.size() == 0) {
+            createProduct(name);
+        } else {
+            result.forEach(System.out::println);
+            System.out.println("1. Increase Existing");
+            System.out.println("2. Create new Product");
+            int ans = reader.getNumericInput("Selection:");
+            if (ans == 1) {
+                int id = reader.getNumericInput("Enter ID:");
+                increaseQuantity(id);
+            } else {
+                createProduct(name);
+            }
+        }
+    }
+
+    protected void increaseQuantity(int id) {
         int quantity = reader.getNumericInput("Quantity:");
-        double price = server.getProduct(name) == null ? reader.getDoubleInput("Price:") : server.getProduct(name).getPrice();
-        server.addProduct(name, price, quantity, (Employee) loggedInUser);
+        try {
+            server.increaseQuantity(id, quantity);
+        } catch (ProductNotFound e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    protected void createProduct(String name) {
+        double price = reader.getDoubleInput("Price:");
+        int quantity = reader.getNumericInput("Quantity");
+        server.createProduct(name, price, quantity);
     }
 
     /**
      * remove product from stock
      */
+
+    //TODO Update to new ID version
     protected void deleteProduct() {
         String name = reader.readLine("Product Name: ");
         System.out.print("Quantity: ");
