@@ -250,7 +250,7 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            eventManager.addEvent(new Event(c.getID(), key.getProductnumber(), cart.get(key)));
+            eventManager.addEvent(new Event(c, key, cart.get(key)));
             Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
@@ -285,7 +285,7 @@ public class Shop {
         saveAsync();
 
         Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
-        eventManager.addEvent(new Event(e.getID(), productManager.getProduct(name).getProductnumber(), quantity));
+        eventManager.addEvent(new Event(e, productManager.getProduct(name), quantity));
     }
 
     /**
@@ -299,7 +299,7 @@ public class Shop {
         productManager.removeProduct(name, quantity);
         saveAsync();
         Logger.log(user, "Removed: " + name + "|" + quantity);
-        eventManager.addEvent(new Event(user.getID(), productManager.getProduct(name).getProductnumber(), quantity));
+        eventManager.addEvent(new Event(user, productManager.getProduct(name), quantity));
     }
 
     /**

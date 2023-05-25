@@ -22,9 +22,9 @@ public class Event {
     int quantity;
     int dayInYear;
 
-    public Event(String userId, int productId, int quantity) {
-        this.userId = userId;
-        this.productId = productId;
+    public Event(User user, Products p, int quantity) {
+        this.userId = user.getID();
+        this.productId = p.getProductnumber();
         this.quantity = quantity;
         this.dayInYear = LocalDate.now().getDayOfYear();
     }
