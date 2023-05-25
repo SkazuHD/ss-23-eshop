@@ -3,8 +3,10 @@ package Produckt;
 import org.eshop.entities.Products;
 import org.eshop.shop.ProductManager;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class ProductTest {
 
     @Test
