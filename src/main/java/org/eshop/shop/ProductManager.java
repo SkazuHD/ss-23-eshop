@@ -9,10 +9,16 @@ import java.util.*;
  * The type Product manager.
  */
 public class ProductManager {
-    //Maps the Product Name to a List of Product Numbers
+    /**
+     * The Product map.
+     */
+//Maps the Product Name to a List of Product Numbers
     //Used to find a Product Number by Name or to find all Product Numbers of a Products with the same Name
     public Map<String, List<Integer>> productMap = new HashMap<String, List<Integer>>();
-    //Maps the Product Number to a Product
+    /**
+     * The Product nr map.
+     */
+//Maps the Product Number to a Product
     //Find a specific Product by its Product Number
     public Map<Integer, Products> productNrMap = new HashMap<Integer, Products>();
     /**
@@ -58,6 +64,7 @@ public class ProductManager {
      *
      * @param id       the id
      * @param quantity the quantity
+     * @throws ProductNotFound the product not found
      */
     public void removeProduct(int id, int quantity) throws ProductNotFound {
         //TODO IMPLEMENT
@@ -77,6 +84,12 @@ public class ProductManager {
         return productNrMap.values();
     }
 
+    /**
+     * Gets product by name.
+     *
+     * @param name the name
+     * @return the product by name
+     */
     public List<Products> getProductByName(String name) {
         List<Products> result = new ArrayList<>();
         List<Integer> ids = productMap.get(name);
@@ -90,6 +103,13 @@ public class ProductManager {
         return result;
     }
 
+    /**
+     * Gets product by id.
+     *
+     * @param id the id
+     * @return the product by id
+     * @throws ProductNotFound the product not found
+     */
     public Products getProductById(int id) throws ProductNotFound {
         if (productNrMap.containsKey(id)) {
             return productNrMap.get(id);
@@ -98,6 +118,13 @@ public class ProductManager {
         }
     }
 
+    /**
+     * Create product.
+     *
+     * @param name     the name
+     * @param price    the price
+     * @param quantity the quantity
+     */
     public void createProduct(String name, double price, int quantity) {
         //Generate id
         int id = pNrCounter;
@@ -120,6 +147,13 @@ public class ProductManager {
 
     }
 
+    /**
+     * Increase quantity.
+     *
+     * @param id       the id
+     * @param quantity the quantity
+     * @throws ProductNotFound the product not found
+     */
     public void increaseQuantity(int id, int quantity) throws ProductNotFound {
         Products p = getProductById(id);
         p.setQuantity(p.getQuantity() + quantity);

@@ -32,6 +32,9 @@ public class Shop {
      */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    /**
+     * The Event manager.
+     */
     EventManager eventManager = new EventManager();
     /**
      * The Persistence.
@@ -247,7 +250,7 @@ public class Shop {
      *
      * @param c the Customer
      */
-    //TODO Check if the product is in stock before checking out
+//TODO Check if the product is in stock before checking out
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
@@ -297,22 +300,49 @@ public class Shop {
         //eventManager.addEvent(new Event(e, productManager.getProduct(name), quantity));
     }
 
+    /**
+     * Increase quantity.
+     *
+     * @param id       the id
+     * @param quantity the quantity
+     * @throws ProductNotFound the product not found
+     */
     public void increaseQuantity(int id, int quantity) throws ProductNotFound {
         productManager.increaseQuantity(id, quantity);
         saveAsync();
 
     }
 
+    /**
+     * Create product.
+     *
+     * @param name     the name
+     * @param price    the price
+     * @param quantity the quantity
+     */
     public void createProduct(String name, double price, int quantity) {
         productManager.createProduct(name, price, quantity);
         saveAsync();
 
     }
 
+    /**
+     * Find products list.
+     *
+     * @param name the name
+     * @return the list
+     */
     public List<Products> findProducts(String name) {
         return productManager.getProductByName(name);
     }
 
+    /**
+     * Find product products.
+     *
+     * @param id the id
+     * @return the products
+     * @throws ProductNotFound the product not found
+     */
     public Products findProduct(int id) throws ProductNotFound {
         return productManager.getProductById(id);
     }
@@ -323,6 +353,7 @@ public class Shop {
      * @param id       the name
      * @param quantity the quantity
      * @param user     the user
+     * @throws ProductNotFound the product not found
      */
     public void removeProduct(int id, int quantity, User user) throws ProductNotFound {
         productManager.removeProduct(id, quantity);

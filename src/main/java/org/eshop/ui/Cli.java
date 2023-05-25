@@ -77,13 +77,9 @@ public class Cli {
      * register employee
      */
     protected void registerEmployee() {
-        //GET USERNAME
         String username = reader.readLine("Enter Username:");
-        //GET PERSONR
         int persoNr = reader.getNumericInput("Enter PersoNr:");
-        //GET NAME
         String name = reader.readLine("Enter Name:");
-        //GET PWD
         String password = reader.readLine("Enter Password:");
 
         try {
@@ -117,7 +113,6 @@ public class Cli {
     /**
      * Show products.
      */
-    //TODO Update to new ID version
     protected void showProducts() {
         System.out.println("ID    Preis      Name            Bestand");
         System.out.println("----------------------------------------");
@@ -127,11 +122,10 @@ public class Cli {
     /**
      * Buy products.
      */
-    //TODo update to ID version
     protected void buyProducts() {
         String name = reader.readLine("Product Name:");
         List<Products> result = server.findProducts(name);
-        int id = 0;
+        int id;
         if (result.size() > 1) {
             result.forEach(System.out::println);
             System.out.println("Multiple Products found, please select one by ID");
@@ -160,7 +154,7 @@ public class Cli {
     protected void removeProduct() throws ProductNotFound {
         String name = reader.readLine("Product Name:");
         List<Products> result = server.findProducts(name);
-        int id = 0;
+        int id;
         if (result.size() > 1) {
             result.forEach(System.out::println);
             System.out.println("Multiple Products found, please select one by ID");
@@ -197,6 +191,11 @@ public class Cli {
         }
     }
 
+    /**
+     * Increase quantity.
+     *
+     * @param id the id
+     */
     protected void increaseQuantity(int id) {
         int quantity = reader.getNumericInput("Quantity:");
         try {
@@ -206,6 +205,11 @@ public class Cli {
         }
     }
 
+    /**
+     * Create product.
+     *
+     * @param name the name
+     */
     protected void createProduct(String name) {
         double price = reader.getDoubleInput("Price:");
         int quantity = reader.getNumericInput("Quantity");
@@ -215,8 +219,6 @@ public class Cli {
     /**
      * remove product from stock
      */
-
-    //TODO Update to new ID version
     protected void deleteProduct() {
         String name = reader.readLine("Product Name:");
         List<Products> result = server.findProducts(name);

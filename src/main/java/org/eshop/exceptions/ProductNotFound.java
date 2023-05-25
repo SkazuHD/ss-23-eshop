@@ -13,6 +13,11 @@ public class ProductNotFound extends Exception {
         super("Product with name:" + name + " not found.");
     }
 
+    /**
+     * Instantiates a new Product not found.
+     *
+     * @param id the id
+     */
     public ProductNotFound(int id) {
         super("Product with ID:" + id + " not found.");
     }
