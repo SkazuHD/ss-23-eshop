@@ -127,12 +127,25 @@ public class Cli {
     /**
      * Buy products.
      */
+    //TODo update to ID version
     protected void buyProducts() {
-        String name = reader.readLine("Product Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
+        String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        int id = 0;
+        if (result.size() > 1) {
+            result.forEach(System.out::println);
+            System.out.println("Multiple Products found, please select one by ID");
+            id = reader.getNumericInput("Enter ID:");
+        } else if (result.size() == 1) {
+            id = result.get(0).getId();
+        } else {
+            System.err.println("No Product found");
+            return;
+        }
+        int quantity = reader.getNumericInput("Quantity:");
+
         try {
-            server.addProductToCart(name, quantity, (Customer) loggedInUser);
+            server.addProductToCart(id, quantity, (Customer) loggedInUser);
         } catch (ProductNotFound | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
@@ -140,15 +153,26 @@ public class Cli {
     }
 
     /**
-     * Remove product.
+     * Remove product from Customers cart.
      *
      * @throws ProductNotFound the product not found
      */
     protected void removeProduct() throws ProductNotFound {
-        String name = reader.readLine("Prouct Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
-        server.removeProductFromCart(name, quantity, (Customer) loggedInUser);
+        String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        int id = 0;
+        if (result.size() > 1) {
+            result.forEach(System.out::println);
+            System.out.println("Multiple Products found, please select one by ID");
+            id = reader.getNumericInput("Enter ID:");
+        } else if (result.size() == 1) {
+            id = result.get(0).getId();
+        } else {
+            System.err.println("No Product found");
+            return;
+        }
+        int quantity = reader.getNumericInput("Quantity:");
+        server.removeProductFromCart(id, quantity, (Customer) loggedInUser);
     }
 
     /**
@@ -194,10 +218,23 @@ public class Cli {
 
     //TODO Update to new ID version
     protected void deleteProduct() {
-        String name = reader.readLine("Product Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
-        server.removeProduct(name, quantity, loggedInUser);
+        String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        int id = 0;
+        if (result.size() > 1) {
+            result.forEach(System.out::println);
+            System.out.println("Multiple Products found, please select one by ID");
+            id = reader.getNumericInput("Enter ID:");
+        }
+        int quantity = reader.getNumericInput("Quantity:");
+
+        try {
+            server.removeProduct(id, quantity, loggedInUser);
+
+        } catch (ProductNotFound e) {
+            System.err.println(e.getMessage());
+            System.err.flush();
+        }
     }
 
 

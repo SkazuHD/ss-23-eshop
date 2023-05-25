@@ -9,11 +9,6 @@ import java.util.*;
  * The type Product manager.
  */
 public class ProductManager {
-
-    /**
-     * The Products set.
-     */
-    public Map<String, Products> products = new HashMap<String, Products>();
     //Maps the Product Name to a List of Product Numbers
     //Used to find a Product Number by Name or to find all Product Numbers of a Products with the same Name
     public Map<String, List<Integer>> productMap = new HashMap<String, List<Integer>>();
@@ -38,23 +33,6 @@ public class ProductManager {
      * @param price    gibt dem Prodcukt einen Preis
      * @param quantity gibt dem Produckt eine Mengenanzahl
      */
-    @Deprecated
-    public void addProduct(String name, double price, int quantity) {
-
-        if (products.containsKey(name)) {
-            //Increase Quantity of existing Product
-            Products p = products.get(name);
-            p.setQuantity(p.getQuantity() + quantity);
-            p.setPrice(price);
-        } else {
-            //Create new Product
-            Products p = new Products(pNrCounter, price, name, quantity);
-            products.put(name, p);
-            pNrCounter++;
-        }
-
-    }
-
 
     /**
      * Load product.
@@ -78,29 +56,16 @@ public class ProductManager {
     /**
      * Remove product.
      *
-     * @param name     the name
+     * @param id       the id
      * @param quantity the quantity
      */
-    public void removeProduct(String name, int quantity) {
+    public void removeProduct(int id, int quantity) throws ProductNotFound {
+        //TODO IMPLEMENT
+        Products p = getProductById(id);
+        //Check if enough Products are in Stock
+        if (p.getQuantity() >= quantity) p.setQuantity(p.getQuantity() - quantity);
 
-        if (products.containsKey(name)) {
-            //Decrease Quantity of existing Product
-            Products p = products.get(name);
-            p.setQuantity(p.getQuantity() - quantity);
-            if (p.getQuantity() <= 0) {
-                products.remove(name);
-            }
-        }
-    }
 
-    /**
-     * Get product products.
-     *
-     * @param name the name
-     * @return the products
-     */
-    public Products getProduct(String name) {
-        return products.get(name);
     }
 
     /**

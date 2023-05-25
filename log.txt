@@ -31,3 +31,6 @@ Wed May 24 14:10:53 CEST 2023 | Änderungen: 1234|admin|Removed:Kuchen|10
 145|2023-05-25 18:26:46|User:ID:1234 Username:admin admin|Changes: Added:  Stuhl|50.0|50
 145|2023-05-25 18:26:52|User:ID:1234 Username:admin admin|Changes: Added:  Stuhl|50.0|50
 145|2023-05-25 18:28:33|User:ID:1234 Username:admin admin|Changes: Added:  Milch|1.99|50
+145|2023-05-25 19:52:01|Changes: Test
+145|2023-05-25 20:25:35|User:ID:C3000 Username:test test test|Changes: Buys: Gurke|3.99|10
+145|2023-05-25 20:34:20|User:ID:C3000 Username:test test test|Changes: Buys: Gurke|3.99|5

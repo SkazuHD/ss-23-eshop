@@ -197,36 +197,36 @@ public class Shop {
     /**
      * Add product to cart.
      *
-     * @param name     the name of the product
+     * @param id       the id of the product
      * @param quantity the quantity
      * @param c        the Customer
      * @throws NotInStockException Exception thrown when the product is not in stock
      * @throws ProductNotFound     Exception thrown when the product is not found
      */
 //CUSTOMER ONLY
-    public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
-        Products p = productManager.getProduct(name);
+    public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound {
+        Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.buyProduct(p, quantity, c);
         } else {
-            throw new ProductNotFound(name);
+            throw new ProductNotFound(id);
         }
     }
 
     /**
      * Remove product from cart.
      *
-     * @param name     the name
+     * @param id       the name
      * @param quantity the quantity
      * @param c        the c
      * @throws ProductNotFound the product not found
      */
-    public void removeProductFromCart(String name, int quantity, Customer c) throws ProductNotFound {
-        Products p = productManager.getProduct(name);
+    public void removeProductFromCart(int id, int quantity, Customer c) throws ProductNotFound {
+        Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.removeProduct(p, quantity, c);
         } else {
-            throw new ProductNotFound(name);
+            throw new ProductNotFound(id);
         }
     }
 
@@ -247,12 +247,17 @@ public class Shop {
      *
      * @param c the Customer
      */
+    //TODO Check if the product is in stock before checking out
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
             eventManager.addEvent(new Event(c, key, cart.get(key)));
             Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
-            productManager.removeProduct(key.getName(), cart.get(key));
+            try {
+                productManager.removeProduct(key.getId(), cart.get(key));
+            } catch (ProductNotFound e) {
+                System.out.println(e.getMessage());
+            }
         }
         saveAsync();
         cart.clear();
@@ -285,11 +290,11 @@ public class Shop {
 
         productManager.getProductByName(name).size();
 
-        productManager.addProduct(name, price, quantity);
+        //productManager.addProduct(name, price, quantity);
 
         saveAsync();
         Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
-        eventManager.addEvent(new Event(e, productManager.getProduct(name), quantity));
+        //eventManager.addEvent(new Event(e, productManager.getProduct(name), quantity));
     }
 
     public void increaseQuantity(int id, int quantity) throws ProductNotFound {
@@ -315,15 +320,16 @@ public class Shop {
     /**
      * Remove product.
      *
-     * @param name     the name
+     * @param id       the name
      * @param quantity the quantity
      * @param user     the user
      */
-    public void removeProduct(String name, int quantity, User user) {
-        productManager.removeProduct(name, quantity);
+    public void removeProduct(int id, int quantity, User user) throws ProductNotFound {
+        productManager.removeProduct(id, quantity);
         saveAsync();
-        Logger.log(user, "Removed: " + name + "|" + quantity);
-        eventManager.addEvent(new Event(user, productManager.getProduct(name), quantity));
+
+        //Logger.log(user, "Removed: " + name + "|" + quantity);
+        // eventManager.addEvent(new Event(user, productManager.getProduct(name), quantity));
     }
 
     /**
@@ -358,8 +364,8 @@ public class Shop {
      * @param name the name
      * @return the product
      */
-    public Products getProduct(String name) {
-        return productManager.getProduct(name);
+    public List<Products> getProduct(String name) {
+        return productManager.getProductByName(name);
     }
 }
 //Employees

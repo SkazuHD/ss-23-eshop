@@ -17,7 +17,7 @@ public class EventManager {
 
     public void addEvent(Event event) {
         if (productEvents.containsKey(event.getProductId())) {
-            //  productEvents.get(event.getProductId()).add(event);
+            productEvents.get(event.getProductId()).add(event);
         } else {
             productEvents.put(event.getProductId(), List.of(event));
         }
