@@ -1,5 +1,6 @@
 package org.eshop.shop;
 
+import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.Map;
 /**
  * The type Product manager.
  */
-public class ProductManager {
+public class  ProductManager {
 
     /**
      * The Products set.
@@ -49,19 +50,28 @@ public class ProductManager {
      * @param price    gibt dem Prodcukt einen Preis
      * @param quantity gibt dem Produckt eine Mengenanzahl
      */
-    public void addProduct(String name, double price, int quantity) {
+    public void addProduct(String name, double price, int quantity, int packsize) {
+        Products p;
 
         if (products.containsKey(name)) {
             //Increase Quantity of existing Product
-            Products p = products.get(name);
+            p = products.get(name);
             p.setQuantity(p.getQuantity() + quantity);
             p.setPrice(price);
         } else {
             //Create new Product
-            Products p = new Products(pNrCounter, price, name, quantity);
-            products.put(name, p);
-            pNrCounter++;
+            if (packsize > 0){
+                p = new MassProducts(pNrCounter,price,name, quantity, packsize);
+            }else {
+                 p = new Products(pNrCounter, price, name, quantity);
+            }
+
         }
+        products.put(name, p);
+        pNrCounter++;
+
+
+
 
     }
 

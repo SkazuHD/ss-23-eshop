@@ -25,12 +25,12 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void addProduct() throws ProductNotFound, NotInStockException {
+    public void addProduct() throws Exception {
         shop.addProductToCart("test0", 1, customer);
     }
 
     @Test
-    public void removeProductComplete() throws ProductNotFound, NotInStockException {
+    public void removeProductComplete() throws Exception {
         shop.addProductToCart("test0", 1, customer);
         Assertions.assertEquals(1, customer.getCart().size());
         shop.removeProductFromCart("test0", 1, customer);
@@ -38,7 +38,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void decreaseQuantity() throws ProductNotFound, NotInStockException {
+    public void decreaseQuantity() throws Exception {
         shop.addProductToCart("test0", 2, customer);
         Products p = shop.getProduct("test0");
         Assertions.assertEquals(2, customer.getCart().get(p));
@@ -47,7 +47,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void increaseQuantity() throws ProductNotFound, NotInStockException {
+    public void increaseQuantity() throws Exception {
         shop.addProductToCart("test0", 2, customer);
         Products p = shop.getProduct("test0");
         Assertions.assertEquals(2, customer.getCart().get(p));
@@ -56,7 +56,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void increaseQuantityOverStock() throws ProductNotFound, NotInStockException {
+    public void increaseQuantityOverStock() throws Exception {
         Products p = shop.getProduct("test0");
         shop.addProductToCart("test0", 49, customer);
         Assertions.assertEquals(49, customer.getCart().get(p));

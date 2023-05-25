@@ -10,14 +10,14 @@ public class ProductTest {
     @Test
     void testProduckt() {
         ProductManager productManger = new ProductManager();
-        productManger.addProduct("Horst", 3.99, 4);
+        productManger.addProduct("Horst", 3.99, 4,0);
         Assertions.assertEquals(1, productManger.products.size());
     }
 
     @Test
     void removeProductQuantiy() {
         ProductManager productManger = new ProductManager();
-        productManger.addProduct("Horst", 3.99, 4);
+        productManger.addProduct("Horst", 3.99, 4,0);
         Products p = productManger.getProduct("Horst");
         productManger.removeProduct("Horst", 2);
         Assertions.assertEquals(2, p.getQuantity());
@@ -26,7 +26,7 @@ public class ProductTest {
     @Test
     void removeProductComplete() {
         ProductManager productManger = new ProductManager();
-        productManger.addProduct("Horst", 3.99, 4);
+        productManger.addProduct("Horst", 3.99, 4,0);
         productManger.removeProduct("Horst", 4);
         Assertions.assertEquals(0, productManger.products.size());
 

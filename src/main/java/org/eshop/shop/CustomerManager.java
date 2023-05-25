@@ -1,9 +1,6 @@
 package org.eshop.shop;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.Invoice;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
+import org.eshop.entities.*;
 import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
 
@@ -101,7 +98,14 @@ public class CustomerManager {
      * @param c      the Customer
      * @throws NotInStockException the not in stock exception
      */
-    public void buyProduct(Products p, int anzahl, Customer c) throws NotInStockException {
+    public void buyProduct(Products p, int anzahl, Customer c) throws Exception {
+        // Instance of ...
+        if (p instanceof MassProducts){
+            if(((MassProducts) p).getPacksize() % anzahl != 0){
+                throw new Exception("FUCK OFF");
+            }
+        }
+
         int addedAmount = c.addToCart(p, anzahl);
         if (addedAmount != anzahl) {
             throw new NotInStockException(addedAmount);

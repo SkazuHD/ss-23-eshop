@@ -135,6 +135,8 @@ public class Cli {
         } catch (ProductNotFound | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -154,10 +156,22 @@ public class Cli {
      * add new product
      */
     protected void addProduct() {
+        int packsize = 0;
         String name = reader.readLine("Product Name:");
         int quantity = reader.getNumericInput("Quantity:");
         double price = server.getProduct(name) == null ? reader.getDoubleInput("Price:") : server.getProduct(name).getPrice();
-        server.addProduct(name, price, quantity, (Employee) loggedInUser);
+        char Massenprodukt;
+
+        do {
+             Massenprodukt = reader.readLine("Massenprodukt (j/n)? ").charAt(0);
+
+        } while (Massenprodukt != 'j' && Massenprodukt != 'n');
+        if (Massenprodukt == 'j') {
+            packsize = reader.getNumericInput("packsize: ");
+        } else if (Massenprodukt == 'n') {
+            packsize = 0;
+        }
+        server.addProduct(name, price, quantity, (Employee) loggedInUser, packsize);
     }
 
     /**

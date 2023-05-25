@@ -201,7 +201,7 @@ public class Shop {
      * @throws ProductNotFound     Exception thrown when the product is not found
      */
 //CUSTOMER ONLY
-    public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
+    public void addProductToCart(String name, int quantity, Customer c) throws Exception {
         Products p = productManager.getProduct(name);
         if (p != null) {
             customerManager.buyProduct(p, quantity, c);
@@ -244,6 +244,7 @@ public class Shop {
      *
      * @param c the Customer
      */
+    // toDO  check quantity !!!!!!
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
@@ -276,8 +277,8 @@ public class Shop {
      * @param e        the e
      */
 //EMPLOYEE ONLY
-    public void addProduct(String name, double price, int quantity, Employee e) {
-        productManager.addProduct(name, price, quantity);
+    public void addProduct(String name, double price, int quantity, Employee e, int packsize) {
+        productManager.addProduct(name, price, quantity, packsize);
         saveAsync();
 
         Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
