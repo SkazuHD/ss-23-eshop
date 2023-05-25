@@ -31,10 +31,13 @@ public class Shop {
      */
     EmployeeManager employeeManager = new EmployeeManager();
 
+    EventManager eventManager = new EventManager();
     /**
      * The Persistence.
      */
     ShopPersistence persistence = new FileManager();
+
+
 
     /**
      * Instantiates a new Shop.
@@ -247,6 +250,7 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
+            eventManager.addEvent(new Event(c.getID(), key.getProductnumber(), cart.get(key)));
             Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
             productManager.removeProduct(key.getName(), cart.get(key));
         }
@@ -281,6 +285,7 @@ public class Shop {
         saveAsync();
 
         Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
+        eventManager.addEvent(new Event(e.getID(), productManager.getProduct(name).getProductnumber(), quantity));
     }
 
     /**
@@ -293,9 +298,8 @@ public class Shop {
     public void removeProduct(String name, int quantity, User user) {
         productManager.removeProduct(name, quantity);
         saveAsync();
-        if (user instanceof Employee) {
-            Logger.log(user, "Removed: " + name + "|" + quantity);
-        }
+        Logger.log(user, "Removed: " + name + "|" + quantity);
+        eventManager.addEvent(new Event(user.getID(), productManager.getProduct(name).getProductnumber(), quantity));
     }
 
     /**
