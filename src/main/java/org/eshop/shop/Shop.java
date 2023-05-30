@@ -287,18 +287,7 @@ public class Shop {
      * @param quantity the quantity
      * @param e        the e
      */
-//EMPLOYEE ONLY
-    @Deprecated
-    public void addProduct(String name, double price, int quantity, Employee e) {
-
-        productManager.getProductByName(name).size();
-
-        //productManager.addProduct(name, price, quantity);
-
-        saveAsync();
-        Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
-        //eventManager.addEvent(new Event(e, productManager.getProduct(name), quantity));
-    }
+    //EMPLOYEE ONLY
 
     /**
      * Increase quantity.
@@ -396,6 +385,7 @@ public class Shop {
      * @return the product
      */
     public List<Products> getProduct(String name) {
+        //TODO MAYBE JUST RETURN THE FIRST ONE
         return productManager.getProductByName(name);
     }
 }
