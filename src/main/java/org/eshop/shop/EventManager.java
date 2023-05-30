@@ -1,7 +1,10 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Event;
+import org.eshop.entities.Products;
+import org.eshop.entities.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +36,23 @@ public class EventManager {
         if (productEvents.containsKey(event.getProductId())) {
             productEvents.get(event.getProductId()).add(event);
         } else {
-            productEvents.put(event.getProductId(), List.of(event));
+            ArrayList<Event> list = new ArrayList<>();
+            list.add(event);
+            productEvents.put(event.getProductId(), list);
         }
 
+        //Show all Events for Debugging
 
+        productEvents.forEach((k, v) -> {
+            v.forEach((e) -> {
+                System.out.println(e);
+            });
+        });
+    }
+
+    public void addEvent(User user, Products p, int quantity) {
+        Event event = new Event(user, p, quantity);
+        addEvent(event);
     }
 
 

@@ -7,7 +7,6 @@ import org.eshop.exceptions.ProductNotFound;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
-import org.eshop.util.Logger;
 
 import java.io.File;
 import java.util.Collection;
@@ -254,9 +253,8 @@ public class Shop {
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            eventManager.addEvent(new Event(c, key, cart.get(key)));
-            Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
             try {
+                eventManager.addEvent(c, key, -cart.get(key));
                 productManager.removeProduct(key.getId(), cart.get(key));
             } catch (ProductNotFound e) {
                 System.out.println(e.getMessage());
@@ -264,8 +262,6 @@ public class Shop {
         }
         saveAsync();
         cart.clear();
-
-
     }
 
     /**
@@ -278,15 +274,6 @@ public class Shop {
         Invoice i = customerManager.checkout(c);
         return i.toString();
     }
-
-    /**
-     * Add product.
-     *
-     * @param name     the name
-     * @param price    the price
-     * @param quantity the quantity
-     * @param e        the e
-     */
     //EMPLOYEE ONLY
 
     /**
@@ -296,10 +283,10 @@ public class Shop {
      * @param quantity the quantity
      * @throws ProductNotFound the product not found
      */
-    public void increaseQuantity(int id, int quantity) throws ProductNotFound {
+    public void increaseQuantity(int id, int quantity, User u) throws ProductNotFound {
         productManager.increaseQuantity(id, quantity);
         saveAsync();
-
+        eventManager.addEvent(u, productManager.getProductById(id), quantity);
     }
 
     /**
@@ -309,9 +296,10 @@ public class Shop {
      * @param price    the price
      * @param quantity the quantity
      */
-    public void createProduct(String name, double price, int quantity) {
-        productManager.createProduct(name, price, quantity);
+    public void createProduct(String name, double price, int quantity, User u) {
+        Products p = productManager.createProduct(name, price, quantity);
         saveAsync();
+        eventManager.addEvent(u, p, quantity);
 
     }
 
@@ -348,25 +336,24 @@ public class Shop {
         productManager.removeProduct(id, quantity);
         saveAsync();
 
-        //Logger.log(user, "Removed: " + name + "|" + quantity);
-        // eventManager.addEvent(new Event(user, productManager.getProduct(name), quantity));
+        eventManager.addEvent(user, productManager.getProductById(id), -quantity);
     }
 
     /**
      * Register employee.
      *
      * @param username the username
-     * @param persoNr  the Personalnummmer
+     * @param id       the Personalnummmer
      * @param name     the name
      * @param password the password
      * @throws UserExistsException the customer exists exception
      */
-//Employees
-    public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
-        if (!employeeManager.register(username, persoNr, name, password)) {
+    //Employees
+    public void registerEmployee(String username, int id, String name, String password) throws UserExistsException {
+        if (!employeeManager.register(username, id, name, password)) {
             throw new UserExistsException(username);
         }
-        //Try Saveing to File
+        //Try Saving to File
         try {
             persistence.openForWriting("employees.csv", true);
             Employee e = employeeManager.getEmployee(username);

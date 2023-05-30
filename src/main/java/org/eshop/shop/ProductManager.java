@@ -125,7 +125,7 @@ public class ProductManager {
      * @param price    the price
      * @param quantity the quantity
      */
-    public void createProduct(String name, double price, int quantity) {
+    public Products createProduct(String name, double price, int quantity) {
         //Generate id
         int id = pNrCounter;
         while (productNrMap.containsKey(id)) {
@@ -145,6 +145,7 @@ public class ProductManager {
         }
         productNrMap.put(id, p);
 
+        return p;
     }
 
     /**

@@ -199,7 +199,7 @@ public class Cli {
     protected void increaseQuantity(int id) {
         int quantity = reader.getNumericInput("Quantity:");
         try {
-            server.increaseQuantity(id, quantity);
+            server.increaseQuantity(id, quantity, loggedInUser);
         } catch (ProductNotFound e) {
             System.out.println(e.getMessage());
         }
@@ -213,7 +213,7 @@ public class Cli {
     protected void createProduct(String name) {
         double price = reader.getDoubleInput("Price:");
         int quantity = reader.getNumericInput("Quantity");
-        server.createProduct(name, price, quantity);
+        server.createProduct(name, price, quantity, loggedInUser);
     }
 
     /**
@@ -222,11 +222,16 @@ public class Cli {
     protected void deleteProduct() {
         String name = reader.readLine("Product Name:");
         List<Products> result = server.findProducts(name);
-        int id = 0;
+        int id;
         if (result.size() > 1) {
             result.forEach(System.out::println);
             System.out.println("Multiple Products found, please select one by ID");
             id = reader.getNumericInput("Enter ID:");
+        } else if (result.size() == 1) {
+            id = result.get(0).getId();
+        } else {
+            System.err.println("No Product found");
+            return;
         }
         int quantity = reader.getNumericInput("Quantity:");
 

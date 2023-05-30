@@ -11,19 +11,19 @@ public class Event {
     /**
      * The User id.
      */
-    String userId;
+    final String userId;
     /**
      * The Product id.
      */
-    int productId;
+    final int productId;
     /**
      * The Quantity.
      */
-    int quantity;
+    final int quantity;
     /**
      * The Day in year.
      */
-    int dayInYear;
+    final int dayInYear;
 
     /**
      * Instantiates a new Event.
@@ -59,15 +59,6 @@ public class Event {
     }
 
     /**
-     * Sets user id.
-     *
-     * @param userId the user id
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    /**
      * Gets product id.
      *
      * @return the product id
@@ -76,14 +67,6 @@ public class Event {
         return productId;
     }
 
-    /**
-     * Sets product id.
-     *
-     * @param productId the product id
-     */
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
     /**
      * Gets quantity.
@@ -94,14 +77,6 @@ public class Event {
         return quantity;
     }
 
-    /**
-     * Sets quantity.
-     *
-     * @param quantity the quantity
-     */
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     /**
      * Gets day in year.
@@ -110,14 +85,5 @@ public class Event {
      */
     public int getDayInYear() {
         return dayInYear;
-    }
-
-    /**
-     * Sets day in year.
-     *
-     * @param dayInYear the day in year
-     */
-    public void setDayInYear(int dayInYear) {
-        this.dayInYear = dayInYear;
     }
 }
