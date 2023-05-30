@@ -7,10 +7,10 @@ import org.eshop.exceptions.ProductNotFound;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
-import org.eshop.util.Logger;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,9 +32,14 @@ public class Shop {
     EmployeeManager employeeManager = new EmployeeManager();
 
     /**
+     * The Event manager.
+     */
+    EventManager eventManager = new EventManager();
+    /**
      * The Persistence.
      */
     ShopPersistence persistence = new FileManager();
+
 
     /**
      * Instantiates a new Shop.
@@ -63,7 +68,7 @@ public class Shop {
             }
             try {
                 persistence.openForWriting("products.csv", false);
-                Collection<Products> products = productManager.getProductsSet();
+                Collection<Products> products = productManager.getProducts();
                 for (Products p : products) {
                     persistence.writeProducts(p);
                 }
@@ -188,42 +193,42 @@ public class Shop {
      */
 //Products
     public Collection<Products> getProductSet() {
-        return productManager.getProductsSet();
+        return productManager.getProducts();
     }
 
     /**
      * Add product to cart.
      *
-     * @param name     the name of the product
+     * @param id       the id of the product
      * @param quantity the quantity
      * @param c        the Customer
      * @throws NotInStockException Exception thrown when the product is not in stock
      * @throws ProductNotFound     Exception thrown when the product is not found
      */
 //CUSTOMER ONLY
-    public void addProductToCart(String name, int quantity, Customer c) throws NotInStockException, ProductNotFound {
-        Products p = productManager.getProduct(name);
+    public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound {
+        Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.buyProduct(p, quantity, c);
         } else {
-            throw new ProductNotFound(name);
+            throw new ProductNotFound(id);
         }
     }
 
     /**
      * Remove product from cart.
      *
-     * @param name     the name
+     * @param id       the name
      * @param quantity the quantity
      * @param c        the c
      * @throws ProductNotFound the product not found
      */
-    public void removeProductFromCart(String name, int quantity, Customer c) throws ProductNotFound {
-        Products p = productManager.getProduct(name);
+    public void removeProductFromCart(int id, int quantity, Customer c) throws ProductNotFound {
+        Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.removeProduct(p, quantity, c);
         } else {
-            throw new ProductNotFound(name);
+            throw new ProductNotFound(id);
         }
     }
 
@@ -244,16 +249,19 @@ public class Shop {
      *
      * @param c the Customer
      */
+//TODO Check if the product is in stock before checking out
     public void checkout(Customer c) {
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
-            Logger.log(c, "Buys: " + key.getName() + "|" + key.getPrice() + "|" + cart.get(key));
-            productManager.removeProduct(key.getName(), cart.get(key));
+            try {
+                eventManager.addEvent(c, key, -cart.get(key));
+                productManager.removeProduct(key.getId(), cart.get(key));
+            } catch (ProductNotFound e) {
+                System.out.println(e.getMessage());
+            }
         }
         saveAsync();
         cart.clear();
-
-
     }
 
     /**
@@ -266,53 +274,88 @@ public class Shop {
         Invoice i = customerManager.checkout(c);
         return i.toString();
     }
+    //EMPLOYEE ONLY
 
     /**
-     * Add product.
+     * Increase quantity.
+     *
+     * @param id       the id
+     * @param quantity the quantity
+     * @param u        the u
+     * @throws ProductNotFound the product not found
+     */
+    public void increaseQuantity(int id, int quantity, User u) throws ProductNotFound {
+        productManager.increaseQuantity(id, quantity);
+        saveAsync();
+        eventManager.addEvent(u, productManager.getProductById(id), quantity);
+    }
+
+    /**
+     * Create product.
      *
      * @param name     the name
      * @param price    the price
      * @param quantity the quantity
-     * @param e        the e
+     * @param u        the u
      */
-//EMPLOYEE ONLY
-    public void addProduct(String name, double price, int quantity, Employee e) {
-        productManager.addProduct(name, price, quantity);
+    public void createProduct(String name, double price, int quantity, User u) {
+        Products p = productManager.createProduct(name, price, quantity);
         saveAsync();
+        eventManager.addEvent(u, p, quantity);
 
-        Logger.log(e, "Added: " + " " + name + "|" + price + "|" + quantity);
+    }
+
+    /**
+     * Find products list.
+     *
+     * @param name the name
+     * @return the list
+     */
+    public List<Products> findProducts(String name) {
+        return productManager.getProductByName(name);
+    }
+
+    /**
+     * Find product products.
+     *
+     * @param id the id
+     * @return the products
+     * @throws ProductNotFound the product not found
+     */
+    public Products findProduct(int id) throws ProductNotFound {
+        return productManager.getProductById(id);
     }
 
     /**
      * Remove product.
      *
-     * @param name     the name
+     * @param id       the name
      * @param quantity the quantity
      * @param user     the user
+     * @throws ProductNotFound the product not found
      */
-    public void removeProduct(String name, int quantity, User user) {
-        productManager.removeProduct(name, quantity);
+    public void removeProduct(int id, int quantity, User user) throws ProductNotFound {
+        productManager.removeProduct(id, quantity);
         saveAsync();
-        if (user instanceof Employee) {
-            Logger.log(user, "Removed: " + name + "|" + quantity);
-        }
+
+        eventManager.addEvent(user, productManager.getProductById(id), -quantity);
     }
 
     /**
      * Register employee.
      *
      * @param username the username
-     * @param persoNr  the Personalnummmer
+     * @param id       the Personalnummmer
      * @param name     the name
      * @param password the password
      * @throws UserExistsException the customer exists exception
      */
 //Employees
-    public void registerEmployee(String username, int persoNr, String name, String password) throws UserExistsException {
-        if (!employeeManager.register(username, persoNr, name, password)) {
+    public void registerEmployee(String username, int id, String name, String password) throws UserExistsException {
+        if (!employeeManager.register(username, id, name, password)) {
             throw new UserExistsException(username);
         }
-        //Try Saveing to File
+        //Try Saving to File
         try {
             persistence.openForWriting("employees.csv", true);
             Employee e = employeeManager.getEmployee(username);
@@ -330,8 +373,9 @@ public class Shop {
      * @param name the name
      * @return the product
      */
-    public Products getProduct(String name) {
-        return productManager.getProduct(name);
+    public List<Products> getProduct(String name) {
+        //TODO MAYBE JUST RETURN THE FIRST ONE
+        return productManager.getProductByName(name);
     }
 }
 //Employees
