@@ -281,6 +281,7 @@ public class Shop {
      *
      * @param id       the id
      * @param quantity the quantity
+     * @param u        the u
      * @throws ProductNotFound the product not found
      */
     public void increaseQuantity(int id, int quantity, User u) throws ProductNotFound {
@@ -295,6 +296,7 @@ public class Shop {
      * @param name     the name
      * @param price    the price
      * @param quantity the quantity
+     * @param u        the u
      */
     public void createProduct(String name, double price, int quantity, User u) {
         Products p = productManager.createProduct(name, price, quantity);
@@ -348,7 +350,7 @@ public class Shop {
      * @param password the password
      * @throws UserExistsException the customer exists exception
      */
-    //Employees
+//Employees
     public void registerEmployee(String username, int id, String name, String password) throws UserExistsException {
         if (!employeeManager.register(username, id, name, password)) {
             throw new UserExistsException(username);

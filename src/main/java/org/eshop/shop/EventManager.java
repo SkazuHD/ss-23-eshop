@@ -50,6 +50,13 @@ public class EventManager {
         });
     }
 
+    /**
+     * Add event.
+     *
+     * @param user     the user
+     * @param p        the p
+     * @param quantity the quantity
+     */
     public void addEvent(User user, Products p, int quantity) {
         Event event = new Event(user, p, quantity);
         addEvent(event);

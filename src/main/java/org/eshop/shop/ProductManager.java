@@ -124,6 +124,7 @@ public class ProductManager {
      * @param name     the name
      * @param price    the price
      * @param quantity the quantity
+     * @return the products
      */
     public Products createProduct(String name, double price, int quantity) {
         //Generate id
