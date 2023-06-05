@@ -55,9 +55,7 @@ public class EventManager {
 
         //Show all Events for Debugging
 
-        productEvents.forEach((k, v) -> {
-            v.forEach(System.out::println);
-        });
+        productEvents.forEach((k, v) -> v.forEach(System.out::println));
     }
 
     /**
@@ -74,7 +72,7 @@ public class EventManager {
 
     public void loadEvents(String filename) {
         try {
-            persistence.openForReading("events.csv");
+            persistence.openForReading(filename);
         } catch (Exception e) {
             //TODO handle exception
             return;
@@ -84,7 +82,6 @@ public class EventManager {
             event = persistence.readEvent();
             if (event != null) {
                 addEvent(event);
-
             }
         } while (event != null);
     }
