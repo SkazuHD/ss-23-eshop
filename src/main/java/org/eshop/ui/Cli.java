@@ -206,9 +206,8 @@ public class Cli {
             System.out.println(e.getMessage());
             return;
         }
-        if(p instanceof MassProducts){
-            MassProducts mp = (MassProducts) p;
-            if(quantity % ((MassProducts) p).getPacksize() !=0){
+        if(p instanceof MassProducts mp){
+            if(quantity % mp.getPacksize() !=0){
                 System.err.println("Quantity not Matching Packsize: "+ mp.getPacksize());
                 do {
                     quantity = reader.getNumericInput("Quantity:");

@@ -15,13 +15,13 @@ public class ProductManager {
      */
 //Maps the Product Name to a List of Product Numbers
     //Used to find a Product Number by Name or to find all Product Numbers of a Products with the same Name
-    public Map<String, List<Integer>> productMap = new HashMap<String, List<Integer>>();
+    public Map<String, List<Integer>> productMap = new HashMap<>();
     /**
      * The Product nr map.
      */
 //Maps the Product Number to a Product
     //Find a specific Product by its Product Number
-    public Map<Integer, Products> productNrMap = new HashMap<Integer, Products>();
+    public Map<Integer, Products> productNrMap = new HashMap<>();
     /**
      * The P nr counter.
      */
@@ -32,14 +32,6 @@ public class ProductManager {
      */
     public ProductManager() {
     }
-
-    /**
-     * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
-     *
-     * @param name     gibt dem Produckt einen Namen
-     * @param price    gibt dem Prodcukt einen Preis
-     * @param quantity gibt dem Produckt eine Mengenanzahl
-     */
 
     /**
      * Load product.
