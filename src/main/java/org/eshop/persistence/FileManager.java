@@ -2,6 +2,7 @@ package org.eshop.persistence;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.Employee;
+import org.eshop.entities.Event;
 import org.eshop.entities.Products;
 
 import java.io.*;
@@ -102,6 +103,23 @@ public class FileManager implements ShopPersistence {
         }
         String[] parts = serial.split(";");
         return new Products(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]));
+    }
+
+    public void writeEvent(Event event) {
+        writer.print(event.getDayInYear() + ";");
+        writer.print(event.getUserId() + ";");
+        writer.print(event.getProductId() + ";");
+        writer.print(event.getQuantity());
+        writer.println();
+    }
+
+    public Event readEvent() {
+        String serial = readLine();
+        if (serial == null) {
+            return null;
+        }
+        String[] parts = serial.split(";");
+        return new Event(Integer.parseInt(parts[0]), parts[1], Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
     }
 
     public void close() {
