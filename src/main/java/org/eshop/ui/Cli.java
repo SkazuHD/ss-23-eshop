@@ -209,9 +209,9 @@ public class Cli {
         if(p instanceof MassProducts){
             MassProducts mp = (MassProducts) p;
             if(quantity % ((MassProducts) p).getPacksize() !=0){
-                System.err.println("Quantity not Matching Packsize");
+                System.err.println("Quantity not Matching Packsize: "+ mp.getPacksize());
                 do {
-                    quantity = reader.getNumericInput("Quantity");
+                    quantity = reader.getNumericInput("Quantity:");
                     if(quantity % mp.getPacksize() != 0){
                         System.err.println("Packsize not Matching Quantity");
                     }
@@ -238,13 +238,13 @@ public class Cli {
         do{
             ans = reader.readLine("Is Massproduct (y/n)");
             ans = ans.toLowerCase();
-        }while (!ans.equals("y")|| !ans.equals("n"));
+        }while (!ans.equals("y") && !ans.equals("n"));
         int packsize = 0;
         int quantity;
         if(ans.equals("y")){
             packsize = reader.getNumericInput("Packsize:");
             do {
-                quantity = reader.getNumericInput("Quantity");
+                quantity = reader.getNumericInput("Quantity:");
                 if(quantity % packsize != 0){
                     System.err.println("Packsize not Matching Quantity");
                 }
