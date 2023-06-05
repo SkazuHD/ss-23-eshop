@@ -299,10 +299,15 @@ public class Shop {
      * @param u        the u
      */
     public void createProduct(String name, double price, int quantity, User u) {
-        Products p = productManager.createProduct(name, price, quantity);
+        Products p = productManager.createProduct(name, price, quantity, 0);
         saveAsync();
         eventManager.addEvent(u, p, quantity);
 
+    }
+    public void createMassProduct(String name, double price, int quantity, int packsize, User u){
+        Products p = productManager.createProduct(name, price, quantity, packsize);
+        saveAsync();
+        eventManager.addEvent(u, p, quantity);
     }
 
     /**

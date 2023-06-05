@@ -1,5 +1,6 @@
 package org.eshop.shop;
 
+import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.exceptions.ProductNotFound;
 
@@ -126,14 +127,20 @@ public class ProductManager {
      * @param quantity the quantity
      * @return the products
      */
-    public Products createProduct(String name, double price, int quantity) {
+    public Products createProduct(String name, double price, int quantity, int packsize) {
         //Generate id
         int id = pNrCounter;
         while (productNrMap.containsKey(id)) {
             pNrCounter++;
             id = pNrCounter;
         }
-        Products p = new Products(id, price, name, quantity);
+        Products p;
+
+        if(packsize != 0){
+            p = new MassProducts(id, price, name, quantity, packsize);
+        }else {
+            p = new Products(id, price, name, quantity);
+        }
 
         // Check if name already exist in Map and add id to List
         if (productMap.containsKey(name)) {
