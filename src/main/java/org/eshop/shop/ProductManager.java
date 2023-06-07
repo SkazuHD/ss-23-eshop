@@ -1,5 +1,6 @@
 package org.eshop.shop;
 
+import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.exceptions.ProductNotFound;
 
@@ -14,13 +15,13 @@ public class ProductManager {
      */
 //Maps the Product Name to a List of Product Numbers
     //Used to find a Product Number by Name or to find all Product Numbers of a Products with the same Name
-    public Map<String, List<Integer>> productMap = new HashMap<String, List<Integer>>();
+    public Map<String, List<Integer>> productMap = new HashMap<>();
     /**
      * The Product nr map.
      */
 //Maps the Product Number to a Product
     //Find a specific Product by its Product Number
-    public Map<Integer, Products> productNrMap = new HashMap<Integer, Products>();
+    public Map<Integer, Products> productNrMap = new HashMap<>();
     /**
      * The P nr counter.
      */
@@ -31,14 +32,6 @@ public class ProductManager {
      */
     public ProductManager() {
     }
-
-    /**
-     * Fügt ein Produckt hinzu und zählt die Producktnummer hoch
-     *
-     * @param name     gibt dem Produckt einen Namen
-     * @param price    gibt dem Prodcukt einen Preis
-     * @param quantity gibt dem Produckt eine Mengenanzahl
-     */
 
     /**
      * Load product.
@@ -126,14 +119,20 @@ public class ProductManager {
      * @param quantity the quantity
      * @return the products
      */
-    public Products createProduct(String name, double price, int quantity) {
+    public Products createProduct(String name, double price, int quantity, int packsize) {
         //Generate id
         int id = pNrCounter;
         while (productNrMap.containsKey(id)) {
             pNrCounter++;
             id = pNrCounter;
         }
-        Products p = new Products(id, price, name, quantity);
+        Products p;
+
+        if(packsize != 0){
+            p = new MassProducts(id, price, name, quantity, packsize);
+        }else {
+            p = new Products(id, price, name, quantity);
+        }
 
         // Check if name already exist in Map and add id to List
         if (productMap.containsKey(name)) {

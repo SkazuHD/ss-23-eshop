@@ -1,6 +1,7 @@
 package org.eshop.ui;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
@@ -198,6 +199,27 @@ public class Cli {
      */
     protected void increaseQuantity(int id) {
         int quantity = reader.getNumericInput("Quantity:");
+        Products p;
+        try {
+             p = server.findProduct(id);
+        }catch (ProductNotFound e){
+            System.out.println(e.getMessage());
+            return;
+        }
+        if(p instanceof MassProducts mp){
+            if(quantity % mp.getPacksize() !=0){
+                System.err.println("Quantity not Matching Packsize: "+ mp.getPacksize());
+                do {
+                    quantity = reader.getNumericInput("Quantity:");
+                    if(quantity % mp.getPacksize() != 0){
+                        System.err.println("Packsize not Matching Quantity");
+                    }
+                }while (quantity % mp.getPacksize() != 0);
+
+            }
+        }
+
+
         try {
             server.increaseQuantity(id, quantity, loggedInUser);
         } catch (ProductNotFound e) {
@@ -211,9 +233,33 @@ public class Cli {
      * @param name the name
      */
     protected void createProduct(String name) {
+        String ans;
+        do{
+            ans = reader.readLine("Is Massproduct (y/n)");
+            ans = ans.toLowerCase();
+        }while (!ans.equals("y") && !ans.equals("n"));
+        int packsize = 0;
+        int quantity;
+        if(ans.equals("y")){
+            packsize = reader.getNumericInput("Packsize:");
+            do {
+                quantity = reader.getNumericInput("Quantity:");
+                if(quantity % packsize != 0){
+                    System.err.println("Packsize not Matching Quantity");
+                }
+            }while (quantity % packsize != 0);
+
+        }else {
+            quantity = reader.getNumericInput("Quantity");
+        }
         double price = reader.getDoubleInput("Price:");
-        int quantity = reader.getNumericInput("Quantity");
-        server.createProduct(name, price, quantity, loggedInUser);
+
+        if (ans.equals("y")){
+            server.createMassProduct(name, price, quantity,packsize,loggedInUser);
+        }else {
+            server.createProduct(name, price, quantity, loggedInUser);
+
+        }
     }
 
     /**

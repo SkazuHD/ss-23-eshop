@@ -39,6 +39,14 @@ public class Event {
         this.dayInYear = LocalDate.now().getDayOfYear();
     }
 
+    //Load from file
+    public Event(int dayInYear, String user, int p, int quantity) {
+        this.userId = user;
+        this.productId = p;
+        this.quantity = quantity;
+        this.dayInYear = dayInYear;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
