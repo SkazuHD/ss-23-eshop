@@ -9,8 +9,10 @@ import java.awt.event.WindowEvent;
 /**
  * The type Gui.
  */
-public class Gui extends WindowAdapter {
-    JFrame frame;
+public class Gui extends JFrame {
+
+    JPanel search;
+    JPanel output;
 
     public Gui() {
 
@@ -22,20 +24,7 @@ public class Gui extends WindowAdapter {
     }
 
     public void initialize() {
-        frame = new JFrame("Eshop");
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.setSize(300, 300);
-        frame.setVisible(true);
-
-        //Add a window listener for the close button
-
-        frame.addWindowListener(this);
 
     }
 
-    @Override
-    public void windowClosing(WindowEvent e) {
-        System.err.println("Closing");
-        frame.dispose();
-    }
 }

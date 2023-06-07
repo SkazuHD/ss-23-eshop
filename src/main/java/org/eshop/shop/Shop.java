@@ -145,7 +145,7 @@ public class Shop {
         if (!customerManager.register(username, password, name, address)) {
             throw new UserExistsException(username);
         }
-        //Try Saveing to File
+        //Try Saving to File
         try {
             persistence.openForWriting("customers.csv", true);
             Customer c = customerManager.getCustomer(username);
@@ -206,6 +206,8 @@ public class Shop {
      * @throws ProductNotFound     Exception thrown when the product is not found
      */
 //CUSTOMER ONLY
+
+    //TODO Check if Massproduct -> Packsize match quantiry
     public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound {
         Products p = productManager.getProductById(id);
         if (p != null) {
