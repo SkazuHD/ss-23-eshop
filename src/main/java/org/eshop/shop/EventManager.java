@@ -3,6 +3,8 @@ package org.eshop.shop;
 import org.eshop.entities.Event;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
+import org.eshop.persistence.FileManager;
+import org.eshop.persistence.ShopPersistence;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,14 +19,15 @@ public class EventManager {
     /**
      * The Product events.
      */
-// Manges Product events
     Map<Integer, List<Event>> productEvents;
+    ShopPersistence persistence = new FileManager();
 
     /**
      * Instantiates a new Event manager.
      */
     public EventManager() {
         productEvents = new HashMap<>();
+        loadEvents("events.csv");
     }
 
     /**
@@ -40,14 +43,19 @@ public class EventManager {
             list.add(event);
             productEvents.put(event.getProductId(), list);
         }
+        try {
+            persistence.openForWriting("events.csv", true);
+
+        } catch (Exception e) {
+            //TODO handle exception
+            return;
+        }
+        persistence.writeEvent(event);
+        persistence.close();
 
         //Show all Events for Debugging
 
-        productEvents.forEach((k, v) -> {
-            v.forEach((e) -> {
-                System.out.println(e);
-            });
-        });
+        productEvents.forEach((k, v) -> v.forEach(System.out::println));
     }
 
     /**
@@ -60,6 +68,22 @@ public class EventManager {
     public void addEvent(User user, Products p, int quantity) {
         Event event = new Event(user, p, quantity);
         addEvent(event);
+    }
+
+    public void loadEvents(String filename) {
+        try {
+            persistence.openForReading(filename);
+        } catch (Exception e) {
+            //TODO handle exception
+            return;
+        }
+        Event event;
+        do {
+            event = persistence.readEvent();
+            if (event != null) {
+                addEvent(event);
+            }
+        } while (event != null);
     }
 
 
