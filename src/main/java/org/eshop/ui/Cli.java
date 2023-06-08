@@ -1,7 +1,7 @@
 package org.eshop.ui;
 
 import org.eshop.entities.Customer;
-import org.eshop.entities.Employee;
+import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
@@ -11,6 +11,7 @@ import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -77,13 +78,9 @@ public class Cli {
      * register employee
      */
     protected void registerEmployee() {
-        //GET USERNAME
         String username = reader.readLine("Enter Username:");
-        //GET PERSONR
         int persoNr = reader.getNumericInput("Enter PersoNr:");
-        //GET NAME
         String name = reader.readLine("Enter Name:");
-        //GET PWD
         String password = reader.readLine("Enter Password:");
 
         try {
@@ -127,11 +124,23 @@ public class Cli {
      * Buy products.
      */
     protected void buyProducts() {
-        String name = reader.readLine("Product Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
+        String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        int id;
+        if (result.size() > 1) {
+            result.forEach(System.out::println);
+            System.out.println("Multiple Products found, please select one by ID");
+            id = reader.getNumericInput("Enter ID:");
+        } else if (result.size() == 1) {
+            id = result.get(0).getId();
+        } else {
+            System.err.println("No Product found");
+            return;
+        }
+        int quantity = reader.getNumericInput("Quantity:");
+
         try {
-            server.addProductToCart(name, quantity, (Customer) loggedInUser);
+            server.addProductToCart(id, quantity, (Customer) loggedInUser);
         } catch (ProductNotFound | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
@@ -139,15 +148,26 @@ public class Cli {
     }
 
     /**
-     * Remove product.
+     * Remove product from Customers cart.
      *
      * @throws ProductNotFound the product not found
      */
     protected void removeProduct() throws ProductNotFound {
-        String name = reader.readLine("Prouct Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
-        server.removeProductFromCart(name, quantity, (Customer) loggedInUser);
+        String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        int id;
+        if (result.size() > 1) {
+            result.forEach(System.out::println);
+            System.out.println("Multiple Products found, please select one by ID");
+            id = reader.getNumericInput("Enter ID:");
+        } else if (result.size() == 1) {
+            id = result.get(0).getId();
+        } else {
+            System.err.println("No Product found");
+            return;
+        }
+        int quantity = reader.getNumericInput("Quantity:");
+        server.removeProductFromCart(id, quantity, (Customer) loggedInUser);
     }
 
     /**
@@ -155,19 +175,119 @@ public class Cli {
      */
     protected void addProduct() {
         String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        if (result.size() == 0) {
+            createProduct(name);
+        } else {
+            result.forEach(System.out::println);
+            System.out.println("1. Increase Existing");
+            System.out.println("2. Create new Product");
+            int ans = reader.getNumericInput("Selection:");
+            if (ans == 1) {
+                int id = reader.getNumericInput("Enter ID:");
+                increaseQuantity(id);
+            } else {
+                createProduct(name);
+            }
+        }
+    }
+
+    /**
+     * Increase quantity.
+     *
+     * @param id the id
+     */
+    protected void increaseQuantity(int id) {
         int quantity = reader.getNumericInput("Quantity:");
-        double price = server.getProduct(name) == null ? reader.getDoubleInput("Price:") : server.getProduct(name).getPrice();
-        server.addProduct(name, price, quantity, (Employee) loggedInUser);
+        Products p;
+        try {
+             p = server.findProduct(id);
+        }catch (ProductNotFound e){
+            System.out.println(e.getMessage());
+            return;
+        }
+        if(p instanceof MassProducts mp){
+            if(quantity % mp.getPacksize() !=0){
+                System.err.println("Quantity not Matching Packsize: "+ mp.getPacksize());
+                do {
+                    quantity = reader.getNumericInput("Quantity:");
+                    if(quantity % mp.getPacksize() != 0){
+                        System.err.println("Packsize not Matching Quantity");
+                    }
+                }while (quantity % mp.getPacksize() != 0);
+
+            }
+        }
+
+
+        try {
+            server.increaseQuantity(id, quantity, loggedInUser);
+        } catch (ProductNotFound e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Create product.
+     *
+     * @param name the name
+     */
+    protected void createProduct(String name) {
+        String ans;
+        do{
+            ans = reader.readLine("Is Massproduct (y/n)");
+            ans = ans.toLowerCase();
+        }while (!ans.equals("y") && !ans.equals("n"));
+        int packsize = 0;
+        int quantity;
+        if(ans.equals("y")){
+            packsize = reader.getNumericInput("Packsize:");
+            do {
+                quantity = reader.getNumericInput("Quantity:");
+                if(quantity % packsize != 0){
+                    System.err.println("Packsize not Matching Quantity");
+                }
+            }while (quantity % packsize != 0);
+
+        }else {
+            quantity = reader.getNumericInput("Quantity");
+        }
+        double price = reader.getDoubleInput("Price:");
+
+        if (ans.equals("y")){
+            server.createMassProduct(name, price, quantity,packsize,loggedInUser);
+        }else {
+            server.createProduct(name, price, quantity, loggedInUser);
+
+        }
     }
 
     /**
      * remove product from stock
      */
     protected void deleteProduct() {
-        String name = reader.readLine("Product Name: ");
-        System.out.print("Quantity: ");
-        int quantity = reader.getNumericInput("");
-        server.removeProduct(name, quantity, loggedInUser);
+        String name = reader.readLine("Product Name:");
+        List<Products> result = server.findProducts(name);
+        int id;
+        if (result.size() > 1) {
+            result.forEach(System.out::println);
+            System.out.println("Multiple Products found, please select one by ID");
+            id = reader.getNumericInput("Enter ID:");
+        } else if (result.size() == 1) {
+            id = result.get(0).getId();
+        } else {
+            System.err.println("No Product found");
+            return;
+        }
+        int quantity = reader.getNumericInput("Quantity:");
+
+        try {
+            server.removeProduct(id, quantity, loggedInUser);
+
+        } catch (ProductNotFound e) {
+            System.err.println(e.getMessage());
+            System.err.flush();
+        }
     }
 
 

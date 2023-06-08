@@ -5,7 +5,7 @@ package org.eshop.entities;
  */
 public class Products {
     //Attribute  Price, Nem und Producktnumber für das Product
-    private int Productnumber;
+    private int id;
     private double Price;
 
     private String name;
@@ -17,13 +17,13 @@ public class Products {
     /**
      * Instantiates a new Products.
      *
-     * @param pNr      the p nr
+     * @param id       the p nr
      * @param price    the price
      * @param name     the name
      * @param quantity the quantity
      */
-    public Products(int pNr, double price, String name, int quantity) {
-        Productnumber = pNr;
+    public Products(int id, double price, String name, int quantity) {
+        this.id = id;
         Price = price;
         this.name = name;
         this.quantity = quantity;
@@ -72,17 +72,17 @@ public class Products {
      *
      * @return the productnumber
      */
-    public int getProductnumber() {
-        return Productnumber;
+    public int getId() {
+        return id;
     }
 
     /**
      * Sets productnumber.
      *
-     * @param productnumber the productnumber
+     * @param id the productnumber
      */
-    public void setProductnumber(int productnumber) {
-        Productnumber = productnumber;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -104,6 +104,6 @@ public class Products {
     }
 
     public String toString() {
-        return String.format("%-5d %-6.2f %-22s %d", this.getProductnumber(), this.getPrice(), this.getName(), this.getQuantity());
+        return String.format("%-5d %-6.2f %-22s %d", this.getId(), this.getPrice(), this.getName(), this.getQuantity());
     }
 }
