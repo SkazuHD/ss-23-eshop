@@ -144,7 +144,9 @@ public class Cli {
         } catch (PacksizeNotMatching e) {
             System.err.println((e.getMessage()));
             try {
-                server.addProductToCart(id,quantity,(Customer) loggedInUser);
+             quantity = reader. getNumericInput("new quantity:");
+                server.addProductToCart(id, quantity, (Customer) loggedInUser);
+
             } catch (ProductNotFound | NotInStockException a) {
                 System.err.println(a.getMessage());
                 System.err.flush();
