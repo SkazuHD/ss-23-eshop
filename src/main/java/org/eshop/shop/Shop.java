@@ -209,7 +209,7 @@ public class Shop {
         Products p = productManager.getProductById(id);
         if(p instanceof MassProducts){
             if (quantity % ((MassProducts) p).getPacksize() != 0){
-                throw  new PacksizeNotMatching();
+                throw  new PacksizeNotMatching(((MassProducts) p).getPacksize());
             }
             }
         if (p != null) {
