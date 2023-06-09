@@ -4,10 +4,7 @@ import org.eshop.entities.Customer;
 import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.exceptions.LoginFailed;
-import org.eshop.exceptions.NotInStockException;
-import org.eshop.exceptions.ProductNotFound;
-import org.eshop.exceptions.UserExistsException;
+import org.eshop.exceptions.*;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
 
@@ -144,6 +141,19 @@ public class Cli {
         } catch (ProductNotFound | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
+        } catch (PacksizeNotMatching e) {
+            System.err.println((e.getMessage()));
+            try {
+             quantity = reader. getNumericInput("new quantity:");
+                server.addProductToCart(id, quantity, (Customer) loggedInUser);
+
+            } catch (ProductNotFound | NotInStockException a) {
+                System.err.println(a.getMessage());
+                System.err.flush();
+            }
+            catch (PacksizeNotMatching a) {
+                System.err.println((e.getMessage()));
+            }
         }
     }
 
@@ -201,20 +211,20 @@ public class Cli {
         int quantity = reader.getNumericInput("Quantity:");
         Products p;
         try {
-             p = server.findProduct(id);
-        }catch (ProductNotFound e){
+            p = server.findProduct(id);
+        } catch (ProductNotFound e) {
             System.out.println(e.getMessage());
             return;
         }
-        if(p instanceof MassProducts mp){
-            if(quantity % mp.getPacksize() !=0){
-                System.err.println("Quantity not Matching Packsize: "+ mp.getPacksize());
+        if (p instanceof MassProducts mp) {
+            if (quantity % mp.getPacksize() != 0) {
+                System.err.println("Quantity not Matching Packsize: " + mp.getPacksize());
                 do {
                     quantity = reader.getNumericInput("Quantity:");
-                    if(quantity % mp.getPacksize() != 0){
+                    if (quantity % mp.getPacksize() != 0) {
                         System.err.println("Packsize not Matching Quantity");
                     }
-                }while (quantity % mp.getPacksize() != 0);
+                } while (quantity % mp.getPacksize() != 0);
 
             }
         }
@@ -234,29 +244,29 @@ public class Cli {
      */
     protected void createProduct(String name) {
         String ans;
-        do{
+        do {
             ans = reader.readLine("Is Massproduct (y/n)");
             ans = ans.toLowerCase();
-        }while (!ans.equals("y") && !ans.equals("n"));
+        } while (!ans.equals("y") && !ans.equals("n"));
         int packsize = 0;
         int quantity;
-        if(ans.equals("y")){
+        if (ans.equals("y")) {
             packsize = reader.getNumericInput("Packsize:");
             do {
                 quantity = reader.getNumericInput("Quantity:");
-                if(quantity % packsize != 0){
+                if (quantity % packsize != 0) {
                     System.err.println("Packsize not Matching Quantity");
                 }
-            }while (quantity % packsize != 0);
+            } while (quantity % packsize != 0);
 
-        }else {
+        } else {
             quantity = reader.getNumericInput("Quantity");
         }
         double price = reader.getDoubleInput("Price:");
 
-        if (ans.equals("y")){
-            server.createMassProduct(name, price, quantity,packsize,loggedInUser);
-        }else {
+        if (ans.equals("y")) {
+            server.createMassProduct(name, price, quantity, packsize, loggedInUser);
+        } else {
             server.createProduct(name, price, quantity, loggedInUser);
 
         }
