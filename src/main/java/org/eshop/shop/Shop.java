@@ -207,6 +207,7 @@ public class Shop {
     //TODO Check if Massproduct -> Packsize match quantiry
     public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound, PacksizeNotMatching {
         Products p = productManager.getProductById(id);
+
         if(p instanceof MassProducts){
             if (quantity % ((MassProducts) p).getPacksize() != 0){
                 throw  new PacksizeNotMatching(((MassProducts) p).getPacksize());
