@@ -210,6 +210,7 @@ public class Shop {
     //TODO Check if Massproduct -> Packsize match quantiry
     public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound {
         Products p = productManager.getProductById(id);
+
         if (p != null) {
             customerManager.buyProduct(p, quantity, c);
         } else {

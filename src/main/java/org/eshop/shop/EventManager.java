@@ -86,5 +86,8 @@ public class EventManager {
         } while (event != null);
     }
 
-
+    //TODO IMPLEMENT
+    public int[] getProductHistory(){
+        return null;
+    }
 }

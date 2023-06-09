@@ -49,7 +49,6 @@ public class Cli {
      * Run.
      */
     public void run() {
-
         startMenu();
     }
 
