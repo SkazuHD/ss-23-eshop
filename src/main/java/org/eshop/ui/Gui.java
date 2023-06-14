@@ -1,13 +1,11 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Employee;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.frames.LoginFrame;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 /**
  * The type Gui.
@@ -37,9 +35,13 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
 
     @Override
     public void onLogin(User user) {
-        //TODO LOGIN SHOW EMPLOYEE/CUSTOMER FRAME
         System.out.println(user);
-                JFrame Employee = new GuiEmployee(server);
+        if(user instanceof Employee){
+            JFrame Employee = new GuiEmployee(server);
+        }else {
+            //TODO LOGIN SHOW CUSTOMER FRAME
+
+        }
 
     }
 }

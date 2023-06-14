@@ -139,6 +139,12 @@ public class Shop {
      * @throws UserExistsException the customer exists exception
      */
     public void registerUser(String username, String password, String name, String address) throws UserExistsException {
+        //TODO CHECK IF STRING IS EMPTY
+
+        if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty()) {
+            throw new IllegalArgumentException("Empty Fields");
+        }
+
         if (!customerManager.register(username, password, name, address)) {
             throw new UserExistsException(username);
         }
