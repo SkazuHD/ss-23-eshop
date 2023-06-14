@@ -1,11 +1,13 @@
 package org.eshop.ui.frames;
 
 import org.eshop.entities.User;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.shop.Shop;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
+import java.util.Arrays;
 
 
 public class LoginFrame extends JFrame {
@@ -17,6 +19,7 @@ public class LoginFrame extends JFrame {
     private addLoginListener listener;
 
     private JPanel loginPanel;
+    private JPanel formPanel;
     private JLabel usernameLabel;
     private JTextField usernameField;
     private JLabel passwordLabel;
@@ -28,36 +31,65 @@ public class LoginFrame extends JFrame {
         server = shop;
         this.listener = listener;
         buildUI();
+        setupEvents();
     }
 
     private void buildUI(){
+        Dimension inputMaxSize = new Dimension(300,25);
         loginPanel = new JPanel();
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.PAGE_AXIS));
-        loginPanel.setPreferredSize(new Dimension(640,480));
+        loginPanel.setBorder(new EmptyBorder(10,10,10,10));
 
-        JPanel usernamePanel = new JPanel();
+        formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.PAGE_AXIS));
+        formPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        JLabel title = new JLabel("LOGIN");
+        title.setFont(new Font("Arial", Font.PLAIN, 24));
+        formPanel.add(title);
+
         usernameLabel = new JLabel("Username:");
-        usernamePanel.add(usernameLabel);
+        formPanel.add(usernameLabel);
         usernameField = new JTextField();
-        usernamePanel.add(usernameField);
+        usernameField.setMaximumSize(inputMaxSize);
+        usernameField.setPreferredSize(inputMaxSize);
 
-        loginPanel.add(usernamePanel);
+        formPanel.add(usernameField);
+
+        loginPanel.add(formPanel);
 
 
-        JPanel passwordPanel = new JPanel();
+
         passwordLabel = new JLabel("Password");
-        passwordPanel.add(passwordLabel);
+        formPanel.add(passwordLabel);
         passwordField = new JPasswordField();
-        passwordPanel.add(passwordField);
+        formPanel.add(passwordField);
+        passwordField.setMaximumSize(inputMaxSize);
+        passwordField.setPreferredSize(inputMaxSize);
 
-        loginPanel.add(passwordPanel);
 
+        loginButton = new JButton("LOGIN");
+        formPanel.add(loginButton);
         loginPanel.setVisible(true);
 
         this.add(loginPanel);
-        this.setSize(640, 480);
+
+        pack();
         this.setVisible(true);
     }
-    private void setupEvents(){}
+    private void setupEvents(){
+        //LOGIN Button
+        loginButton.addActionListener((e)->{
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            User u = null;
+            try {
+                u = server.loginUser(username, password);
+                listener.onLogin(u);
+            }catch (LoginFailed exp){
+                JOptionPane.showMessageDialog(new JFrame(), exp.getMessage(), "Login failed!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
 
 }
