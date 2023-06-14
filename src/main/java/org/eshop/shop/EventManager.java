@@ -54,8 +54,7 @@ public class EventManager {
         persistence.close();
 
         //Show all Events for Debugging
-
-        productEvents.forEach((k, v) -> v.forEach(System.out::println));
+        //productEvents.forEach((k, v) -> v.forEach(System.out::println));
     }
 
     /**
