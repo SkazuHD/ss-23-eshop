@@ -1,4 +1,3 @@
-package customer;
 
 import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.UserExistsException;

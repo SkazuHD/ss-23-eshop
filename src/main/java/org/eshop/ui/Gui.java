@@ -5,6 +5,7 @@ import org.eshop.shop.Shop;
 import org.eshop.ui.frames.LoginFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -21,7 +22,8 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
 
     public Gui() {
         server = new Shop();
-       loginFrame = new LoginFrame(server, this);
+        JFrame Employee = new GuiEmployee(server);
+       //loginFrame = new LoginFrame(server, this);
     }
 
     public static void main(String[] args) {
