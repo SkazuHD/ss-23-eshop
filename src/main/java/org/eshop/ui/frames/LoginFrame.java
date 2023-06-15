@@ -4,6 +4,7 @@ import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
+import org.eshop.ui.listener.ShopCloseListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -32,6 +33,8 @@ public class LoginFrame extends JFrame {
         this.listener = listener;
         buildUI();
         setupEvents();
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new ShopCloseListener(server));
     }
 
     private void buildUI() {
