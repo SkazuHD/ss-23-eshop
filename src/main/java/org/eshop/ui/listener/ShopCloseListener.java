@@ -22,8 +22,7 @@ public class ShopCloseListener extends WindowAdapter implements WindowListener {
         int option = JOptionPane.showOptionDialog(new JFrame(), "Save Data before closing the Application?", "Save Data?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
         switch (option) {
             case JOptionPane.YES_OPTION:
-                //TODO WAIT FOR SAVE TO FINISH
-                server.saveAsync();
+                server.saveProducts();
                 break;
             case JOptionPane.NO_OPTION:
                 break;

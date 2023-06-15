@@ -53,27 +53,30 @@ public class Shop {
     public void saveAsync() {
         // Parallel Process
         new Thread(() -> {
+            saveProducts();
+        }).start();
+    }
 
-            //Test if file is in use
-            File file = new File("products.csv");
-            while (!file.renameTo(file)) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+    public void saveProducts() {
+        //Test if file is in use
+        File file = new File("products.csv");
+        while (!file.renameTo(file)) {
             try {
-                persistence.openForWriting("products.csv", false);
-                Collection<Products> products = productManager.getProducts();
-                for (Products p : products) {
-                    persistence.writeProducts(p);
-                }
-                persistence.close();
-            } catch (Exception e) {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+        }
+        try {
+            persistence.openForWriting("products.csv", false);
+            Collection<Products> products = productManager.getProducts();
+            for (Products p : products) {
+                persistence.writeProducts(p);
+            }
+            persistence.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -214,11 +217,11 @@ public class Shop {
     public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound, PacksizeNotMatching {
         Products p = productManager.getProductById(id);
 
-        if(p instanceof MassProducts){
-            if (quantity % ((MassProducts) p).getPacksize() != 0){
-                throw  new PacksizeNotMatching(((MassProducts) p).getPacksize());
+        if (p instanceof MassProducts) {
+            if (quantity % ((MassProducts) p).getPacksize() != 0) {
+                throw new PacksizeNotMatching(((MassProducts) p).getPacksize());
             }
-            }
+        }
         if (p != null) {
             customerManager.buyProduct(p, quantity, c);
         } else {
@@ -315,7 +318,8 @@ public class Shop {
         eventManager.addEvent(u, p, quantity);
 
     }
-    public void createMassProduct(String name, double price, int quantity, int packsize, User u){
+
+    public void createMassProduct(String name, double price, int quantity, int packsize, User u) {
         Products p = productManager.createProduct(name, price, quantity, packsize);
         saveAsync();
         eventManager.addEvent(u, p, quantity);
