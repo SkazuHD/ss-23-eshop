@@ -2,6 +2,7 @@ package org.eshop.ui;
 
 
 import org.eshop.shop.Shop;
+import org.eshop.ui.components.SearchWidget;
 
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class MenuePanel extends javax.swing.JPanel {
 
         Shop shop;
 
-        public MenuePanel (Shop shop){
+        public MenuePanel (Shop shop, SearchWidget.SearchListener searchListener){
 
 
 
@@ -39,10 +40,12 @@ public class MenuePanel extends javax.swing.JPanel {
             jMenuBar.setBorder(new EmptyBorder(10,10,10,10));
             jMenuBar.add(menu);
 
-
+            SearchWidget search = new SearchWidget(shop, searchListener);
+            search.setBackground(new Color(50));
+            menu.add(search);
 
             menu.add(Mitarbeiter,BorderLayout.LINE_START);
-            menu.add(Search);
+            //menu.add(Search);
             menu.setBackground(new Color(50));
             menu.setBorder(new EmptyBorder(10,10,10,10));
             menu.add(Logout);
