@@ -47,8 +47,12 @@ public class SearchWidget extends JPanel implements ActionListener {
 
     private void search() {
         String query = searchField.getText();
-        List<Products> result = server.findProducts(query);
-        listener.onSearch(result);
+        if (query.isEmpty() || query.isBlank() || query.length() < 3) {
+            listener.onSearch(server.getProductSet().stream().toList());
+        } else {
+            List<Products> result = server.findProducts(query);
+            listener.onSearch(result);
+        }
     }
 
     @Override
