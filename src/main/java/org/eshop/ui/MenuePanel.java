@@ -31,9 +31,8 @@ public class MenuePanel extends javax.swing.JPanel {
 
 
 
-            jPanel1.add(pannel1, java.awt.BorderLayout.PAGE_START);
-            pannel1.add(jMenuBar);
-            pannel1.setBackground(new Color(50));
+            this.add(jMenuBar);
+            this.setBackground(new Color(50));
 
             jMenuBar.setBackground(new Color(50));
             jMenuBar.setBorderPainted(true);

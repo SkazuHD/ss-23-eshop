@@ -7,12 +7,13 @@ public class ProducktPanel extends javax.swing.JPanel {
     private javax.swing.JList Produkte =
             new javax.swing.JList<Products>();
     Shop shop;
-GuiEmployee guiEmployee;
-GuiEmployee jPanel1;
+    //GuiEmployee guiEmployee;
+    //GuiEmployee jPanel1;
 
-    public ProducktPanel (GuiEmployee guiEmployee){
-        this.guiEmployee = guiEmployee;
+    public ProducktPanel (Shop shop){
+        //this.guiEmployee = guiEmployee;
 
-        jPanel1.add(Produkte,java.awt.BorderLayout.CENTER);
+
+        this.add(Produkte);
         Produkte.setListData(shop.getProductSet().toArray());
 }}

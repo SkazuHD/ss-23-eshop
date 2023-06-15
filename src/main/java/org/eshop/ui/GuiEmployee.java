@@ -29,10 +29,15 @@ public class GuiEmployee extends javax.swing.JFrame {
          */
         public GuiEmployee(Shop shop) {
             this.shop = shop;
+            jPanel1.setLayout( new BorderLayout() );
+            setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            producktPanel = new ProducktPanel(shop);
+            jPanel1.add(producktPanel, BorderLayout.CENTER);
 
+            sidePanel = new SidePanel(shop);
+            //jPanel1.add(sidePanel);
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+            jPanel1.add(sidePanel, BorderLayout.EAST);
 
 //            jPanel1.add(Produkte,java.awt.BorderLayout.CENTER);
             menuePanel = new MenuePanel(shop);
