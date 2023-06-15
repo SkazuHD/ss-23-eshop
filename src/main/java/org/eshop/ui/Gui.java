@@ -23,6 +23,8 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
     public Gui() {
         server = new Shop();
         JFrame Employee = new GuiEmployee(server);
+
+
        //loginFrame = new LoginFrame(server, this);
     }
 
