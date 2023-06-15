@@ -8,17 +8,11 @@ import org.eshop.shop.Shop;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.Arrays;
 
 
 public class LoginFrame extends JFrame {
-    public interface addLoginListener{
-        void onLogin(User user);
-    }
-
-    private Shop server;
-    private addLoginListener listener;
-
+    private final Shop server;
+    private final addLoginListener listener;
     private JPanel mainPanel;
     private JPanel loginPanel;
     private JLabel usernameLabel;
@@ -33,19 +27,18 @@ public class LoginFrame extends JFrame {
     private JTextField registerNameField;
     private JTextField registerAddressField;
 
-
-    public LoginFrame(Shop shop, addLoginListener listener){
+    public LoginFrame(Shop shop, addLoginListener listener) {
         server = shop;
         this.listener = listener;
         buildUI();
         setupEvents();
     }
 
-    private void buildUI(){
-        Dimension inputMaxSize = new Dimension(300,25);
+    private void buildUI() {
+        Dimension inputMaxSize = new Dimension(300, 25);
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(1,2,10,10));
-        mainPanel.setBorder(new EmptyBorder(10,10,10,10));
+        mainPanel.setLayout(new GridLayout(1, 2, 10, 10));
+        mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         loginPanel = new JPanel();
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.PAGE_AXIS));
@@ -63,7 +56,6 @@ public class LoginFrame extends JFrame {
         loginPanel.add(usernameField);
 
         mainPanel.add(loginPanel);
-
 
 
         passwordLabel = new JLabel("Password");
@@ -103,7 +95,7 @@ public class LoginFrame extends JFrame {
 
         JLabel registerPasswordConfirmLabel = new JLabel("Confirm Password:");
         registerPanel.add(registerPasswordConfirmLabel);
-         registerPasswordField2 = new JPasswordField();
+        registerPasswordField2 = new JPasswordField();
         registerPasswordField2.setMaximumSize(inputMaxSize);
         registerPasswordField2.setPreferredSize(inputMaxSize);
         registerPanel.add(registerPasswordField2);
@@ -125,23 +117,22 @@ public class LoginFrame extends JFrame {
         registerButton = new JButton("REGISTER");
         registerPanel.add(registerButton);
 
-
         mainPanel.add(registerPanel);
-
 
         pack();
         this.setVisible(true);
     }
-    private void setupEvents(){
+
+    private void setupEvents() {
         //LOGIN Button
-        loginButton.addActionListener((e)->{
+        loginButton.addActionListener((e) -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             User u = null;
             try {
                 u = server.loginUser(username, password);
                 listener.onLogin(u);
-            }catch (LoginFailed exp){
+            } catch (LoginFailed exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage(), "Login failed!",
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -150,7 +141,7 @@ public class LoginFrame extends JFrame {
             String username = registerUsernameField.getText();
             String password = new String(registerPasswordField.getPassword());
             String password2 = new String(registerPasswordField2.getPassword());
-            if(!password.equals(password2)){
+            if (!password.equals(password2)) {
                 JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match!", "Registration failed!",
                         JOptionPane.ERROR_MESSAGE);
                 registerPasswordField.setText("");
@@ -169,13 +160,17 @@ public class LoginFrame extends JFrame {
                 registerPasswordField2.setText("");
                 registerNameField.setText("");
                 registerAddressField.setText("");
-            }catch (UserExistsException | IllegalArgumentException exp){
+            } catch (UserExistsException | IllegalArgumentException exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage(), "Registration failed!",
                         JOptionPane.ERROR_MESSAGE);
             }
 
         }));
 
+    }
+
+    public interface addLoginListener {
+        void onLogin(User user);
     }
 
 }
