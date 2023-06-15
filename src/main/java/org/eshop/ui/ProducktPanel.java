@@ -2,8 +2,11 @@ package org.eshop.ui;
 
 import org.eshop.entities.Products;
 import org.eshop.shop.Shop;
+import org.eshop.ui.components.SearchWidget;
 
-public class ProducktPanel extends javax.swing.JPanel {
+import java.util.List;
+
+public class ProducktPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
     private javax.swing.JList Produkte =
             new javax.swing.JList<Products>();
     Shop shop;
@@ -16,4 +19,9 @@ public class ProducktPanel extends javax.swing.JPanel {
 
         this.add(Produkte);
         Produkte.setListData(shop.getProductSet().toArray());
-}}
+
+    }
+    public void onSearch(List<Products> result){
+        Produkte.setListData(result.toArray());
+    };
+}

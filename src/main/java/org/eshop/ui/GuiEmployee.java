@@ -40,7 +40,7 @@ public class GuiEmployee extends javax.swing.JFrame {
             jPanel1.add(sidePanel, BorderLayout.EAST);
 
 //            jPanel1.add(Produkte,java.awt.BorderLayout.CENTER);
-            menuePanel = new MenuePanel(shop);
+            menuePanel = new MenuePanel(shop ,producktPanel);
             jPanel1.add(menuePanel, BorderLayout.PAGE_START);
 
                 // Das Panel zum aktiven, sichtbaren Inhalt des JFrame machen:
