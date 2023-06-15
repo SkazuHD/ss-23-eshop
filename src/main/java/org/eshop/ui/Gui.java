@@ -20,7 +20,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
 
     public Gui() {
         server = new Shop();
-                loginFrame = new LoginFrame(server, this);
+        loginFrame = new LoginFrame(server, this);
 
     }
 
@@ -35,10 +35,11 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
 
     @Override
     public void onLogin(User user) {
-        System.out.println(user);
         if(user instanceof Employee){
+            loginFrame.dispose();
             JFrame Employee = new GuiEmployee(server);
         }else {
+            loginFrame.dispose();
             //TODO LOGIN SHOW CUSTOMER FRAME
 
         }

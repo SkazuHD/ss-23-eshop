@@ -30,7 +30,6 @@ public class LoginFrame extends JFrame {
     private JTextField registerUsernameField;
     private JPasswordField registerPasswordField;
     private JPasswordField registerPasswordField2;
-    private JTextField registerEmailField;
     private JTextField registerNameField;
     private JTextField registerAddressField;
 
@@ -45,12 +44,12 @@ public class LoginFrame extends JFrame {
     private void buildUI(){
         Dimension inputMaxSize = new Dimension(300,25);
         mainPanel = new JPanel();
-        mainPanel.setLayout(new FlowLayout());
+        mainPanel.setLayout(new GridLayout(1,2,10,10));
         mainPanel.setBorder(new EmptyBorder(10,10,10,10));
 
         loginPanel = new JPanel();
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.PAGE_AXIS));
-        loginPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        //loginPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         JLabel title = new JLabel("LOGIN");
         title.setFont(new Font("Arial", Font.PLAIN, 24));
         loginPanel.add(title);
@@ -82,7 +81,7 @@ public class LoginFrame extends JFrame {
         //Customer Registration Panel
         JPanel registerPanel = new JPanel();
         registerPanel.setLayout(new BoxLayout(registerPanel, BoxLayout.PAGE_AXIS));
-        registerPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        //registerPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         JLabel registerTitle = new JLabel("REGISTER");
         registerTitle.setFont(new Font("Arial", Font.PLAIN, 24));
         registerPanel.add(registerTitle);

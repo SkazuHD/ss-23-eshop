@@ -29,7 +29,7 @@ public class GuiEmployee extends javax.swing.JFrame {
         private javax.swing.JButton Mitarbeiter =
                 new javax.swing.JButton( "Mitarbeiter" );
         private javax.swing.JFormattedTextField Search =
-                new javax.swing.JFormattedTextField("Search");
+                new javax.swing.JFormattedTextField("SearchWidget");
 
         private javax.swing.JButton Produckte =
                 new javax.swing.JButton("Produckte");
@@ -56,7 +56,6 @@ public class GuiEmployee extends javax.swing.JFrame {
          */
         public GuiEmployee(Shop shop) {
             this.shop = shop;
-
                 // Was soll bei Klick auf das System-X rechts oben passieren:
                 // Das Programm soll gänzlich beendet werden.
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -107,7 +106,6 @@ public class GuiEmployee extends javax.swing.JFrame {
                 menu.add(Produckte);
 
                 Produkte.setListData(shop.getProductSet().toArray());
-
                 // Das Panel zum aktiven, sichtbaren Inhalt des JFrame machen:
                 this.getContentPane().add ( jPanel1 ) ;
                 // Alle Elemente auf kleinstmögliche Größe bringen
