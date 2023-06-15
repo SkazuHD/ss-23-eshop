@@ -6,9 +6,9 @@ import org.eshop.shop.Shop;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class MenuePanel extends javax.swing.JFrame {
+public class MenuePanel extends javax.swing.JPanel {
 
-    GuiEmployee guiEmployee;
+
     private javax.swing.JMenuBar jMenuBar =
             new javax.swing.JMenuBar();
     private javax.swing.JButton Mitarbeiter =
@@ -24,12 +24,10 @@ public class MenuePanel extends javax.swing.JFrame {
     private javax.swing.JButton Logout =
             new  javax.swing.JButton("Logout");
 
-    private javax.swing.JPanel pannel1 =
-            new javax.swing.JPanel();
-        GuiEmployee jPanel1;
+        Shop shop;
 
-        public MenuePanel (GuiEmployee guiEmployee){
-            this.guiEmployee = guiEmployee;
+        public MenuePanel (Shop shop){
+
 
 
 
