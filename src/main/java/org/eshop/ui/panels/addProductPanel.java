@@ -11,8 +11,6 @@ import java.awt.event.ActionListener;
 
 public class addProductPanel extends JPanel implements ActionListener {
 
-    private Shop server;
-    private User loggedInUser;
     private final JTextField productName = new JTextField();
     //TODO SHOULD BE REPLACED WITH CUSTOM JNumberField for Input Validation
     private final JTextField productQuantity = new JTextField();
@@ -21,16 +19,18 @@ public class addProductPanel extends JPanel implements ActionListener {
     //Set visible when massProduct is checked
     //TODO SHOULD BE REPLACED WITH CUSTOM JNumberField for Input Validation
     private final JTextField productPacksize = new JTextField();
-
     private final JButton createButton = new JButton("Create");
+    private Shop server;
+    private User loggedInUser;
 
-    public addProductPanel(Shop shop, User user){
+    public addProductPanel(Shop shop, User user) {
         server = shop;
         loggedInUser = user;
         setupUI();
         setupEvents();
     }
-    private void setupUI(){
+
+    private void setupUI() {
         Dimension inputMaxSize = new Dimension(300, 25);
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -57,7 +57,8 @@ public class addProductPanel extends JPanel implements ActionListener {
 
         this.setVisible(true);
     }
-    private void setupEvents(){
+
+    private void setupEvents() {
         massProduct.addActionListener(this);
         createButton.addActionListener(this);
     }
@@ -70,26 +71,34 @@ public class addProductPanel extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(massProduct)){
-            if(massProduct.isSelected()){
+        if (e.getSource().equals(massProduct)) {
+            if (massProduct.isSelected()) {
                 productPacksize.setEnabled(true);
-            }else {
+            } else {
                 productPacksize.setEnabled(false);
                 productPacksize.setText("");
             }
-        }else if(e.getSource().equals(createButton)){
-            String name = productName.getText();
-            int quantity = Integer.parseInt(productQuantity.getText());
-            double price = Double.parseDouble(productPrice.getText());
+        } else if (e.getSource().equals(createButton)) {
+            boolean success = false;
 
-            if (!massProduct.isSelected()){
-                server.createProduct(name, price, quantity, loggedInUser );
-                System.out.println("HURRAY NORMAL PRODUCT");
-            }else{
-                int packSize = Integer.parseInt(productPacksize.getText());
-                server.createMassProduct(name, price,quantity, packSize, loggedInUser);
-                System.out.println("HURRAY MASSPRODUCT");
+            try {
+                String name = productName.getText();
+                int quantity = Integer.parseInt(productQuantity.getText());
+                double price = Double.parseDouble(productPrice.getText());
+                if (!massProduct.isSelected()) {
+                    server.createProduct(name, price, quantity, loggedInUser);
+                } else {
+                    int packSize = Integer.parseInt(productPacksize.getText());
+                    server.createMassProduct(name, price, quantity, packSize, loggedInUser);
+                }
+                success = true;
+            } catch (Exception ignored) {
+
+            } finally {
+                JOptionPane.showMessageDialog(new JFrame(), success ? "HURRAY" : "YOU FUCKED IT UP!", success ? "Succes!" : "FAILURE!", success ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE);
+
             }
+
 
         }
     }
