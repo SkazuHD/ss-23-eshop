@@ -263,14 +263,15 @@ public class Shop {
      *
      * @param c the Customer
      */
-//TODO Check if the product is in stock before checking out
     public void checkout(Customer c) {
+        //TODO Check all products before removing it
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
                 productManager.removeProduct(key.getId(), cart.get(key));
-            } catch (ProductNotFound e) {
+            } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
+                //TODO HANDLE IT CORRECTLY
                 System.out.println(e.getMessage());
             }
         }
@@ -298,7 +299,7 @@ public class Shop {
      * @param u        the u
      * @throws ProductNotFound the product not found
      */
-    public void increaseQuantity(int id, int quantity, User u) throws ProductNotFound {
+    public void increaseQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching {
         productManager.increaseQuantity(id, quantity);
         saveAsync();
         eventManager.addEvent(u, productManager.getProductById(id), quantity);
@@ -357,7 +358,7 @@ public class Shop {
      * @param user     the user
      * @throws ProductNotFound the product not found
      */
-    public void removeProduct(int id, int quantity, User user) throws ProductNotFound {
+    public void removeProduct(int id, int quantity, User user) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         productManager.removeProduct(id, quantity);
         saveAsync();
 

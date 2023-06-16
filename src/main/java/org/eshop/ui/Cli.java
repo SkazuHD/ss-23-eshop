@@ -231,7 +231,7 @@ public class Cli {
 
         try {
             server.increaseQuantity(id, quantity, loggedInUser);
-        } catch (ProductNotFound e) {
+        } catch (ProductNotFound | PacksizeNotMatching e) {
             System.out.println(e.getMessage());
         }
     }
@@ -264,7 +264,11 @@ public class Cli {
         double price = reader.getDoubleInput("Price:");
 
         if (ans.equals("y")) {
-            server.createMassProduct(name, price, quantity, packsize, loggedInUser);
+            try {
+                server.createMassProduct(name, price, quantity, packsize, loggedInUser);
+            } catch (PacksizeNotMatching e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             server.createProduct(name, price, quantity, loggedInUser);
 
@@ -293,7 +297,7 @@ public class Cli {
         try {
             server.removeProduct(id, quantity, loggedInUser);
 
-        } catch (ProductNotFound e) {
+        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
