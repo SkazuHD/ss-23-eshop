@@ -1,7 +1,10 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Employee;
+import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
+import org.eshop.ui.panels.addProductPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +28,8 @@ public class TestFrame extends JFrame {
 
         TestFrame frame = new TestFrame(new SearchWidget(new Shop(), result -> {
             System.out.println(result);
+        }));
+        new TestFrame(new addProductPanel(new Shop(), new Employee("TESTFRAME", 69, "TESTFRAME", "TESTFRAME") {
         }));
 
 

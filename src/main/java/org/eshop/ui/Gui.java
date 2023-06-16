@@ -18,6 +18,8 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
     User loggedInUser;
     LoginFrame loginFrame;
 
+
+    /*TODO General: ADD CUSTOM JNumberField Class */
     public Gui() {
         server = new Shop();
         loginFrame = new LoginFrame(server, this);
