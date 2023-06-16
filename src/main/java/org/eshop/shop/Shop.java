@@ -319,7 +319,10 @@ public class Shop {
 
     }
 
-    public void createMassProduct(String name, double price, int quantity, int packsize, User u) {
+    public void createMassProduct(String name, double price, int quantity, int packsize, User u) throws PacksizeNotMatching {
+        if(quantity % packsize != 0){
+            throw new PacksizeNotMatching(packsize);
+        }
         Products p = productManager.createProduct(name, price, quantity, packsize);
         saveAsync();
         eventManager.addEvent(u, p, quantity);

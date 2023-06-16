@@ -2,6 +2,7 @@ package org.eshop.shop;
 
 import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
+import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 
 import java.util.*;
@@ -155,8 +156,13 @@ public class ProductManager {
      * @param quantity the quantity
      * @throws ProductNotFound the product not found
      */
-    public void increaseQuantity(int id, int quantity) throws ProductNotFound {
+    public void increaseQuantity(int id, int quantity) throws ProductNotFound, PacksizeNotMatching {
         Products p = getProductById(id);
+        if (p instanceof MassProducts mp){
+            if (mp.getPacksize() % quantity != 0){
+                throw new PacksizeNotMatching(mp.getPacksize());
+            }
+        }
         p.setQuantity(p.getQuantity() + quantity);
     }
 
