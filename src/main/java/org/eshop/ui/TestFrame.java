@@ -4,6 +4,7 @@ import org.eshop.entities.Employee;
 import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
+import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
 import org.eshop.ui.panels.addProductPanel;
@@ -27,12 +28,12 @@ public class TestFrame extends JFrame {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ProductNotFound {
 
         //MOCK DATA
         Shop shop = new Shop();
         Employee employee = new Employee("TESTFRAME", 69, "TESTFRAME", "TESTFRAME");
-        Products p = new Products(1,69, "TESTPROD", 50);
+        Products p = shop.findProduct(1000);
         MassProducts mp = new MassProducts(1, 69, "TESTPROD", 50, 50);
 
 
@@ -46,7 +47,7 @@ public class TestFrame extends JFrame {
 
         //TEST EDIT PANEL
         editProductPanel edit = new editProductPanel(shop, employee);
-        edit.onChange(mp);
+        edit.onChange(p);
         new TestFrame(edit);
 
 

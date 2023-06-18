@@ -69,7 +69,7 @@ public class ProductManager {
                 throw new PacksizeNotMatching(mp.getPacksize());
         }
         if (p.getQuantity() >= quantity)
-            p.setQuantity(p.getQuantity() - quantity);
+            p.setQuantity(p.getQuantity() + quantity);
         else throw new NotInStockException(quantity);
 
 

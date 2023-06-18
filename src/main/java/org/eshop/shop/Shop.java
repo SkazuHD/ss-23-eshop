@@ -248,14 +248,21 @@ public class Shop implements ShopFacade{
 
     @Override
     public Products editProductDetails(int id, String name, double price) throws ProductNotFound {
-        //TODO
-        return null;
+        Products p = productManager.getProductById(id);
+        p.setName(name);
+        p.setPrice(price);
+        saveAsync();
+        return p;
     }
 
     @Override
     public Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
-        //TODO
-        return null;
+        MassProducts mp = (MassProducts) productManager.getProductById(id);
+        mp.setName(name);
+        mp.setPrice(price);
+        mp.setPacksize(packSize);
+        saveAsync();
+        return mp;
     }
 
     public List<Products> findProducts(String name) {

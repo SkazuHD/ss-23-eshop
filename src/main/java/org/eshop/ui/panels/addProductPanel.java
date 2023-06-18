@@ -89,7 +89,7 @@ public class addProductPanel extends JPanel implements ActionListener {
                     server.createProduct(name, price, quantity, loggedInUser);
                 } else {
                     int packSize = Integer.parseInt(productPacksize.getText());
-                    server.createMassProduct(name, price, quantity, packSize, loggedInUser);
+                    server.createProduct(name, price, quantity, packSize, loggedInUser);
                 }
                 success = true;
             } catch (Exception ignored) {
