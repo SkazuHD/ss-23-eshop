@@ -61,7 +61,7 @@ public class ProductManager {
      * @param quantity the quantity
      * @throws ProductNotFound the product not found
      */
-    public void removeProduct(int id, int quantity) throws ProductNotFound, NotInStockException, PacksizeNotMatching {
+    public void decreaseQuantity(int id, int quantity) throws ProductNotFound, NotInStockException, PacksizeNotMatching {
         Products p = getProductById(id);
         //Check if enough Products are in Stock
         if(p instanceof MassProducts mp){

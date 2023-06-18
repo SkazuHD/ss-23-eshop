@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * The type Shop.
  */
-public class Shop {
+public class Shop implements ShopFacade{
 
     /**
      * The Customer manager.
@@ -40,7 +40,6 @@ public class Shop {
 
     /**
      * Instantiates a new Shop.
-     * and loads the data from the csv files
      */
     public Shop() {
         load();
@@ -48,7 +47,6 @@ public class Shop {
 
     /**
      * Save async.
-     * Saves products to csv file Async
      */
     public void saveAsync() {
         // Parallel Process
@@ -57,6 +55,9 @@ public class Shop {
         }).start();
     }
 
+    /**
+     * Save products.
+     */
     public void saveProducts() {
         //Test if file is in use
         File file = new File("products.csv");
@@ -78,11 +79,9 @@ public class Shop {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Load.
-     * Loads the data from the csv files using the persistence Module
-     */
+    public void save(){
+        saveProducts();
+    }
     public void load() {
         try {
 
@@ -132,18 +131,7 @@ public class Shop {
         }
     }
 
-    /**
-     * Register user.
-     *
-     * @param username the username
-     * @param password the password
-     * @param name     the name
-     * @param address  the address
-     * @throws UserExistsException the customer exists exception
-     */
     public void registerUser(String username, String password, String name, String address) throws UserExistsException {
-        //TODO CHECK IF STRING IS EMPTY
-
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty()) {
             throw new IllegalArgumentException("Empty Fields");
         }
@@ -164,15 +152,7 @@ public class Shop {
 
     }
 
-    /**
-     * Login user customer.
-     *
-     * @param username the username
-     * @param password the password
-     * @return the customer
-     * @throws LoginFailed the customer login failed
-     */
-    public User loginUser(String username, String password) throws LoginFailed {
+    public User logIn(String username, String password) throws LoginFailed {
         try {
             return customerManager.login(username, password);
         } catch (LoginFailed e) {
@@ -181,45 +161,24 @@ public class Shop {
     }
 
 
-    /**
-     * Log out user boolean.
-     *
-     * @param u the u
-     * @return the boolean
-     */
-    public boolean logOutUser(User u) {
+    public boolean logOut(User u) {
         u.logout();
         return u.isLoggedIn();
     }
 
-    /**
-     * Gets product set.
-     *
-     * @return the product set
-     */
-//Products
-    public Collection<Products> getProductSet() {
+    //Products
+    public Collection<Products> getAllProducts() {
         return productManager.getProducts();
     }
 
-    /**
-     * Add product to cart.
-     *
-     * @param id       the id of the product
-     * @param quantity the quantity
-     * @param c        the Customer
-     * @throws NotInStockException Exception thrown when the product is not in stock
-     * @throws ProductNotFound     Exception thrown when the product is not found
-     */
-//CUSTOMER ONLY
+    //CUSTOMER ONLY
 
-    //TODO Check if Massproduct -> Packsize match quantiry
-    public void addProductToCart(int id, int quantity, Customer c) throws NotInStockException, ProductNotFound, PacksizeNotMatching {
+    public void addToCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         Products p = productManager.getProductById(id);
 
-        if (p instanceof MassProducts) {
-            if (quantity % ((MassProducts) p).getPacksize() != 0) {
-                throw new PacksizeNotMatching(((MassProducts) p).getPacksize());
+        if (p instanceof MassProducts mp) {
+            if (quantity % mp.getPacksize() != 0) {
+                throw new PacksizeNotMatching((mp.getPacksize()));
             }
         }
         if (p != null) {
@@ -229,15 +188,7 @@ public class Shop {
         }
     }
 
-    /**
-     * Remove product from cart.
-     *
-     * @param id       the name
-     * @param quantity the quantity
-     * @param c        the c
-     * @throws ProductNotFound the product not found
-     */
-    public void removeProductFromCart(int id, int quantity, Customer c) throws ProductNotFound {
+    public void removeFromCart(int id, int quantity, Customer c) throws ProductNotFound {
         Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.removeProduct(p, quantity, c);
@@ -247,29 +198,17 @@ public class Shop {
     }
 
 
-    /**
-     * }
-     * Gets cart.
-     *
-     * @param c the Customer
-     * @return the cart
-     */
     public Map<Products, Integer> getCart(Customer c) {
         return customerManager.getCart(c);
     }
 
-    /**
-     * Checkout.
-     *
-     * @param c the Customer
-     */
     public void checkout(Customer c) {
         //TODO Check all products before removing it
         Map<Products, Integer> cart = c.getCart();
         for (Products key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
-                productManager.removeProduct(key.getId(), cart.get(key));
+                productManager.decreaseQuantity(key.getId(), cart.get(key));
             } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
                 //TODO HANDLE IT CORRECTLY
                 System.out.println(e.getMessage());
@@ -279,40 +218,13 @@ public class Shop {
         cart.clear();
     }
 
-    /**
-     * Gets invoice.
-     *
-     * @param c the c
-     * @return the invoice
-     */
     public String getInvoice(Customer c) {
         Invoice i = customerManager.checkout(c);
         return i.toString();
     }
     //EMPLOYEE ONLY
 
-    /**
-     * Increase quantity.
-     *
-     * @param id       the id
-     * @param quantity the quantity
-     * @param u        the u
-     * @throws ProductNotFound the product not found
-     */
-    public void increaseQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching {
-        productManager.increaseQuantity(id, quantity);
-        saveAsync();
-        eventManager.addEvent(u, productManager.getProductById(id), quantity);
-    }
 
-    /**
-     * Create product.
-     *
-     * @param name     the name
-     * @param price    the price
-     * @param quantity the quantity
-     * @param u        the u
-     */
     public void createProduct(String name, double price, int quantity, User u) {
         Products p = productManager.createProduct(name, price, quantity, 0);
         saveAsync();
@@ -320,7 +232,7 @@ public class Shop {
 
     }
 
-    public void createMassProduct(String name, double price, int quantity, int packsize, User u) throws PacksizeNotMatching {
+    public void createProduct(String name, double price, int quantity, int packsize, User u) throws PacksizeNotMatching {
         if(quantity % packsize != 0){
             throw new PacksizeNotMatching(packsize);
         }
@@ -329,53 +241,45 @@ public class Shop {
         eventManager.addEvent(u, p, quantity);
     }
 
-    /**
-     * Find products list.
-     *
-     * @param name the name
-     * @return the list
-     */
+    @Override
+    public void deleteProduct(int id) throws ProductNotFound {
+        //TODO
+    }
+
+    @Override
+    public Products editProductDetails(int id, String name, double price) throws ProductNotFound {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
+        //TODO
+        return null;
+    }
+
     public List<Products> findProducts(String name) {
         return productManager.getProductByName(name);
     }
-
-    /**
-     * Find product products.
-     *
-     * @param id the id
-     * @return the products
-     * @throws ProductNotFound the product not found
-     */
     public Products findProduct(int id) throws ProductNotFound {
         return productManager.getProductById(id);
     }
 
-    /**
-     * Remove product.
-     *
-     * @param id       the name
-     * @param quantity the quantity
-     * @param user     the user
-     * @throws ProductNotFound the product not found
-     */
-    public void removeProduct(int id, int quantity, User user) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
-        productManager.removeProduct(id, quantity);
+    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
+        if(quantity>0){
+            productManager.increaseQuantity(id, quantity);
+        }else if (quantity<0){
+            productManager.decreaseQuantity(id, quantity);
+        }else {
+            //Returns when quantity isnt effected -> 0
+            return;
+        }
         saveAsync();
+        eventManager.addEvent(u, productManager.getProductById(id), quantity);
 
-        eventManager.addEvent(user, productManager.getProductById(id), -quantity);
     }
-
-    /**
-     * Register employee.
-     *
-     * @param username the username
-     * @param id       the Personalnummmer
-     * @param name     the name
-     * @param password the password
-     * @throws UserExistsException the customer exists exception
-     */
-//Employees
-    public void registerEmployee(String username, int id, String name, String password) throws UserExistsException {
+    //Employees
+    public void registerEmployee(int id, String username, String password, String name) throws UserExistsException {
         if (!employeeManager.register(username, id, name, password)) {
             throw new UserExistsException(username);
         }
@@ -389,17 +293,6 @@ public class Shop {
         } finally {
             persistence.close();
         }
-    }
-
-    /**
-     * Gets product.
-     *
-     * @param name the name
-     * @return the product
-     */
-    public List<Products> getProduct(String name) {
-        //TODO MAYBE JUST RETURN THE FIRST ONE
-        return productManager.getProductByName(name);
     }
 }
 //Employees
