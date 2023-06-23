@@ -80,7 +80,7 @@ public class Cli {
         String password = reader.readLine("Enter Password:");
 
         try {
-            server.registerEmployee(username, persoNr, name, password);
+            server.registerEmployee(persoNr, username, password, name);
         } catch (UserExistsException e) {
             System.err.println(e.getMessage());
             System.err.flush();
@@ -95,11 +95,11 @@ public class Cli {
         String username = reader.readLine("Enter Username:");
         //GET PWD
         String password = reader.readLine("Enter Password:");
-        // Login Customer First else try Employee login
+        // Login Customer First else try Employee logIn
         // throws LoginFailed if no user is found with the given username
         // Potential ERROR: if a customer and an employee have the same username -> Customer is logged in
         try {
-            loggedInUser = server.loginUser(username, password);
+            loggedInUser = server.logIn(username, password);
             loggedIn = loggedInUser.isLoggedIn();
         } catch (LoginFailed e) {
             System.err.println(e.getMessage());
@@ -113,7 +113,7 @@ public class Cli {
     protected void showProducts() {
         System.out.println("ID    Preis      Name            Bestand");
         System.out.println("----------------------------------------");
-        server.getProductSet().forEach(System.out::println);
+        server.getAllProducts().forEach(System.out::println);
     }
 
     /**
@@ -136,7 +136,7 @@ public class Cli {
         int quantity = reader.getNumericInput("Quantity:");
 
         try {
-            server.addProductToCart(id, quantity, (Customer) loggedInUser);
+            server.addToCart(id, quantity, (Customer) loggedInUser);
         } catch (ProductNotFound | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
@@ -144,7 +144,7 @@ public class Cli {
             System.err.println((e.getMessage()));
             try {
              quantity = reader. getNumericInput("new quantity:");
-                server.addProductToCart(id, quantity, (Customer) loggedInUser);
+                server.addToCart(id, quantity, (Customer) loggedInUser);
 
             } catch (ProductNotFound | NotInStockException a) {
                 System.err.println(a.getMessage());
@@ -176,7 +176,7 @@ public class Cli {
             return;
         }
         int quantity = reader.getNumericInput("Quantity:");
-        server.removeProductFromCart(id, quantity, (Customer) loggedInUser);
+        server.removeFromCart(id, quantity, (Customer) loggedInUser);
     }
 
     /**
@@ -230,8 +230,8 @@ public class Cli {
 
 
         try {
-            server.increaseQuantity(id, quantity, loggedInUser);
-        } catch (ProductNotFound e) {
+            server.changeQuantity(id, quantity, loggedInUser);
+        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -264,7 +264,11 @@ public class Cli {
         double price = reader.getDoubleInput("Price:");
 
         if (ans.equals("y")) {
-            server.createMassProduct(name, price, quantity, packsize, loggedInUser);
+            try {
+                server.createProduct(name, price, quantity, packsize, loggedInUser);
+            } catch (PacksizeNotMatching e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             server.createProduct(name, price, quantity, loggedInUser);
 
@@ -291,9 +295,9 @@ public class Cli {
         int quantity = reader.getNumericInput("Quantity:");
 
         try {
-            server.removeProduct(id, quantity, loggedInUser);
+            server.changeQuantity(id, -quantity, loggedInUser);
 
-        } catch (ProductNotFound e) {
+        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
@@ -362,7 +366,7 @@ public class Cli {
                 shoppingCartMenu();
             }
             case 4 -> {
-                loggedIn = server.logOutUser(loggedInUser);
+                loggedIn = server.logOut(loggedInUser);
                 loggedInUser = null;
                 startMenu();
             }
@@ -395,7 +399,7 @@ public class Cli {
             case 3 -> addProduct();
             case 4 -> deleteProduct();
             case 5 -> {
-                loggedIn = server.logOutUser(loggedInUser);
+                loggedIn = server.logOut(loggedInUser);
                 loggedInUser = null;
                 startMenu();
             }

@@ -10,20 +10,20 @@ public class LoginTest {
 
     @Test
     void loginUser() throws UserExistsException, LoginFailed {
-        shop.loginUser("test", "test");
+        shop.logIn("test", "test");
     }
 
     @Test
     void loginWithNonExistingUser() {
         Assertions.assertThrows(LoginFailed.class, () -> {
-            shop.loginUser("doesNotExistLoL", "test");
+            shop.logIn("doesNotExistLoL", "test");
         });
     }
 
     @Test
     void loginWithWrongPassword() {
         Assertions.assertThrows(LoginFailed.class, () -> {
-            shop.loginUser("test", "wrongPassword");
+            shop.logIn("test", "wrongPassword");
         });
     }
 

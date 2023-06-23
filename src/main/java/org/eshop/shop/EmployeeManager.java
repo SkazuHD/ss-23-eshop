@@ -23,7 +23,7 @@ public class EmployeeManager {
      * @param username the username
      * @param password the password
      * @return the user
-     * @throws LoginFailed the login failed
+     * @throws LoginFailed the logIn failed
      */
     public User login(String username, String password) throws LoginFailed {
         User u = employees.get(username);
