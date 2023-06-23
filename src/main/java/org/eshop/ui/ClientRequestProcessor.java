@@ -6,20 +6,20 @@
 package org.eshop.ui;
 
 //import de.hsbremen.prog2.net.socket.Adresse;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Map;
 
 class ClientAddressRequestProcessor {
 
-    private Socket clientSocket;
+    private final Socket clientSocket;
     private BufferedReader in;
     private PrintStream out;
 
-    public ClientAddressRequestProcessor(Socket socket){
+    public ClientAddressRequestProcessor(Socket socket) {
         this.clientSocket = socket;
 
 
@@ -32,7 +32,7 @@ class ClientAddressRequestProcessor {
             } catch (IOException var5) {
             }
 
-            System.err.println("Ausnahme bei Bereitstellung des Streams: " + String.valueOf(var6));
+            System.err.println("Ausnahme bei Bereitstellung des Streams: " + var6);
             return;
         }
 
@@ -43,15 +43,15 @@ class ClientAddressRequestProcessor {
 
     public void verarbeiteAnfragen() {
         String input = "";
-        this.out.println("Server bereit");
+        out.println("Server bereit");
 
         do {
+            input = null;
             try {
-                input = this.in.readLine();
-            } catch (Exception var5) {
+                input = in.readLine();
+            } catch (Exception e) {
                 System.out.println("--->Fehler beim Lesen vom Client (Aktion): ");
-                System.out.println(var5.getMessage());
-                continue;
+                System.out.println(e.getMessage());
             }
             System.out.println(input);
 
@@ -61,10 +61,11 @@ class ClientAddressRequestProcessor {
 
             switch (input) {
                 case "search":
-
-                case "Logout":
+                    System.out.println("search");
+                case "quit":
+                    System.out.println("quit");
             }
-        } while(!input.equals("Logout"));
+        } while (!input.equals("quit"));
 
         PrintStream var10000 = System.out;
         String var10001 = String.valueOf(this.clientSocket.getInetAddress());
