@@ -38,12 +38,15 @@ public class editProductPanel extends JPanel implements ActionListener{
     private void setupUI(){
         Dimension inputMaxSize = new Dimension(300, 25);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //this.setLayout(new GridLayout(2,1));
         this.setPreferredSize(new Dimension(500, 500));
-
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container,  BoxLayout.PAGE_AXIS));
         this.add(new JLabel("ID"));
         this.add(productId);
         productId.setEnabled(false);
         productId.setMaximumSize(inputMaxSize);
+        productId.setPreferredSize(inputMaxSize);
         this.add(new JLabel("NAME"));
         this.add(productName);
         productName.setMaximumSize(inputMaxSize);
@@ -60,9 +63,10 @@ public class editProductPanel extends JPanel implements ActionListener{
         productPacksize.setEnabled(false);
         productPacksize.setMaximumSize(inputMaxSize);
         JPanel btns = new JPanel();
-        btns.setLayout(new FlowLayout(FlowLayout.LEFT));
+        btns.setLayout(new FlowLayout(FlowLayout.CENTER));
         btns.add(saveBtn);
         btns.add(deleteBtn);
+        //this.add(container);
         this.add(btns);
     }
     private void setupEvents(){
