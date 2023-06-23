@@ -12,14 +12,14 @@ import javax.swing.*;
 /**
  * The type Gui.
  */
-public class Gui extends JFrame implements LoginFrame.addLoginListener{
+public class Gui extends JFrame implements LoginFrame.addLoginListener {
 
     Shop server;
-    JPanel search;
-    JPanel output;
     User loggedInUser;
     LoginFrame loginFrame;
 
+
+    /*TODO General: ADD CUSTOM JNumberField Class */
     public Gui() {
         server = new Shop();
         loginFrame = new LoginFrame(server, this);
@@ -37,10 +37,11 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener{
 
     @Override
     public void onLogin(User user) {
-        if(user instanceof Employee){
+        loggedInUser = user;
+        if (user instanceof Employee) {
             loginFrame.dispose();
             JFrame Employee = new GuiEmployee(server);
-        }else {
+        } else {
             loginFrame.dispose();
             //TODO LOGIN SHOW CUSTOMER FRAME
 

@@ -39,9 +39,7 @@ public class ProducktPanel extends javax.swing.JPanel implements SearchWidget.Se
 
         Produkte.setListData(shop.getProductSet().toArray());
 
-
-
-            }
+    }
     public void onSearch(List<Products> result){
         Produkte.setListData(result.toArray());
     };

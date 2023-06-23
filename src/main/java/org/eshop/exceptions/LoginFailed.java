@@ -1,11 +1,11 @@
 package org.eshop.exceptions;
 
 /**
- * The type Customer login failed.
+ * The type Customer logIn failed.
  */
 public class LoginFailed extends Exception {
     /**
-     * Instantiates a new Customer login failed.
+     * Instantiates a new Customer logIn failed.
      *
      * @param username the username
      */
