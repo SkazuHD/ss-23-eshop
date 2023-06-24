@@ -130,7 +130,16 @@ public class Shop implements ShopFacade{
             persistence.close();
         }
     }
-
+    public User getUser(String username){
+        User u = customerManager.getCustomer(username);
+        if(u == null){
+            u = employeeManager.getEmployee(username);
+        }
+        if (u == null){
+            throw new IllegalArgumentException("User not found");
+        }
+        return u;
+    };
     public void registerUser(String username, String password, String name, String address) throws UserExistsException {
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty()) {
             throw new IllegalArgumentException("Empty Fields");

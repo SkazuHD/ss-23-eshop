@@ -55,6 +55,8 @@ public interface ShopFacade {
      */
     public boolean logOut(User user);
 
+    public User getUser(String username);
+
     /**
      * Create product.
      *

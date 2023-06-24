@@ -8,6 +8,8 @@ package org.eshop.ui;
 //package de.hsbremen.prog2.net.socket.server;
 
 //import de.hsbremen.prog2.net.socket.Adresse;
+import org.eshop.shop.Shop;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
@@ -20,11 +22,12 @@ public class EshopServer{
     public static final int DEFAULT_PORT = 6789;
     private int port;
     private ServerSocket serverSocket;
+    private Shop server;
 
 
     public EshopServer(int optPort) {
         this.port = optPort == 0 ? 6789 : optPort;
-
+        this.server = new Shop();
         try {
             this.serverSocket = new ServerSocket(this.port);
             InetAddress ia = InetAddress.getLocalHost();
@@ -44,7 +47,7 @@ public class EshopServer{
         try {
             while(true) {
                 Socket clientSocket = this.serverSocket.accept();
-                ClientAddressRequestProcessor c = new ClientAddressRequestProcessor(clientSocket);
+                ClientAddressRequestProcessor c = new ClientAddressRequestProcessor(clientSocket, this.server);
                 c.verarbeiteAnfragen();
             }
         } catch (IOException var3) {
