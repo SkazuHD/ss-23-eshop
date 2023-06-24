@@ -1,12 +1,11 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Customer;
-import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.*;
-import org.eshop.persistence.FileManager;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +126,7 @@ public interface ShopFacade {
      *
      * @return the all products
      */
-    public Collection<Products> getAllProducts();
+    public Collection<Products> getAllProducts() throws IOException;
 
     /**
      * Find products list.
