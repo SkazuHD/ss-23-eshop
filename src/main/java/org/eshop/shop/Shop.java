@@ -181,6 +181,9 @@ public class Shop implements ShopFacade{
     }
 
     //CUSTOMER ONLY
+    public Collection <Employee>getAllEmployee(){
+        return employeeManager.getEmployee();
+    }
 
     public void addToCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         Products p = productManager.getProductById(id);
@@ -310,6 +313,8 @@ public class Shop implements ShopFacade{
             persistence.close();
         }
     }
+
+
 }
 //Employees
 

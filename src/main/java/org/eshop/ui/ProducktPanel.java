@@ -1,5 +1,6 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Employee;
 import org.eshop.entities.Products;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
@@ -37,10 +38,13 @@ public class ProducktPanel extends javax.swing.JPanel implements SearchWidget.Se
 
           pannel.add(Produkte);
 
-        Produkte.setListData(shop.getProductSet().toArray());
+        Produkte.setListData(shop.getAllProducts().toArray());
 
     }
     public void onSearch(List<Products> result){
         Produkte.setListData(result.toArray());
-    };
+    }
+
+
+
 }

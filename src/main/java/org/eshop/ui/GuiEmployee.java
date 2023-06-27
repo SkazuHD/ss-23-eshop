@@ -27,6 +27,8 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
     private javax.swing.JScrollPane scrollPane =
             new javax.swing.JScrollPane();
+    private javax.swing.JPanel Paneelcenter =
+            new javax.swing.JPanel();
 
     /**
      * Der Konstruktor.
@@ -36,8 +38,11 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         producktPanel = new ProducktPanel(shop);
-        jPanel1.add(new JScrollPane(producktPanel), BorderLayout.CENTER);
-              producktPanel.setVisible(true);
+
+
+
+              jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
+              Paneelcenter.add(producktPanel);
 
 
         mitarbeiterPanel = new MitarbeiterPanel(shop,this);
@@ -51,8 +56,9 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
         jPanel1.add(menuePanel, BorderLayout.PAGE_START);
 
-        jPanel1.add(mitarbeiterPanel, java.awt.BorderLayout.CENTER);
-          mitarbeiterPanel.setVisible(false);
+        Paneelcenter.add(mitarbeiterPanel);
+        mitarbeiterPanel.setVisible(false);
+
 
 
         // Das Panel zum aktiven, sichtbaren Inhalt des JFrame machen:
