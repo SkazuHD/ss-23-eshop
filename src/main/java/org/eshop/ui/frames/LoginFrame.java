@@ -133,7 +133,7 @@ public class LoginFrame extends JFrame {
             String password = new String(passwordField.getPassword());
             User u = null;
             try {
-                u = server.loginUser(username, password);
+                u = server.logIn(username, password);
                 listener.onLogin(u);
             } catch (LoginFailed exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage(), "Login failed!",

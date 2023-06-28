@@ -69,7 +69,7 @@ public class CustomerManager {
      * @param username the username
      * @param password the password
      * @return User customer
-     * @throws LoginFailed the customer login failed
+     * @throws LoginFailed the customer logIn failed
      */
     public User login(String username, String password) throws LoginFailed {
         //Find User in Set
