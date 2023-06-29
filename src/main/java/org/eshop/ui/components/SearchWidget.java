@@ -1,5 +1,6 @@
 package org.eshop.ui.components;
 
+import org.eshop.entities.Employee;
 import org.eshop.entities.Products;
 import org.eshop.shop.Shop;
 
@@ -63,6 +64,7 @@ public class SearchWidget extends JPanel implements ActionListener {
 
     public interface SearchListener {
         void onSearch(List<Products> result);
+
     }
 
     private class SearchFieldListener implements DocumentListener {

@@ -1,9 +1,11 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Employee;
+import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +58,9 @@ public class EmployeeManager {
         }
 
     }
+    public Collection<Employee> getEmployee() {
+        return employees.values();
+    }
 
     /**
      * Gets employee.
@@ -65,5 +70,6 @@ public class EmployeeManager {
      */
     public Employee getEmployee(String username) {
         return employees.get(username);
+
     }
 }

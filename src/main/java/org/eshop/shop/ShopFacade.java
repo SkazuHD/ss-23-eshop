@@ -1,12 +1,12 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Customer;
-import org.eshop.entities.Invoice;
+import org.eshop.entities.Employee;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.*;
-import org.eshop.persistence.FileManager;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +55,8 @@ public interface ShopFacade {
      * @return the boolean
      */
     public boolean logOut(User user);
+
+    public User getUser(String username);
 
     /**
      * Create product.
@@ -128,7 +130,7 @@ public interface ShopFacade {
      * @return the all products
      */
     public Collection<Products> getAllProducts();
-
+    public Collection <Employee>getAllEmployees();
     /**
      * Find products list.
      *
@@ -145,6 +147,7 @@ public interface ShopFacade {
      * @throws ProductNotFound the product not found
      */
     public Products findProduct(int ID) throws ProductNotFound;
+
 
     /**
      * Gets invoice.

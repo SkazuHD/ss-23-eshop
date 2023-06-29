@@ -4,10 +4,17 @@ package org.eshop.ui;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
 
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MenuePanel extends javax.swing.JPanel {
+public class MenuePanel extends javax.swing.JPanel{
+
+
 
 
     private javax.swing.JMenuBar jMenuBar =
@@ -27,10 +34,13 @@ public class MenuePanel extends javax.swing.JPanel {
 
         Shop shop;
 
-        public MenuePanel (Shop shop, SearchWidget.SearchListener searchListener){
+       ProducktPanel producktPanel;
+        MitarbeiterPanel mitarbeiterPanel;
+        GuiEmployee guiEmployee;
 
+        public MenuePanel (Shop shop, SearchWidget.SearchListener searchListener, GuiEmployee guiEmployee){
 
-
+            this.guiEmployee = guiEmployee;
 
             this.add(jMenuBar);
             this.setBackground(new Color(50));
@@ -45,13 +55,27 @@ public class MenuePanel extends javax.swing.JPanel {
             menu.add(search);
 
             menu.add(Mitarbeiter,BorderLayout.LINE_START);
+            Mitarbeiter.setActionCommand("Mitarbeiterpanel");
+            Mitarbeiter.addActionListener(guiEmployee);
+
+
+
+
             //menu.add(Search);
             menu.setBackground(new Color(50));
             menu.setBorder(new EmptyBorder(10,10,10,10));
             menu.add(Logout);
             menu.add(Produckte);
+            Produckte.setActionCommand("Producktpanel");
+            Produckte.addActionListener(guiEmployee);
+
+
+
 
             Search.setPreferredSize(new Dimension(300,10));
 
         }
+
+
+
 }
