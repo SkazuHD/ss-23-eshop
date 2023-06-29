@@ -80,13 +80,26 @@ public class EventManager {
         do {
             event = persistence.readEvent();
             if (event != null) {
-                addEvent(event);
+                if (productEvents.containsKey(event.getProductId())) {
+                    productEvents.get(event.getProductId()).add(event);
+                } else {
+                    ArrayList<Event> list = new ArrayList<>();
+                    list.add(event);
+                    productEvents.put(event.getProductId(), list);
+                }
+                try {
+                    persistence.openForWriting("events.csv", true);
+
+                } catch (Exception e) {
+                    //TODO handle exception
+                    return;
+                }
             }
         } while (event != null);
     }
 
     //TODO IMPLEMENT
-    public int[] getProductHistory(){
+    public int[] getProductHistory() {
         return null;
     }
 }

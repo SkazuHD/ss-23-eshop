@@ -86,7 +86,6 @@ public class Shop implements ShopFacade {
 
     public void load() {
         try {
-
             persistence.openForReading("customers.csv");
             Customer c;
             do {
