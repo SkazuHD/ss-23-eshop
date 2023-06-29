@@ -5,8 +5,6 @@ import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.frames.LoginFrame;
 
-
-
 import javax.swing.*;
 
 /**
@@ -23,6 +21,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
     public Gui() {
         server = new Shop();
         loginFrame = new LoginFrame(server, this);
+        server.saveAsync();
 
     }
 
