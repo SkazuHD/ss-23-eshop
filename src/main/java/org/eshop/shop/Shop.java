@@ -288,6 +288,15 @@ public class Shop implements ShopFacade {
         return productManager.getProductById(id);
     }
 
+    @Override
+    public int[] getProductHistory(int productId, int days) {
+        try {
+            return eventManager.getProductHistory(productId, days, productManager.getProductById(productId).getQuantity());
+        } catch (ProductNotFound exp) {
+            return new int[days];
+        }
+    }
+
 
     public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         if (quantity > 0) {

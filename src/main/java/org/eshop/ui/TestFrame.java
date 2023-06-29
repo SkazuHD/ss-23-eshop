@@ -35,6 +35,9 @@ public class TestFrame extends JFrame {
         Products p = shop.findProduct(1000);
         MassProducts mp = new MassProducts(1, 69, "TESTPROD", 50, 50);
 
+        int[] test = shop.getProductHistory(1001, 30);
+        for (int i = 0; i < test.length; i++)
+            System.out.println(test[i]);
 
         //TEST LOGIN SEARCH PANEL
       /*  new TestFrame(new SearchWidget(shop, result -> {
