@@ -10,7 +10,7 @@ public class GuiCustomer extends javax.swing.JFrame {
 
     Shop shop;
     CustomerMenu customerMenu;
-    SidePanel sidePanel;
+    ShoppingCartPanel shoppingCart;
     ProducktPanel productPanel;
 
     private javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane();
@@ -21,9 +21,8 @@ public class GuiCustomer extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         productPanel = new ProducktPanel(shop);
         panel.add(productPanel, BorderLayout.CENTER);
-        sidePanel = new SidePanel(shop);
-        panel.add(sidePanel, BorderLayout.EAST);
-        // TODO add shopping cart
+        shoppingCart = new ShoppingCartPanel(shop);
+        panel.add(shoppingCart, BorderLayout.EAST);
         customerMenu = new CustomerMenu(shop, productPanel);
         panel.add(customerMenu, BorderLayout.PAGE_START);
 
