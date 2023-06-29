@@ -1,6 +1,7 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.Employee;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.*;
@@ -128,8 +129,8 @@ public interface ShopFacade {
      *
      * @return the all products
      */
-    public Collection<Products> getAllProducts() throws IOException;
-
+    public Collection<Products> getAllProducts();
+    public Collection <Employee>getAllEmployees();
     /**
      * Find products list.
      *
@@ -146,6 +147,7 @@ public interface ShopFacade {
      * @throws ProductNotFound the product not found
      */
     public Products findProduct(int ID) throws ProductNotFound;
+
 
     /**
      * Gets invoice.

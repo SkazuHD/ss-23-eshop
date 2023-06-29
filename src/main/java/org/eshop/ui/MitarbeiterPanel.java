@@ -22,7 +22,7 @@ public class MitarbeiterPanel extends javax.swing.JPanel implements SearchWidget
         this.add(Mitarbeiter);
 
 
-        Mitarbeiter.setListData(shop.getAllEmployee().toArray());
+        Mitarbeiter.setListData(shop.getAllEmployees().toArray());
 
 
 

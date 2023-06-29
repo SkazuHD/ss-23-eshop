@@ -7,10 +7,7 @@ package org.eshop.ui;
 //package de.hsbremen.prog2.net.socket.client;
 
 //import de.hsbremen.prog2.net.socket.Adresse;
-import org.eshop.entities.Customer;
-import org.eshop.entities.MassProducts;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
+import org.eshop.entities.*;
 import org.eshop.exceptions.*;
 import org.eshop.shop.ShopFacade;
 
@@ -325,19 +322,24 @@ public class Client  implements ShopFacade {
     }
 
     @Override
-    public Collection<Products> getAllProducts() throws IOException {
+    public Collection<Products> getAllProducts() {
         out.println("getAll");
-       String status = this.in.readLine();
-       if(status.equals("400")){
-           IOException IOException;
+        String status = "";
+        try { status = this.in.readLine();
+        }
 
-       } else if (status.equals("200")) {
-           readProducktList();
+        catch(IOException ignore) {}
+
+            if (status.equals("400")) {
+                IOException IOException;
+
+            } else if (status.equals("200")) {
+                readProducktList();
 
 
-       }
-        return null;
-    }
+            }
+            return null;
+        }
 
     @Override
     public List<Products> findProducts(String name) {
@@ -395,6 +397,26 @@ public class Client  implements ShopFacade {
         return null;
     }
 
+
+    @Override
+    public Collection <Employee>getAllEmployees() {
+        out.println("getAllEmp");
+        String status ="";
+        try {
+             status = this.in.readLine();
+        }catch (IOException ignore){
+
+        }
+        if (status.equals("400")) {
+
+        } else if (status.equals("200")) {
+
+
+
+        }
+        return null;
+    }
+
     @Override
     public String getInvoice(Customer c) {
 
@@ -431,11 +453,13 @@ public class Client  implements ShopFacade {
 
     }
 
-    private List<Products> readProducktList () throws IOException {
-        String type = in.readLine();
-        List<Products> products = new ArrayList<>();
+    private List<Products> readProducktList ()  {
 
-            int count = Integer.parseInt(in.readLine());
+        List<Products> products = new ArrayList<>();
+        int count;
+        try {
+            String type = in.readLine();
+            count = Integer.parseInt(in.readLine());
             for (int i = 0; i < count; i++) {
                 if (type.equals("p")) {
                     int id = Integer.parseInt(in.readLine());
@@ -444,15 +468,19 @@ public class Client  implements ShopFacade {
                     int quantity = Integer.parseInt(this.in.readLine());
                     products.add(new Products(id, price, name, quantity));
                 }else if (type.equals("mp")) {
-                        int id = Integer.parseInt(in.readLine());
-                        String name = this.in.readLine();
-                        double price = Double.valueOf(this.in.readLine());
-                        int quantity = Integer.parseInt(this.in.readLine());
-                        int packsize = Integer.parseInt(this.in.readLine());
-                        products.add(new MassProducts(id, price, name, quantity, packsize));
+                    int id = Integer.parseInt(in.readLine());
+                    String name = this.in.readLine();
+                    double price = Double.valueOf(this.in.readLine());
+                    int quantity = Integer.parseInt(this.in.readLine());
+                    int packsize = Integer.parseInt(this.in.readLine());
+                    products.add(new MassProducts(id, price, name, quantity, packsize));
+                }
             }
+        }catch (IOException e){
+        }finally {
+            return products;
         }
-       return products;
+
     }
     public User getUser(String username) {
         return null;

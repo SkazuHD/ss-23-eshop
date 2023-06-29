@@ -6,6 +6,7 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -181,7 +182,7 @@ public class Shop implements ShopFacade{
     }
 
     //CUSTOMER ONLY
-    public Collection <Employee>getAllEmployee(){
+    public Collection <Employee>getAllEmployees(){
         return employeeManager.getEmployee();
     }
 
@@ -283,6 +284,8 @@ public class Shop implements ShopFacade{
     public Products findProduct(int id) throws ProductNotFound {
         return productManager.getProductById(id);
     }
+
+
 
     public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         if(quantity>0){
