@@ -40,10 +40,10 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
         loggedInUser = user;
         if (user instanceof Employee) {
             loginFrame.dispose();
-            JFrame Employee = new GuiEmployee(server);
+            JFrame Employee = new GuiEmployee(server, user);
         } else {
             loginFrame.dispose();
-            JFrame Customer = new GuiCustomer(server);
+            JFrame Customer = new GuiCustomer(server, user);
 
         }
 

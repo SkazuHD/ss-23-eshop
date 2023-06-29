@@ -1,6 +1,8 @@
 package org.eshop.ui;
 import org.eshop.entities.Products;
+import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.ui.panels.addProductPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +35,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     /**
      * Der Konstruktor.
      */
-    public GuiEmployee(Shop shop) {
+    public GuiEmployee(Shop shop, User loggedInUser) {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,7 +48,9 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
 
         mitarbeiterPanel = new MitarbeiterPanel(shop,this);
-        sidePanel = new SidePanel(shop);
+        sidePanel = new SidePanel(shop, loggedInUser);
+        sidePanel.add(new addProductPanel(shop, loggedInUser));
+
         //jPanel1.add(sidePanel);
 
         jPanel1.add(sidePanel, BorderLayout.EAST);
