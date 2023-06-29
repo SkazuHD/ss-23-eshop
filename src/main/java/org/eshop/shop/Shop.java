@@ -6,6 +6,7 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -130,7 +131,16 @@ public class Shop implements ShopFacade{
             persistence.close();
         }
     }
-
+    public User getUser(String username){
+        User u = customerManager.getCustomer(username);
+        if(u == null){
+            u = employeeManager.getEmployee(username);
+        }
+        if (u == null){
+            throw new IllegalArgumentException("User not found");
+        }
+        return u;
+    };
     public void registerUser(String username, String password, String name, String address) throws UserExistsException {
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty()) {
             throw new IllegalArgumentException("Empty Fields");
@@ -172,6 +182,9 @@ public class Shop implements ShopFacade{
     }
 
     //CUSTOMER ONLY
+    public Collection <Employee>getAllEmployees(){
+        return employeeManager.getEmployee();
+    }
 
     public void addToCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         Products p = productManager.getProductById(id);
@@ -272,6 +285,8 @@ public class Shop implements ShopFacade{
         return productManager.getProductById(id);
     }
 
+
+
     public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         if(quantity>0){
             productManager.increaseQuantity(id, quantity);
@@ -301,6 +316,8 @@ public class Shop implements ShopFacade{
             persistence.close();
         }
     }
+
+
 }
 //Employees
 

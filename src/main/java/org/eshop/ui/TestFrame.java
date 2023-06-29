@@ -38,9 +38,9 @@ public class TestFrame extends JFrame {
 
 
         //TEST LOGIN SEARCH PANEL
-        new TestFrame(new SearchWidget(shop, result -> {
-            System.out.println(result);
-        }));
+      /*  new TestFrame(new SearchWidget(shop, result -> {
+           System.out.println(result);
+        }));*/
 
         //TEST ADD PANEL
         new TestFrame(new addProductPanel(shop, employee));
