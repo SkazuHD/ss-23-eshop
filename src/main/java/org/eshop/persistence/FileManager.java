@@ -69,8 +69,8 @@ public class FileManager implements ShopPersistence {
 
     @Override
     public void writeEmployee(Employee employee) {
-        writer.print(employee.getName() + ";");
         writer.print(employee.getID() + ";");
+        writer.print(employee.getName() + ";");
         writer.print(employee.getUsername() + ";");
         writer.print(employee.getPassword());
         writer.println();
@@ -83,7 +83,7 @@ public class FileManager implements ShopPersistence {
             return null;
         }
         String[] parts = serial.split(";");
-        return new Employee(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3]);
+        return new Employee(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3]);
     }
 
     @Override

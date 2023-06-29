@@ -6,7 +6,6 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Map;
 /**
  * The type Shop.
  */
-public class Shop implements ShopFacade{
+public class Shop implements ShopFacade {
 
     /**
      * The Customer manager.
@@ -80,9 +79,11 @@ public class Shop implements ShopFacade{
             e.printStackTrace();
         }
     }
-    public void save(){
+
+    public void save() {
         saveProducts();
     }
+
     public void load() {
         try {
 
@@ -106,7 +107,7 @@ public class Shop implements ShopFacade{
             do {
                 e = persistence.readEmployee();
                 if (e != null) {
-                    employeeManager.register(e.getUsername(), Integer.parseInt(e.getID()), e.getName(), e.getPassword());
+                    employeeManager.register(Integer.parseInt(e.getID()), e.getName(), e.getUsername(), e.getPassword());
                 }
             } while (e != null);
 
@@ -131,16 +132,18 @@ public class Shop implements ShopFacade{
             persistence.close();
         }
     }
-    public User getUser(String username){
+
+    public User getUser(String username) {
         User u = customerManager.getCustomer(username);
-        if(u == null){
+        if (u == null) {
             u = employeeManager.getEmployee(username);
         }
-        if (u == null){
+        if (u == null) {
             throw new IllegalArgumentException("User not found");
         }
         return u;
-    };
+    }
+
     public void registerUser(String username, String password, String name, String address) throws UserExistsException {
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty()) {
             throw new IllegalArgumentException("Empty Fields");
@@ -182,7 +185,7 @@ public class Shop implements ShopFacade{
     }
 
     //CUSTOMER ONLY
-    public Collection <Employee>getAllEmployees(){
+    public Collection<Employee> getAllEmployees() {
         return employeeManager.getEmployee();
     }
 
@@ -246,7 +249,7 @@ public class Shop implements ShopFacade{
     }
 
     public void createProduct(String name, double price, int quantity, int packsize, User u) throws PacksizeNotMatching {
-        if(quantity % packsize != 0){
+        if (quantity % packsize != 0) {
             throw new PacksizeNotMatching(packsize);
         }
         Products p = productManager.createProduct(name, price, quantity, packsize);
@@ -281,18 +284,18 @@ public class Shop implements ShopFacade{
     public List<Products> findProducts(String name) {
         return productManager.getProductByName(name);
     }
+
     public Products findProduct(int id) throws ProductNotFound {
         return productManager.getProductById(id);
     }
 
 
-
     public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
-        if(quantity>0){
+        if (quantity > 0) {
             productManager.increaseQuantity(id, quantity);
-        }else if (quantity<0){
+        } else if (quantity < 0) {
             productManager.decreaseQuantity(id, quantity);
-        }else {
+        } else {
             //Returns when quantity isnt effected -> 0
             return;
         }
@@ -300,9 +303,10 @@ public class Shop implements ShopFacade{
         eventManager.addEvent(u, productManager.getProductById(id), quantity);
 
     }
+
     //Employees
-    public void registerEmployee(int id, String username, String password, String name) throws UserExistsException {
-        if (!employeeManager.register(username, id, name, password)) {
+    public void registerEmployee(int id, String name, String username, String password) throws UserExistsException {
+        if (!employeeManager.register(id, name, username, password)) {
             throw new UserExistsException(username);
         }
         //Try Saving to File

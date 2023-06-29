@@ -1,36 +1,31 @@
 package org.eshop.ui;
-import org.eshop.entities.Products;
+
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.panels.addProductPanel;
+import org.eshop.ui.panels.editProductPanel;
+import org.eshop.ui.panels.registerEmployeePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-// Import-Anweisung für unser JLabel
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-
-
 
 
 public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
-    private javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
-
-
+    private final javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+    private final javax.swing.JScrollPane scrollPane =
+            new javax.swing.JScrollPane();
+    private final javax.swing.JPanel Paneelcenter =
+            new javax.swing.JPanel();
     Shop shop;
-
     MenuePanel menuePanel;
-
     SidePanel sidePanel;
     ProducktPanel producktPanel;
     MitarbeiterPanel mitarbeiterPanel;
-
-    private javax.swing.JScrollPane scrollPane =
-            new javax.swing.JScrollPane();
-    private javax.swing.JPanel Paneelcenter =
-            new javax.swing.JPanel();
+    addProductPanel addProductPanel;
+    editProductPanel editProductPanel;
+    registerEmployeePanel registerEmployeePanel;
 
     /**
      * Der Konstruktor.
@@ -42,14 +37,21 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         producktPanel = new ProducktPanel(shop);
 
 
+        jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
+        Paneelcenter.add(producktPanel);
 
-              jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
-              Paneelcenter.add(producktPanel);
 
-
-        mitarbeiterPanel = new MitarbeiterPanel(shop,this);
+        mitarbeiterPanel = new MitarbeiterPanel(shop, this);
         sidePanel = new SidePanel(shop, loggedInUser);
-        sidePanel.add(new addProductPanel(shop, loggedInUser));
+        editProductPanel = new editProductPanel(shop, loggedInUser);
+        addProductPanel = new addProductPanel(shop, loggedInUser);
+        registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
+        sidePanel.add(addProductPanel);
+        sidePanel.add(editProductPanel);
+        sidePanel.add(registerEmployeePanel);
+        addProductPanel.setVisible(true);
+        editProductPanel.setVisible(false);
+        registerEmployeePanel.setVisible(false);
 
         //jPanel1.add(sidePanel);
 
@@ -64,15 +66,12 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         mitarbeiterPanel.setVisible(false);
 
 
-
         // Das Panel zum aktiven, sichtbaren Inhalt des JFrame machen:
         this.getContentPane().add(jPanel1);
         // Alle Elemente auf kleinstmögliche Größe bringen
         pack();
 
         this.setVisible(true);
-
-        ;
 
 
     }
@@ -82,16 +81,22 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         producktPanel.setVisible(false);
         mitarbeiterPanel.setVisible(false);
-        switch(e.getActionCommand()){
+        switch (e.getActionCommand()) {
             case "Producktpanel":
-            producktPanel.setVisible(true);
-              mitarbeiterPanel.setVisible(false);
+                producktPanel.setVisible(true);
+                mitarbeiterPanel.setVisible(false);
+                addProductPanel.setVisible(true);
+                editProductPanel.setVisible(false);
+                registerEmployeePanel.setVisible(false);
 
 
                 break;
             case "Mitarbeiterpanel":
                 mitarbeiterPanel.setVisible(true);
                 producktPanel.setVisible(false);
+                registerEmployeePanel.setVisible(true);
+                addProductPanel.setVisible(false);
+                editProductPanel.setVisible(false);
 
 
                 break;
