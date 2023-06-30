@@ -1,7 +1,6 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Employee;
-import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
 
@@ -42,22 +41,23 @@ public class EmployeeManager {
      * Register boolean.
      *
      * @param username the username
-     * @param persoNr  the perso nr
+     * @param id       the perso nr
      * @param name     the name
      * @param password the password
      * @return the boolean
      */
-    public boolean register(String username, int persoNr, String name, String password) {
+    public boolean register(int id, String name, String username, String password) {
 
         if (employees.containsKey(username)) {
             return false;
         } else {
-            Employee e = new Employee(username, persoNr, name, password);
+            Employee e = new Employee(id, name, username, password);
             employees.put(username, e);
             return true;
         }
 
     }
+
     public Collection<Employee> getEmployee() {
         return employees.values();
     }

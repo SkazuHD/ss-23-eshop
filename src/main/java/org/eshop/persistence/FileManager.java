@@ -1,9 +1,6 @@
 package org.eshop.persistence;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.Employee;
-import org.eshop.entities.Event;
-import org.eshop.entities.Products;
+import org.eshop.entities.*;
 
 import java.io.*;
 
@@ -69,8 +66,8 @@ public class FileManager implements ShopPersistence {
 
     @Override
     public void writeEmployee(Employee employee) {
-        writer.print(employee.getName() + ";");
         writer.print(employee.getID() + ";");
+        writer.print(employee.getName() + ";");
         writer.print(employee.getUsername() + ";");
         writer.print(employee.getPassword());
         writer.println();
@@ -83,7 +80,7 @@ public class FileManager implements ShopPersistence {
             return null;
         }
         String[] parts = serial.split(";");
-        return new Employee(parts[0], Integer.parseInt(parts[1]), parts[2], parts[3]);
+        return new Employee(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3]);
     }
 
     @Override
@@ -91,7 +88,8 @@ public class FileManager implements ShopPersistence {
         writer.print(products.getId() + ";");
         writer.print(products.getPrice() + ";");
         writer.print(products.getName() + ";");
-        writer.print(products.getQuantity());
+        writer.print(products.getQuantity() + ";");
+        writer.print(products instanceof MassProducts mp ? mp.getPacksize() : 0);
         writer.println();
     }
 
@@ -102,7 +100,12 @@ public class FileManager implements ShopPersistence {
             return null;
         }
         String[] parts = serial.split(";");
-        return new Products(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]));
+        if (parts[4].equals("0")) {
+            return new Products(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]));
+
+        } else {
+            return new MassProducts(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]), Integer.parseInt(parts[4]));
+        }
     }
 
     public void writeEvent(Event event) {
