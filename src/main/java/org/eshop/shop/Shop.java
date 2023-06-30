@@ -203,7 +203,7 @@ public class Shop implements ShopFacade {
         }
     }
 
-    public void removeFromCart(int id, int quantity, Customer c) throws ProductNotFound {
+    public void removeFromCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching {
         Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.removeProduct(p, quantity, c);
@@ -223,19 +223,19 @@ public class Shop implements ShopFacade {
         for (Products key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
-                productManager.decreaseQuantity(key.getId(), cart.get(key));
-            } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
-                //TODO HANDLE IT CORRECTLY
-                System.out.println(e.getMessage());
+                productManager.decreaseQuantity(key, cart.get(key));
+            }catch (Exception ignore){
+                //TODO HANDLE IT MAN
             }
+
+
         }
         saveAsync();
         cart.clear();
     }
 
-    public String getInvoice(Customer c) {
-        Invoice i = customerManager.checkout(c);
-        return i.toString();
+    public Invoice getInvoice(Customer c) {
+        return customerManager.checkout(c);
     }
     //EMPLOYEE ONLY
 

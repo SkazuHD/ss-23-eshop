@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 class ClientAddressRequestProcessor{
@@ -60,10 +61,10 @@ class ClientAddressRequestProcessor{
                 System.out.println(var5.getMessage());
                 continue;
             }
-            System.out.println(input);
 
             if (input == null) {
                 input = "quit";
+                break;
             }
 
             switch (input) {
@@ -103,8 +104,22 @@ class ClientAddressRequestProcessor{
                 case "findId":
                     findId();
                         break;
+                case "prodHistory":
+                    getProdHistory();
+                    break;
+                case "getInvoice":
+                    getInvoice();
+                    break;
+                case "getCart":
+                    getCart();
+                case "addToCart":
+                    addToCart();
+                case "removeFromCart":
+                    removeFromCart();
+                case "save":
+                    server.save();
                 default:
-                    System.out.println(input);
+                    System.out.println("Not valid "+ input);
             }
         } while(!input.equals("Logout"));
 
@@ -280,16 +295,7 @@ class ClientAddressRequestProcessor{
         }
 
     }
-    private void returnProd(Products p){
-        out.println(p instanceof MassProducts? "p": "mp");
-        out.println(p.getId());
-        out.println(p.getName());
-        out.println(p.getPrice());
-        out.println(p.getQuantity());
-        if(p instanceof MassProducts mp){
-            out.println(mp.getPacksize());
-        }
-    }
+
     public void changeQuantity(){
         int id = 0;
         int quantity = 0;
@@ -348,6 +354,149 @@ class ClientAddressRequestProcessor{
         }catch (ProductNotFound e){
             out.println(400);
             out.println(id);
+        }
+    }
+
+    public void getProdHistory(){
+        int prodId = 0;
+        int days = 0;
+        try {
+             prodId = Integer.parseInt(in.readLine());
+             days = Integer.parseInt(in.readLine());
+        }catch (IOException ignore){
+        }
+        int[] history = server.getProductHistory(prodId, days);
+        out.println(200);
+        out.println(history.length);
+        for (int i : history) {
+            out.println(i);
+        }
+    }
+    public void getCart(){
+        String customerName = "";
+        try {
+             customerName = in.readLine();
+        }catch (IOException ignore){}
+        try {
+            Customer c = (Customer) server.getUser(customerName);
+            Map<Products, Integer> cart = server.getCart(c);
+            out.println(200);
+            out.println(cart.size());
+            Iterator<Products> it = cart.keySet().iterator();
+            while (it.hasNext()){
+                Products p = it.next();
+                int quantity = cart.get(p);
+                returnProd(p);
+                out.println(quantity);
+            }
+        }catch (RuntimeException e){
+            out.println(400);
+        }
+    }
+    public void getInvoice(){
+        String username ="";
+        try {
+            username = in.readLine();
+        }catch (IOException ignore){
+        }
+        Customer c = (Customer) server.getUser(username);
+        out.println(200);
+        returnCart(c.getUsername());
+    }
+    public void addToCart(){
+        int prodId = 0;
+        int quantiy;
+        String username;
+        Customer c;
+        try {
+             prodId = Integer.parseInt(in.readLine());
+             quantiy = Integer.parseInt(in.readLine());
+             username = in.readLine();
+             c = (Customer) server.getUser(username);
+            server.addToCart(prodId,quantiy,c);
+            out.println(200);
+        }catch (IOException e){
+
+        } catch (PacksizeNotMatching e) {
+            out.println(401);
+            out.println(e.getPacksize());
+        } catch (ProductNotFound e) {
+            out.println(400);
+            out.println(prodId);
+        } catch (NotInStockException e) {
+            out.println(402);
+            out.println(e.getQuantity());
+        }
+
+
+    }
+    public void removeFromCart(){
+        int prodId = 0;
+        int quantiy;
+        String username;
+        Customer c;
+        try {
+            prodId = Integer.parseInt(in.readLine());
+            quantiy = Integer.parseInt(in.readLine());
+            username = in.readLine();
+            c = (Customer) server.getUser(username);
+            server.removeFromCart(prodId,quantiy,c);
+            out.println(200);
+        }catch (IOException e){
+
+        } catch (PacksizeNotMatching e) {
+            out.println(401);
+            out.println(e.getPacksize());
+        } catch (ProductNotFound e) {
+            out.println(400);
+            out.println(prodId);
+        }
+    }
+    public void checkout(){
+        try {
+            String username = in.readLine();
+            Customer c = (Customer) server.getUser(username);
+            server.checkout(c);
+        }catch (IOException ignore){
+
+        }
+
+    }
+
+    // UTIL
+    private void returnProd(Products p){
+        out.println(p instanceof MassProducts? "p": "mp");
+        out.println(p.getId());
+        out.println(p.getName());
+        out.println(p.getPrice());
+        out.println(p.getQuantity());
+        if(p instanceof MassProducts mp){
+            out.println(mp.getPacksize());
+        }
+    }
+
+    private void returnCustomer(Customer c){
+        out.println(c.getUsername());
+        out.println(c.getPassword());
+        out.println(c.getAddress());
+        out.println(c.getID());
+    }
+
+    private void returnCart(String username){
+        try {
+            Customer c = (Customer) server.getUser(username);
+            Map<Products, Integer> cart = server.getCart(c);
+            out.println(200);
+            out.println(cart.size());
+            Iterator<Products> it = cart.keySet().iterator();
+            while (it.hasNext()){
+                Products p = it.next();
+                int quantity = cart.get(p);
+                returnProd(p);
+                out.println(quantity);
+            }
+        }catch (RuntimeException e){
+            out.println(400);
         }
     }
 
