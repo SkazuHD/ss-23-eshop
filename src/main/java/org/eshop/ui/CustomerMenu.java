@@ -39,10 +39,9 @@ public class CustomerMenu extends javax.swing.JPanel {
         search.setBackground(new Color(50));
         Menu.add(search);
 
-        Menu.add(User,BorderLayout.LINE_START);
+        Menu.add(Produkte,BorderLayout.LINE_START);
         Menu.setBackground(new Color(50));
         Menu.setBorder(new EmptyBorder(10,10,10,10));
-        Menu.add(Produkte);
         Menu.add(Warenkorb);
         Menu.add(Logout);
 

@@ -21,6 +21,7 @@ public class GuiCustomer extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         productPanel = new ProducktPanel(shop);
         panel.add(productPanel, BorderLayout.CENTER);
+
         shoppingCart = new ShoppingCartPanel(shop);
         panel.add(shoppingCart, BorderLayout.EAST);
         customerMenu = new CustomerMenu(shop, productPanel);
