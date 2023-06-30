@@ -6,7 +6,6 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.exceptions.*;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public interface ShopFacade {
      * @throws UserExistsException the user exists exception
      */
 //User API
-    public void registerUser(String username, String password, String name, String address) throws UserExistsException;
+    void registerUser(String username, String password, String name, String address) throws UserExistsException;
 
     /**
      * Register employee.
@@ -36,7 +35,7 @@ public interface ShopFacade {
      * @param name     the name
      * @throws UserExistsException the user exists exception
      */
-    public void registerEmployee(int id, String username, String password, String name) throws UserExistsException;
+    void registerEmployee(int id, String username, String password, String name) throws UserExistsException;
 
     /**
      * Log in user.
@@ -46,7 +45,7 @@ public interface ShopFacade {
      * @return the user
      * @throws LoginFailed the login failed
      */
-    public User logIn(String username, String password) throws LoginFailed;
+    User logIn(String username, String password) throws LoginFailed;
 
     /**
      * Log out boolean.
@@ -54,9 +53,9 @@ public interface ShopFacade {
      * @param user the user
      * @return the boolean
      */
-    public boolean logOut(User user);
+    boolean logOut(User user);
 
-    public User getUser(String username);
+    User getUser(String username);
 
     /**
      * Create product.
@@ -67,7 +66,7 @@ public interface ShopFacade {
      * @param user     the user
      */
 //Product API
-    public void createProduct(String name,double price, int quantity, User user);
+    void createProduct(String name, double price, int quantity, User user);
 
     /**
      * Create product.
@@ -79,7 +78,7 @@ public interface ShopFacade {
      * @param user     the user
      * @throws PacksizeNotMatching the packsize not matching
      */
-    public void createProduct(String name, double price, int quantity , int packSize, User user) throws PacksizeNotMatching;
+    void createProduct(String name, double price, int quantity, int packSize, User user) throws PacksizeNotMatching;
 
     /**
      * Delete product.
@@ -87,7 +86,7 @@ public interface ShopFacade {
      * @param id the id
      * @throws ProductNotFound the product not found
      */
-    public void deleteProduct(int id) throws ProductNotFound;
+    void deleteProduct(int id) throws ProductNotFound;
 
     /**
      * Edit product details products.
@@ -98,7 +97,7 @@ public interface ShopFacade {
      * @return the products
      * @throws ProductNotFound the product not found
      */
-    public Products editProductDetails(int id, String name, double price) throws ProductNotFound;
+    Products editProductDetails(int id, String name, double price) throws ProductNotFound;
 
     /**
      * Edit product details products.
@@ -110,7 +109,7 @@ public interface ShopFacade {
      * @return the products
      * @throws ProductNotFound the product not found
      */
-    public Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound;
+    Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound;
 
     /**
      * Change quantity.
@@ -122,22 +121,24 @@ public interface ShopFacade {
      * @throws PacksizeNotMatching the packsize not matching
      * @throws NotInStockException the not in stock exception
      */
-    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException;
+    void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException;
 
     /**
      * Gets all products.
      *
      * @return the all products
      */
-    public Collection<Products> getAllProducts();
-    public Collection <Employee>getAllEmployees();
+    Collection<Products> getAllProducts();
+
+    Collection<Employee> getAllEmployees();
+
     /**
      * Find products list.
      *
      * @param name the name
      * @return the list
      */
-    public List<Products> findProducts(String name);
+    List<Products> findProducts(String name);
 
     /**
      * Find product products.
@@ -146,8 +147,9 @@ public interface ShopFacade {
      * @return the products
      * @throws ProductNotFound the product not found
      */
-    public Products findProduct(int ID) throws ProductNotFound;
+    Products findProduct(int ID) throws ProductNotFound;
 
+    int[] getProductHistory(int productId, int days);
 
     /**
      * Gets invoice.
@@ -156,14 +158,14 @@ public interface ShopFacade {
      * @return the invoice
      */
 //Customer API
-    public String getInvoice(Customer c);
+    String getInvoice(Customer c);
 
     /**
      * Checkout.
      *
      * @param c the c
      */
-    public void checkout(Customer c);
+    void checkout(Customer c);
 
     /**
      * Gets cart.
@@ -171,7 +173,7 @@ public interface ShopFacade {
      * @param c the c
      * @return the cart
      */
-    public Map<Products, Integer> getCart(Customer c);
+    Map<Products, Integer> getCart(Customer c);
 
     /**
      * Add to cart.
@@ -183,7 +185,7 @@ public interface ShopFacade {
      * @throws NotInStockException the not in stock exception
      * @throws ProductNotFound     the product not found
      */
-    public void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound;
+    void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound;
 
     /**
      * Remove from cart.
@@ -194,16 +196,16 @@ public interface ShopFacade {
      * @throws PacksizeNotMatching the packsize not matching
      * @throws ProductNotFound     the product not found
      */
-    public void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound;
+    void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound;
 
     /**
      * Save.
      */
 //PERSISTENCE API
-    public void save();
+    void save();
 
     /**
      * Load.
      */
-    public void load();
+    void load();
 }

@@ -5,8 +5,6 @@ import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.frames.LoginFrame;
 
-
-
 import javax.swing.*;
 
 /**
@@ -23,7 +21,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
     public Gui() {
         server = new Shop();
         loginFrame = new LoginFrame(server, this);
-
+        
     }
 
     public static void main(String[] args) {
@@ -40,10 +38,10 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
         loggedInUser = user;
         if (user instanceof Employee) {
             loginFrame.dispose();
-            JFrame Employee = new GuiEmployee(server);
+            JFrame Employee = new GuiEmployee(server, user);
         } else {
             loginFrame.dispose();
-            JFrame Customer = new GuiCustomer(server);
+            JFrame Customer = new GuiCustomer(server, user);
 
         }
 

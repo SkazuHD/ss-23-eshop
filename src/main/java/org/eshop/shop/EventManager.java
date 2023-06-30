@@ -6,10 +6,12 @@ import org.eshop.entities.User;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The type Event manager.
@@ -80,13 +82,49 @@ public class EventManager {
         do {
             event = persistence.readEvent();
             if (event != null) {
-                addEvent(event);
+                if (productEvents.containsKey(event.getProductId())) {
+                    productEvents.get(event.getProductId()).add(event);
+                } else {
+                    ArrayList<Event> list = new ArrayList<>();
+                    list.add(event);
+                    productEvents.put(event.getProductId(), list);
+                }
+                try {
+                    persistence.openForWriting("events.csv", true);
+
+                } catch (Exception e) {
+                    //TODO handle exception
+                    return;
+                }
             }
         } while (event != null);
     }
 
     //TODO IMPLEMENT
-    public int[] getProductHistory(){
-        return null;
+    public int[] getProductHistory(int productId, int days, int currentStock) {
+        List<Event> allEvents = productEvents.get(productId);
+        if (allEvents == null || allEvents.isEmpty()) return new int[days];
+        //Filter Events by Date
+        allEvents.removeIf(event -> event.getDayInYear() < (LocalDate.now().getDayOfYear() - days));
+        //Create Array with size of days
+        int[] history = new int[days];
+        history[0] = currentStock;
+        for (int i = 1; i < days; i++) {
+
+            //Get All Events for the day
+            AtomicInteger sum = new AtomicInteger();
+            int finalI = i;
+            allEvents.forEach(event -> {
+                //Check if Date Matches;
+                if (LocalDate.now().getDayOfYear() - finalI == event.getDayInYear()) {
+                    sum.addAndGet(event.getQuantity());
+                }
+            });
+            history[i] = history[i - 1] - sum.get();
+        }
+
+        return history;
     }
+
+
 }

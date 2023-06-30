@@ -17,7 +17,7 @@ public class Employee extends User {
      * @param username the username
      * @param password the password
      */
-    public Employee(String name, int id, String username, String password) {
+    public Employee(int id, String name, String username, String password) {
         super(username, password);
         setName(name);
         setID(String.valueOf(id));
