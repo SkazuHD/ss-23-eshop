@@ -162,7 +162,7 @@ public interface ShopFacade {
      *
      * @param c the c
      */
-    void checkout(Customer c);
+    void checkout(Customer c) throws CheckoutFailed;
 
     /**
      * Gets cart.

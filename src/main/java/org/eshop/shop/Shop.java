@@ -6,6 +6,7 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -217,9 +218,17 @@ public class Shop implements ShopFacade {
         return customerManager.getCart(c);
     }
 
-    public void checkout(Customer c) {
-        //TODO Check all products before removing it
+    public void checkout(Customer c) throws CheckoutFailed {
         Map<Products, Integer> cart = c.getCart();
+        List<Products> productsToBeFixed = new ArrayList<>();
+        for (Products key : cart.keySet()) {
+            if(key.getQuantity() < cart.get(key)){
+                productsToBeFixed.add(key);
+            }
+        }
+        if(productsToBeFixed.size() > 0){
+            throw new CheckoutFailed(productsToBeFixed);
+        }
         for (Products key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
