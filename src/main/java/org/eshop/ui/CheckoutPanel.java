@@ -21,9 +21,8 @@ public class CheckoutPanel extends javax.swing.JPanel {
     }
 
     private void setupUI() {
-        Dimension inputMaxSize = new Dimension(300, 25);
-
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setPreferredSize(new Dimension(200, 500));
+        //TODO invoice ausgeben
     }
 }

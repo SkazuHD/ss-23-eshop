@@ -1,7 +1,11 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Products;
+import org.eshop.entities.Customer;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ProductManager;
+import org.eshop.shop.CustomerManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +15,14 @@ import java.awt.event.ActionListener;
 
 public class ShoppingCartPanel extends JPanel{
 
-    private final JTextField productName = new JTextField();
-    //TODO SHOULD BE REPLACED WITH CUSTOM JNumberField for Input Validation
-    private final JTextField productQuantity = new JTextField();
-    private final JButton checkoutButton = new JButton("Checkout");
+    private JButton checkoutButton = new JButton("Checkout");
     private Shop server;
     private User loggedInUser;
+    private javax.swing.JList Waren =
+            new javax.swing.JList<Customer>();
+
+    CustomerManager customerManager;
+    Customer c;
     GuiCustomer guiCustomer;
 
     public ShoppingCartPanel(Shop shop, User user) {
@@ -26,19 +32,15 @@ public class ShoppingCartPanel extends JPanel{
     }
 
     private void setupUI() {
-        Dimension inputMaxSize = new Dimension(300, 25);
-
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setPreferredSize(new Dimension(200, 500));
-        productName.setPreferredSize(inputMaxSize);
-        productName.setMaximumSize(inputMaxSize);
-        this.add(new JLabel("Name:"));
-        this.add(productName);
-        productQuantity.setPreferredSize(inputMaxSize);
-        productQuantity.setMaximumSize(inputMaxSize);
-        this.add(new JLabel("Quantity"));
-        this.add(productQuantity);
+        this.add(Waren);
+        // Waren.setListData(server.getCart(c).toArray());
+        //TODO Waren als Liste ausgeben
         this.add(checkoutButton);
+        // checkoutButton.setActionCommand("checkoutPanel");
+        // checkoutButton.addActionListener(guiCustomer);
+        //TODO Button nutzbar machen
 
     }
 
