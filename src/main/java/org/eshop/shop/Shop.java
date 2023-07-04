@@ -6,6 +6,7 @@ import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -203,7 +204,7 @@ public class Shop implements ShopFacade {
         }
     }
 
-    public void removeFromCart(int id, int quantity, Customer c) throws ProductNotFound {
+    public void removeFromCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching {
         Products p = productManager.getProductById(id);
         if (p != null) {
             customerManager.removeProduct(p, quantity, c);
@@ -217,25 +218,33 @@ public class Shop implements ShopFacade {
         return customerManager.getCart(c);
     }
 
-    public void checkout(Customer c) {
-        //TODO Check all products before removing it
+    public void checkout(Customer c) throws CheckoutFailed {
         Map<Products, Integer> cart = c.getCart();
+        List<Products> productsToBeFixed = new ArrayList<>();
+        for (Products key : cart.keySet()) {
+            if(key.getQuantity() < cart.get(key)){
+                productsToBeFixed.add(key);
+            }
+        }
+        if(productsToBeFixed.size() > 0){
+            throw new CheckoutFailed(productsToBeFixed);
+        }
         for (Products key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
-                productManager.decreaseQuantity(key.getId(), cart.get(key));
-            } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
-                //TODO HANDLE IT CORRECTLY
-                System.out.println(e.getMessage());
+                productManager.decreaseQuantity(key, cart.get(key));
+            }catch (Exception ignore){
+                //TODO HANDLE IT MAN
             }
+
+
         }
         saveAsync();
         cart.clear();
     }
 
-    public String getInvoice(Customer c) {
-        Invoice i = customerManager.checkout(c);
-        return i.toString();
+    public Invoice getInvoice(Customer c) {
+        return customerManager.checkout(c);
     }
     //EMPLOYEE ONLY
 

@@ -65,4 +65,16 @@ public class Invoice {
         return total;
     }
 
+    public Map<Products, Integer> getCart(){
+        return cart;
+    }
+
+    public Customer getCustomer(){
+        return c;
+    }
+
+    public Date getDate(){
+        return date;
+    }
+
 }
