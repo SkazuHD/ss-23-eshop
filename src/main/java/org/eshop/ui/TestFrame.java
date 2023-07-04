@@ -5,6 +5,7 @@ import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
+import org.eshop.ui.components.SearchWidget;
 import org.eshop.ui.panels.addProductPanel;
 import org.eshop.ui.panels.editProductPanel;
 import org.eshop.ui.panels.registerEmployeePanel;
@@ -41,9 +42,9 @@ public class TestFrame extends JFrame {
             System.out.println(test[i]);
 
         //TEST LOGIN SEARCH PANEL
-      /*  new TestFrame(new SearchWidget(shop, result -> {
-           System.out.println(result);
-        }));*/
+        new TestFrame(new SearchWidget(shop, result -> {
+            System.out.println(result);
+        }));
 
         //TEST ADD PANEL
         new TestFrame(new addProductPanel(shop, employee));
@@ -57,7 +58,7 @@ public class TestFrame extends JFrame {
 
 
         List<Products> products = shop.getAllProducts().stream().toList();
-        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", "Buttons"};
+        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", ""};
         new TestFrame(new JScrollPane(new Table(products, columns)));
 
     }

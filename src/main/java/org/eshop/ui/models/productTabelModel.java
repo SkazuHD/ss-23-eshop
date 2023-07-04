@@ -9,7 +9,10 @@ import java.util.Vector;
 public class productTabelModel extends AbstractTableModel {
 
     private final List<Products> productsList;
-    private String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", "Edit"};
+    private final String[] columns;
+    boolean[] canEdit = new boolean[]{
+            false, false, false, false, true
+    };
 
     public productTabelModel(List<Products> productsList, String[] columns) {
         super();
@@ -23,6 +26,12 @@ public class productTabelModel extends AbstractTableModel {
         this.productsList.addAll(productsList);
         fireTableDataChanged();
     }
+
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+
+        return canEdit[columnIndex];
+    }
+
 
     @Override
     public int getRowCount() {

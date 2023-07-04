@@ -11,6 +11,7 @@ public class TabelButton extends JButton {
     private boolean mousePress;
 
     public TabelButton() {
+        super("+");
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(3, 3, 3, 3));
         addMouseListener(new MouseAdapter() {
