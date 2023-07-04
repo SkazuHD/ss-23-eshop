@@ -16,11 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.lang.reflect.Array;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Client implements ShopFacade {
     private Socket socket = null;
@@ -395,8 +393,31 @@ public class Client implements ShopFacade {
 
     @Override
     public int[] getProductHistory(int productId, int days) {
-        return new int[0];
+        out.println("prodHistory");
+        out.println(productId);
+        out.println(days);
+        String status;
+        int[] zahlen = new int[days];
+        try {
+            status = this.in.readLine();
+            if (status.equals("400")) {
+
+            } else if (status.equals("200")) {
+               int length = Integer.parseInt(in.readLine());
+                zahlen = new int[length];
+
+               for (int i= 0; i <length; i++){
+                     zahlen[i] = Integer.parseInt(in.readLine());
+               }
+            }
+
+        } catch (IOException e) {
+
+        }
+        return zahlen;
     }
+
+
 
 
     @Override
@@ -418,40 +439,145 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public String getInvoice(Customer c) {
+    public Invoice getInvoice(Customer c) {
+        out.println("getInvoice");
+        out.println(c.getUsername());
+        String status;
+         try {
+            status = this.in.readLine();
+            if (status.equals("400")) {
 
-        return null;
+            } else if (status.equals("200")) {
+                c.clearCart();
+                int size = Integer.parseInt(in.readLine());
+                for (int i = 0; i < size; i++) {
+                    Products p = prod();
+                    int quantity = Integer.parseInt(in.readLine());
+                    c.addToCart(p, quantity);
+                }
+
+            }
+
+        } catch (IOException e) {
+
+        }
+        return new Invoice(c);
+
     }
 
     @Override
     public void checkout(Customer c) {
+        out.println("checkout");
+        out.println(c.getUsername());
+        String status;
+        try {
+            status = this.in.readLine();
+            if (status.equals("400")) {
+
+            } else if (status.equals("200")) {
+                c.clearCart();
+
+
+            }
+
+        } catch (IOException e) {
+
+        }
+
+
 
     }
 
     @Override
     public Map<Products, Integer> getCart(Customer c) {
-        return null;
+        out.println("getCart");
+        out.println(c.getUsername());
+        Map<Products, Integer> cart = new HashMap<>();
+        String status;
+        try {
+            status = this.in.readLine();
+            if (status.equals("400")) {
+
+            } else if (status.equals("200")) {
+                int size = Integer.parseInt(in.readLine());
+                for (int i = 0; i < size; i++) {
+                    Products p = prod();
+                    int quantity = Integer.parseInt(in.readLine());
+                    cart.put(p, quantity);
+
+                }
+            }
+
+        } catch (IOException e) {
+
+        }
+        return cart;
     }
 
     @Override
     public void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound {
+        out.println("addToCart");
+        out.println(id);
+        out.println(quantity);
+        out.println(c.getUsername());
+        String status;
+        try {
+             status = this.in.readLine();
+            if (status.equals("400")) {
+                String ans = this.in.readLine();
+                throw new ProductNotFound(ans);
+            } else if (status.equals("401")) {
+                int ans = Integer.parseInt(this.in.readLine());
+                throw new PacksizeNotMatching(ans);
+            } else if (status.equals("402")) {
+                int ans = Integer.parseInt(this.in.readLine());
+                throw new NotInStockException(ans);
+
+            } else if (status.equals("200")) {
+
+
+            }
+
+        } catch (IOException e) {
+
+        }
+
+
 
     }
 
     @Override
     public void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound {
+        out.println("removeFromCart");
+        out.println(id);
+        out.println(quantity);
+        out.println(c.getUsername());
+        String status;
+        try {
+            status = this.in.readLine();
+            if (status.equals("400")) {
+                String ans = this.in.readLine();
+                throw new ProductNotFound(ans);
+            } else if (status.equals("401")) {
+                int ans = Integer.parseInt(this.in.readLine());
+                throw new PacksizeNotMatching(ans);
+            } else if (status.equals("200")) {
+
+
+            }
+
+        } catch (IOException e) {
+
+        }
+
 
     }
 
     @Override
     public void save() {
-
+        out.println("save");
     }
 
-    @Override
-    public void load() {
-
-    }
 
     private List<Products> readProducktList() {
 
@@ -486,5 +612,31 @@ public class Client implements ShopFacade {
     public User getUser(String username) {
         return null;
     }
+
+    private  Products prod (){
+        String status;
+        try {
+            String type = in.readLine();
+            if (type.equals("p")) {
+                    int id = Integer.parseInt(in.readLine());
+                    String name = this.in.readLine();
+                    double price = Double.valueOf(this.in.readLine());
+                    int quantity = Integer.parseInt(this.in.readLine());
+                    return new Products(id,price, name, quantity);
+
+                } else if (type.equals("mp")) {
+                    int id = Integer.parseInt(in.readLine());
+                    String name = this.in.readLine();
+                    double price = Double.valueOf(this.in.readLine());
+                    int quantity = Integer.parseInt(this.in.readLine());
+                    int packsize = Integer.parseInt(this.in.readLine());
+                    return new MassProducts(id,price,name,quantity, packsize);
+                }
+
+        } catch (IOException e) {
+
+        } return  null;
+    }
+
 }
 

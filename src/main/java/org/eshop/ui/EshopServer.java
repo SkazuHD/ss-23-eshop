@@ -8,6 +8,7 @@ package org.eshop.ui;
 //package de.hsbremen.prog2.net.socket.server;
 
 //import de.hsbremen.prog2.net.socket.Adresse;
+
 import org.eshop.shop.Shop;
 
 import java.io.IOException;
@@ -15,14 +16,12 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Hashtable;
-import java.util.Map;
 
-public class EshopServer{
+public class EshopServer {
     public static final int DEFAULT_PORT = 6789;
-    private int port;
+    private final int port;
+    private final Shop server;
     private ServerSocket serverSocket;
-    private Shop server;
 
 
     public EshopServer(int optPort) {
@@ -36,24 +35,11 @@ public class EshopServer{
             String var10001 = ia.getHostAddress();
             var10000.println("Server *" + var10001 + "* lauscht auf Port " + this.port);
         } catch (IOException var3) {
-            System.err.println("Eine Ausnahme trat beim Anlegen des Server-Sockets auf: " + String.valueOf(var3));
+            System.err.println("Eine Ausnahme trat beim Anlegen des Server-Sockets auf: " + var3);
             System.exit(1);
         }
 
 
-    }
-
-    public void acceptClientConnectRequests() {
-        try {
-            while(true) {
-                Socket clientSocket = this.serverSocket.accept();
-                ClientAddressRequestProcessor c = new ClientAddressRequestProcessor(clientSocket, this.server);
-                c.verarbeiteAnfragen();
-            }
-        } catch (IOException var3) {
-            System.err.println("Fehler während des Wartens auf Verbindungen: " + String.valueOf(var3));
-            System.exit(1);
-        }
     }
 
     public static void main(String[] args) {
@@ -69,7 +55,18 @@ public class EshopServer{
         server.acceptClientConnectRequests();
 
 
+    }
 
-
+    public void acceptClientConnectRequests() {
+        try {
+            while (true) {
+                Socket clientSocket = this.serverSocket.accept();
+                ClientAddressRequestProcessor c = new ClientAddressRequestProcessor(clientSocket, this.server);
+                c.verarbeiteAnfragen();
+            }
+        } catch (IOException var3) {
+            System.err.println("Fehler während des Wartens auf Verbindungen: " + var3);
+            System.exit(1);
+        }
     }
 }

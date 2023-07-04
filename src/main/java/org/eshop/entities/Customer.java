@@ -146,10 +146,14 @@ public class Customer extends User {
      * @param quantity the quantity
      */
     public void removeFromCart(Products product, int quantity) {
+        //TODO CHECK PACKSIZE
         if (quantity >= cart.get(product)) {
             cart.remove(product);
         } else {
             cart.put(product, cart.get(product) - quantity);
         }
+    }
+    public void clearCart(){
+        cart.clear();
     }
 }

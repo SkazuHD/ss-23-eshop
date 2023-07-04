@@ -1,9 +1,6 @@
 package org.eshop.ui;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.MassProducts;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
+import org.eshop.entities.*;
 import org.eshop.exceptions.*;
 import org.eshop.shop.Shop;
 import org.eshop.util.IoReader;
@@ -143,14 +140,13 @@ public class Cli {
         } catch (PacksizeNotMatching e) {
             System.err.println((e.getMessage()));
             try {
-             quantity = reader. getNumericInput("new quantity:");
+                quantity = reader.getNumericInput("new quantity:");
                 server.addToCart(id, quantity, (Customer) loggedInUser);
 
             } catch (ProductNotFound | NotInStockException a) {
                 System.err.println(a.getMessage());
                 System.err.flush();
-            }
-            catch (PacksizeNotMatching a) {
+            } catch (PacksizeNotMatching a) {
                 System.err.println((e.getMessage()));
             }
         }
@@ -161,7 +157,7 @@ public class Cli {
      *
      * @throws ProductNotFound the product not found
      */
-    protected void removeProduct() throws ProductNotFound {
+    protected void removeProduct() throws ProductNotFound, PacksizeNotMatching {
         String name = reader.readLine("Product Name:");
         List<Products> result = server.findProducts(name);
         int id;
@@ -436,12 +432,19 @@ public class Cli {
                 } catch (ProductNotFound e) {
                     System.err.println(e.getMessage());
                     System.err.flush();
+                } catch (PacksizeNotMatching e) {
+                    throw new RuntimeException(e);
                 }
             }
             case 2 -> {
-                String invoice = server.getInvoice((Customer) loggedInUser);
+                Invoice invoice = server.getInvoice((Customer) loggedInUser);
                 System.out.println(invoice);
-                server.checkout((Customer) loggedInUser);
+
+                try {
+                    server.checkout((Customer) loggedInUser);
+                } catch (CheckoutFailed e) {
+                    throw new RuntimeException(e);
+                }
                 customerMenu();
             }
             case 3 -> {

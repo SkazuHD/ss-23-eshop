@@ -74,7 +74,18 @@ public class ProductManager {
 
 
     }
+    public void decreaseQuantity(Products p, int quantity) throws NotInStockException, PacksizeNotMatching {
+        //Check if enough Products are in Stock
+        if(p instanceof MassProducts mp){
+            if(mp.getPacksize() % quantity != 0)
+                throw new PacksizeNotMatching(mp.getPacksize());
+        }
+        if (p.getQuantity() >= quantity)
+            p.setQuantity(p.getQuantity() + quantity);
+        else throw new NotInStockException(quantity);
 
+
+    }
     /**
      * Get products set set.
      *

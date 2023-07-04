@@ -1,9 +1,6 @@
 package org.eshop.shop;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.Employee;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
+import org.eshop.entities.*;
 import org.eshop.exceptions.*;
 
 import java.util.Collection;
@@ -158,14 +155,14 @@ public interface ShopFacade {
      * @return the invoice
      */
 //Customer API
-    String getInvoice(Customer c);
+    Invoice getInvoice(Customer c);
 
     /**
      * Checkout.
      *
      * @param c the c
      */
-    void checkout(Customer c);
+    void checkout(Customer c) throws CheckoutFailed;
 
     /**
      * Gets cart.
@@ -204,8 +201,6 @@ public interface ShopFacade {
 //PERSISTENCE API
     void save();
 
-    /**
-     * Load.
-     */
-    void load();
+
+
 }

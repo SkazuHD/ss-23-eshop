@@ -6,6 +6,7 @@
 package org.eshop.ui;
 
 //import de.hsbremen.prog2.net.socket.Adresse;
+
 import org.eshop.entities.*;
 import org.eshop.exceptions.*;
 import org.eshop.shop.Shop;
@@ -16,16 +17,17 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
-class ClientAddressRequestProcessor{
+class ClientAddressRequestProcessor {
 
-    private Socket clientSocket;
+    private final Shop server;
+    private final Socket clientSocket;
     private BufferedReader in;
     private PrintStream out;
-    private final Shop server;
 
-    public ClientAddressRequestProcessor(Socket socket, Shop server){
+    public ClientAddressRequestProcessor(Socket socket, Shop server) {
         this.clientSocket = socket;
         this.server = server;
 
@@ -38,7 +40,7 @@ class ClientAddressRequestProcessor{
             } catch (IOException var5) {
             }
 
-            System.err.println("Ausnahme bei Bereitstellung des Streams: " + String.valueOf(var6));
+            System.err.println("Ausnahme bei Bereitstellung des Streams: " + var6);
             return;
         }
 
@@ -60,10 +62,10 @@ class ClientAddressRequestProcessor{
                 System.out.println(var5.getMessage());
                 continue;
             }
-            System.out.println(input);
 
             if (input == null) {
                 input = "quit";
+                break;
             }
 
             switch (input) {
@@ -90,7 +92,7 @@ class ClientAddressRequestProcessor{
                     break;
                 case "editMProd":
                     editMProduct();
-                        break;
+                    break;
                 case "changeQuant":
                     changeQuantity();
                     break;
@@ -102,11 +104,25 @@ class ClientAddressRequestProcessor{
                     break;
                 case "findId":
                     findId();
-                        break;
+                    break;
+                case "prodHistory":
+                    getProdHistory();
+                    break;
+                case "getInvoice":
+                    getInvoice();
+                    break;
+                case "getCart":
+                    getCart();
+                case "addToCart":
+                    addToCart();
+                case "removeFromCart":
+                    removeFromCart();
+                case "save":
+                    server.save();
                 default:
-                    System.out.println(input);
+                    System.out.println("Not valid " + input);
             }
-        } while(!input.equals("Logout"));
+        } while (!input.equals("Logout"));
 
         PrintStream var10000 = System.out;
         String var10001 = String.valueOf(this.clientSocket.getInetAddress());
@@ -118,6 +134,7 @@ class ClientAddressRequestProcessor{
         }
 
     }
+
     public void regiserUser() {
         String username = null;
         String password = null;
@@ -125,9 +142,9 @@ class ClientAddressRequestProcessor{
         String address = null;
         try {
             username = this.in.readLine();
-             password = this.in.readLine();
-             name = this.in.readLine();
-             address = this.in.readLine();
+            password = this.in.readLine();
+            name = this.in.readLine();
+            address = this.in.readLine();
             server.registerUser(username, password, name, address);
             this.out.println(200);
 
@@ -138,7 +155,8 @@ class ClientAddressRequestProcessor{
             this.out.println(username);
         }
     }
-    public void regiserEmployee(){
+
+    public void regiserEmployee() {
         int id = 0;
         String username = null;
         String password = null;
@@ -149,9 +167,9 @@ class ClientAddressRequestProcessor{
             username = this.in.readLine();
             password = this.in.readLine();
             name = this.in.readLine();
-            server.registerEmployee(id,username,password, name);
+            server.registerEmployee(id, username, password, name);
             this.out.println(200);
-        }catch (IOException e){
+        } catch (IOException e) {
 
         } catch (UserExistsException e) {
             this.out.println(400);
@@ -159,7 +177,8 @@ class ClientAddressRequestProcessor{
         }
 
     }
-    public void login(){
+
+    public void login() {
         String username = null;
         String password = null;
         try {
@@ -167,41 +186,43 @@ class ClientAddressRequestProcessor{
             password = in.readLine();
             User user = server.logIn(username, password);
             out.println(200);
-            if(user instanceof Customer c){
+            if (user instanceof Customer c) {
                 out.println("customer");
                 out.println(c.getID());
                 out.println(c.getUsername());
                 out.println(c.getPassword());
                 out.println(c.getName());
                 out.println(c.getAddress());
-            }else if(user instanceof Employee e){
+            } else if (user instanceof Employee e) {
                 out.println("employee");
                 out.println(e.getID());
                 out.println(e.getUsername());
                 out.println(e.getPassword());
                 out.println(e.getName());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
 
-        }catch (LoginFailed lf){
+        } catch (LoginFailed lf) {
             out.println(400);
             out.println(username);
         }
     }
-    public void logout(){
+
+    public void logout() {
         String username = null;
         try {
             username = in.readLine();
             User user = server.getUser(username);
             server.logOut(user);
             out.println(200);
-        }catch (IOException e){
+        } catch (IOException e) {
 
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             out.println(400);
         }
     }
-    public void createProduct(){
+
+    public void createProduct() {
         String name = null;
         Double price = null;
         int quantity = 0;
@@ -213,12 +234,13 @@ class ClientAddressRequestProcessor{
             user = server.getUser(in.readLine());
             server.createProduct(name, price, quantity, user);
             out.println(200);
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
 
     }
-    public void createMProduct(){
+
+    public void createMProduct() {
         String name = null;
         Double price = null;
         int quantity = 0;
@@ -232,14 +254,15 @@ class ClientAddressRequestProcessor{
             user = server.getUser(in.readLine());
             server.createProduct(name, price, quantity, packSize, user);
             out.println(200);
-        }catch (IOException e){
+        } catch (IOException e) {
 
         } catch (PacksizeNotMatching e) {
             out.println(400);
             out.println(packSize);
         }
     }
-    public void editProduct(){
+
+    public void editProduct() {
         int id = 0;
         String name = null;
         Double price = null;
@@ -258,7 +281,8 @@ class ClientAddressRequestProcessor{
 
         }
     }
-    public void editMProduct(){
+
+    public void editMProduct() {
         int id = 0;
         String name = null;
         Double price = null;
@@ -272,7 +296,7 @@ class ClientAddressRequestProcessor{
             Products p = server.editProductDetails(id, name, price, packSize);
             out.println(200);
             returnProd(p);
-        }catch (IOException e){
+        } catch (IOException e) {
 
         } catch (ProductNotFound e) {
             out.println(400);
@@ -280,17 +304,8 @@ class ClientAddressRequestProcessor{
         }
 
     }
-    private void returnProd(Products p){
-        out.println(p instanceof MassProducts? "p": "mp");
-        out.println(p.getId());
-        out.println(p.getName());
-        out.println(p.getPrice());
-        out.println(p.getQuantity());
-        if(p instanceof MassProducts mp){
-            out.println(mp.getPacksize());
-        }
-    }
-    public void changeQuantity(){
+
+    public void changeQuantity() {
         int id = 0;
         int quantity = 0;
         User user = null;
@@ -300,57 +315,212 @@ class ClientAddressRequestProcessor{
             user = server.getUser(in.readLine());
             server.changeQuantity(id, quantity, user);
             out.println(200);
-        }catch (IOException e){
+        } catch (IOException e) {
 
-        }catch (ProductNotFound e){
+        } catch (ProductNotFound e) {
             out.println(400);
             out.println(id);
-        }catch (PacksizeNotMatching e){
+        } catch (PacksizeNotMatching e) {
             out.println(401);
             out.println(e.getPacksize());
-        }catch (NotInStockException e){
+        } catch (NotInStockException e) {
             out.println(402);
             out.println(e.getQuantity());
         }
     }
-    public void getAll(){
+
+    public void getAll() {
         Collection<Products> products = server.getAllProducts();
         out.println(200);
         out.println(products.size());
-        for(Products p: products){
+        for (Products p : products) {
             returnProd(p);
         }
 
     }
-    public void findName(){
+
+    public void findName() {
         String query = null;
         try {
             query = in.readLine();
             Collection<Products> products = server.findProducts(query);
             out.println(200);
             out.println(products.size());
-            for(Products p: products){
+            for (Products p : products) {
                 returnProd(p);
             }
 
-    }catch (IOException e){
+        } catch (IOException e) {
         }
     }
-    public void findId(){
+
+    public void findId() {
         int id = 0;
         try {
             id = Integer.parseInt(in.readLine());
             Products p = server.findProduct(id);
             out.println(200);
             returnProd(p);
-    }catch (IOException e){
+        } catch (IOException e) {
 
-        }catch (ProductNotFound e){
+        } catch (ProductNotFound e) {
             out.println(400);
             out.println(id);
         }
     }
 
+    public void getProdHistory() {
+        int prodId = 0;
+        int days = 0;
+        try {
+            prodId = Integer.parseInt(in.readLine());
+            days = Integer.parseInt(in.readLine());
+        } catch (IOException ignore) {
+        }
+        int[] history = server.getProductHistory(prodId, days);
+        out.println(200);
+        out.println(history.length);
+        for (int i : history) {
+            out.println(i);
+        }
+    }
+
+    public void getCart() {
+        String customerName = "";
+        try {
+            customerName = in.readLine();
+        } catch (IOException ignore) {
+        }
+        try {
+            Customer c = (Customer) server.getUser(customerName);
+            Map<Products, Integer> cart = server.getCart(c);
+            out.println(200);
+            out.println(cart.size());
+            Iterator<Products> it = cart.keySet().iterator();
+            while (it.hasNext()) {
+                Products p = it.next();
+                int quantity = cart.get(p);
+                returnProd(p);
+                out.println(quantity);
+            }
+        } catch (RuntimeException e) {
+            out.println(400);
+        }
+    }
+
+    public void getInvoice() {
+        String username = "";
+        try {
+            username = in.readLine();
+        } catch (IOException ignore) {
+        }
+        Customer c = (Customer) server.getUser(username);
+        out.println(200);
+        returnCart(c.getUsername());
+    }
+
+    public void addToCart() {
+        int prodId = 0;
+        int quantiy;
+        String username;
+        Customer c;
+        try {
+            prodId = Integer.parseInt(in.readLine());
+            quantiy = Integer.parseInt(in.readLine());
+            username = in.readLine();
+            c = (Customer) server.getUser(username);
+            server.addToCart(prodId, quantiy, c);
+            out.println(200);
+        } catch (IOException e) {
+
+        } catch (PacksizeNotMatching e) {
+            out.println(401);
+            out.println(e.getPacksize());
+        } catch (ProductNotFound e) {
+            out.println(400);
+            out.println(prodId);
+        } catch (NotInStockException e) {
+            out.println(402);
+            out.println(e.getQuantity());
+        }
+
+
+    }
+
+    public void removeFromCart() {
+        int prodId = 0;
+        int quantiy;
+        String username;
+        Customer c;
+        try {
+            prodId = Integer.parseInt(in.readLine());
+            quantiy = Integer.parseInt(in.readLine());
+            username = in.readLine();
+            c = (Customer) server.getUser(username);
+            server.removeFromCart(prodId, quantiy, c);
+            out.println(200);
+        } catch (IOException e) {
+
+        } catch (PacksizeNotMatching e) {
+            out.println(401);
+            out.println(e.getPacksize());
+        } catch (ProductNotFound e) {
+            out.println(400);
+            out.println(prodId);
+        }
+    }
+
+    public void checkout() {
+        try {
+            String username = in.readLine();
+            Customer c = (Customer) server.getUser(username);
+            server.checkout(c);
+            out.println(200);
+        } catch (IOException ignore) {
+
+        } catch (CheckoutFailed checkoutFailed) {
+            out.println(400);
+
+        }
+
+    }
+
+    // UTIL
+    private void returnProd(Products p) {
+        out.println(p instanceof MassProducts ? "p" : "mp");
+        out.println(p.getId());
+        out.println(p.getName());
+        out.println(p.getPrice());
+        out.println(p.getQuantity());
+        if (p instanceof MassProducts mp) {
+            out.println(mp.getPacksize());
+        }
+    }
+
+    private void returnCustomer(Customer c) {
+        out.println(c.getUsername());
+        out.println(c.getPassword());
+        out.println(c.getAddress());
+        out.println(c.getID());
+    }
+
+    private void returnCart(String username) {
+        try {
+            Customer c = (Customer) server.getUser(username);
+            Map<Products, Integer> cart = server.getCart(c);
+            out.println(200);
+            out.println(cart.size());
+            Iterator<Products> it = cart.keySet().iterator();
+            while (it.hasNext()) {
+                Products p = it.next();
+                int quantity = cart.get(p);
+                returnProd(p);
+                out.println(quantity);
+            }
+        } catch (RuntimeException e) {
+            out.println(400);
+        }
+    }
 
 
 }

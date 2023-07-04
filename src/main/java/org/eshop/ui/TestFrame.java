@@ -11,6 +11,7 @@ import org.eshop.ui.panels.registerEmployeePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class TestFrame extends JFrame {
     public TestFrame(Component component) {
@@ -54,6 +55,9 @@ public class TestFrame extends JFrame {
 
         new TestFrame(new registerEmployeePanel(shop, employee));
 
+        List<Products> products = shop.getAllProducts().stream().toList();
+        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", "Edit"};
+        new TestFrame(new JScrollPane(new Table(products, columns)));
 
     }
 }
