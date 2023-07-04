@@ -20,8 +20,8 @@ public class addProductPanel extends JPanel implements ActionListener {
     //TODO SHOULD BE REPLACED WITH CUSTOM JNumberField for Input Validation
     private final JTextField productPacksize = new JTextField();
     private final JButton createButton = new JButton("Create");
-    private Shop server;
-    private User loggedInUser;
+    private final Shop server;
+    private final User loggedInUser;
 
     public addProductPanel(Shop shop, User user) {
         server = shop;

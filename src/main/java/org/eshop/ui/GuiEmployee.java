@@ -2,9 +2,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.panels.addProductPanel;
-import org.eshop.ui.panels.editProductPanel;
-import org.eshop.ui.panels.registerEmployeePanel;
+import org.eshop.ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;

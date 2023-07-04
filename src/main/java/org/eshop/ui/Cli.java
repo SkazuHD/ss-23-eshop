@@ -140,14 +140,13 @@ public class Cli {
         } catch (PacksizeNotMatching e) {
             System.err.println((e.getMessage()));
             try {
-             quantity = reader. getNumericInput("new quantity:");
+                quantity = reader.getNumericInput("new quantity:");
                 server.addToCart(id, quantity, (Customer) loggedInUser);
 
             } catch (ProductNotFound | NotInStockException a) {
                 System.err.println(a.getMessage());
                 System.err.flush();
-            }
-            catch (PacksizeNotMatching a) {
+            } catch (PacksizeNotMatching a) {
                 System.err.println((e.getMessage()));
             }
         }
@@ -440,7 +439,12 @@ public class Cli {
             case 2 -> {
                 Invoice invoice = server.getInvoice((Customer) loggedInUser);
                 System.out.println(invoice);
-                server.checkout((Customer) loggedInUser);
+
+                try {
+                    server.checkout((Customer) loggedInUser);
+                } catch (CheckoutFailed e) {
+                    throw new RuntimeException(e);
+                }
                 customerMenu();
             }
             case 3 -> {

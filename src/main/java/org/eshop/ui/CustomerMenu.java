@@ -1,57 +1,54 @@
 package org.eshop.ui;
+
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CustomerMenu extends javax.swing.JPanel {
-    private javax.swing.JMenuBar jMenuBar =
+    private final javax.swing.JMenuBar jMenuBar =
             new javax.swing.JMenuBar();
-    private javax.swing.JButton User =
-            new javax.swing.JButton( "User" );
-    private javax.swing.JFormattedTextField Search =
+    private final javax.swing.JButton User =
+            new javax.swing.JButton("User");
+    private final javax.swing.JFormattedTextField Search =
             new javax.swing.JFormattedTextField("Search");
-    private javax.swing.JMenuBar Menu =
+    private final javax.swing.JMenuBar Menu =
             new javax.swing.JMenuBar();
 
-    private javax.swing.JButton Produkte =
+    private final javax.swing.JButton Produkte =
             new javax.swing.JButton("Produkte");
 
-    private javax.swing.JButton Warenkorb =
+    private final javax.swing.JButton Warenkorb =
             new javax.swing.JButton("Warenkorb");
 
-    private JButton checkoutButton =
+    private final JButton checkoutButton =
             new JButton("Checkout");
 
-    private javax.swing.JButton Logout =
-            new  javax.swing.JButton("Logout");
+    private final javax.swing.JButton Logout =
+            new javax.swing.JButton("Logout");
 
     Shop shop;
     GuiCustomer guiCustomer;
 
     public CustomerMenu(Shop shop, SearchWidget.SearchListener searchListener, GuiCustomer guiCustomer) {
         this.guiCustomer = guiCustomer;
-    this.add(jMenuBar);
+        this.add(jMenuBar);
         this.setBackground(new Color(50));
 
         jMenuBar.setBackground(new Color(50));
         jMenuBar.setBorderPainted(true);
-        jMenuBar.setBorder(new EmptyBorder(10,10,10,10));
+        jMenuBar.setBorder(new EmptyBorder(10, 10, 10, 10));
         jMenuBar.add(Menu);
 
         SearchWidget search = new SearchWidget(shop, searchListener);
         search.setBackground(new Color(50));
         Menu.add(search);
 
-        Menu.add(Produkte,BorderLayout.LINE_START);
+        Menu.add(Produkte, BorderLayout.LINE_START);
         Menu.setBackground(new Color(50));
-        Menu.setBorder(new EmptyBorder(10,10,10,10));
+        Menu.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         Menu.add(Warenkorb);
         Warenkorb.setActionCommand("shoppingCart");
@@ -63,6 +60,6 @@ public class CustomerMenu extends javax.swing.JPanel {
 
         Menu.add(Logout);
 
-        Search.setPreferredSize(new Dimension(300,10));
+        Search.setPreferredSize(new Dimension(300, 10));
     }
 }

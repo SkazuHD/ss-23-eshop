@@ -1,29 +1,25 @@
-package org.eshop.ui;
+package org.eshop.ui.panels;
 
-import org.eshop.entities.Products;
 import org.eshop.entities.Customer;
 import org.eshop.entities.User;
-import org.eshop.shop.Shop;
-import org.eshop.shop.ProductManager;
 import org.eshop.shop.CustomerManager;
+import org.eshop.shop.Shop;
+import org.eshop.ui.GuiCustomer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
-public class ShoppingCartPanel extends JPanel{
-
-    private JButton checkoutButton = new JButton("Checkout");
-    private Shop server;
-    private User loggedInUser;
-    private javax.swing.JList Waren =
-            new javax.swing.JList<Customer>();
+public class ShoppingCartPanel extends JPanel {
 
     CustomerManager customerManager;
     Customer c;
     GuiCustomer guiCustomer;
+    private final JButton checkoutButton = new JButton("Checkout");
+    private final Shop server;
+    private final User loggedInUser;
+    private final javax.swing.JList Waren =
+            new javax.swing.JList<Customer>();
 
     public ShoppingCartPanel(Shop shop, User user) {
         server = shop;
