@@ -34,22 +34,22 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
 
     @Override
     public void onAdd(int row) {
-
+        System.out.println("ADD");
     }
 
     @Override
     public void onRemove(int row) {
-
+        System.out.println("REMOVE");
     }
 
     @Override
     public void onEdit(int row) {
-
+        System.out.println("EDIT");
     }
 
     @Override
     public void onDelete(int row) {
-
+        System.out.println("DELETE");
     }
 
     @Override
