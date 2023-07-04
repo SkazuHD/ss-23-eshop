@@ -19,7 +19,7 @@ public class ProducktPanel extends javax.swing.JPanel implements SearchWidget.Se
         this.shop = shop;
 
         List<Products> products = shop.getAllProducts().stream().toList();
-        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl"};
+        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", " "};
         table = new Table(products, columns);
         this.add(table);
         table.setTableHeader(new JTableHeader());

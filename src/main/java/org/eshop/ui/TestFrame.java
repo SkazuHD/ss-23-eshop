@@ -56,7 +56,7 @@ public class TestFrame extends JFrame {
         new TestFrame(new registerEmployeePanel(shop, employee));
 
         List<Products> products = shop.getAllProducts().stream().toList();
-        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl"};
+        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", "Edit"};
         new TestFrame(new JScrollPane(new Table(products, columns)));
 
     }
