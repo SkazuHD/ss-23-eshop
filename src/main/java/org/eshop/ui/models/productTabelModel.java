@@ -2,7 +2,6 @@ package org.eshop.ui.models;
 
 import org.eshop.entities.Products;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.Vector;
@@ -10,11 +9,11 @@ import java.util.Vector;
 public class productTabelModel extends AbstractTableModel {
 
     private final List<Products> productsList;
-    private final String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", "Edit"};
+    private String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", "Edit"};
 
     public productTabelModel(List<Products> productsList, String[] columns) {
         super();
-        //this.columns = columns;
+        this.columns = columns;
         this.productsList = new Vector<>();
         this.productsList.addAll(productsList);
     }
@@ -53,7 +52,7 @@ public class productTabelModel extends AbstractTableModel {
             case 3:
                 return products.getQuantity();
             case 4:
-                return new JButton("Edit");
+                return "FUCK";
             default:
                 return null;
         }
