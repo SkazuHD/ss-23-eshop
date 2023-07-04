@@ -3,8 +3,6 @@ package org.eshop.ui;
 import org.eshop.entities.Products;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
 import org.eshop.ui.models.productTabelModel;
 
 import java.util.List;
@@ -17,8 +15,8 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
         productTabelModel tabelModel = new productTabelModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
-        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
-        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
+        //this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
+        //this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
         updateProducts(productsList);
 
 

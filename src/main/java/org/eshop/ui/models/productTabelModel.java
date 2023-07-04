@@ -52,7 +52,7 @@ public class productTabelModel extends AbstractTableModel {
             case 3:
                 return products.getQuantity();
             case 4:
-                return "FUCK";
+                return null;
             default:
                 return null;
         }
