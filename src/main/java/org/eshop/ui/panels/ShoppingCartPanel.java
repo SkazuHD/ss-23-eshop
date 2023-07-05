@@ -1,6 +1,7 @@
 package org.eshop.ui.panels;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.CustomerManager;
 import org.eshop.shop.Shop;
@@ -21,6 +22,7 @@ public class ShoppingCartPanel extends JPanel implements Table.tableButtonListen
     private final Shop server;
     private final User loggedInUser;
     private final JTable shoppingCart = new JTable();
+
     CustomerManager customerManager;
     Customer c;
     GuiCustomer guiCustomer;
