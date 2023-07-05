@@ -23,9 +23,6 @@ public class CustomerMenu extends javax.swing.JPanel {
     private final javax.swing.JButton Warenkorb =
             new javax.swing.JButton("Warenkorb");
 
-    private final JButton checkoutButton =
-            new JButton("Checkout");
-
     private final javax.swing.JButton Logout =
             new javax.swing.JButton("Logout");
 
@@ -53,10 +50,6 @@ public class CustomerMenu extends javax.swing.JPanel {
         Menu.add(Warenkorb);
         Warenkorb.setActionCommand("shoppingCart");
         Warenkorb.addActionListener(guiCustomer);
-
-        Menu.add(checkoutButton);
-        checkoutButton.setActionCommand("checkoutPanel");
-        checkoutButton.addActionListener(guiCustomer);
 
         Menu.add(Logout);
 

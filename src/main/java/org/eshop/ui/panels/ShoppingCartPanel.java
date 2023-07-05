@@ -12,6 +12,7 @@ import org.eshop.ui.Table;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,7 +40,6 @@ public class ShoppingCartPanel extends JPanel {
         //TODO Waren als Liste ausgeben
         this.add(checkoutButton);
         checkoutButton.setActionCommand("checkoutPanel");
-        checkoutButton.addActionListener(guiCustomer);
         //TODO Button nutzbar machen
 
     }
