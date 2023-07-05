@@ -10,41 +10,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
-    private final javax.swing.JPanel panel = new javax.swing.JPanel();
-    private final javax.swing.JScrollPane scrollPane =
-            new javax.swing.JScrollPane();
-    private final javax.swing.JPanel panelCenter =
-            new javax.swing.JPanel();
-
     Shop shop;
     CustomerMenu customerMenu;
     SidePanel sidePanel;
     ShoppingCartPanel shoppingCart;
     CheckoutPanel checkoutPanel;
-    CustomerProducts productPanel;
+    ProductPanel productPanel;
 
     public GuiCustomer(Shop shop, User loggedInUser) {
         this.shop = shop;
-        panel.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        productPanel = new CustomerProducts(shop);
-        panel.add(new JScrollPane(panelCenter), BorderLayout.CENTER);
-        panelCenter.add(productPanel);
+        shoppingCart = new ShoppingCartPanel(shop, loggedInUser);
+        productPanel = new CustomerCenterPanel(shop, shoppingCart, loggedInUser);
+        checkoutPanel = new CheckoutPanel(shop, loggedInUser);
+        customerMenu = new CustomerMenu(shop, productPanel, this);
 
         sidePanel = new SidePanel(shop, loggedInUser);
-        shoppingCart = new ShoppingCartPanel(shop, loggedInUser);
-        checkoutPanel = new CheckoutPanel(shop, loggedInUser);
         sidePanel.add(shoppingCart);
         sidePanel.add(checkoutPanel);
+
         shoppingCart.setVisible(true);
         checkoutPanel.setVisible(false);
 
-        panel.add(sidePanel, BorderLayout.EAST);
+        this.add(sidePanel, BorderLayout.EAST);
+        this.add(new JScrollPane(productPanel), BorderLayout.CENTER);
 
-        customerMenu = new CustomerMenu(shop, productPanel, this);
-        panel.add(customerMenu, BorderLayout.PAGE_START);
+        this.add(customerMenu, BorderLayout.PAGE_START);
 
-        this.getContentPane().add(panel);
+
         pack();
         this.setVisible(true);
     }

@@ -19,7 +19,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     Shop shop;
     MenuePanel menuePanel;
     SidePanel sidePanel;
-    ProducktPanel producktPanel;
+    ProductPanel productPanel;
     MitarbeiterPanel mitarbeiterPanel;
     addProductPanel addProductPanel;
     editProductPanel editProductPanel;
@@ -32,16 +32,17 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        producktPanel = new ProducktPanel(shop);
+        editProductPanel = new editProductPanel(shop, loggedInUser);
+
+        productPanel = new EmployeeCenterPanel(shop, editProductPanel, loggedInUser);
 
 
         jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
-        Paneelcenter.add(producktPanel);
+        Paneelcenter.add(productPanel);
 
 
         mitarbeiterPanel = new MitarbeiterPanel(shop, this);
         sidePanel = new SidePanel(shop, loggedInUser);
-        editProductPanel = new editProductPanel(shop, loggedInUser);
         addProductPanel = new addProductPanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
         sidePanel.add(addProductPanel);
@@ -56,7 +57,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         jPanel1.add(sidePanel, BorderLayout.EAST);
 
 
-        menuePanel = new MenuePanel(shop, producktPanel, this);
+        menuePanel = new MenuePanel(shop, productPanel, this);
 
         jPanel1.add(menuePanel, BorderLayout.PAGE_START);
 
@@ -77,11 +78,11 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        producktPanel.setVisible(false);
+        productPanel.setVisible(false);
         mitarbeiterPanel.setVisible(false);
         switch (e.getActionCommand()) {
             case "Producktpanel":
-                producktPanel.setVisible(true);
+                productPanel.setVisible(true);
                 mitarbeiterPanel.setVisible(false);
                 addProductPanel.setVisible(true);
                 editProductPanel.setVisible(false);
@@ -91,7 +92,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
                 break;
             case "Mitarbeiterpanel":
                 mitarbeiterPanel.setVisible(true);
-                producktPanel.setVisible(false);
+                productPanel.setVisible(false);
                 registerEmployeePanel.setVisible(true);
                 addProductPanel.setVisible(false);
                 editProductPanel.setVisible(false);

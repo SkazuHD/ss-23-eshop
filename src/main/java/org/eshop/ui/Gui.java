@@ -3,6 +3,7 @@ package org.eshop.ui;
 import org.eshop.entities.Employee;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.frames.LoginFrame;
 
 import javax.swing.*;
