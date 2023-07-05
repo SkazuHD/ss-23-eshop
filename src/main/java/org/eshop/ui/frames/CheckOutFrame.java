@@ -2,7 +2,6 @@ package org.eshop.ui.frames;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
-import org.eshop.shop.Shop;
 import org.eshop.ui.tables.models.CartModel;
 
 import javax.swing.*;
@@ -14,6 +13,7 @@ public class CheckOutFrame extends JFrame {
     private final JTable Cart = new JTable();
     private final JLabel Date2 = new JLabel();
     private final JLabel price2 = new JLabel();
+    private final JPanel customer2 = new JPanel();
     CartModel cartModel;
 
 
@@ -26,7 +26,7 @@ public class CheckOutFrame extends JFrame {
         invoice.getCart();
         invoice.getDate();
         invoice.getTotalPrice();
-//        invoice.getCustomer()
+        invoice.getCustomer();
 
         //getDate = new Date(invoice.getDate());
         Date date = invoice.getDate();
@@ -39,8 +39,14 @@ public class CheckOutFrame extends JFrame {
 
 
         String price = String.format("%.2f", invoice.getTotalPrice());
-        jPanel1.add(price2, BorderLayout.PAGE_START);
+        jPanel1.add(price2, BorderLayout.LINE_END);
         price2.setText(price);
+
+        Customer customer = invoice.getCustomer();
+        jPanel1.add(customer2, BorderLayout.PAGE_END);
+        customer2.add(new JLabel(customer.getName()));
+        customer2.add(new JLabel(customer.getAddress()));
+        customer2.add(new JLabel(customer.getID()));
 
 
         this.pack();

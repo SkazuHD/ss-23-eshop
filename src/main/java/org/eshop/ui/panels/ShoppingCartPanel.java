@@ -21,6 +21,7 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
     private final Shop server;
     private final User loggedInUser;
     private final JTable shoppingCart = new JTable();
+    private final JLabel totalprice = new JLabel();
 
 
     public ShoppingCartPanel(Shop shop, User user) {
@@ -28,6 +29,7 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
         loggedInUser = user;
         setupUI();
         setupEvents();
+
     }
 
     private void setupUI() {
