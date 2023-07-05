@@ -5,9 +5,9 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.CustomerManager;
 import org.eshop.shop.Shop;
-import org.eshop.ui.CustomerProductTable;
 import org.eshop.ui.GuiCustomer;
-import org.eshop.ui.models.CartModel;
+import org.eshop.ui.tables.models.CartModel;
+import org.eshop.ui.tables.tabel.CustomerProductTable;
 
 import javax.swing.*;
 import java.awt.*;

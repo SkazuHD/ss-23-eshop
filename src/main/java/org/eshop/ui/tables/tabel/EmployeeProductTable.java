@@ -1,12 +1,12 @@
-package org.eshop.ui;
+package org.eshop.ui.tables.tabel;
 
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
-import org.eshop.ui.models.productEmployeeModel;
+import org.eshop.ui.tables.TableButtonEventListener;
+import org.eshop.ui.tables.components.TableButtonRender;
+import org.eshop.ui.tables.components.TableCellEditor;
+import org.eshop.ui.tables.models.productEmployeeModel;
 
 import javax.swing.*;
 import java.util.List;

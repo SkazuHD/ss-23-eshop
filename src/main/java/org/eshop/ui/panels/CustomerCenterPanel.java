@@ -3,7 +3,7 @@ package org.eshop.ui.panels;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.CustomerProductTable;
+import org.eshop.ui.tables.tabel.CustomerProductTable;
 
 import javax.swing.*;
 import java.util.List;

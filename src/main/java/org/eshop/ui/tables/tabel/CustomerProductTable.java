@@ -1,4 +1,4 @@
-package org.eshop.ui;
+package org.eshop.ui.tables.tabel;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.MassProducts;
@@ -8,10 +8,10 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
-import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
-import org.eshop.ui.models.productTabelModel;
+import org.eshop.ui.tables.TableButtonEventListener;
+import org.eshop.ui.tables.components.TableButtonRender;
+import org.eshop.ui.tables.components.TableCellEditor;
+import org.eshop.ui.tables.models.productTabelModel;
 
 import java.util.List;
 

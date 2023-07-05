@@ -1,4 +1,4 @@
-package org.eshop.ui.models;
+package org.eshop.ui.tables.models;
 
 import org.eshop.entities.Products;
 
@@ -6,15 +6,14 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.Vector;
 
-public class productTabelModel extends AbstractTableModel {
-
+public class productEmployeeModel extends AbstractTableModel {
     private final List<Products> productsList;
     private final String[] columns;
     boolean[] canEdit = new boolean[]{
-            false, false, false, true
+            false, false, false, false, true
     };
 
-    public productTabelModel(List<Products> productsList, String[] columns) {
+    public productEmployeeModel(List<Products> productsList, String[] columns) {
         super();
         this.columns = columns;
         this.productsList = new Vector<>();
@@ -58,9 +57,13 @@ public class productTabelModel extends AbstractTableModel {
             case 2:
                 return products.getPrice();
             case 3:
+                return products.getQuantity();
+            case 4:
                 return null;
             default:
                 return null;
         }
     }
 }
+
+
