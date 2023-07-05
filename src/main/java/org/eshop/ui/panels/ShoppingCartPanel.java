@@ -3,27 +3,23 @@ package org.eshop.ui.panels;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
-import org.eshop.shop.CustomerManager;
 import org.eshop.shop.Shop;
-import org.eshop.ui.GuiCustomer;
+import org.eshop.ui.frames.CheckOutFrame;
+import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.models.CartModel;
-import org.eshop.ui.tables.tabel.CustomerProductTable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
 
-public class ShoppingCartPanel extends JPanel implements CustomerProductTable.tableButtonListener {
+public class ShoppingCartPanel extends JPanel implements TableListener {
 
     private final JButton checkoutButton = new JButton("Checkout");
     private final Shop server;
     private final User loggedInUser;
     private final JTable shoppingCart = new JTable();
 
-    CustomerManager customerManager;
-    Customer c;
-    GuiCustomer guiCustomer;
 
     public ShoppingCartPanel(Shop shop, User user) {
         server = shop;
@@ -41,8 +37,8 @@ public class ShoppingCartPanel extends JPanel implements CustomerProductTable.ta
 
     private void setupEvents() {
         checkoutButton.addActionListener((actionEvent) -> {
-            JFrame frame = new JFrame("CHECK ME OUT");
-            frame.setVisible(true);
+            System.out.println("Checkout");
+            new CheckOutFrame((Customer) loggedInUser, server);
         });
     }
 
@@ -50,6 +46,17 @@ public class ShoppingCartPanel extends JPanel implements CustomerProductTable.ta
     public void updateCart() {
         Map<Products, Integer> GetCart = server.getCart((Customer) loggedInUser);
         shoppingCart.setModel(new CartModel(GetCart));
+
+    }
+
+    @Override
+    public void editProduct(Products p) {
+        
+    }
+
+
+    @Override
+    public void viewGraph() {
 
     }
 

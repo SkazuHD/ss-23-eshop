@@ -58,8 +58,6 @@ public class productEmployeeModel extends AbstractTableModel {
                 return products.getPrice();
             case 3:
                 return products.getQuantity();
-            case 4:
-                return null;
             default:
                 return null;
         }

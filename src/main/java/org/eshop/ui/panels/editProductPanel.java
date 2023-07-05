@@ -6,15 +6,15 @@ import org.eshop.entities.User;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
-import org.eshop.shop.Shop;
 import org.eshop.shop.ShopFacade;
+import org.eshop.ui.tables.TableListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class editProductPanel extends JPanel implements ActionListener{
+public class editProductPanel extends JPanel implements ActionListener, TableListener {
     private final ShopFacade server;
     private final User loggedInUser;
     private final JButton saveBtn = new JButton("SAVE");
@@ -29,20 +29,20 @@ public class editProductPanel extends JPanel implements ActionListener{
     private final JTextField productPacksize = new JTextField();
     private Products currentProduct;
 
-    public editProductPanel(ShopFacade shop, User loggedInUser){
+    public editProductPanel(ShopFacade shop, User loggedInUser) {
         this.server = shop;
         this.loggedInUser = loggedInUser;
         setupUI();
         setupEvents();
     }
 
-    private void setupUI(){
+    private void setupUI() {
         Dimension inputMaxSize = new Dimension(300, 25);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //this.setLayout(new GridLayout(2,1));
         this.setPreferredSize(new Dimension(500, 500));
         JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container,  BoxLayout.PAGE_AXIS));
+        container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
         this.add(new JLabel("ID"));
         this.add(productId);
         productId.setEnabled(false);
@@ -70,24 +70,25 @@ public class editProductPanel extends JPanel implements ActionListener{
         //this.add(container);
         this.add(btns);
     }
-    private void setupEvents(){
+
+    private void setupEvents() {
         massProduct.addActionListener(this);
         saveBtn.addActionListener(this);
     }
 
-    public void onChange(Products p){
+    public void onChange(Products p) {
         currentProduct = p;
         //TODO Create Eventlistener that passes the selected product
         productId.setText(String.valueOf(p.getId()));
         productName.setText(p.getName());
         productQuantity.setText(String.valueOf(p.getQuantity()));
         productPrice.setText(String.valueOf(p.getPrice()));
-        if (p instanceof MassProducts mp){
+        if (p instanceof MassProducts mp) {
             if (!massProduct.isSelected()) massProduct.doClick();
             productPacksize.setText(String.valueOf(mp.getPacksize()));
-        }else {
+        } else {
             productPacksize.setText("");
-            if(massProduct.isSelected())massProduct.doClick();
+            if (massProduct.isSelected()) massProduct.doClick();
         }
     }
 
@@ -109,29 +110,46 @@ public class editProductPanel extends JPanel implements ActionListener{
                 productPacksize.setEnabled(false);
                 productPacksize.setText("");
             }
-         }else if(e.getSource().equals(deleteBtn)){
+        } else if (e.getSource().equals(deleteBtn)) {
             //Todo add method to remove Product
-        }else if(e.getSource().equals(saveBtn)){
+        } else if (e.getSource().equals(saveBtn)) {
             System.out.println("SAVING PROD FROM EDIT");
             int quantityDiffrence = -currentProduct.getQuantity() + Integer.parseInt(productQuantity.getText());
             Products p = null;
             try {
                 server.changeQuantity(currentProduct.getId(), quantityDiffrence, loggedInUser);
-                if(currentProduct instanceof MassProducts mp && massProduct.isSelected()){
+                if (currentProduct instanceof MassProducts mp && massProduct.isSelected()) {
                     p = server.editProductDetails(currentProduct.getId(), productName.getText(),
                             Double.parseDouble(productPrice.getText()),
                             Integer.parseInt(productPacksize.getText()));
-                }else if(!(currentProduct instanceof MassProducts mp && massProduct.isSelected())) {
-                   p = server.editProductDetails(currentProduct.getId(), productName.getText(),Double.parseDouble(productPrice.getText()));
-                }else {
+                } else if (!(currentProduct instanceof MassProducts mp && massProduct.isSelected())) {
+                    p = server.editProductDetails(currentProduct.getId(), productName.getText(), Double.parseDouble(productPrice.getText()));
+                } else {
                     //TODO CAST NORMAL TO MASS etc
                 }
-            }catch (PacksizeNotMatching | NotInStockException | ProductNotFound exp){
+            } catch (PacksizeNotMatching | NotInStockException | ProductNotFound exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage());
             }
-            System.out.println(p);
+            this.setVisible(false);
 
         }
+
+    }
+
+    @Override
+    public void updateCart() {
+
+    }
+
+    @Override
+    public void editProduct(Products p) {
+        System.out.println("EDITING PRODUCT FROM EDIT");
+        onChange(p);
+        this.setVisible(true);
+    }
+
+    @Override
+    public void viewGraph() {
 
     }
 }
