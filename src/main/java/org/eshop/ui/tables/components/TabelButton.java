@@ -1,4 +1,4 @@
-package org.eshop.ui.components;
+package org.eshop.ui.tables.components;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

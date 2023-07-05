@@ -1,6 +1,7 @@
 package org.eshop.entities;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,7 +23,10 @@ public class Invoice {
     public Invoice(Customer c) {
         this.c = c;
         this.date = new Date();
-        this.cart = c.getCart();
+        Map<Products, Integer> cartCopy = c.getCart();
+        this.cart = new HashMap<>();
+        cart.putAll(cartCopy);
+
     }
 
     /**
@@ -65,15 +69,15 @@ public class Invoice {
         return total;
     }
 
-    public Map<Products, Integer> getCart(){
+    public Map<Products, Integer> getCart() {
         return cart;
     }
 
-    public Customer getCustomer(){
+    public Customer getCustomer() {
         return c;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return date;
     }
 

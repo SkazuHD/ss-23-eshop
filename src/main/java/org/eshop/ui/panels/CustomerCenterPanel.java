@@ -3,13 +3,14 @@ package org.eshop.ui.panels;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.CustomerProductTable;
+import org.eshop.ui.tables.TableListener;
+import org.eshop.ui.tables.tabel.CustomerProductTable;
 
 import javax.swing.*;
 import java.util.List;
 
 public class CustomerCenterPanel extends ProductPanel {
-    public CustomerCenterPanel(Shop shop, CustomerProductTable.tableButtonListener listener, User user) {
+    public CustomerCenterPanel(Shop shop, TableListener listener, User user) {
         super(shop, listener, user);
         setupUI();
     }
@@ -19,7 +20,7 @@ public class CustomerCenterPanel extends ProductPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         //Setup Column names and get all products
-        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", " "};
+        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Packsize", ""};
         List<Products> products = shop.getAllProducts().stream().toList();
         //Create Table
         customerProductTable = new CustomerProductTable(products, columns, listener, user, shop);

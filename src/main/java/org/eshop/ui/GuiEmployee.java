@@ -32,7 +32,9 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        productPanel = new EmployeeCenterPanel(shop, null, loggedInUser);
+        editProductPanel = new editProductPanel(shop, loggedInUser);
+
+        productPanel = new EmployeeCenterPanel(shop, editProductPanel, loggedInUser);
 
 
         jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
@@ -41,7 +43,6 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
         mitarbeiterPanel = new MitarbeiterPanel(shop, this);
         sidePanel = new SidePanel(shop, loggedInUser);
-        editProductPanel = new editProductPanel(shop, loggedInUser);
         addProductPanel = new addProductPanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
         sidePanel.add(addProductPanel);

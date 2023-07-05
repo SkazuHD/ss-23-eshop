@@ -1,4 +1,6 @@
-package org.eshop.ui.components;
+package org.eshop.ui.tables.components;
+
+import org.eshop.ui.tables.TableButtonEventListener;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

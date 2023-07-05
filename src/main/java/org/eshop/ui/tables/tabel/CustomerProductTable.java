@@ -1,4 +1,4 @@
-package org.eshop.ui;
+package org.eshop.ui.tables.tabel;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.MassProducts;
@@ -8,19 +8,20 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
-import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
-import org.eshop.ui.models.productTabelModel;
+import org.eshop.ui.tables.TableButtonEventListener;
+import org.eshop.ui.tables.TableListener;
+import org.eshop.ui.tables.components.TableButtonRender;
+import org.eshop.ui.tables.components.TableCellEditor;
+import org.eshop.ui.tables.models.productTabelModel;
 
 import java.util.List;
 
 public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener {
     Shop shop;
-    tableButtonListener listener;
+    TableListener listener;
     User user;
 
-    public CustomerProductTable(List<Products> productsList, String[] coulumns, tableButtonListener listener, User user, Shop shop) {
+    public CustomerProductTable(List<Products> productsList, String[] coulumns, TableListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
@@ -28,8 +29,8 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         productTabelModel tabelModel = new productTabelModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
-        this.getColumnModel().getColumn(3).setCellRenderer(new TableButtonRender());
-        this.getColumnModel().getColumn(3).setCellEditor(new TableCellEditor(this));
+        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
+        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
         updateProducts(productsList);
     }
 

@@ -1,12 +1,14 @@
-package org.eshop.ui;
+package org.eshop.ui.tables.tabel;
 
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
+import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
-import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
-import org.eshop.ui.models.productEmployeeModel;
+import org.eshop.ui.tables.TableButtonEventListener;
+import org.eshop.ui.tables.TableListener;
+import org.eshop.ui.tables.components.TableButtonRenderEmployee;
+import org.eshop.ui.tables.components.TableCellEditorEmployee;
+import org.eshop.ui.tables.models.productEmployeeModel;
 
 import javax.swing.*;
 import java.util.List;
@@ -14,10 +16,10 @@ import java.util.List;
 public class EmployeeProductTable extends JTable implements TableButtonEventListener {
 
     Shop shop;
-    CustomerProductTable.tableButtonListener listener;
+    TableListener listener;
     User user;
 
-    public EmployeeProductTable(List<Products> productsList, String[] coulumns, CustomerProductTable.tableButtonListener listener, User user, Shop shop) {
+    public EmployeeProductTable(List<Products> productsList, String[] coulumns, TableListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
@@ -27,8 +29,8 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         this.setModel(tabelModel);
         this.setRowHeight(40);
         //TODO CREATE OWN RENDERER AND EDITOR
-        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
-        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
+        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRenderEmployee());
+        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditorEmployee(this));
         updateProducts(productsList);
     }
 
@@ -51,7 +53,15 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
 
     @Override
     public void onEdit(int row) {
-        //TODO implement
+        System.out.println("Edit: " + row);
+        try {
+            Products p = shop.findProduct((int) getValueAt(row, 0));
+            System.out.println(p);
+            listener.editProduct(p);
+        } catch (ProductNotFound e) {
+        }
+
+
     }
 
     @Override
@@ -62,5 +72,11 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
     @Override
     public void onView(int row) {
         //TODO show Graph
+    }
+
+    public interface tableButtonListener {
+        void editProduct();
+
+        void viewGraph();
     }
 }
