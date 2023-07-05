@@ -17,13 +17,11 @@ public class CheckOutFrame extends JFrame {
     CartModel cartModel;
 
 
-    public CheckOutFrame(Customer c, Shop shop) {
+    public CheckOutFrame(Invoice invoice) {
         this.add(jPanel1);
         jPanel1.setPreferredSize(new Dimension(300, 300));
         jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
 
-
-        Invoice invoice = shop.getInvoice(c);
         cartModel = new CartModel(invoice.getCart());
         invoice.getCart();
         invoice.getDate();
@@ -41,7 +39,7 @@ public class CheckOutFrame extends JFrame {
 
 
         String price = String.format("%.2f", invoice.getTotalPrice());
-        jPanel1.add(price2, BorderLayout.S);
+        jPanel1.add(price2, BorderLayout.PAGE_START);
         price2.setText(price);
 
 

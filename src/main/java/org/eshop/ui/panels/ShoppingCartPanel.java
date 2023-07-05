@@ -1,8 +1,10 @@
 package org.eshop.ui.panels;
 
 import org.eshop.entities.Customer;
+import org.eshop.entities.Invoice;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
+import org.eshop.exceptions.CheckoutFailed;
 import org.eshop.shop.Shop;
 import org.eshop.ui.frames.CheckOutFrame;
 import org.eshop.ui.tables.TableListener;
@@ -38,7 +40,12 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
     private void setupEvents() {
         checkoutButton.addActionListener((actionEvent) -> {
             System.out.println("Checkout");
-            new CheckOutFrame((Customer) loggedInUser, server);
+            try {
+                Invoice i = server.getInvoice((Customer) loggedInUser);
+                server.checkout((Customer) loggedInUser);
+                new CheckOutFrame(i);
+            } catch (CheckoutFailed e) {
+            }
         });
     }
 
@@ -51,12 +58,13 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
 
     @Override
     public void editProduct(Products p) {
-        
+        //Not needed
     }
 
 
     @Override
     public void viewGraph() {
+        //Not needed
 
     }
 
