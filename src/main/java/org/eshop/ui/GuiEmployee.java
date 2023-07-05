@@ -32,7 +32,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        producktPanel = new ProducktPanel(shop);
+        producktPanel = new ProducktPanel(shop, null, loggedInUser);
 
 
         jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);

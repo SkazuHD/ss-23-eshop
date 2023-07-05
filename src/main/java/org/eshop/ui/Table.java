@@ -1,6 +1,12 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Customer;
+import org.eshop.entities.MassProducts;
 import org.eshop.entities.Products;
+import org.eshop.entities.User;
+import org.eshop.exceptions.NotInStockException;
+import org.eshop.exceptions.PacksizeNotMatching;
+import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.TableButtonEventListener;
 import org.eshop.ui.components.TableButtonRender;
@@ -11,9 +17,14 @@ import java.util.List;
 
 public class Table extends javax.swing.JTable implements TableButtonEventListener {
     Shop shop;
+    tableButtonListener listener;
+    User user;
 
-    public Table(List<Products> productsList, String[] coulumns) {
+    public Table(List<Products> productsList, String[] coulumns, tableButtonListener listener, User user, Shop shop) {
         super();
+        this.listener = listener;
+        this.user = user;
+        this.shop = shop;
         productTabelModel tabelModel = new productTabelModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
@@ -34,12 +45,37 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
 
     @Override
     public void onAdd(int row) {
-        System.out.println("ADD");
+        //TODO GET PRODUCT
+        int prodID = (int) getValueAt(row, 0);
+        Products p = null;
+        try {
+            p = shop.findProduct(prodID);
+            shop.addToCart(prodID, p instanceof MassProducts mp? mp.getPacksize():1, (Customer) user);
+
+        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
+
+        }
+
+        //TODO ADD PRODUCT TO CART
+
+        listener.updateCart();
     }
 
     @Override
     public void onRemove(int row) {
-        System.out.println("REMOVE");
+        int prodID = (int) getValueAt(row, 0);
+        Products p = null;
+        try {
+            p = shop.findProduct(prodID);
+            shop.removeFromCart(prodID, p instanceof MassProducts mp? mp.getPacksize():1, (Customer) user);
+
+        } catch (ProductNotFound | PacksizeNotMatching  e) {
+
+        }
+
+        //TODO ADD PRODUCT TO CART
+
+        listener.updateCart();
     }
 
     @Override
@@ -55,5 +91,8 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
     @Override
     public void onView(int row) {
         System.out.println("VIEW");
+    }
+    public interface tableButtonListener {
+        void updateCart();
     }
 }

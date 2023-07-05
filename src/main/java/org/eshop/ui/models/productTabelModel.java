@@ -28,7 +28,6 @@ public class productTabelModel extends AbstractTableModel {
     }
 
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-
         return canEdit[columnIndex];
     }
 

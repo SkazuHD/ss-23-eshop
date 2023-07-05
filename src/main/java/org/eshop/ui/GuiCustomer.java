@@ -30,12 +30,12 @@ public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
         this.shop = shop;
         panel.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        productPanel = new ProducktPanel(shop);
+        shoppingCart = new ShoppingCartPanel(shop, loggedInUser);
+        productPanel = new ProducktPanel(shop, shoppingCart, loggedInUser);
         panel.add(new JScrollPane(panelCenter), BorderLayout.CENTER);
         panelCenter.add(productPanel);
 
         sidePanel = new SidePanel(shop, loggedInUser);
-        shoppingCart = new ShoppingCartPanel(shop, loggedInUser);
         checkoutPanel = new CheckoutPanel(shop, loggedInUser);
         sidePanel.add(shoppingCart);
         sidePanel.add(checkoutPanel);
