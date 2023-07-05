@@ -17,14 +17,14 @@ public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
     CheckoutPanel checkoutPanel;
     ProductPanel productPanel;
 
-    public GuiCustomer(Shop shop, User loggedInUser) {
+    public GuiCustomer(Shop shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
         this.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         shoppingCart = new ShoppingCartPanel(shop, loggedInUser);
         productPanel = new CustomerCenterPanel(shop, shoppingCart, loggedInUser);
         checkoutPanel = new CheckoutPanel(shop, loggedInUser);
-        customerMenu = new CustomerMenu(shop, productPanel, this);
+        customerMenu = new CustomerMenu(shop, productPanel, this, logoutListener, loggedInUser);
 
         sidePanel = new SidePanel(shop, loggedInUser);
         sidePanel.add(shoppingCart);
