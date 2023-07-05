@@ -3,9 +3,7 @@ package org.eshop.ui;
 import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
+import org.eshop.ui.components.*;
 import org.eshop.ui.models.productEmployeeModel;
 
 import javax.swing.*;
@@ -14,21 +12,26 @@ import java.util.List;
 public class EmployeeProductTable extends JTable implements TableButtonEventListener {
 
     Shop shop;
-    CustomerProductTable.tableButtonListener listener;
+    tableButtonListener listener;
     User user;
 
-    public EmployeeProductTable(List<Products> productsList, String[] coulumns, CustomerProductTable.tableButtonListener listener, User user, Shop shop) {
+    public EmployeeProductTable(List<Products> productsList, String[] coulumns, tableButtonListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
         this.shop = shop;
-        //TODO CREATE OWN MODEL
         productEmployeeModel tabelModel = new productEmployeeModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
         //TODO CREATE OWN RENDERER AND EDITOR
-        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
-        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
+
+        TableButtonRender renderer = new TableButtonRender();
+        renderer.setPanel(new TableButtonPanelEmployee());
+        this.getColumnModel().getColumn(4).setCellRenderer(renderer);
+
+        TableCellEditor editor = new TableCellEditor(this);
+        editor.setPanel(new TableButtonPanelEmployee());
+        this.getColumnModel().getColumn(4).setCellEditor(editor);
         updateProducts(productsList);
     }
 
@@ -52,6 +55,7 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
     @Override
     public void onEdit(int row) {
         //TODO implement
+        System.out.println("Edit from EmployeeProductTable");
     }
 
     @Override
@@ -62,5 +66,7 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
     @Override
     public void onView(int row) {
         //TODO show Graph
+        System.out.println("View from EmployeeProductTable");
     }
+
 }

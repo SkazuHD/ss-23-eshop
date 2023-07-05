@@ -4,12 +4,13 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.CustomerProductTable;
+import org.eshop.ui.components.tableButtonListener;
 
 import javax.swing.*;
 import java.util.List;
 
 public class CustomerCenterPanel extends ProductPanel {
-    public CustomerCenterPanel(Shop shop, CustomerProductTable.tableButtonListener listener, User user) {
+    public CustomerCenterPanel(Shop shop, tableButtonListener listener, User user) {
         super(shop, listener, user);
         setupUI();
     }

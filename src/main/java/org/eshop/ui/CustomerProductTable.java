@@ -8,9 +8,7 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
-import org.eshop.ui.components.TableButtonEventListener;
-import org.eshop.ui.components.TableButtonRender;
-import org.eshop.ui.components.TableCellEditor;
+import org.eshop.ui.components.*;
 import org.eshop.ui.models.productTabelModel;
 
 import java.util.List;
@@ -28,8 +26,15 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         productTabelModel tabelModel = new productTabelModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
-        this.getColumnModel().getColumn(3).setCellRenderer(new TableButtonRender());
-        this.getColumnModel().getColumn(3).setCellEditor(new TableCellEditor(this));
+
+        TableButtonRender renderer = new TableButtonRender();
+        renderer.setPanel(new TableButtonPanelCustomer());
+        this.getColumnModel().getColumn(3).setCellRenderer(renderer);
+
+        TableCellEditor editor = new TableCellEditor(this);
+        editor.setPanel(new TableButtonPanelCustomer());
+        this.getColumnModel().getColumn(3).setCellEditor(editor);
+
         updateProducts(productsList);
     }
 
@@ -88,7 +93,5 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         System.out.println("VIEW");
     }
 
-    public interface tableButtonListener {
-        void updateCart();
-    }
+
 }

@@ -5,8 +5,8 @@ import org.eshop.entities.Products;
 import org.eshop.entities.User;
 import org.eshop.shop.CustomerManager;
 import org.eshop.shop.Shop;
-import org.eshop.ui.CustomerProductTable;
 import org.eshop.ui.GuiCustomer;
+import org.eshop.ui.components.tableButtonListener;
 import org.eshop.ui.models.CartModel;
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.Map;
 
 
-public class ShoppingCartPanel extends JPanel implements CustomerProductTable.tableButtonListener {
+public class ShoppingCartPanel extends JPanel implements tableButtonListener {
 
     private final JButton checkoutButton = new JButton("Checkout");
     private final Shop server;
@@ -44,6 +44,21 @@ public class ShoppingCartPanel extends JPanel implements CustomerProductTable.ta
             JFrame frame = new JFrame("CHECK ME OUT");
             frame.setVisible(true);
         });
+    }
+
+    @Override
+    public void onEdit(int row) {
+        //NOT NEEDED
+    }
+
+    @Override
+    public void onDelete(int row) {
+        //NOT NEEDED
+    }
+
+    @Override
+    public void onView(int row) {
+        //NOT NEEDED
     }
 
     @Override
