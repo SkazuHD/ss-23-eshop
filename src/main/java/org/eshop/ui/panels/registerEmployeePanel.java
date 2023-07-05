@@ -3,13 +3,14 @@ package org.eshop.ui.panels;
 import org.eshop.entities.User;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class registerEmployeePanel extends JPanel {
 
-    private final Shop server;
+    private final ShopFacade server;
     private final User loggedInUser;
     private JButton registerButton;
     private JTextField registerUsernameField;
@@ -18,7 +19,7 @@ public class registerEmployeePanel extends JPanel {
     private JTextField registerNameField;
     private JTextField registerIDField;
 
-    public registerEmployeePanel(Shop shop, User loggedInUser) {
+    public registerEmployeePanel(ShopFacade shop, User loggedInUser) {
         this.server = shop;
         this.loggedInUser = loggedInUser;
         setupUI();
