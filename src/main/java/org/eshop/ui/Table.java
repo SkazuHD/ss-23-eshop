@@ -15,6 +15,7 @@ public class Table extends javax.swing.JTable {
         this.setModel(tabelModel);
         updateProducts(productsList);
 
+
     }
 
     public void updateProducts(List<Products> productsList) {
