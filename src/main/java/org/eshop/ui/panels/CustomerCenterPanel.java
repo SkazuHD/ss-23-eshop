@@ -27,4 +27,8 @@ public class CustomerCenterPanel extends ProductPanel {
         this.add(new JScrollPane(customerProductTable));
 
     }
+
+    public void onSearch(List<Products> result) {
+        customerProductTable.updateProducts(result);
+    }
 }

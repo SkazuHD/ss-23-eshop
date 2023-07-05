@@ -28,4 +28,8 @@ public class EmployeeCenterPanel extends ProductPanel {
         this.add(new JScrollPane(employeeProductTable));
 
     }
+
+    public void onSearch(List<Products> result) {
+        employeeProductTable.updateProducts(result);
+    }
 }

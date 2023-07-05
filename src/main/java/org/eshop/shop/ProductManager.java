@@ -65,7 +65,7 @@ public class ProductManager {
         Products p = getProductById(id);
         //Check if enough Products are in Stock
         if(p instanceof MassProducts mp){
-            if(mp.getPacksize() % quantity != 0)
+            if(Math.abs(quantity) % mp.getPacksize() != 0)
                 throw new PacksizeNotMatching(mp.getPacksize());
         }
         if (p.getQuantity() >= quantity)
@@ -176,7 +176,7 @@ public class ProductManager {
     public void increaseQuantity(int id, int quantity) throws ProductNotFound, PacksizeNotMatching {
         Products p = getProductById(id);
         if (p instanceof MassProducts mp){
-            if (mp.getPacksize() % quantity != 0){
+            if (quantity % mp.getPacksize()  != 0){
                 throw new PacksizeNotMatching(mp.getPacksize());
             }
         }
