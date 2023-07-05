@@ -9,7 +9,7 @@ public class CheckOutFrame extends JFrame {
     private final javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
 
     public CheckOutFrame(Customer c, Shop shop){
-        jPanel1
+        //jPanel1
 
     }
 }
