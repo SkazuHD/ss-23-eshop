@@ -33,8 +33,15 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
     private void setupUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setPreferredSize(new Dimension(200, 500));
+        JLabel title = new JLabel("Warenkorb");
+        title.setFont(new Font("Arial", Font.PLAIN, 24));
+        this.add(title);
         this.add(shoppingCart);
+        this.add(totalprice);
+        this.add(Box.createVerticalGlue());
         this.add(checkoutButton);
+        this.add(Box.createRigidArea(new Dimension(5, 20)));
+        updateCart();
     }
 
     private void setupEvents() {
@@ -44,15 +51,26 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
                 Invoice i = server.getInvoice((Customer) loggedInUser);
                 server.checkout((Customer) loggedInUser);
                 new CheckOutFrame(i);
+                updateCart();
             } catch (CheckoutFailed e) {
             }
         });
+
     }
 
     @Override
     public void updateCart() {
         Map<Products, Integer> GetCart = server.getCart((Customer) loggedInUser);
         shoppingCart.setModel(new CartModel(GetCart));
+        checkoutButton.setEnabled(!GetCart.isEmpty());
+
+        double total = 0;
+        for (Map.Entry<Products, Integer> entry : GetCart.entrySet()) {
+            total += entry.getKey().getPrice() * entry.getValue();
+        }
+
+        String price = String.format("%.2f", total);
+        totalprice.setText(price);
 
     }
 
