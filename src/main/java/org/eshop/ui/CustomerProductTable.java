@@ -15,12 +15,12 @@ import org.eshop.ui.models.productTabelModel;
 
 import java.util.List;
 
-public class Table extends javax.swing.JTable implements TableButtonEventListener {
+public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener {
     Shop shop;
     tableButtonListener listener;
     User user;
 
-    public Table(List<Products> productsList, String[] coulumns, tableButtonListener listener, User user, Shop shop) {
+    public CustomerProductTable(List<Products> productsList, String[] coulumns, tableButtonListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
@@ -28,11 +28,9 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
         productTabelModel tabelModel = new productTabelModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
-        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
-        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
+        this.getColumnModel().getColumn(3).setCellRenderer(new TableButtonRender());
+        this.getColumnModel().getColumn(3).setCellEditor(new TableCellEditor(this));
         updateProducts(productsList);
-
-
     }
 
     public void updateProducts(List<Products> productsList) {
@@ -45,18 +43,15 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
 
     @Override
     public void onAdd(int row) {
-        //TODO GET PRODUCT
         int prodID = (int) getValueAt(row, 0);
         Products p = null;
         try {
             p = shop.findProduct(prodID);
-            shop.addToCart(prodID, p instanceof MassProducts mp? mp.getPacksize():1, (Customer) user);
+            shop.addToCart(prodID, p instanceof MassProducts mp ? mp.getPacksize() : 1, (Customer) user);
 
         } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
 
         }
-
-        //TODO ADD PRODUCT TO CART
 
         listener.updateCart();
     }
@@ -67,9 +62,9 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
         Products p = null;
         try {
             p = shop.findProduct(prodID);
-            shop.removeFromCart(prodID, p instanceof MassProducts mp? mp.getPacksize():1, (Customer) user);
+            shop.removeFromCart(prodID, p instanceof MassProducts mp ? mp.getPacksize() : 1, (Customer) user);
 
-        } catch (ProductNotFound | PacksizeNotMatching  e) {
+        } catch (ProductNotFound | PacksizeNotMatching e) {
 
         }
 
@@ -92,6 +87,7 @@ public class Table extends javax.swing.JTable implements TableButtonEventListene
     public void onView(int row) {
         System.out.println("VIEW");
     }
+
     public interface tableButtonListener {
         void updateCart();
     }
