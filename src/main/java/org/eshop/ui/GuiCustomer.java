@@ -2,10 +2,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.panels.CheckoutPanel;
-import org.eshop.ui.panels.ProducktPanel;
-import org.eshop.ui.panels.ShoppingCartPanel;
-import org.eshop.ui.panels.SidePanel;
+import org.eshop.ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,13 +21,13 @@ public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
     SidePanel sidePanel;
     ShoppingCartPanel shoppingCart;
     CheckoutPanel checkoutPanel;
-    ProducktPanel productPanel;
+    CustomerProducts productPanel;
 
     public GuiCustomer(Shop shop, User loggedInUser) {
         this.shop = shop;
         panel.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        productPanel = new ProducktPanel(shop);
+        productPanel = new CustomerProducts(shop);
         panel.add(new JScrollPane(panelCenter), BorderLayout.CENTER);
         panelCenter.add(productPanel);
 
