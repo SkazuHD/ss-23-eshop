@@ -25,7 +25,7 @@ public class MenuePanel extends javax.swing.JPanel {
     private final javax.swing.JButton Logout =
             new javax.swing.JButton("Logout");
     Shop shop;
-    ProducktPanel producktPanel;
+    ProductPanel productPanel;
     MitarbeiterPanel mitarbeiterPanel;
     GuiEmployee guiEmployee;
 

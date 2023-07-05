@@ -59,7 +59,7 @@ public class TestFrame extends JFrame {
 
         List<Products> products = shop.getAllProducts().stream().toList();
         String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", ""};
-        //new TestFrame(new JScrollPane(new Table(products, columns,)));
+        //new TestFrame(new JScrollPane(new CustomerProductTable(products, columns,)));
 
     }
 }
