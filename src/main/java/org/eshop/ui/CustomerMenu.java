@@ -1,11 +1,15 @@
 package org.eshop.ui;
 
+import org.eshop.entities.User;
+import org.eshop.exceptions.LoginFailed;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
+import org.eshop.ui.frames.LoginFrame;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CustomerMenu extends javax.swing.JPanel {
     private final javax.swing.JMenuBar jMenuBar =
@@ -27,10 +31,18 @@ public class CustomerMenu extends javax.swing.JPanel {
             new javax.swing.JButton("Logout");
 
     Shop shop;
+    User loggedInUser;
     GuiCustomer guiCustomer;
+    LoginFrame loginFrame;
+
 
     public CustomerMenu(Shop shop, SearchWidget.SearchListener searchListener, GuiCustomer guiCustomer) {
         this.guiCustomer = guiCustomer;
+        buildUI(searchListener);
+        setupEvents();
+    }
+
+    private void buildUI(SearchWidget.SearchListener searchListener) {
         this.add(jMenuBar);
         this.setBackground(new Color(50));
 
@@ -54,5 +66,11 @@ public class CustomerMenu extends javax.swing.JPanel {
         Menu.add(Logout);
 
         Search.setPreferredSize(new Dimension(300, 10));
+    }
+
+    private void setupEvents() {
+        Logout.addActionListener((e) -> {
+            loggedInUser.logout();
+        });
     }
 }

@@ -1,7 +1,10 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Employee;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.ui.components.SearchWidget;
+import org.eshop.ui.frames.LoginFrame;
 import org.eshop.ui.panels.*;
 
 import javax.swing.*;
@@ -16,6 +19,8 @@ public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
     ShoppingCartPanel shoppingCart;
     CheckoutPanel checkoutPanel;
     ProductPanel productPanel;
+    LoginFrame loginFrame;
+    User loggedInUser;
 
     public GuiCustomer(Shop shop, User loggedInUser) {
         this.shop = shop;

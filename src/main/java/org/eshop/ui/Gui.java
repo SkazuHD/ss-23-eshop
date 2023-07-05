@@ -17,6 +17,9 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
     User loggedInUser;
     LoginFrame loginFrame;
 
+    GuiEmployee guiEmployee;
+    GuiCustomer guiCustomer;
+
 
     /*TODO General: ADD CUSTOM JNumberField Class */
     public Gui() {
@@ -47,4 +50,5 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
         }
 
     }
+
 }

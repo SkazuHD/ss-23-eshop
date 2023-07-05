@@ -6,6 +6,8 @@ import org.eshop.entities.Products;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+import java.util.ArrayList;
 
 public class CartModel extends AbstractTableModel {
 
