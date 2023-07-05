@@ -5,6 +5,7 @@ import org.eshop.entities.Products;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 public class productEmployeeModel extends AbstractTableModel {
     private final List<Products> productsList;
@@ -18,6 +19,7 @@ public class productEmployeeModel extends AbstractTableModel {
         this.columns = columns;
         this.productsList = new Vector<>();
         this.productsList.addAll(productsList);
+        // List<Products> sortedList = productsList.stream().sorted().collect(Collectors.toList());
     }
 
     public void setProductsList(List<Products> productsList) {

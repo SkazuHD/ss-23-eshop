@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CartModel extends AbstractTableModel {
 
@@ -16,7 +17,7 @@ public class CartModel extends AbstractTableModel {
 
     public CartModel(Map<Products, Integer> cart) {
         this.cart = cart;
-        prods = cart.keySet().stream().toList();
+        prods = cart.keySet().stream().collect(Collectors.toList());
 
         updateCart();
         fireTableDataChanged();
@@ -55,6 +56,7 @@ public class CartModel extends AbstractTableModel {
                 return null;
         }
     }
+
 }
 
 
