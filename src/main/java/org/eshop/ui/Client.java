@@ -54,11 +54,6 @@ public class Client implements ShopFacade {
 
         }
 
-
-        this.out.println("p");
-        this.out.println("p");
-        this.out.println("p");
-
     }
 
 
@@ -466,28 +461,33 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void checkout(Customer c) {
+    public void checkout(Customer c) throws CheckoutFailed {
         out.println("checkout");
         out.println(c.getUsername());
         String status;
+        List<Products> prod = new ArrayList<>();
         try {
             status = this.in.readLine();
             if (status.equals("400")) {
+                int size = Integer.parseInt(in.readLine());
+                for (int i = 0; i < size; i++) {
+                    Products p = prod();
+                    prod.add(p);
+                }
+                throw new CheckoutFailed(prod);
 
-            } else if (status.equals("200")) {
-                c.clearCart();
+                } else if (status.equals("200")) {
+                    c.clearCart();
 
+                }
+
+
+        }
+        catch(IOException e){
 
             }
 
-        } catch (IOException e) {
-
-        }
-
-
-
     }
-
     @Override
     public Map<Products, Integer> getCart(Customer c) {
         out.println("getCart");

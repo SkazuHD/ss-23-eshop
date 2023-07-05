@@ -7,6 +7,7 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class editProductPanel extends JPanel implements ActionListener{
-    private final Shop server;
+    private final ShopFacade server;
     private final User loggedInUser;
     private final JButton saveBtn = new JButton("SAVE");
     private final JButton deleteBtn = new JButton("DELETE");
@@ -28,7 +29,7 @@ public class editProductPanel extends JPanel implements ActionListener{
     private final JTextField productPacksize = new JTextField();
     private Products currentProduct;
 
-    public editProductPanel(Shop shop, User loggedInUser){
+    public editProductPanel(ShopFacade shop, User loggedInUser){
         this.server = shop;
         this.loggedInUser = loggedInUser;
         setupUI();
