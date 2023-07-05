@@ -28,7 +28,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     /**
      * Der Konstruktor.
      */
-    public GuiEmployee(Shop shop, User loggedInUser) {
+    public GuiEmployee(Shop shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -104,6 +104,8 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
 
     }
+
+
 }
 
 

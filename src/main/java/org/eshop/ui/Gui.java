@@ -11,7 +11,9 @@ import javax.swing.*;
 /**
  * The type Gui.
  */
-public class Gui extends JFrame implements LoginFrame.addLoginListener {
+public class Gui extends JFrame implements LoginFrame.addLoginListener, CustomerMenu.addLogoutListener {
+
+
 
     Shop server;
     User loggedInUser;
@@ -39,12 +41,15 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener {
         loggedInUser = user;
         if (user instanceof Employee) {
             loginFrame.dispose();
-            JFrame Employee = new GuiEmployee(server, user);
+            JFrame Employee = new GuiEmployee(server, user, this);
         } else {
             loginFrame.dispose();
-            JFrame Customer = new GuiCustomer(server, user);
+            JFrame Customer = new GuiCustomer(server, user, this);
 
         }
 
+    }
+    public void onLogout(User user){
+        new LoginFrame(server, this);
     }
 }
