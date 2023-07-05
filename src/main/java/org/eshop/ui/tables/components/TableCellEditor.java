@@ -8,15 +8,20 @@ import java.awt.*;
 public class TableCellEditor extends DefaultCellEditor {
 
     private final TableButtonEventListener listener;
+    private TableButtonPanel editorComponent;
 
     public TableCellEditor(TableButtonEventListener listener) {
         super(new JCheckBox());
         this.listener = listener;
     }
 
+    public void setPanel(TableButtonPanel panel) {
+        this.editorComponent = panel;
+    }
+
     @Override
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int row, int column) {
-        TableButtonPanel panel = new TableButtonPanel();
+        TableButtonPanel panel = this.editorComponent;
         panel.initEvents(listener, row);
         return panel;
     }
