@@ -507,7 +507,7 @@ class ClientAddressRequestProcessor {
 
     // UTIL
     private void returnProd(Product p) {
-        out.println(p instanceof MassProduct ? "p" : "mp");
+        out.println(p instanceof MassProduct ? "mp" : "p");
         out.println(p.getId());
         out.println(p.getName());
         out.println(p.getPrice());

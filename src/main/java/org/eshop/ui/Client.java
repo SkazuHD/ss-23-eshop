@@ -322,9 +322,7 @@ public class Client implements ShopFacade {
             IOException IOException;
 
         } else if (status.equals("200")) {
-            readProducktList();
-
-
+           return readProducktList();
         }
         return null;
     }
@@ -583,9 +581,10 @@ public class Client implements ShopFacade {
         List<Product> products = new ArrayList<>();
         int count;
         try {
-            String type = in.readLine();
             count = Integer.parseInt(in.readLine());
+            System.err.println("Count "+ count);
             for (int i = 0; i < count; i++) {
+                String type = in.readLine();
                 if (type.equals("p")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
@@ -602,10 +601,9 @@ public class Client implements ShopFacade {
                 }
             }
         } catch (IOException e) {
-        } finally {
-            return products;
-        }
 
+        }
+        return products;
     }
 
     public User getUser(String username) {
