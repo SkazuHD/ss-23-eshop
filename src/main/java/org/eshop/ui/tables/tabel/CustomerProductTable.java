@@ -13,6 +13,7 @@ import org.eshop.ui.tables.components.TableButtonRender;
 import org.eshop.ui.tables.components.TableCellEditor;
 import org.eshop.ui.tables.models.productTabelModel;
 
+import javax.swing.*;
 import java.util.List;
 
 public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener {
@@ -43,13 +44,13 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     @Override
     public void onAdd(int row) {
         int prodID = (int) getValueAt(row, 0);
-        Product p = null;
+        Product p;
         try {
             p = shop.findProduct(prodID);
             shop.addToCart(prodID, p instanceof MassProduct mp ? mp.getPacksize() : 1, (Customer) user);
 
         } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
-
+            JOptionPane.showMessageDialog(new JFrame(), e.getMessage());
         }
 
         listener.updateCart();

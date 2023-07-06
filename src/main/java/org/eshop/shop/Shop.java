@@ -232,7 +232,7 @@ public class Shop implements ShopFacade {
         for (Product key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
-                productManager.decreaseQuantity(key, cart.get(key));
+                productManager.decreaseQuantity(key, -cart.get(key));
             }catch (Exception ignore){
                 //TODO HANDLE IT MAN
             }

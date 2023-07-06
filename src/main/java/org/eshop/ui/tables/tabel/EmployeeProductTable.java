@@ -59,7 +59,7 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
             Product p = shop.findProduct((int) getValueAt(row, 0));
             System.out.println(p);
             listener.editProduct(p);
-        } catch (ProductNotFound e) {
+        } catch (ProductNotFound ignore) {
         }
 
 
@@ -75,9 +75,4 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         //TODO show Graph
     }
 
-    public interface tableButtonListener {
-        void editProduct();
-
-        void viewGraph();
-    }
 }
