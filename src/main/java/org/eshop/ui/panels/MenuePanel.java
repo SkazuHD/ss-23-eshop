@@ -1,7 +1,9 @@
 package org.eshop.ui.panels;
 
 
+import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.ui.CustomerMenu;
 import org.eshop.ui.GuiEmployee;
 import org.eshop.ui.MitarbeiterPanel;
 import org.eshop.ui.components.SearchWidget;
@@ -28,11 +30,14 @@ public class MenuePanel extends javax.swing.JPanel {
     ProductPanel productPanel;
     MitarbeiterPanel mitarbeiterPanel;
     GuiEmployee guiEmployee;
+    CustomerMenu.addLogoutListener listener;
+    User loggedInUser;
 
-    public MenuePanel(Shop shop, SearchWidget.SearchListener searchListener, GuiEmployee guiEmployee) {
+    public MenuePanel(Shop shop, SearchWidget.SearchListener searchListener, GuiEmployee guiEmployee, CustomerMenu.addLogoutListener logoutListener, User loggedInUSer) {
 
         this.guiEmployee = guiEmployee;
-
+        this.listener = logoutListener;
+        this.loggedInUser = loggedInUSer;
         this.add(jMenuBar);
         this.setBackground(new Color(50));
 
@@ -58,6 +63,11 @@ public class MenuePanel extends javax.swing.JPanel {
         Produckte.setActionCommand("Producktpanel");
         Produckte.addActionListener(guiEmployee);
 
+
+        Logout.addActionListener((e)->{
+            guiEmployee.dispose();
+            listener.onLogout(loggedInUSer);
+        });
 
         Search.setPreferredSize(new Dimension(300, 10));
 
