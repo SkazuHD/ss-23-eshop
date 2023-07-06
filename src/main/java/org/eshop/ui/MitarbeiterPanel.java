@@ -3,7 +3,6 @@ package org.eshop.ui;
 
 import org.eshop.entities.Employee;
 import org.eshop.entities.Product;
-import org.eshop.shop.EmployeeManager;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
 

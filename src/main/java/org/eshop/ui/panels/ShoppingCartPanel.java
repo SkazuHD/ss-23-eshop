@@ -55,6 +55,7 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
                 new CheckOutFrame(i);
                 updateCart();
             } catch (CheckoutFailed e) {
+                JOptionPane.showMessageDialog(new JFrame(), e.getMessage());
             }
         });
 
