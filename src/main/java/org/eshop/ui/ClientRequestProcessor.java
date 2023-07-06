@@ -271,7 +271,7 @@ class ClientAddressRequestProcessor {
             id = Integer.parseInt(in.readLine());
             name = in.readLine();
             price = Double.parseDouble(in.readLine());
-            Products p = server.editProductDetails(id, name, price);
+            Product p = server.editProductDetails(id, name, price);
             out.println(200);
             returnProd(p);
         } catch (ProductNotFound e) {
@@ -293,7 +293,7 @@ class ClientAddressRequestProcessor {
             name = in.readLine();
             price = Double.parseDouble(in.readLine());
             packSize = Integer.parseInt(in.readLine());
-            Products p = server.editProductDetails(id, name, price, packSize);
+            Product p = server.editProductDetails(id, name, price, packSize);
             out.println(200);
             returnProd(p);
         } catch (IOException e) {
@@ -330,10 +330,10 @@ class ClientAddressRequestProcessor {
     }
 
     public void getAll() {
-        Collection<Products> products = server.getAllProducts();
+        Collection<Product> products = server.getAllProducts();
         out.println(200);
         out.println(products.size());
-        for (Products p : products) {
+        for (Product p : products) {
             returnProd(p);
         }
 
@@ -343,10 +343,10 @@ class ClientAddressRequestProcessor {
         String query = null;
         try {
             query = in.readLine();
-            Collection<Products> products = server.findProducts(query);
+            Collection<Product> products = server.findProducts(query);
             out.println(200);
             out.println(products.size());
-            for (Products p : products) {
+            for (Product p : products) {
                 returnProd(p);
             }
 
@@ -358,7 +358,7 @@ class ClientAddressRequestProcessor {
         int id = 0;
         try {
             id = Integer.parseInt(in.readLine());
-            Products p = server.findProduct(id);
+            Product p = server.findProduct(id);
             out.println(200);
             returnProd(p);
         } catch (IOException e) {
@@ -393,12 +393,12 @@ class ClientAddressRequestProcessor {
         }
         try {
             Customer c = (Customer) server.getUser(customerName);
-            Map<Products, Integer> cart = server.getCart(c);
+            Map<Product, Integer> cart = server.getCart(c);
             out.println(200);
             out.println(cart.size());
-            Iterator<Products> it = cart.keySet().iterator();
+            Iterator<Product> it = cart.keySet().iterator();
             while (it.hasNext()) {
-                Products p = it.next();
+                Product p = it.next();
                 int quantity = cart.get(p);
                 returnProd(p);
                 out.println(quantity);
@@ -486,13 +486,13 @@ class ClientAddressRequestProcessor {
     }
 
     // UTIL
-    private void returnProd(Products p) {
-        out.println(p instanceof MassProducts ? "p" : "mp");
+    private void returnProd(Product p) {
+        out.println(p instanceof MassProduct ? "p" : "mp");
         out.println(p.getId());
         out.println(p.getName());
         out.println(p.getPrice());
         out.println(p.getQuantity());
-        if (p instanceof MassProducts mp) {
+        if (p instanceof MassProduct mp) {
             out.println(mp.getPacksize());
         }
     }
@@ -507,12 +507,12 @@ class ClientAddressRequestProcessor {
     private void returnCart(String username) {
         try {
             Customer c = (Customer) server.getUser(username);
-            Map<Products, Integer> cart = server.getCart(c);
+            Map<Product, Integer> cart = server.getCart(c);
             out.println(200);
             out.println(cart.size());
-            Iterator<Products> it = cart.keySet().iterator();
+            Iterator<Product> it = cart.keySet().iterator();
             while (it.hasNext()) {
-                Products p = it.next();
+                Product p = it.next();
                 int quantity = cart.get(p);
                 returnProd(p);
                 out.println(quantity);

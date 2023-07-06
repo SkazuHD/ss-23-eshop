@@ -32,7 +32,7 @@ public class Event {
      * @param p        the p
      * @param quantity the quantity
      */
-    public Event(User user, Products p, int quantity) {
+    public Event(User user, Product p, int quantity) {
         this.userId = user.getID();
         this.productId = p.getId();
         this.quantity = quantity;

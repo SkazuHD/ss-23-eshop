@@ -1,7 +1,7 @@
 package org.eshop.shop;
 
-import org.eshop.entities.MassProducts;
-import org.eshop.entities.Products;
+import org.eshop.entities.MassProduct;
+import org.eshop.entities.Product;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
@@ -16,14 +16,14 @@ public class ProductManager {
      * The Product map.
      */
 //Maps the Product Name to a List of Product Numbers
-    //Used to find a Product Number by Name or to find all Product Numbers of a Products with the same Name
+    //Used to find a Product Number by Name or to find all Product Numbers of a Product with the same Name
     public Map<String, List<Integer>> productMap = new HashMap<>();
     /**
      * The Product nr map.
      */
 //Maps the Product Number to a Product
     //Find a specific Product by its Product Number
-    public Map<Integer, Products> productNrMap = new HashMap<>();
+    public Map<Integer, Product> productNrMap = new HashMap<>();
     /**
      * The P nr counter.
      */
@@ -40,7 +40,7 @@ public class ProductManager {
      *
      * @param p the p
      */
-    public void loadProduct(Products p) {
+    public void loadProduct(Product p) {
         String name = p.getName();
         int id = p.getId();
         if (productMap.containsKey(name)) {
@@ -62,10 +62,10 @@ public class ProductManager {
      * @throws ProductNotFound the product not found
      */
     public void decreaseQuantity(int id, int quantity) throws ProductNotFound, NotInStockException, PacksizeNotMatching {
-        Products p = getProductById(id);
-        //Check if enough Products are in Stock
-        if(p instanceof MassProducts mp){
-            if(mp.getPacksize() % quantity != 0)
+        Product p = getProductById(id);
+        //Check if enough Product are in Stock
+        if(p instanceof MassProduct mp){
+            if(Math.abs(quantity) % mp.getPacksize() != 0)
                 throw new PacksizeNotMatching(mp.getPacksize());
         }
         if (p.getQuantity() >= quantity)
@@ -74,10 +74,10 @@ public class ProductManager {
 
 
     }
-    public void decreaseQuantity(Products p, int quantity) throws NotInStockException, PacksizeNotMatching {
-        //Check if enough Products are in Stock
-        if(p instanceof MassProducts mp){
-            if(mp.getPacksize() % quantity != 0)
+    public void decreaseQuantity(Product p, int quantity) throws NotInStockException, PacksizeNotMatching {
+        //Check if enough Product are in Stock
+        if(p instanceof MassProduct mp){
+            if(quantity % mp.getPacksize() != 0)
                 throw new PacksizeNotMatching(mp.getPacksize());
         }
         if (p.getQuantity() >= quantity)
@@ -91,7 +91,7 @@ public class ProductManager {
      *
      * @return the set
      */
-    public Collection<Products> getProducts() {
+    public Collection<Product> getProducts() {
         return productNrMap.values();
     }
 
@@ -101,13 +101,13 @@ public class ProductManager {
      * @param name the name
      * @return the product by name
      */
-    public List<Products> getProductByName(String name) {
-        List<Products> result = new ArrayList<>();
+    public List<Product> getProductByName(String name) {
+        List<Product> result = new ArrayList<>();
         List<Integer> ids = productMap.get(name);
         if (ids == null) {
             return result;
         }
-        //Add all Products to result
+        //Add all Product to result
         for (int id : ids) {
             result.add(productNrMap.get(id));
         }
@@ -121,7 +121,7 @@ public class ProductManager {
      * @return the product by id
      * @throws ProductNotFound the product not found
      */
-    public Products getProductById(int id) throws ProductNotFound {
+    public Product getProductById(int id) throws ProductNotFound {
         if (productNrMap.containsKey(id)) {
             return productNrMap.get(id);
         } else {
@@ -137,19 +137,19 @@ public class ProductManager {
      * @param quantity the quantity
      * @return the products
      */
-    public Products createProduct(String name, double price, int quantity, int packsize) {
+    public Product createProduct(String name, double price, int quantity, int packsize) {
         //Generate id
         int id = pNrCounter;
         while (productNrMap.containsKey(id)) {
             pNrCounter++;
             id = pNrCounter;
         }
-        Products p;
+        Product p;
 
         if(packsize != 0){
-            p = new MassProducts(id, price, name, quantity, packsize);
+            p = new MassProduct(id, price, name, quantity, packsize);
         }else {
-            p = new Products(id, price, name, quantity);
+            p = new Product(id, price, name, quantity);
         }
 
         // Check if name already exist in Map and add id to List
@@ -174,9 +174,9 @@ public class ProductManager {
      * @throws ProductNotFound the product not found
      */
     public void increaseQuantity(int id, int quantity) throws ProductNotFound, PacksizeNotMatching {
-        Products p = getProductById(id);
-        if (p instanceof MassProducts mp){
-            if (mp.getPacksize() % quantity != 0){
+        Product p = getProductById(id);
+        if (p instanceof MassProduct mp){
+            if (quantity % mp.getPacksize()  != 0){
                 throw new PacksizeNotMatching(mp.getPacksize());
             }
         }

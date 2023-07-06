@@ -1,13 +1,16 @@
 package org.eshop.ui;
 
+import org.eshop.entities.Employee;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.ui.listener.ShopCloseListener;
 import org.eshop.ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 
 public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
@@ -28,21 +31,25 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     /**
      * Der Konstruktor.
      */
-    public GuiEmployee(Shop shop, User loggedInUser) {
+    public GuiEmployee(Shop shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        productPanel = new EmployeeCenterPanel(shop, null, loggedInUser);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new ShopCloseListener(shop));
+        addProductPanel = new addProductPanel(shop, loggedInUser);
+
+        editProductPanel = new editProductPanel(shop, loggedInUser, addProductPanel);
+
+        productPanel = new EmployeeCenterPanel(shop, editProductPanel, loggedInUser);
 
 
         jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
         Paneelcenter.add(productPanel);
+        Paneelcenter.setLayout(new BoxLayout(Paneelcenter, BoxLayout.PAGE_AXIS));
 
-
-        mitarbeiterPanel = new MitarbeiterPanel(shop, this);
+        String[] columns = {"ID", "Name", "Username", ""};
+        mitarbeiterPanel = new MitarbeiterPanel(shop, this, mitarbeiterPanel.listener,  loggedInUser,columns);
         sidePanel = new SidePanel(shop, loggedInUser);
-        editProductPanel = new editProductPanel(shop, loggedInUser);
-        addProductPanel = new addProductPanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
         sidePanel.add(addProductPanel);
         sidePanel.add(editProductPanel);
@@ -56,7 +63,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         jPanel1.add(sidePanel, BorderLayout.EAST);
 
 
-        menuePanel = new MenuePanel(shop, productPanel, this);
+        menuePanel = new MenuePanel(shop, productPanel, this, logoutListener, loggedInUser);
 
         jPanel1.add(menuePanel, BorderLayout.PAGE_START);
 
@@ -103,6 +110,8 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
 
     }
+
+
 }
 
 

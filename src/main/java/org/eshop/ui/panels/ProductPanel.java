@@ -1,26 +1,26 @@
 package org.eshop.ui.panels;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
-import org.eshop.ui.CustomerProductTable;
-import org.eshop.ui.EmployeeProductTable;
 import org.eshop.ui.components.SearchWidget;
-import org.eshop.ui.components.tableButtonListener;
+import org.eshop.ui.tables.TableListener;
+import org.eshop.ui.tables.tabel.CustomerProductTable;
+import org.eshop.ui.tables.tabel.EmployeeProductTable;
 
 import javax.swing.*;
 import java.util.List;
 
 public abstract class ProductPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
 
-    protected tableButtonListener listener;
+    protected TableListener listener;
     protected User user;
     protected Shop shop;
     protected CustomerProductTable customerProductTable;
     protected EmployeeProductTable employeeProductTable;
 
 
-    public ProductPanel(Shop shop, tableButtonListener listener, User user) {
+    public ProductPanel(Shop shop, TableListener listener, User user) {
 
         this.shop = shop;
         this.listener = listener;
@@ -33,7 +33,7 @@ public abstract class ProductPanel extends javax.swing.JPanel implements SearchW
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
-    public void onSearch(List<Products> result) {
+    public void onSearch(List<Product> result) {
         customerProductTable.updateProducts(result);
     }
 

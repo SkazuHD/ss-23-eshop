@@ -2,35 +2,59 @@ package org.eshop.ui;
 
 
 import org.eshop.entities.Employee;
-import org.eshop.entities.Products;
-import org.eshop.shop.EmployeeManager;
+import org.eshop.entities.Product;
+import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
+import org.eshop.ui.tables.TableListener;
+import org.eshop.ui.tables.tabel.EmployeeTable;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.Vector;
 
 public class MitarbeiterPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
-    private final javax.swing.JList Mitarbeiter =
-            new javax.swing.JList<Employee>();
-    private final javax.swing.JPanel panel =
-            new javax.swing.JPanel();
-    EmployeeManager employeeManager;
-    Shop shop;
 
-    public MitarbeiterPanel(Shop shop, GuiEmployee guiEmployee) {
-        this.add(Mitarbeiter);
+    protected TableListener listener;
+    protected User user;
+    protected Shop shop;
 
 
-        Mitarbeiter.setListData(shop.getAllEmployees().toArray());
+    protected EmployeeTable employeeTable;
+
+
+    public MitarbeiterPanel(Shop shop, GuiEmployee guiEmployee, TableListener listener, User user, String[] coulumns) {
+        this.shop = shop;
+        List<Employee> employeeList = shop.getAllEmployees().stream().toList();
+        employeeTable = new EmployeeTable( employeeList, coulumns, listener,user, shop);
+
+        this.listener = listener;
+        this.user = user;
+        setupUI();
+
+         this.add(employeeTable);
+        employeeTable.updateEmployee(employeeList);
+
 
 
     }
+
+    private void setupUI() {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+
+
+
+
+
+
+
+
 
 
     @Override
-    public void onSearch(List<Products> result) {
+    public void onSearch(List<Product> result) {
 
     }
-
-
 }

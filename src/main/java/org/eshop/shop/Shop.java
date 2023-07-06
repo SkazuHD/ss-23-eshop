@@ -71,8 +71,8 @@ public class Shop implements ShopFacade {
         }
         try {
             persistence.openForWriting("products.csv", false);
-            Collection<Products> products = productManager.getProducts();
-            for (Products p : products) {
+            Collection<Product> products = productManager.getProducts();
+            for (Product p : products) {
                 persistence.writeProducts(p);
             }
             persistence.close();
@@ -118,7 +118,7 @@ public class Shop implements ShopFacade {
         }
         try {
             persistence.openForReading("products.csv");
-            Products p;
+            Product p;
             do {
                 p = persistence.readProducts();
                 if (p != null) {
@@ -179,8 +179,8 @@ public class Shop implements ShopFacade {
         return u.isLoggedIn();
     }
 
-    //Products
-    public Collection<Products> getAllProducts() {
+    //Product
+    public Collection<Product> getAllProducts() {
         return productManager.getProducts();
     }
 
@@ -190,9 +190,9 @@ public class Shop implements ShopFacade {
     }
 
     public void addToCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
-        Products p = productManager.getProductById(id);
+        Product p = productManager.getProductById(id);
 
-        if (p instanceof MassProducts mp) {
+        if (p instanceof MassProduct mp) {
             if (quantity % mp.getPacksize() != 0) {
                 throw new PacksizeNotMatching((mp.getPacksize()));
             }
@@ -205,7 +205,7 @@ public class Shop implements ShopFacade {
     }
 
     public void removeFromCart(int id, int quantity, Customer c) throws ProductNotFound, PacksizeNotMatching {
-        Products p = productManager.getProductById(id);
+        Product p = productManager.getProductById(id);
         if (p != null) {
             customerManager.removeProduct(p, quantity, c);
         } else {
@@ -214,27 +214,27 @@ public class Shop implements ShopFacade {
     }
 
 
-    public Map<Products, Integer> getCart(Customer c) {
+    public Map<Product, Integer> getCart(Customer c) {
         return customerManager.getCart(c);
     }
 
     public void checkout(Customer c) throws CheckoutFailed {
-        Map<Products, Integer> cart = c.getCart();
-        List<Products> productsToBeFixed = new ArrayList<>();
-        for (Products key : cart.keySet()) {
+        Map<Product, Integer> cart = c.getCart();
+        List<Product> productToBeFixed = new ArrayList<>();
+        for (Product key : cart.keySet()) {
             if(key.getQuantity() < cart.get(key)){
-                productsToBeFixed.add(key);
+                productToBeFixed.add(key);
             }
         }
-        if(productsToBeFixed.size() > 0){
-            throw new CheckoutFailed(productsToBeFixed);
+        if(productToBeFixed.size() > 0){
+            throw new CheckoutFailed(productToBeFixed);
         }
-        for (Products key : cart.keySet()) {
+        for (Product key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
-                productManager.decreaseQuantity(key, cart.get(key));
-            }catch (Exception ignore){
-                //TODO HANDLE IT MAN
+                productManager.decreaseQuantity(key, -cart.get(key));
+            }catch (Exception e){
+                System.err.println(e.getMessage());
             }
 
 
@@ -250,7 +250,7 @@ public class Shop implements ShopFacade {
 
 
     public void createProduct(String name, double price, int quantity, User u) {
-        Products p = productManager.createProduct(name, price, quantity, 0);
+        Product p = productManager.createProduct(name, price, quantity, 0);
         saveAsync();
         eventManager.addEvent(u, p, quantity);
 
@@ -260,7 +260,7 @@ public class Shop implements ShopFacade {
         if (quantity % packsize != 0) {
             throw new PacksizeNotMatching(packsize);
         }
-        Products p = productManager.createProduct(name, price, quantity, packsize);
+        Product p = productManager.createProduct(name, price, quantity, packsize);
         saveAsync();
         eventManager.addEvent(u, p, quantity);
     }
@@ -271,8 +271,8 @@ public class Shop implements ShopFacade {
     }
 
     @Override
-    public Products editProductDetails(int id, String name, double price) throws ProductNotFound {
-        Products p = productManager.getProductById(id);
+    public Product editProductDetails(int id, String name, double price) throws ProductNotFound {
+        Product p = productManager.getProductById(id);
         p.setName(name);
         p.setPrice(price);
         saveAsync();
@@ -280,8 +280,8 @@ public class Shop implements ShopFacade {
     }
 
     @Override
-    public Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
-        MassProducts mp = (MassProducts) productManager.getProductById(id);
+    public Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
+        MassProduct mp = (MassProduct) productManager.getProductById(id);
         mp.setName(name);
         mp.setPrice(price);
         mp.setPacksize(packSize);
@@ -289,11 +289,11 @@ public class Shop implements ShopFacade {
         return mp;
     }
 
-    public List<Products> findProducts(String name) {
+    public List<Product> findProducts(String name) {
         return productManager.getProductByName(name);
     }
 
-    public Products findProduct(int id) throws ProductNotFound {
+    public Product findProduct(int id) throws ProductNotFound {
         return productManager.getProductById(id);
     }
 

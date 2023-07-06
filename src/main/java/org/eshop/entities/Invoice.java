@@ -1,6 +1,7 @@
 package org.eshop.entities;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class Invoice {
     Customer c;
-    Map<Products, Integer> cart;
+    Map<Product, Integer> cart;
     Date date;
 
     /**
@@ -22,7 +23,10 @@ public class Invoice {
     public Invoice(Customer c) {
         this.c = c;
         this.date = new Date();
-        this.cart = c.getCart();
+        Map<Product, Integer> cartCopy = c.getCart();
+        this.cart = new HashMap<>();
+        cart.putAll(cartCopy);
+
     }
 
     /**
@@ -37,7 +41,7 @@ public class Invoice {
         output.append("Invoice for ").append(c.getName()).append("\n");
         output.append("Date: ").append(date.toString()).append("\n");
         output.append("Items:\n");
-        for (Map.Entry<Products, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
             output.append(entry.getKey().getName())
                     .append(" x")
                     .append(entry.getValue())
@@ -59,21 +63,21 @@ public class Invoice {
      */
     public double getTotalPrice() {
         double total = 0;
-        for (Map.Entry<Products, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
             total += entry.getKey().getPrice() * entry.getValue();
         }
         return total;
     }
 
-    public Map<Products, Integer> getCart(){
+    public Map<Product, Integer> getCart() {
         return cart;
     }
 
-    public Customer getCustomer(){
+    public Customer getCustomer() {
         return c;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return date;
     }
 

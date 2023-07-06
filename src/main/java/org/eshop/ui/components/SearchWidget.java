@@ -1,7 +1,6 @@
 package org.eshop.ui.components;
 
-import org.eshop.entities.Employee;
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.shop.Shop;
 
 import javax.swing.*;
@@ -51,7 +50,7 @@ public class SearchWidget extends JPanel implements ActionListener {
         if (query.isEmpty() || query.isBlank() || query.length() < 3) {
             listener.onSearch(server.getAllProducts().stream().toList());
         } else {
-            List<Products> result = server.findProducts(query);
+            List<Product> result = server.findProducts(query);
             listener.onSearch(result);
         }
     }
@@ -63,7 +62,7 @@ public class SearchWidget extends JPanel implements ActionListener {
     }
 
     public interface SearchListener {
-        void onSearch(List<Products> result);
+        void onSearch(List<Product> result);
 
     }
 

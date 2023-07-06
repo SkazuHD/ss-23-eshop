@@ -1,7 +1,7 @@
 package org.eshop.shop;
 
 import org.eshop.entities.Event;
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
@@ -66,7 +66,7 @@ public class EventManager {
      * @param p        the p
      * @param quantity the quantity
      */
-    public void addEvent(User user, Products p, int quantity) {
+    public void addEvent(User user, Product p, int quantity) {
         Event event = new Event(user, p, quantity);
         addEvent(event);
     }

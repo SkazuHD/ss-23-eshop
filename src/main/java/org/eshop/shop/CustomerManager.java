@@ -2,7 +2,7 @@ package org.eshop.shop;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.NotInStockException;
@@ -96,12 +96,12 @@ public class CustomerManager {
     /**
      * Buy product.
      *
-     * @param p      the Products
+     * @param p      the Product
      * @param anzahl the Quantity
      * @param c      the Customer
      * @throws NotInStockException the not in stock exception
      */
-    public void buyProduct(Products p, int anzahl, Customer c) throws NotInStockException {
+    public void buyProduct(Product p, int anzahl, Customer c) throws NotInStockException {
         int addedAmount = c.addToCart(p, anzahl);
         if (addedAmount != anzahl) {
             throw new NotInStockException(addedAmount);
@@ -111,11 +111,11 @@ public class CustomerManager {
     /**
      * Remove product.
      *
-     * @param p      the Products
+     * @param p      the Product
      * @param anzahl the Quantity
      * @param c      the Customer
      */
-    public void removeProduct(Products p, int anzahl, Customer c) {
+    public void removeProduct(Product p, int anzahl, Customer c) {
         c.removeFromCart(p, anzahl);
     }
 
@@ -125,7 +125,7 @@ public class CustomerManager {
      * @param c the Customer
      * @return the cart of the Customer
      */
-    public Map<Products, Integer> getCart(Customer c) {
+    public Map<Product, Integer> getCart(Customer c) {
         return c.getCart();
     }
 

@@ -34,7 +34,7 @@ public class addProductPanel extends JPanel implements ActionListener {
         Dimension inputMaxSize = new Dimension(300, 25);
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.setPreferredSize(new Dimension(200, 500));
+        this.setPreferredSize(new Dimension(300, 500));
         productName.setPreferredSize(inputMaxSize);
         productName.setMaximumSize(inputMaxSize);
         this.add(new JLabel("Name:"));
