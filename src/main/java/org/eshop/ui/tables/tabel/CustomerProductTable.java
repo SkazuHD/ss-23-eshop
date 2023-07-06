@@ -88,7 +88,4 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         System.out.println("VIEW");
     }
 
-    public interface tableButtonListener {
-        void updateCart();
-    }
 }
