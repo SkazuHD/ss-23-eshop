@@ -2,6 +2,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.listener.ShopCloseListener;
 import org.eshop.ui.panels.*;
 
@@ -17,7 +18,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
             new javax.swing.JScrollPane();
     private final javax.swing.JPanel Paneelcenter =
             new javax.swing.JPanel();
-    Shop shop;
+    ShopFacade shop;
     MenuePanel menuePanel;
     SidePanel sidePanel;
     ProductPanel productPanel;
@@ -29,7 +30,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     /**
      * Der Konstruktor.
      */
-    public GuiEmployee(Shop shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
+    public GuiEmployee(ShopFacade shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

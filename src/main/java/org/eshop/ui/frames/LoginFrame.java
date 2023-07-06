@@ -4,6 +4,7 @@ import org.eshop.entities.User;
 import org.eshop.exceptions.LoginFailed;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.listener.ShopCloseListener;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 
 
 public class LoginFrame extends JFrame {
-    private final Shop server;
+    private final ShopFacade server;
     private final addLoginListener listener;
     private JPanel mainPanel;
     private JPanel loginPanel;
@@ -28,7 +29,7 @@ public class LoginFrame extends JFrame {
     private JTextField registerNameField;
     private JTextField registerAddressField;
 
-    public LoginFrame(Shop shop, addLoginListener listener) {
+    public LoginFrame(ShopFacade shop, addLoginListener listener) {
         server = shop;
         this.listener = listener;
         buildUI();

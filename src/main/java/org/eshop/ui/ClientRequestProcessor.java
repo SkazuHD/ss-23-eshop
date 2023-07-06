@@ -54,71 +54,91 @@ class ClientAddressRequestProcessor {
         this.out.println("Server bereit");
 
         do {
-            input = "";
+            input = null;
             try {
                 input = this.in.readLine();
             } catch (Exception var5) {
                 System.out.println("--->Fehler beim Lesen vom Client (Aktion): ");
                 System.out.println(var5.getMessage());
-                continue;
+
             }
 
             if (input == null) {
-                input = "quit";
                 break;
             }
-
+            System.out.println("Request: " + input);
             switch (input) {
-                case "regUser":
+                case "registerUser":
                     regiserUser();
+                    System.out.println("Success");
                     break;
                 case "regEmp":
                     regiserEmployee();
+                    System.out.println("Success");
                     break;
                 case "login":
                     login();
+                    System.out.println("Success");
                     break;
                 case "logout":
                     logout();
+                    System.out.println("Success");
                     break;
                 case "createProd":
                     createProduct();
+                    System.out.println("Success");
                     break;
                 case "createMProd":
                     createMProduct();
+                    System.out.println("Success");
                     break;
                 case "editProd":
                     editProduct();
+                    System.out.println("Success");
                     break;
                 case "editMProd":
                     editMProduct();
+                    System.out.println("Success");
                     break;
                 case "changeQuant":
                     changeQuantity();
+                    System.out.println("Success");
                     break;
                 case "getAll":
                     getAll();
+                    System.out.println("Success");
                     break;
                 case "findName":
                     findName();
+                    System.out.println("Success");
                     break;
                 case "findId":
                     findId();
+                    System.out.println("Success");
                     break;
                 case "prodHistory":
                     getProdHistory();
+                    System.out.println("Success");
                     break;
                 case "getInvoice":
                     getInvoice();
+                    System.out.println("Success");
                     break;
                 case "getCart":
                     getCart();
+                    System.out.println("Success");
+                    break;
                 case "addToCart":
                     addToCart();
+                    System.out.println("Success");
+                    break;
                 case "removeFromCart":
                     removeFromCart();
+                    System.out.println("Success");
+                    break;
                 case "save":
                     server.save();
+                    break;
                 default:
                     System.out.println("Not valid " + input);
             }

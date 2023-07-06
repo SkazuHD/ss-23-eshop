@@ -2,6 +2,7 @@ package org.eshop.ui.panels;
 
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +21,10 @@ public class addProductPanel extends JPanel implements ActionListener {
     //TODO SHOULD BE REPLACED WITH CUSTOM JNumberField for Input Validation
     private final JTextField productPacksize = new JTextField();
     private final JButton createButton = new JButton("Create");
-    private final Shop server;
+    private final ShopFacade server;
     private final User loggedInUser;
 
-    public addProductPanel(Shop shop, User user) {
+    public addProductPanel(ShopFacade shop, User user) {
         server = shop;
         loggedInUser = user;
         setupUI();

@@ -2,7 +2,7 @@ package org.eshop.ui.panels;
 
 
 import org.eshop.entities.User;
-import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.CustomerMenu;
 import org.eshop.ui.GuiEmployee;
 import org.eshop.ui.MitarbeiterPanel;
@@ -26,14 +26,14 @@ public class MenuePanel extends javax.swing.JPanel {
             new javax.swing.JButton("Produckte");
     private final javax.swing.JButton Logout =
             new javax.swing.JButton("Logout");
-    Shop shop;
+    ShopFacade shop;
     ProductPanel productPanel;
     MitarbeiterPanel mitarbeiterPanel;
     GuiEmployee guiEmployee;
     CustomerMenu.addLogoutListener listener;
     User loggedInUser;
 
-    public MenuePanel(Shop shop, SearchWidget.SearchListener searchListener, GuiEmployee guiEmployee, CustomerMenu.addLogoutListener logoutListener, User loggedInUSer) {
+    public MenuePanel(ShopFacade shop, SearchWidget.SearchListener searchListener, GuiEmployee guiEmployee, CustomerMenu.addLogoutListener logoutListener, User loggedInUSer) {
 
         this.guiEmployee = guiEmployee;
         this.listener = logoutListener;

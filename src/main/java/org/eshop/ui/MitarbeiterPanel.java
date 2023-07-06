@@ -3,7 +3,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.Employee;
 import org.eshop.entities.Product;
-import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.components.SearchWidget;
 
 import javax.swing.*;
@@ -12,9 +12,9 @@ import java.util.Vector;
 
 public class MitarbeiterPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
 
-    Shop shop;
+    ShopFacade shop;
 
-    public MitarbeiterPanel(Shop shop, GuiEmployee guiEmployee) {
+    public MitarbeiterPanel(ShopFacade shop, GuiEmployee guiEmployee) {
         this.shop = shop;
         JList<Employee> employees = new JList<>();
         this.add(employees);

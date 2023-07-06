@@ -15,14 +15,14 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
 
 
 
-    Shop server;
+    ShopFacade server;
     User loggedInUser;
     LoginFrame loginFrame;
 
 
     /*TODO General: ADD CUSTOM JNumberField Class */
     public Gui() {
-        server = new Shop();
+        server = new Client("localhost", 6789);
         loginFrame = new LoginFrame(server, this);
         
     }

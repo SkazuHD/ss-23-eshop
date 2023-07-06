@@ -3,7 +3,7 @@ package org.eshop.ui.tables.tabel;
 import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.ProductNotFound;
-import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.tables.TableButtonEventListener;
 import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.components.TableButtonRenderEmployee;
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class EmployeeProductTable extends JTable implements TableButtonEventListener {
 
-    Shop shop;
+    ShopFacade shop;
     TableListener listener;
     User user;
 
-    public EmployeeProductTable(List<Product> productList, String[] coulumns, TableListener listener, User user, Shop shop) {
+    public EmployeeProductTable(List<Product> productList, String[] coulumns, TableListener listener, User user, ShopFacade shop) {
         super();
         this.listener = listener;
         this.user = user;
