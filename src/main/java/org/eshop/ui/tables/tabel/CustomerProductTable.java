@@ -37,9 +37,6 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     }
 
     public void updateProducts(List<Products> productsList) {
-
-        //TODO sort here
-
         productTabelModel tabelModel = (productTabelModel) getModel();
         tabelModel.setProductsList(productsList);
     }

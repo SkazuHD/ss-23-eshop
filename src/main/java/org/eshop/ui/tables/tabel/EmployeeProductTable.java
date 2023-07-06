@@ -11,8 +11,6 @@ import org.eshop.ui.tables.components.TableCellEditorEmployee;
 import org.eshop.ui.tables.models.productEmployeeModel;
 
 import javax.swing.*;
-import javax.swing.table.TableRowSorter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeProductTable extends JTable implements TableButtonEventListener {
