@@ -1,9 +1,9 @@
 package org.eshop.entities;
 
 /**
- * The type Products.
+ * The type Product.
  */
-public class Products {
+public class Product {
     //Attribute  Price, Nem und Producktnumber für das Product
     private int id;
     private double Price;
@@ -15,14 +15,14 @@ public class Products {
     //constructor für die Attribute
 
     /**
-     * Instantiates a new Products.
+     * Instantiates a new Product.
      *
      * @param id       the p nr
      * @param price    the price
      * @param name     the name
      * @param quantity the quantity
      */
-    public Products(int id, double price, String name, int quantity) {
+    public Product(int id, double price, String name, int quantity) {
         this.id = id;
         Price = price;
         this.name = name;

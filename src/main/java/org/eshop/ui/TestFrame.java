@@ -1,8 +1,8 @@
 package org.eshop.ui;
 
 import org.eshop.entities.Employee;
-import org.eshop.entities.MassProducts;
-import org.eshop.entities.Products;
+import org.eshop.entities.MassProduct;
+import org.eshop.entities.Product;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
@@ -34,8 +34,8 @@ public class TestFrame extends JFrame {
         //MOCK DATA
         Shop shop = new Shop();
         Employee employee = new Employee(69, "TESTFRAME", "TESTFRAME", "TESTFRAME");
-        Products p = shop.findProduct(1000);
-        MassProducts mp = new MassProducts(1, 69, "TESTPROD", 50, 50);
+        Product p = shop.findProduct(1000);
+        MassProduct mp = new MassProduct(1, 69, "TESTPROD", 50, 50);
 
         int[] test = shop.getProductHistory(1001, 30);
         for (int i = 0; i < test.length; i++)
@@ -57,7 +57,7 @@ public class TestFrame extends JFrame {
         new TestFrame(new registerEmployeePanel(shop, employee));
 
 
-        List<Products> products = shop.getAllProducts().stream().toList();
+        List<Product> products = shop.getAllProducts().stream().toList();
         String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", ""};
         //new TestFrame(new JScrollPane(new CustomerProductTable(products, columns,)));
 

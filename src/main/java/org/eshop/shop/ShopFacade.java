@@ -94,7 +94,7 @@ public interface ShopFacade {
      * @return the products
      * @throws ProductNotFound the product not found
      */
-    Products editProductDetails(int id, String name, double price) throws ProductNotFound;
+    Product editProductDetails(int id, String name, double price) throws ProductNotFound;
 
     /**
      * Edit product details products.
@@ -106,7 +106,7 @@ public interface ShopFacade {
      * @return the products
      * @throws ProductNotFound the product not found
      */
-    Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound;
+    Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound;
 
     /**
      * Change quantity.
@@ -125,7 +125,7 @@ public interface ShopFacade {
      *
      * @return the all products
      */
-    Collection<Products> getAllProducts();
+    Collection<Product> getAllProducts();
 
     Collection<Employee> getAllEmployees();
 
@@ -135,7 +135,7 @@ public interface ShopFacade {
      * @param name the name
      * @return the list
      */
-    List<Products> findProducts(String name);
+    List<Product> findProducts(String name);
 
     /**
      * Find product products.
@@ -144,7 +144,7 @@ public interface ShopFacade {
      * @return the products
      * @throws ProductNotFound the product not found
      */
-    Products findProduct(int ID) throws ProductNotFound;
+    Product findProduct(int ID) throws ProductNotFound;
 
     int[] getProductHistory(int productId, int days);
 
@@ -170,7 +170,7 @@ public interface ShopFacade {
      * @param c the c
      * @return the cart
      */
-    Map<Products, Integer> getCart(Customer c);
+    Map<Product, Integer> getCart(Customer c);
 
     /**
      * Add to cart.

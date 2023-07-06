@@ -118,11 +118,11 @@ public class Cli {
      */
     protected void buyProducts() {
         String name = reader.readLine("Product Name:");
-        List<Products> result = server.findProducts(name);
+        List<Product> result = server.findProducts(name);
         int id;
         if (result.size() > 1) {
             result.forEach(System.out::println);
-            System.out.println("Multiple Products found, please select one by ID");
+            System.out.println("Multiple Product found, please select one by ID");
             id = reader.getNumericInput("Enter ID:");
         } else if (result.size() == 1) {
             id = result.get(0).getId();
@@ -159,11 +159,11 @@ public class Cli {
      */
     protected void removeProduct() throws ProductNotFound, PacksizeNotMatching {
         String name = reader.readLine("Product Name:");
-        List<Products> result = server.findProducts(name);
+        List<Product> result = server.findProducts(name);
         int id;
         if (result.size() > 1) {
             result.forEach(System.out::println);
-            System.out.println("Multiple Products found, please select one by ID");
+            System.out.println("Multiple Product found, please select one by ID");
             id = reader.getNumericInput("Enter ID:");
         } else if (result.size() == 1) {
             id = result.get(0).getId();
@@ -180,7 +180,7 @@ public class Cli {
      */
     protected void addProduct() {
         String name = reader.readLine("Product Name:");
-        List<Products> result = server.findProducts(name);
+        List<Product> result = server.findProducts(name);
         if (result.size() == 0) {
             createProduct(name);
         } else {
@@ -204,14 +204,14 @@ public class Cli {
      */
     protected void increaseQuantity(int id) {
         int quantity = reader.getNumericInput("Quantity:");
-        Products p;
+        Product p;
         try {
             p = server.findProduct(id);
         } catch (ProductNotFound e) {
             System.out.println(e.getMessage());
             return;
         }
-        if (p instanceof MassProducts mp) {
+        if (p instanceof MassProduct mp) {
             if (quantity % mp.getPacksize() != 0) {
                 System.err.println("Quantity not Matching Packsize: " + mp.getPacksize());
                 do {
@@ -276,11 +276,11 @@ public class Cli {
      */
     protected void deleteProduct() {
         String name = reader.readLine("Product Name:");
-        List<Products> result = server.findProducts(name);
+        List<Product> result = server.findProducts(name);
         int id;
         if (result.size() > 1) {
             result.forEach(System.out::println);
-            System.out.println("Multiple Products found, please select one by ID");
+            System.out.println("Multiple Product found, please select one by ID");
             id = reader.getNumericInput("Enter ID:");
         } else if (result.size() == 1) {
             id = result.get(0).getId();
@@ -304,7 +304,7 @@ public class Cli {
      * Show cart.
      */
     protected void showCart() {
-        Map<Products, Integer> cart = server.getCart((Customer) loggedInUser);
+        Map<Product, Integer> cart = server.getCart((Customer) loggedInUser);
         if (cart.size() == 0) {
             System.out.println("Cart is Empty!");
             return;
@@ -346,8 +346,8 @@ public class Cli {
      * Customer menu.
      */
     protected void customerMenu() {
-        System.out.println("1. View Products");
-        System.out.println("2. Buy Products");
+        System.out.println("1. View Product");
+        System.out.println("2. Buy Product");
         System.out.println("3. View Cart");
 
         System.out.println("4. Logout");
@@ -383,7 +383,7 @@ public class Cli {
         System.out.println("EMPLOYEE MENU");
         System.out.println("-------------");
         System.out.println("1. Register new Employee");
-        System.out.println("2. View Products");
+        System.out.println("2. View Product");
         System.out.println("3. Add Product");
         System.out.println("4. Remove Product");
         System.out.println("5. Logout");

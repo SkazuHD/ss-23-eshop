@@ -1,28 +1,28 @@
 package org.eshop.ui.tables.models;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.Vector;
 
 public class productEmployeeModel extends AbstractTableModel {
-    private final List<Products> productsList;
+    private final List<Product> productList;
     private final String[] columns;
     boolean[] canEdit = new boolean[]{
             false, false, false, false, true
     };
 
-    public productEmployeeModel(List<Products> productsList, String[] columns) {
+    public productEmployeeModel(List<Product> productList, String[] columns) {
         super();
         this.columns = columns;
-        this.productsList = new Vector<>();
-        this.productsList.addAll(productsList);
+        this.productList = new Vector<>();
+        this.productList.addAll(productList);
     }
 
-    public void setProductsList(List<Products> productsList) {
-        this.productsList.clear();
-        this.productsList.addAll(productsList);
+    public void setProductsList(List<Product> productList) {
+        this.productList.clear();
+        this.productList.addAll(productList);
         fireTableDataChanged();
     }
 
@@ -33,7 +33,7 @@ public class productEmployeeModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return this.productsList.size();
+        return this.productList.size();
     }
 
     @Override
@@ -48,16 +48,16 @@ public class productEmployeeModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        Products products = productsList.get(row);
+        Product product = productList.get(row);
         switch (col) {
             case 0:
-                return products.getId();
+                return product.getId();
             case 1:
-                return products.getName();
+                return product.getName();
             case 2:
-                return products.getPrice();
+                return product.getPrice();
             case 3:
-                return products.getQuantity();
+                return product.getQuantity();
             default:
                 return null;
         }

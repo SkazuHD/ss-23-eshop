@@ -3,7 +3,7 @@ package org.eshop.persistence;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Employee;
 import org.eshop.entities.Event;
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -63,14 +63,14 @@ public interface ShopPersistence {
      *
      * @return the products
      */
-    Products readProducts();
+    Product readProducts();
 
     /**
-     * Write products.
+     * Write product.
      *
-     * @param products the products
+     * @param product the product
      */
-    void writeProducts(Products products);
+    void writeProducts(Product product);
 
     void writeEvent(Event event);
 

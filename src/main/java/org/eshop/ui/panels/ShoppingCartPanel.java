@@ -2,7 +2,7 @@ package org.eshop.ui.panels;
 
 import org.eshop.entities.Customer;
 import org.eshop.entities.Invoice;
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CheckoutFailed;
 import org.eshop.shop.Shop;
@@ -62,12 +62,12 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
 
     @Override
     public void updateCart() {
-        Map<Products, Integer> GetCart = server.getCart((Customer) loggedInUser);
+        Map<Product, Integer> GetCart = server.getCart((Customer) loggedInUser);
         shoppingCart.setModel(new CartModel(GetCart));
         checkoutButton.setEnabled(!GetCart.isEmpty());
 
         double total = 0;
-        for (Map.Entry<Products, Integer> entry : GetCart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : GetCart.entrySet()) {
             total += entry.getKey().getPrice() * entry.getValue();
         }
 
@@ -77,7 +77,7 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
     }
 
     @Override
-    public void editProduct(Products p) {
+    public void editProduct(Product p) {
         //Not needed
     }
 

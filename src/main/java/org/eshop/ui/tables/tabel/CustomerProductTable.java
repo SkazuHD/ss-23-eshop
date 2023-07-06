@@ -1,9 +1,8 @@
 package org.eshop.ui.tables.tabel;
 
-import org.eshop.entities.Customer;
-import org.eshop.entities.MassProducts;
-import org.eshop.entities.Products;
-import org.eshop.entities.User;
+import org.eshop.entities.*;
+import org.eshop.entities.MassProduct;
+import org.eshop.entities.Product;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
@@ -21,33 +20,33 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     TableListener listener;
     User user;
 
-    public CustomerProductTable(List<Products> productsList, String[] coulumns, TableListener listener, User user, Shop shop) {
+    public CustomerProductTable(List<Product> productList, String[] coulumns, TableListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
         this.shop = shop;
-        productTabelModel tabelModel = new productTabelModel(productsList, coulumns);
+        productTabelModel tabelModel = new productTabelModel(productList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
         this.setAutoCreateRowSorter(true);
 
-        updateProducts(productsList);
+        updateProducts(productList);
     }
 
-    public void updateProducts(List<Products> productsList) {
+    public void updateProducts(List<Product> productList) {
         productTabelModel tabelModel = (productTabelModel) getModel();
-        tabelModel.setProductsList(productsList);
+        tabelModel.setProductsList(productList);
     }
 
     @Override
     public void onAdd(int row) {
         int prodID = (int) getValueAt(row, 0);
-        Products p = null;
+        Product p = null;
         try {
             p = shop.findProduct(prodID);
-            shop.addToCart(prodID, p instanceof MassProducts mp ? mp.getPacksize() : 1, (Customer) user);
+            shop.addToCart(prodID, p instanceof MassProduct mp ? mp.getPacksize() : 1, (Customer) user);
 
         } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
 
@@ -59,10 +58,10 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     @Override
     public void onRemove(int row) {
         int prodID = (int) getValueAt(row, 0);
-        Products p = null;
+        Product p = null;
         try {
             p = shop.findProduct(prodID);
-            shop.removeFromCart(prodID, p instanceof MassProducts mp ? mp.getPacksize() : 1, (Customer) user);
+            shop.removeFromCart(prodID, p instanceof MassProduct mp ? mp.getPacksize() : 1, (Customer) user);
 
         } catch (ProductNotFound | PacksizeNotMatching e) {
 

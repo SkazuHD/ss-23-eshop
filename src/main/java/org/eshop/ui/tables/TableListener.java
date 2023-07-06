@@ -1,11 +1,11 @@
 package org.eshop.ui.tables;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 
 public interface TableListener {
     void updateCart();
 
-    void editProduct(Products p);
+    void editProduct(Product p);
 
     void viewGraph();
 }

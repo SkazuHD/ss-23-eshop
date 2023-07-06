@@ -1,6 +1,6 @@
 package org.eshop.ui.tables.tabel;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
@@ -19,12 +19,12 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
     TableListener listener;
     User user;
 
-    public EmployeeProductTable(List<Products> productsList, String[] coulumns, TableListener listener, User user, Shop shop) {
+    public EmployeeProductTable(List<Product> productList, String[] coulumns, TableListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
         this.shop = shop;
-        productEmployeeModel tabelModel = new productEmployeeModel(productsList, coulumns);
+        productEmployeeModel tabelModel = new productEmployeeModel(productList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRenderEmployee());
@@ -32,14 +32,14 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         //TableRowSorter<productEmployeeModel> sorter = new TableRowSorter<>();
         this.setAutoCreateRowSorter(true);
 
-        updateProducts(productsList);
+        updateProducts(productList);
     }
 
-    public void updateProducts(List<Products> productsList) {
+    public void updateProducts(List<Product> productList) {
 
         //TODO sort here
         productEmployeeModel tabelModel = (productEmployeeModel) getModel();
-        tabelModel.setProductsList(productsList);
+        tabelModel.setProductsList(productList);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
     public void onEdit(int row) {
         System.out.println("Edit: " + row);
         try {
-            Products p = shop.findProduct((int) getValueAt(row, 0));
+            Product p = shop.findProduct((int) getValueAt(row, 0));
             System.out.println(p);
             listener.editProduct(p);
         } catch (ProductNotFound e) {

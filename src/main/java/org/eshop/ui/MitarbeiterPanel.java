@@ -2,33 +2,33 @@ package org.eshop.ui;
 
 
 import org.eshop.entities.Employee;
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.shop.EmployeeManager;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.Vector;
 
 public class MitarbeiterPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
-    private final javax.swing.JList Mitarbeiter =
-            new javax.swing.JList<Employee>();
-    private final javax.swing.JPanel panel =
-            new javax.swing.JPanel();
-    EmployeeManager employeeManager;
+
     Shop shop;
 
     public MitarbeiterPanel(Shop shop, GuiEmployee guiEmployee) {
-        this.add(Mitarbeiter);
+        this.shop = shop;
+        JList<Employee> employees = new JList<>();
+        this.add(employees);
 
 
-        Mitarbeiter.setListData(shop.getAllEmployees().toArray());
+        employees.setListData(new Vector<>(shop.getAllEmployees()));
 
 
     }
 
 
     @Override
-    public void onSearch(List<Products> result) {
+    public void onSearch(List<Product> result) {
 
     }
 
