@@ -8,6 +8,7 @@ import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.tabel.EmployeeProductTable;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeCenterPanel extends ProductPanel {
@@ -31,6 +32,7 @@ public class EmployeeCenterPanel extends ProductPanel {
     }
 
     public void onSearch(List<Product> result) {
+        if(result == null) result = new ArrayList<Product>();
         employeeProductTable.updateProducts(result);
     }
 }

@@ -3,9 +3,9 @@ package org.eshop.ui;
 import org.eshop.entities.Customer;
 import org.eshop.entities.Employee;
 import org.eshop.entities.User;
+import org.eshop.network.Client;
 import org.eshop.shop.Shop;
 import org.eshop.shop.ShopFacade;
-import org.eshop.ui.frames.CheckOutFrame;
 import org.eshop.ui.frames.LoginFrame;
 
 import javax.swing.*;
@@ -25,6 +25,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
     /*TODO General: ADD CUSTOM JNumberField Class */
     public Gui() {
         server = new Client("localhost", 6789);
+       // server = new Shop();
         loginFrame = new LoginFrame(server, this);
         
     }
@@ -41,7 +42,6 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
     @Override
     public void onLogin(User user) {
         loggedInUser = user;
-        System.err.println(user);
         if (user instanceof Employee) {
             loginFrame.dispose();
             JFrame Employee = new GuiEmployee(server, user, this);

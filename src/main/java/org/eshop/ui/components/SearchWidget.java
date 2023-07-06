@@ -10,6 +10,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SearchWidget extends JPanel implements ActionListener {
@@ -49,7 +51,8 @@ public class SearchWidget extends JPanel implements ActionListener {
     private void search() {
         String query = searchField.getText();
         if (query.isEmpty() || query.isBlank() || query.length() < 3) {
-            listener.onSearch(server.getAllProducts().stream().toList());
+            Collection<Product> result = server.getAllProducts();
+            listener.onSearch(result.stream().toList());
         } else {
             List<Product> result = server.findProducts(query);
             listener.onSearch(result);

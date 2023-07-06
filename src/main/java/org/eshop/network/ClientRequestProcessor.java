@@ -1,11 +1,5 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+package org.eshop.network;
 
-package org.eshop.ui;
-
-//import de.hsbremen.prog2.net.socket.Adresse;
 
 import org.eshop.entities.*;
 import org.eshop.exceptions.*;
@@ -20,14 +14,14 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-class ClientAddressRequestProcessor {
+class ClientRequestProcessor {
 
     private final Shop server;
     private final Socket clientSocket;
     private BufferedReader in;
     private PrintStream out;
 
-    public ClientAddressRequestProcessor(Socket socket, Shop server) {
+    public ClientRequestProcessor(Socket socket, Shop server) {
         this.clientSocket = socket;
         this.server = server;
 
@@ -140,6 +134,10 @@ class ClientAddressRequestProcessor {
                     removeFromCart();
                     System.out.println("Success");
                     break;
+                case "getAllEmp":
+                    getAllEmp();
+                    System.out.println("Success");
+                    break;
                 case "save":
                     server.save();
                     break;
@@ -156,6 +154,16 @@ class ClientAddressRequestProcessor {
             this.clientSocket.close();
         } catch (IOException var4) {
         }
+
+    }
+
+    private void getAllEmp() {
+       Collection<Employee> employees = server.getAllEmployees();
+       this.out.println(200);
+       this.out.println(employees.size());
+       for(Employee e : employees){
+           returnEmployee(e);
+       }
 
     }
 
@@ -526,6 +534,13 @@ class ClientAddressRequestProcessor {
         out.println(c.getPassword());
         out.println(c.getAddress());
         out.println(c.getID());
+    }
+
+    private void returnEmployee(Employee e) {
+        out.println(e.getID());
+        out.println(e.getName());
+        out.println(e.getUsername());
+        out.println(e.getPassword());
     }
 
     private void returnCart(String username) {

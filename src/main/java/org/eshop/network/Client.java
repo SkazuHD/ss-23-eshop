@@ -1,4 +1,4 @@
-package org.eshop.ui;
+package org.eshop.network;
 //
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by FernFlower decompiler)
@@ -137,10 +137,11 @@ public class Client implements ShopFacade {
                     return new Customer(username, password, name, adress, id);
 
                 } else {
-                    String id = in.readLine();
+                    int id = Integer.parseInt(in.readLine());
                     username = in.readLine();
                     password = in.readLine();
                     String name = in.readLine();
+                    return new Employee(id, name, username, password);
 
                 }
 
@@ -234,16 +235,11 @@ public class Client implements ShopFacade {
                 throw new ProductNotFound(ans);
 
             } else if (status.equals("200")) {
-                id = Integer.parseInt(in.readLine());
-                name = in.readLine();
-                price = Double.parseDouble(in.readLine());
-                int quantity = Integer.parseInt(in.readLine());
-                return new Product(id, price, name, quantity);
-
-
+                Product p = prod();
+                return p;
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
         return null;
@@ -287,7 +283,7 @@ public class Client implements ShopFacade {
         out.println("changeQuant");
         out.println(id);
         out.println(quantity);
-        out.println(u);
+        out.println(u.getUsername());
         try {
             String status = this.in.readLine();
             if (status.equals("400")) {
@@ -324,7 +320,7 @@ public class Client implements ShopFacade {
         } else if (status.equals("200")) {
            return readProducktList();
         }
-        return null;
+        return new ArrayList<Product>();
     }
 
     @Override
@@ -424,10 +420,21 @@ public class Client implements ShopFacade {
         if (status.equals("400")) {
 
         } else if (status.equals("200")) {
+            try {
+                int size = Integer.parseInt(in.readLine());
+                List<Employee> employees = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    employees.add(readEmployee());
+                }
+                return employees;
+
+            }catch (IOException e){
+
+            }
 
 
         }
-        return null;
+        return new ArrayList<Employee>();
     }
 
     @Override
@@ -603,6 +610,18 @@ public class Client implements ShopFacade {
 
         }
         return products;
+    }
+    private Employee readEmployee(){
+        try {
+            int id = Integer.parseInt(in.readLine());
+            String name = this.in.readLine();
+            String username = this.in.readLine();
+            String password = this.in.readLine();
+            return new Employee(id, name, username, password);
+        }catch (IOException e){
+
+        }
+        return null;
     }
 
     public User getUser(String username) {
