@@ -115,7 +115,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
         } else if (e.getSource().equals(saveBtn)) {
             System.out.println("SAVING PROD FROM EDIT");
             int quantityDiffrence = -currentProduct.getQuantity() + Integer.parseInt(productQuantity.getText());
-            Product p = null;
+            Product p;
             try {
                 server.changeQuantity(currentProduct.getId(), quantityDiffrence, loggedInUser);
                 if (currentProduct instanceof MassProduct mp && massProduct.isSelected()) {
