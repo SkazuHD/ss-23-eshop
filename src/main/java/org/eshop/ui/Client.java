@@ -582,7 +582,6 @@ public class Client implements ShopFacade {
         int count;
         try {
             count = Integer.parseInt(in.readLine());
-            System.err.println("Count "+ count);
             for (int i = 0; i < count; i++) {
                 String type = in.readLine();
                 if (type.equals("p")) {
@@ -614,7 +613,8 @@ public class Client implements ShopFacade {
         String status;
         try {
             String type = in.readLine();
-            if (type.equals("p")) {
+
+                if (type.equals("p")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());

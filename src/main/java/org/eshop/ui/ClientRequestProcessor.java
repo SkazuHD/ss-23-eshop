@@ -124,6 +124,10 @@ class ClientAddressRequestProcessor {
                     getInvoice();
                     System.out.println("Success");
                     break;
+                case "checkout":
+                    checkout();
+                    System.out.println("Success");
+                    break;
                 case "getCart":
                     getCart();
                     System.out.println("Success");
@@ -528,7 +532,6 @@ class ClientAddressRequestProcessor {
         try {
             Customer c = (Customer) server.getUser(username);
             Map<Product, Integer> cart = server.getCart(c);
-            out.println(200);
             out.println(cart.size());
             Iterator<Product> it = cart.keySet().iterator();
             while (it.hasNext()) {
