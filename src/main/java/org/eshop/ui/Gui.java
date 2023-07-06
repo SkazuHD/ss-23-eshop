@@ -23,9 +23,11 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
 
 
     /*TODO General: ADD CUSTOM JNumberField Class */
+
+    //TODO LIVE UPDATES FOR TABLES
     public Gui() {
         server = new Client("localhost", 6789);
-       // server = new Shop();
+        //server = new Shop();
         loginFrame = new LoginFrame(server, this);
         
     }

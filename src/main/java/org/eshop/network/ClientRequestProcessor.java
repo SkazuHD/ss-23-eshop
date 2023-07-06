@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-class ClientRequestProcessor {
+class ClientRequestProcessor implements Runnable{
 
     private final Shop server;
     private final Socket clientSocket;
@@ -43,7 +43,7 @@ class ClientRequestProcessor {
         var10000.println("Verbunden mit Client " + var10001 + ":" + this.clientSocket.getPort());
     }
 
-    public void verarbeiteAnfragen() {
+    public void run() {
         String input;
         this.out.println("Server bereit");
 

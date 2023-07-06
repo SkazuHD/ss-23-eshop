@@ -62,7 +62,8 @@ public class EshopServer {
             while (true) {
                 Socket clientSocket = this.serverSocket.accept();
                 ClientRequestProcessor c = new ClientRequestProcessor(clientSocket, this.server);
-                c.verarbeiteAnfragen();
+                Thread t = new Thread(c);
+                t.start();
             }
         } catch (IOException var3) {
             System.err.println("Fehler während des Wartens auf Verbindungen: " + var3);
