@@ -21,13 +21,13 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     TableListener listener;
     User user;
 
-    public CustomerProductTable(List<Product> productList, String[] coulumns, TableListener listener, User user, Shop shop) {
+    public CustomerProductTable(List<Product> productList, String[] columns, TableListener listener, User user, Shop shop) {
         super();
         this.listener = listener;
         this.user = user;
         this.shop = shop;
-        productTabelModel tabelModel = new productTabelModel(productList, coulumns);
-        this.setModel(tabelModel);
+        productTabelModel tableModel = new productTabelModel(productList, columns);
+        this.setModel(tableModel);
         this.setRowHeight(40);
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
@@ -37,8 +37,8 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     }
 
     public void updateProducts(List<Product> productList) {
-        productTabelModel tabelModel = (productTabelModel) getModel();
-        tabelModel.setProductsList(productList);
+        productTabelModel tableModel = (productTabelModel) getModel();
+        tableModel.setProductsList(productList);
     }
 
     @Override
@@ -59,16 +59,14 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
     @Override
     public void onRemove(int row) {
         int prodID = (int) getValueAt(row, 0);
-        Product p = null;
+        Product p;
         try {
             p = shop.findProduct(prodID);
             shop.removeFromCart(prodID, p instanceof MassProduct mp ? mp.getPacksize() : 1, (Customer) user);
 
         } catch (ProductNotFound | PacksizeNotMatching e) {
-
+            JOptionPane.showMessageDialog(new JFrame(), e.getMessage());
         }
-
-        //TODO ADD PRODUCT TO CART
 
         listener.updateCart();
     }
@@ -88,7 +86,4 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         System.out.println("VIEW");
     }
 
-    public interface tableButtonListener {
-        void updateCart();
-    }
 }

@@ -50,7 +50,7 @@ public class TestFrame extends JFrame {
         new TestFrame(new addProductPanel(shop, employee));
 
         //TEST EDIT PANEL
-        editProductPanel edit = new editProductPanel(shop, employee);
+        editProductPanel edit = new editProductPanel(shop, employee, null);
         edit.onChange(p);
         new TestFrame(edit);
 

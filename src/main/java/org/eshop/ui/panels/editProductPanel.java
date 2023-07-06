@@ -29,18 +29,21 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
     private final JTextField productPacksize = new JTextField();
     private Product currentProduct;
 
-    public editProductPanel(ShopFacade shop, User loggedInUser) {
+    private addProductPanel addProductPanel;
+
+    public editProductPanel(ShopFacade shop, User loggedInUser, addProductPanel addProductPanel) {
         this.server = shop;
         this.loggedInUser = loggedInUser;
+        this.addProductPanel = addProductPanel;
         setupUI();
         setupEvents();
     }
 
     private void setupUI() {
         Dimension inputMaxSize = new Dimension(300, 25);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         //this.setLayout(new GridLayout(2,1));
-        this.setPreferredSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(300, 500));
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
         this.add(new JLabel("ID"));
@@ -115,7 +118,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
         } else if (e.getSource().equals(saveBtn)) {
             System.out.println("SAVING PROD FROM EDIT");
             int quantityDiffrence = -currentProduct.getQuantity() + Integer.parseInt(productQuantity.getText());
-            Product p = null;
+            Product p;
             try {
                 server.changeQuantity(currentProduct.getId(), quantityDiffrence, loggedInUser);
                 if (currentProduct instanceof MassProduct mp && massProduct.isSelected()) {
@@ -125,12 +128,13 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
                 } else if (!(currentProduct instanceof MassProduct mp && massProduct.isSelected())) {
                     p = server.editProductDetails(currentProduct.getId(), productName.getText(), Double.parseDouble(productPrice.getText()));
                 } else {
-                    //TODO CAST NORMAL TO MASS etc
+                    //TODO QOL CAST NORMAL TO MASS etc
                 }
             } catch (PacksizeNotMatching | NotInStockException | ProductNotFound exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage());
             }
             this.setVisible(false);
+            addProductPanel.setVisible(true);
 
         }
 
@@ -145,6 +149,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
     public void editProduct(Product p) {
         System.out.println("EDITING PRODUCT FROM EDIT");
         onChange(p);
+        addProductPanel.setVisible(false);
         this.setVisible(true);
     }
 
