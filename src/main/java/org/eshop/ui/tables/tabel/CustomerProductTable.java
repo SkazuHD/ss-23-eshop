@@ -31,6 +31,8 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         this.setRowHeight(40);
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
+        this.setAutoCreateRowSorter(true);
+
         updateProducts(productsList);
     }
 

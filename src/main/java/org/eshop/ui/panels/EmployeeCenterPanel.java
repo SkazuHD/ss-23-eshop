@@ -7,6 +7,7 @@ import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.tabel.EmployeeProductTable;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 
 public class EmployeeCenterPanel extends ProductPanel {

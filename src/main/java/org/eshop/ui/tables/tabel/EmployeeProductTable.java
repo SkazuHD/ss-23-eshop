@@ -11,6 +11,8 @@ import org.eshop.ui.tables.components.TableCellEditorEmployee;
 import org.eshop.ui.tables.models.productEmployeeModel;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeProductTable extends JTable implements TableButtonEventListener {
@@ -24,13 +26,14 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         this.listener = listener;
         this.user = user;
         this.shop = shop;
-        //TODO CREATE OWN MODEL
         productEmployeeModel tabelModel = new productEmployeeModel(productsList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
-        //TODO CREATE OWN RENDERER AND EDITOR
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRenderEmployee());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditorEmployee(this));
+        //TableRowSorter<productEmployeeModel> sorter = new TableRowSorter<>();
+        this.setAutoCreateRowSorter(true);
+
         updateProducts(productsList);
     }
 
