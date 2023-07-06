@@ -1,7 +1,7 @@
 package org.eshop.ui.panels;
 
-import org.eshop.entities.MassProducts;
-import org.eshop.entities.Products;
+import org.eshop.entities.MassProduct;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
@@ -27,7 +27,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
 
     private final JCheckBox massProduct = new JCheckBox("Mass Product");
     private final JTextField productPacksize = new JTextField();
-    private Products currentProduct;
+    private Product currentProduct;
 
     public editProductPanel(ShopFacade shop, User loggedInUser) {
         this.server = shop;
@@ -76,14 +76,14 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
         saveBtn.addActionListener(this);
     }
 
-    public void onChange(Products p) {
+    public void onChange(Product p) {
         currentProduct = p;
         //TODO Create Eventlistener that passes the selected product
         productId.setText(String.valueOf(p.getId()));
         productName.setText(p.getName());
         productQuantity.setText(String.valueOf(p.getQuantity()));
         productPrice.setText(String.valueOf(p.getPrice()));
-        if (p instanceof MassProducts mp) {
+        if (p instanceof MassProduct mp) {
             if (!massProduct.isSelected()) massProduct.doClick();
             productPacksize.setText(String.valueOf(mp.getPacksize()));
         } else {
@@ -115,14 +115,14 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
         } else if (e.getSource().equals(saveBtn)) {
             System.out.println("SAVING PROD FROM EDIT");
             int quantityDiffrence = -currentProduct.getQuantity() + Integer.parseInt(productQuantity.getText());
-            Products p = null;
+            Product p = null;
             try {
                 server.changeQuantity(currentProduct.getId(), quantityDiffrence, loggedInUser);
-                if (currentProduct instanceof MassProducts mp && massProduct.isSelected()) {
+                if (currentProduct instanceof MassProduct mp && massProduct.isSelected()) {
                     p = server.editProductDetails(currentProduct.getId(), productName.getText(),
                             Double.parseDouble(productPrice.getText()),
                             Integer.parseInt(productPacksize.getText()));
-                } else if (!(currentProduct instanceof MassProducts mp && massProduct.isSelected())) {
+                } else if (!(currentProduct instanceof MassProduct mp && massProduct.isSelected())) {
                     p = server.editProductDetails(currentProduct.getId(), productName.getText(), Double.parseDouble(productPrice.getText()));
                 } else {
                     //TODO CAST NORMAL TO MASS etc
@@ -142,7 +142,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
     }
 
     @Override
-    public void editProduct(Products p) {
+    public void editProduct(Product p) {
         System.out.println("EDITING PRODUCT FROM EDIT");
         onChange(p);
         this.setVisible(true);

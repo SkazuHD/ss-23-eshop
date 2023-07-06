@@ -84,27 +84,27 @@ public class FileManager implements ShopPersistence {
     }
 
     @Override
-    public void writeProducts(Products products) {
-        writer.print(products.getId() + ";");
-        writer.print(products.getPrice() + ";");
-        writer.print(products.getName() + ";");
-        writer.print(products.getQuantity() + ";");
-        writer.print(products instanceof MassProducts mp ? mp.getPacksize() : 0);
+    public void writeProducts(Product product) {
+        writer.print(product.getId() + ";");
+        writer.print(product.getPrice() + ";");
+        writer.print(product.getName() + ";");
+        writer.print(product.getQuantity() + ";");
+        writer.print(product instanceof MassProduct mp ? mp.getPacksize() : 0);
         writer.println();
     }
 
     @Override
-    public Products readProducts() {
+    public Product readProducts() {
         String serial = readLine();
         if (serial == null) {
             return null;
         }
         String[] parts = serial.split(";");
         if (parts[4].equals("0")) {
-            return new Products(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]));
+            return new Product(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]));
 
         } else {
-            return new MassProducts(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]), Integer.parseInt(parts[4]));
+            return new MassProduct(Integer.parseInt(parts[0]), Double.parseDouble(parts[1]), parts[2], Integer.parseInt(parts[3]), Integer.parseInt(parts[4]));
         }
     }
 

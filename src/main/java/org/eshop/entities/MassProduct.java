@@ -1,10 +1,10 @@
 package org.eshop.entities;
 
-public class MassProducts extends Products {
+public class MassProduct extends Product {
 
     int packsize;
 
-    public MassProducts (int id, double price, String name, int quantity, int packsize){
+    public MassProduct(int id, double price, String name, int quantity, int packsize){
         super(id, price, name, quantity);
         this.packsize = packsize;
     }

@@ -1,6 +1,6 @@
 package org.eshop.ui.panels;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.tables.TableListener;
@@ -21,14 +21,14 @@ public class CustomerCenterPanel extends ProductPanel {
 
         //Setup Column names and get all products
         String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Packsize", ""};
-        List<Products> products = shop.getAllProducts().stream().toList();
+        List<Product> products = shop.getAllProducts().stream().toList();
         //Create Table
         customerProductTable = new CustomerProductTable(products, columns, listener, user, shop);
         this.add(new JScrollPane(customerProductTable));
 
     }
 
-    public void onSearch(List<Products> result) {
+    public void onSearch(List<Product> result) {
         customerProductTable.updateProducts(result);
     }
 }

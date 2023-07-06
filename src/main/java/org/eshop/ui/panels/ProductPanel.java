@@ -1,6 +1,6 @@
 package org.eshop.ui.panels;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
@@ -33,7 +33,7 @@ public abstract class ProductPanel extends javax.swing.JPanel implements SearchW
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
-    public void onSearch(List<Products> result) {
+    public void onSearch(List<Product> result) {
         customerProductTable.updateProducts(result);
     }
 

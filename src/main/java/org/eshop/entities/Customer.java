@@ -8,7 +8,7 @@ import java.util.Objects;
  * The type Customer.
  */
 public class Customer extends User {
-    private final Map<Products, Integer> cart = new HashMap<>();
+    private final Map<Product, Integer> cart = new HashMap<>();
     private String name;
     private String address;
 
@@ -107,7 +107,7 @@ public class Customer extends User {
      *
      * @return the cart
      */
-    public Map<Products, Integer> getCart() {
+    public Map<Product, Integer> getCart() {
         return cart;
     }
 
@@ -118,7 +118,7 @@ public class Customer extends User {
      * @param quantity the quantity
      * @return the int
      */
-    public int addToCart(Products product, int quantity) {
+    public int addToCart(Product product, int quantity) {
         //Check if product is in stock
         if (cart.containsKey(product)) {
             if (quantity + cart.get(product) >= product.getQuantity()) {
@@ -145,7 +145,7 @@ public class Customer extends User {
      * @param product  the product
      * @param quantity the quantity
      */
-    public void removeFromCart(Products product, int quantity) {
+    public void removeFromCart(Product product, int quantity) {
         if(cart.get(product) == null) return;
 
         if (quantity >= cart.get(product)) {

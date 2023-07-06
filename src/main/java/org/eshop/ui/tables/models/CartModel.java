@@ -1,7 +1,7 @@
 package org.eshop.ui.tables.models;
 
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class CartModel extends AbstractTableModel {
 
-    Map<Products, Integer> cart;
-    List<Products> prods;
+    Map<Product, Integer> cart;
+    List<Product> prods;
 
-    public CartModel(Map<Products, Integer> cart) {
+    public CartModel(Map<Product, Integer> cart) {
         this.cart = cart;
         prods = cart.keySet().stream().toList();
 
@@ -37,7 +37,7 @@ public class CartModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        Products p = prods.get(row);
+        Product p = prods.get(row);
         switch (col) {
             case 0:
                 return p.getId();

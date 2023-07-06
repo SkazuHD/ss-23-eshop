@@ -16,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.*;
 
@@ -223,7 +222,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Products editProductDetails(int id, String name, double price) throws ProductNotFound {
+    public Product editProductDetails(int id, String name, double price) throws ProductNotFound {
         out.println("editProd");
         out.println(id);
         out.println(name);
@@ -239,7 +238,7 @@ public class Client implements ShopFacade {
                 name = in.readLine();
                 price = Double.parseDouble(in.readLine());
                 int quantity = Integer.parseInt(in.readLine());
-                return new Products(id, price, name, quantity);
+                return new Product(id, price, name, quantity);
 
 
             }
@@ -252,7 +251,7 @@ public class Client implements ShopFacade {
 
 
     @Override
-    public Products editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
+    public Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
         out.println("editMProd");
         out.println(id);
         out.println(name);
@@ -272,7 +271,7 @@ public class Client implements ShopFacade {
                 packSize = Integer.parseInt(in.readLine());
 
 
-                return new Products(id, price, name, packSize);
+                return new Product(id, price, name, packSize);
 
 
             }
@@ -311,7 +310,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Collection<Products> getAllProducts() {
+    public Collection<Product> getAllProducts() {
         out.println("getAll");
         String status = "";
         try {
@@ -331,7 +330,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public List<Products> findProducts(String name) {
+    public List<Product> findProducts(String name) {
         out.println("findName");
         out.println(name);
         try {
@@ -350,7 +349,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Products findProduct(int ID) throws ProductNotFound {
+    public Product findProduct(int ID) throws ProductNotFound {
         out.println("findId");
         out.println(ID);
         try {
@@ -365,14 +364,14 @@ public class Client implements ShopFacade {
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
-                    return new Products(id, price, name, quantity);
+                    return new Product(id, price, name, quantity);
                 } else if (type.equals("mp")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
                     int packsize = Integer.parseInt(this.in.readLine());
-                    return new MassProducts(id, price, name, quantity, packsize);
+                    return new MassProduct(id, price, name, quantity, packsize);
                 }
 
 
@@ -446,7 +445,7 @@ public class Client implements ShopFacade {
                 c.clearCart();
                 int size = Integer.parseInt(in.readLine());
                 for (int i = 0; i < size; i++) {
-                    Products p = prod();
+                    Product p = prod();
                     int quantity = Integer.parseInt(in.readLine());
                     c.addToCart(p, quantity);
                 }
@@ -465,13 +464,13 @@ public class Client implements ShopFacade {
         out.println("checkout");
         out.println(c.getUsername());
         String status;
-        List<Products> prod = new ArrayList<>();
+        List<Product> prod = new ArrayList<>();
         try {
             status = this.in.readLine();
             if (status.equals("400")) {
                 int size = Integer.parseInt(in.readLine());
                 for (int i = 0; i < size; i++) {
-                    Products p = prod();
+                    Product p = prod();
                     prod.add(p);
                 }
                 throw new CheckoutFailed(prod);
@@ -489,10 +488,10 @@ public class Client implements ShopFacade {
 
     }
     @Override
-    public Map<Products, Integer> getCart(Customer c) {
+    public Map<Product, Integer> getCart(Customer c) {
         out.println("getCart");
         out.println(c.getUsername());
-        Map<Products, Integer> cart = new HashMap<>();
+        Map<Product, Integer> cart = new HashMap<>();
         String status;
         try {
             status = this.in.readLine();
@@ -501,7 +500,7 @@ public class Client implements ShopFacade {
             } else if (status.equals("200")) {
                 int size = Integer.parseInt(in.readLine());
                 for (int i = 0; i < size; i++) {
-                    Products p = prod();
+                    Product p = prod();
                     int quantity = Integer.parseInt(in.readLine());
                     cart.put(p, quantity);
 
@@ -579,9 +578,9 @@ public class Client implements ShopFacade {
     }
 
 
-    private List<Products> readProducktList() {
+    private List<Product> readProducktList() {
 
-        List<Products> products = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         int count;
         try {
             String type = in.readLine();
@@ -592,14 +591,14 @@ public class Client implements ShopFacade {
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
-                    products.add(new Products(id, price, name, quantity));
+                    products.add(new Product(id, price, name, quantity));
                 } else if (type.equals("mp")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
                     int packsize = Integer.parseInt(this.in.readLine());
-                    products.add(new MassProducts(id, price, name, quantity, packsize));
+                    products.add(new MassProduct(id, price, name, quantity, packsize));
                 }
             }
         } catch (IOException e) {
@@ -613,7 +612,7 @@ public class Client implements ShopFacade {
         return null;
     }
 
-    private  Products prod (){
+    private Product prod (){
         String status;
         try {
             String type = in.readLine();
@@ -622,7 +621,7 @@ public class Client implements ShopFacade {
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
-                    return new Products(id,price, name, quantity);
+                    return new Product(id,price, name, quantity);
 
                 } else if (type.equals("mp")) {
                     int id = Integer.parseInt(in.readLine());
@@ -630,7 +629,7 @@ public class Client implements ShopFacade {
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
                     int packsize = Integer.parseInt(this.in.readLine());
-                    return new MassProducts(id,price,name,quantity, packsize);
+                    return new MassProduct(id,price,name,quantity, packsize);
                 }
 
         } catch (IOException e) {

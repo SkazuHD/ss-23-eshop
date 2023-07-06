@@ -41,6 +41,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
         jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
         Paneelcenter.add(productPanel);
+        Paneelcenter.setLayout(new BoxLayout(Paneelcenter, BoxLayout.PAGE_AXIS));
 
 
         mitarbeiterPanel = new MitarbeiterPanel(shop, this);

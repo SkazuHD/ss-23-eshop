@@ -1,18 +1,18 @@
 package org.eshop.exceptions;
 
-import org.eshop.entities.Products;
+import org.eshop.entities.Product;
 
 import java.util.List;
 
 public class CheckoutFailed extends Exception{
 
-    List<Products> products;
-    public CheckoutFailed(List<Products> products){
+    List<Product> products;
+    public CheckoutFailed(List<Product> products){
         super("CHECKOUT NOT POSSIBLE THE FOLLOWING PRODUCTS NEED DO BE ADJUSTED");
         this.products = products;
     }
 
-    public List<Products> getList(){
+    public List<Product> getList(){
         return products;
     }
 
