@@ -49,7 +49,7 @@ public class MenuePanel extends javax.swing.JPanel {
         SearchWidget search = new SearchWidget(shop, searchListener);
         search.setBackground(new Color(50));
         menu.add(search);
-
+        menu.add(Produckte);
         menu.add(Mitarbeiter, BorderLayout.LINE_START);
         Mitarbeiter.setActionCommand("Mitarbeiterpanel");
         Mitarbeiter.addActionListener(guiEmployee);
@@ -59,7 +59,7 @@ public class MenuePanel extends javax.swing.JPanel {
         menu.setBackground(new Color(50));
         menu.setBorder(new EmptyBorder(10, 10, 10, 10));
         menu.add(Logout);
-        menu.add(Produckte);
+
         Produckte.setActionCommand("Producktpanel");
         Produckte.addActionListener(guiEmployee);
 
