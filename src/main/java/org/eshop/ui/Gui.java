@@ -50,6 +50,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
 
     }
     public void onLogout(User user){
+        server.logOut(user);
         new LoginFrame(server, this);
     }
 }
