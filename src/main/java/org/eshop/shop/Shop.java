@@ -233,8 +233,8 @@ public class Shop implements ShopFacade {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
                 productManager.decreaseQuantity(key, -cart.get(key));
-            }catch (Exception ignore){
-                //TODO HANDLE IT MAN
+            }catch (Exception e){
+                System.err.println(e.getMessage());
             }
 
 
