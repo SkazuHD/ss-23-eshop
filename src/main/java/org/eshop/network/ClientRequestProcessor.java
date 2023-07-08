@@ -1,11 +1,5 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+package org.eshop.network;
 
-package org.eshop.ui;
-
-//import de.hsbremen.prog2.net.socket.Adresse;
 
 import org.eshop.entities.*;
 import org.eshop.exceptions.*;
@@ -20,14 +14,14 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-class ClientAddressRequestProcessor {
+class ClientRequestProcessor implements Runnable{
 
     private final Shop server;
     private final Socket clientSocket;
     private BufferedReader in;
     private PrintStream out;
 
-    public ClientAddressRequestProcessor(Socket socket, Shop server) {
+    public ClientRequestProcessor(Socket socket, Shop server) {
         this.clientSocket = socket;
         this.server = server;
 
@@ -49,76 +43,104 @@ class ClientAddressRequestProcessor {
         var10000.println("Verbunden mit Client " + var10001 + ":" + this.clientSocket.getPort());
     }
 
-    public void verarbeiteAnfragen() {
+    public void run() {
         String input;
         this.out.println("Server bereit");
 
         do {
-            input = "";
+            input = null;
             try {
                 input = this.in.readLine();
             } catch (Exception var5) {
                 System.out.println("--->Fehler beim Lesen vom Client (Aktion): ");
                 System.out.println(var5.getMessage());
-                continue;
+
             }
 
             if (input == null) {
-                input = "quit";
                 break;
             }
-
+            System.out.println("Request: " + input);
             switch (input) {
-                case "regUser":
+                case "registerUser":
                     regiserUser();
+                    System.out.println("Success");
                     break;
                 case "regEmp":
                     regiserEmployee();
+                    System.out.println("Success");
                     break;
                 case "login":
                     login();
+                    System.out.println("Success");
                     break;
                 case "logout":
                     logout();
+                    System.out.println("Success");
                     break;
                 case "createProd":
                     createProduct();
+                    System.out.println("Success");
                     break;
                 case "createMProd":
                     createMProduct();
+                    System.out.println("Success");
                     break;
                 case "editProd":
                     editProduct();
+                    System.out.println("Success");
                     break;
                 case "editMProd":
                     editMProduct();
+                    System.out.println("Success");
                     break;
                 case "changeQuant":
                     changeQuantity();
+                    System.out.println("Success");
                     break;
                 case "getAll":
                     getAll();
+                    System.out.println("Success");
                     break;
                 case "findName":
                     findName();
+                    System.out.println("Success");
                     break;
                 case "findId":
                     findId();
+                    System.out.println("Success");
                     break;
                 case "prodHistory":
                     getProdHistory();
+                    System.out.println("Success");
                     break;
                 case "getInvoice":
                     getInvoice();
+                    System.out.println("Success");
+                    break;
+                case "checkout":
+                    checkout();
+                    System.out.println("Success");
                     break;
                 case "getCart":
                     getCart();
+                    System.out.println("Success");
+                    break;
                 case "addToCart":
                     addToCart();
+                    System.out.println("Success");
+                    break;
                 case "removeFromCart":
                     removeFromCart();
+                    System.out.println("Success");
+                    break;
+                case "getAllEmp":
+                    getAllEmp();
+                    System.out.println("Success");
+                    break;
                 case "save":
                     server.save();
+                    break;
                 default:
                     System.out.println("Not valid " + input);
             }
@@ -132,6 +154,16 @@ class ClientAddressRequestProcessor {
             this.clientSocket.close();
         } catch (IOException var4) {
         }
+
+    }
+
+    private void getAllEmp() {
+       Collection<Employee> employees = server.getAllEmployees();
+       this.out.println(200);
+       this.out.println(employees.size());
+       for(Employee e : employees){
+           returnEmployee(e);
+       }
 
     }
 
@@ -487,7 +519,7 @@ class ClientAddressRequestProcessor {
 
     // UTIL
     private void returnProd(Product p) {
-        out.println(p instanceof MassProduct ? "p" : "mp");
+        out.println(p instanceof MassProduct ? "mp" : "p");
         out.println(p.getId());
         out.println(p.getName());
         out.println(p.getPrice());
@@ -504,11 +536,17 @@ class ClientAddressRequestProcessor {
         out.println(c.getID());
     }
 
+    private void returnEmployee(Employee e) {
+        out.println(e.getID());
+        out.println(e.getName());
+        out.println(e.getUsername());
+        out.println(e.getPassword());
+    }
+
     private void returnCart(String username) {
         try {
             Customer c = (Customer) server.getUser(username);
             Map<Product, Integer> cart = server.getCart(c);
-            out.println(200);
             out.println(cart.size());
             Iterator<Product> it = cart.keySet().iterator();
             while (it.hasNext()) {

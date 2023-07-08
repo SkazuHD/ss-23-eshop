@@ -1,4 +1,4 @@
-package org.eshop.ui;
+package org.eshop.network;
 
 //
 // Source code recreated from a .class file by IntelliJ IDEA
@@ -61,8 +61,9 @@ public class EshopServer {
         try {
             while (true) {
                 Socket clientSocket = this.serverSocket.accept();
-                ClientAddressRequestProcessor c = new ClientAddressRequestProcessor(clientSocket, this.server);
-                c.verarbeiteAnfragen();
+                ClientRequestProcessor c = new ClientRequestProcessor(clientSocket, this.server);
+                Thread t = new Thread(c);
+                t.start();
             }
         } catch (IOException var3) {
             System.err.println("Fehler während des Wartens auf Verbindungen: " + var3);

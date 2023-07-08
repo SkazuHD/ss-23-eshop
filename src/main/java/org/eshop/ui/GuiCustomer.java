@@ -2,6 +2,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.listener.ShopCloseListener;
 import org.eshop.ui.panels.*;
 
@@ -11,14 +12,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
-    Shop shop;
+    ShopFacade shop;
     CustomerMenu customerMenu;
     SidePanel sidePanel;
     ShoppingCartPanel shoppingCart;
     CheckoutPanel checkoutPanel;
     ProductPanel productPanel;
 
-    public GuiCustomer(Shop shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
+    public GuiCustomer(ShopFacade shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
         this.setLayout(new BorderLayout());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

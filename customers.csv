@@ -6,3 +6,6 @@ TESTFUX;test;t;t;C3004
 test33;t;t;t;C3005
 test22;t;t;t;C3006
 testFUX2;testFUX3;te;c;C3007
+tester;tester;Max Mustermann;Musterstraﬂe;C3008
+server;server;Server;localhost;C3009
+localhost;localhost;localhost;127.0.0.1;C3010

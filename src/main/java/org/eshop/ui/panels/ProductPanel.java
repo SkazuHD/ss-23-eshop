@@ -2,7 +2,7 @@ package org.eshop.ui.panels;
 
 import org.eshop.entities.Product;
 import org.eshop.entities.User;
-import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.components.SearchWidget;
 import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.tabel.CustomerProductTable;
@@ -15,12 +15,12 @@ public abstract class ProductPanel extends javax.swing.JPanel implements SearchW
 
     protected TableListener listener;
     protected User user;
-    protected Shop shop;
+    protected ShopFacade shop;
     protected CustomerProductTable customerProductTable;
     protected EmployeeProductTable employeeProductTable;
 
 
-    public ProductPanel(Shop shop, TableListener listener, User user) {
+    public ProductPanel(ShopFacade shop, TableListener listener, User user) {
 
         this.shop = shop;
         this.listener = listener;

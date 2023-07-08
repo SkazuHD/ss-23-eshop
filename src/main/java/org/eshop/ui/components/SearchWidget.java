@@ -2,6 +2,7 @@ package org.eshop.ui.components;
 
 import org.eshop.entities.Product;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -9,17 +10,19 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SearchWidget extends JPanel implements ActionListener {
 
-    private final Shop server;
+    private final ShopFacade server;
     private final SearchListener listener;
     private final JLabel searchLabel = new JLabel("Search");
     private final JTextField searchField = new JTextField();
     private final JButton searchButton = new JButton("Search");
 
-    public SearchWidget(Shop server, SearchListener listener) {
+    public SearchWidget(ShopFacade server, SearchListener listener) {
         super();
         this.server = server;
         this.listener = listener;
@@ -48,7 +51,8 @@ public class SearchWidget extends JPanel implements ActionListener {
     private void search() {
         String query = searchField.getText();
         if (query.isEmpty() || query.isBlank() || query.length() < 3) {
-            listener.onSearch(server.getAllProducts().stream().toList());
+            Collection<Product> result = server.getAllProducts();
+            listener.onSearch(result.stream().toList());
         } else {
             List<Product> result = server.findProducts(query);
             listener.onSearch(result);

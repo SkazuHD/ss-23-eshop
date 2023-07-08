@@ -6,6 +6,7 @@ import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.CheckoutFailed;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.frames.CheckOutFrame;
 import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.models.CartModel;
@@ -18,13 +19,13 @@ import java.util.Map;
 public class ShoppingCartPanel extends JPanel implements TableListener {
 
     private final JButton checkoutButton = new JButton("Checkout");
-    private final Shop server;
+    private final ShopFacade server;
     private final User loggedInUser;
     private final JTable shoppingCart = new JTable();
     private final JLabel totalprice = new JLabel();
 
 
-    public ShoppingCartPanel(Shop shop, User user) {
+    public ShoppingCartPanel(ShopFacade shop, User user) {
         server = shop;
         loggedInUser = user;
         setupUI();

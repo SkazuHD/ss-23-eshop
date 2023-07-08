@@ -2,6 +2,7 @@ package org.eshop.ui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.components.SearchWidget;
 import org.eshop.ui.frames.LoginFrame;
 
@@ -31,11 +32,11 @@ public class CustomerMenu extends javax.swing.JPanel {
     private final javax.swing.JButton Logout =
             new javax.swing.JButton("Logout");
 
-    Shop shop;
+    ShopFacade shop;
     GuiCustomer guiCustomer;
     addLogoutListener listener;
 
-    public CustomerMenu(Shop shop, SearchWidget.SearchListener searchListener, GuiCustomer guiCustomer, addLogoutListener LogoutListener , User loggedInUSer) {
+    public CustomerMenu(ShopFacade shop, SearchWidget.SearchListener searchListener, GuiCustomer guiCustomer, addLogoutListener LogoutListener , User loggedInUSer) {
         this.guiCustomer = guiCustomer;
         this.add(jMenuBar);
         this.setBackground(new Color(50));
@@ -50,17 +51,11 @@ public class CustomerMenu extends javax.swing.JPanel {
         search.setBackground(new Color(50));
         Menu.add(search);
 
-        Menu.add(Produkte, BorderLayout.LINE_START);
         Menu.setBackground(new Color(50));
         Menu.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        Menu.add(Warenkorb);
-        Warenkorb.setActionCommand("shoppingCart");
-        Warenkorb.addActionListener(guiCustomer);
 
-        Menu.add(checkoutButton);
-        checkoutButton.setActionCommand("checkoutPanel");
-        checkoutButton.addActionListener(guiCustomer);
+
 
         Menu.add(Logout);
         Logout.addActionListener((e)->{

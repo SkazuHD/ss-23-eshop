@@ -7,6 +7,7 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
+import org.eshop.shop.ShopFacade;
 import org.eshop.ui.tables.TableButtonEventListener;
 import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.components.TableButtonRender;
@@ -17,11 +18,11 @@ import javax.swing.*;
 import java.util.List;
 
 public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener {
-    Shop shop;
+    ShopFacade shop;
     TableListener listener;
     User user;
 
-    public CustomerProductTable(List<Product> productList, String[] columns, TableListener listener, User user, Shop shop) {
+    public CustomerProductTable(List<Product> productList, String[] columns, TableListener listener, User user, ShopFacade shop) {
         super();
         this.listener = listener;
         this.user = user;

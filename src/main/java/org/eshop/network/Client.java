@@ -1,4 +1,4 @@
-package org.eshop.ui;
+package org.eshop.network;
 //
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by FernFlower decompiler)
@@ -137,10 +137,11 @@ public class Client implements ShopFacade {
                     return new Customer(username, password, name, adress, id);
 
                 } else {
-                    String id = in.readLine();
+                    int id = Integer.parseInt(in.readLine());
                     username = in.readLine();
                     password = in.readLine();
                     String name = in.readLine();
+                    return new Employee(id, name, username, password);
 
                 }
 
@@ -234,16 +235,11 @@ public class Client implements ShopFacade {
                 throw new ProductNotFound(ans);
 
             } else if (status.equals("200")) {
-                id = Integer.parseInt(in.readLine());
-                name = in.readLine();
-                price = Double.parseDouble(in.readLine());
-                int quantity = Integer.parseInt(in.readLine());
-                return new Product(id, price, name, quantity);
-
-
+                Product p = prod();
+                return p;
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
         return null;
@@ -287,7 +283,7 @@ public class Client implements ShopFacade {
         out.println("changeQuant");
         out.println(id);
         out.println(quantity);
-        out.println(u);
+        out.println(u.getUsername());
         try {
             String status = this.in.readLine();
             if (status.equals("400")) {
@@ -322,11 +318,9 @@ public class Client implements ShopFacade {
             IOException IOException;
 
         } else if (status.equals("200")) {
-            readProducktList();
-
-
+           return readProducktList();
         }
-        return null;
+        return new ArrayList<Product>();
     }
 
     @Override
@@ -426,10 +420,21 @@ public class Client implements ShopFacade {
         if (status.equals("400")) {
 
         } else if (status.equals("200")) {
+            try {
+                int size = Integer.parseInt(in.readLine());
+                List<Employee> employees = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    employees.add(readEmployee());
+                }
+                return employees;
+
+            }catch (IOException e){
+
+            }
 
 
         }
-        return null;
+        return new ArrayList<Employee>();
     }
 
     @Override
@@ -583,9 +588,9 @@ public class Client implements ShopFacade {
         List<Product> products = new ArrayList<>();
         int count;
         try {
-            String type = in.readLine();
             count = Integer.parseInt(in.readLine());
             for (int i = 0; i < count; i++) {
+                String type = in.readLine();
                 if (type.equals("p")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
@@ -602,10 +607,21 @@ public class Client implements ShopFacade {
                 }
             }
         } catch (IOException e) {
-        } finally {
-            return products;
-        }
 
+        }
+        return products;
+    }
+    private Employee readEmployee(){
+        try {
+            int id = Integer.parseInt(in.readLine());
+            String name = this.in.readLine();
+            String username = this.in.readLine();
+            String password = this.in.readLine();
+            return new Employee(id, name, username, password);
+        }catch (IOException e){
+
+        }
+        return null;
     }
 
     public User getUser(String username) {
@@ -616,7 +632,8 @@ public class Client implements ShopFacade {
         String status;
         try {
             String type = in.readLine();
-            if (type.equals("p")) {
+
+                if (type.equals("p")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
