@@ -3,6 +3,7 @@ package org.eshop.ui;
 import org.eshop.entities.User;
 import org.eshop.shop.Shop;
 import org.eshop.shop.ShopFacade;
+import org.eshop.shop.updateEventListener;
 import org.eshop.ui.listener.ShopCloseListener;
 import org.eshop.ui.panels.*;
 
@@ -12,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
+public class GuiEmployee extends javax.swing.JFrame implements ActionListener, updateEventListener {
     private final javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
     private final javax.swing.JScrollPane scrollPane =
             new javax.swing.JScrollPane();
@@ -111,6 +112,10 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     }
 
 
+    @Override
+    public void handleUpdate() {
+        System.out.println("UPDATE!!!");
+    }
 }
 
 

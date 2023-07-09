@@ -11,6 +11,7 @@ package org.eshop.network;
 import org.eshop.entities.*;
 import org.eshop.exceptions.*;
 import org.eshop.shop.ShopFacade;
+import org.eshop.shop.updateEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -580,6 +581,11 @@ public class Client implements ShopFacade {
     @Override
     public void save() {
         out.println("save");
+    }
+
+    @Override
+    public void addUpdateListener(updateEventListener listener) {
+
     }
 
 
