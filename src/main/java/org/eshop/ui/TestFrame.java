@@ -6,6 +6,7 @@ import org.eshop.entities.Product;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.Shop;
 import org.eshop.ui.components.SearchWidget;
+import org.eshop.ui.frames.GraphFrame;
 import org.eshop.ui.panels.addProductPanel;
 import org.eshop.ui.panels.editProductPanel;
 import org.eshop.ui.panels.registerEmployeePanel;
@@ -20,7 +21,7 @@ public class TestFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.setSize(500, 500);
-
+        this.setLocationRelativeTo(null);
         //Create Vertical Spacer
         this.add(Box.createRigidArea(new Dimension(0, 50)));
 
@@ -29,7 +30,7 @@ public class TestFrame extends JFrame {
 
     }
 
-    public void main(String[] args) throws ProductNotFound {
+    public static void main(String[] args) throws ProductNotFound {
 
         //MOCK DATA
         Shop shop = new Shop();
@@ -61,5 +62,6 @@ public class TestFrame extends JFrame {
         String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Anzahl", ""};
         //new TestFrame(new JScrollPane(new CustomerProductTable(products, columns,)));
 
+        new GraphFrame(shop, 1001, 30);
     }
 }

@@ -100,15 +100,25 @@ public class EventManager {
         } while (event != null);
     }
 
-    //TODO IMPLEMENT
+
     public int[] getProductHistory(int productId, int days, int currentStock) {
         List<Event> allEvents = productEvents.get(productId);
-        if (allEvents == null || allEvents.isEmpty()) return new int[days];
+        //Return current Stock if no Events are found
+        if (allEvents == null || allEvents.isEmpty()){
+            int[] history = new int[days];
+            for (int i = 0; i < days; i++) {
+                history[i] = currentStock;
+            }
+            return history;
+        }
+        //TODO BUG CURRENT DAY IS NOT REFLECTED IN HISTORY
+
         //Filter Events by Date
         allEvents.removeIf(event -> event.getDayInYear() < (LocalDate.now().getDayOfYear() - days));
         //Create Array with size of days
         int[] history = new int[days];
         history[0] = currentStock;
+        System.out.println("Day 0 " + history[0]);
         for (int i = 1; i < days; i++) {
 
             //Get All Events for the day
@@ -120,7 +130,8 @@ public class EventManager {
                     sum.addAndGet(event.getQuantity());
                 }
             });
-            history[i] = history[i - 1] - sum.get();
+            history[i] = history[i-1] - sum.get();
+            System.out.println("Day " + i + " " + history[i]);
         }
 
         return history;

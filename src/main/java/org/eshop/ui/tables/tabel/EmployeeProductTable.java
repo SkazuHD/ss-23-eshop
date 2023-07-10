@@ -4,6 +4,7 @@ import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.shop.ShopFacade;
+import org.eshop.ui.frames.GraphFrame;
 import org.eshop.ui.tables.TableButtonEventListener;
 import org.eshop.ui.tables.TableListener;
 import org.eshop.ui.tables.components.TableButtonRenderEmployee;
@@ -72,7 +73,7 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
 
     @Override
     public void onView(int row) {
-        //TODO show Graph
+        new GraphFrame(shop, (int) getValueAt(row, 0), 30);
     }
 
 }
