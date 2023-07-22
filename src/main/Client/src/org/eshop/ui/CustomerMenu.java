@@ -65,6 +65,6 @@ public class CustomerMenu extends javax.swing.JPanel {
     }
 
     public interface addLogoutListener{
-        public void onLogout(User user);
+        void onLogout(User user);
     }
 }

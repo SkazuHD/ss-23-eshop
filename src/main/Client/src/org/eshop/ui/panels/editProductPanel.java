@@ -29,7 +29,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
     private final JTextField productPacksize = new JTextField();
     private Product currentProduct;
 
-    private addProductPanel addProductPanel;
+    private final addProductPanel addProductPanel;
 
     public editProductPanel(ShopFacade shop, User loggedInUser, addProductPanel addProductPanel) {
         this.server = shop;
