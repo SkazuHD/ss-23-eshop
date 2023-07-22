@@ -229,8 +229,6 @@ public class Client implements ShopFacade {
 
             } else if (status.equals("200")) {
                 return readProduct();
-
-
             }
 
         } catch (IOException ignore) {
@@ -281,7 +279,6 @@ public class Client implements ShopFacade {
 
         if (status.equals("400")) {
 
-
         } else if (status.equals("200")) {
            return readProducktList();
         }
@@ -298,7 +295,6 @@ public class Client implements ShopFacade {
 
             } else if (status.equals("200")) {
                 return readProducktList();
-
             }
 
         } catch (IOException ignore) {
@@ -454,7 +450,6 @@ public class Client implements ShopFacade {
                     Product p = readProduct();
                     int quantity = Integer.parseInt(in.readLine());
                     cart.put(p, quantity);
-
                 }
             }
 
@@ -507,15 +502,17 @@ public class Client implements ShopFacade {
         String status;
         try {
             status = this.in.readLine();
-            if (status.equals("400")) {
-                String ans = this.in.readLine();
-                throw new ProductNotFound(ans);
-            } else if (status.equals("401")) {
-                int ans = Integer.parseInt(this.in.readLine());
-                throw new PacksizeNotMatching(ans);
-            } else if (status.equals("200")) {
-
-
+            switch (status) {
+                case "400": {
+                    String ans = this.in.readLine();
+                    throw new ProductNotFound(ans);
+                }
+                case "401": {
+                    int ans = Integer.parseInt(this.in.readLine());
+                    throw new PacksizeNotMatching(ans);
+                }
+                case "200":
+                    break;
             }
 
         } catch (IOException ignore) {
