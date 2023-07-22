@@ -194,6 +194,11 @@ public class Shop implements ShopFacade {
         return productManager.getProducts();
     }
 
+    @Override
+    public Collection<Event> getAllEvents() {
+        return eventManager.getAllEvents();
+    }
+
     //CUSTOMER ONLY
     public Collection<Employee> getAllEmployees() {
         return employeeManager.getEmployee();

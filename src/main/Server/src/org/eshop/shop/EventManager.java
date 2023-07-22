@@ -94,7 +94,11 @@ public class EventManager {
             }
         } while (event != null);
     }
-
+    public Collection<Event> getAllEvents(){
+        List<Event> allEvents = new ArrayList<>();
+        productEvents.forEach((k, v) -> allEvents.addAll(v));
+        return allEvents;
+    }
 
     public int[] getProductHistory(int productId, int days, int currentStock) {
         List<Event> allEvents = productEvents.get(productId);

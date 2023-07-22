@@ -34,7 +34,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
     }
 
     public void initialize() {
-
+        loginFrame.setVisible(true);
     }
 
     @Override

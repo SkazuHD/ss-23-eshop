@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 class ClientRequestProcessor implements Runnable{
@@ -139,6 +140,10 @@ class ClientRequestProcessor implements Runnable{
                 }
                 case "getAllEmp" -> {
                     getAllEmp();
+                    System.out.println("Success");
+                }
+                case "getAllEvents" -> {
+                    getAllEvents();
                     System.out.println("Success");
                 }
                 case "save" -> server.save();
@@ -364,6 +369,21 @@ class ClientRequestProcessor implements Runnable{
             returnProd(p);
         }
 
+    }
+    public void getAllEvents(){
+        List<Event> events = server.getAllEvents().stream().toList();
+        out.println(200);
+        out.println(events.size());
+        for(Event e : events){
+            returnEvent(e);
+        }
+    }
+
+    private void returnEvent(Event e) {
+        out.println(e.getDayInYear());
+        out.println(e.getUserId());
+        out.println(e.getProductId());
+        out.println(e.getQuantity());
     }
 
     public void findName() {

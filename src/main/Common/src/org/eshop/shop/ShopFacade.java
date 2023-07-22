@@ -126,6 +126,7 @@ public interface ShopFacade {
      * @return the all products
      */
     Collection<Product> getAllProducts();
+    Collection<Event> getAllEvents();
 
     Collection<Employee> getAllEmployees();
 
