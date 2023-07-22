@@ -111,8 +111,6 @@ public class EventManager {
             }
             return history;
         }
-        //TODO BUG CURRENT DAY IS NOT REFLECTED IN HISTORY
-
         //Filter Events by Date
         allEvents.removeIf(event -> event.getDayInYear() <= (LocalDate.now().getDayOfYear() - days));
         System.out.println(allEvents);
