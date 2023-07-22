@@ -187,7 +187,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void deleteProduct(int id) throws ProductNotFound {
+    public void deleteProduct(int id) {
 
     }
 
@@ -254,17 +254,21 @@ public class Client implements ShopFacade {
         out.println(u.getUsername());
         try {
             String status = this.in.readLine();
-            if (status.equals("400")) {
-                String ans = this.in.readLine();
-                throw new ProductNotFound(ans);
-            } else if (status.equals("401")) {
-                int ans = Integer.parseInt(this.in.readLine());
-                throw new PacksizeNotMatching(ans);
-            } else if (status.equals("402")) {
-                int ans = Integer.parseInt(this.in.readLine());
-                throw new NotInStockException(ans);
-
-            } else if (status.equals("200")) {
+            switch (status) {
+                case "400": {
+                    String ans = this.in.readLine();
+                    throw new ProductNotFound(ans);
+                }
+                case "401": {
+                    int ans = Integer.parseInt(this.in.readLine());
+                    throw new PacksizeNotMatching(ans);
+                }
+                case "402": {
+                    int ans = Integer.parseInt(this.in.readLine());
+                    throw new NotInStockException(ans);
+                }
+                case "200":
+                    break;
             }
 
         } catch (IOException ignore) {
@@ -288,7 +292,7 @@ public class Client implements ShopFacade {
         } else if (status.equals("200")) {
            return readProducktList();
         }
-        return new ArrayList<Product>();
+        return new ArrayList<>();
     }
 
     @Override
@@ -320,27 +324,10 @@ public class Client implements ShopFacade {
                 throw new ProductNotFound(in.readLine());
 
             } else if (status.equals("200")) {
-                String type = in.readLine();
-                if (type.equals("p")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    return new Product(id, price, name, quantity);
-                } else if (type.equals("mp")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.valueOf(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    int packsize = Integer.parseInt(this.in.readLine());
-                    return new MassProduct(id, price, name, quantity, packsize);
-                }
-
+               return readProduct();
 
             }
-
-
-        } catch (Exception e) {
+        } catch (IOException ignore) {
 
 
         }
