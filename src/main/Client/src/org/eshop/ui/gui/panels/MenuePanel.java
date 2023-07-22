@@ -8,6 +8,7 @@ import org.eshop.ui.gui.GuiEmployee;
 import org.eshop.ui.gui.MitarbeiterPanel;
 import org.eshop.ui.gui.components.SearchWidget;
 
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
@@ -24,6 +25,8 @@ public class MenuePanel extends javax.swing.JPanel {
             new javax.swing.JMenuBar();
     private final javax.swing.JButton Produckte =
             new javax.swing.JButton("Produckte");
+    private final JButton Events =
+            new JButton("Events");
     private final javax.swing.JButton Logout =
             new javax.swing.JButton("Logout");
     ShopFacade shop;
@@ -50,6 +53,7 @@ public class MenuePanel extends javax.swing.JPanel {
         search.setBackground(new Color(50));
         menu.add(search);
         menu.add(Produckte);
+        menu.add(Events);
         menu.add(Mitarbeiter, BorderLayout.LINE_START);
         Mitarbeiter.setActionCommand("Mitarbeiterpanel");
         Mitarbeiter.addActionListener(guiEmployee);
@@ -63,6 +67,8 @@ public class MenuePanel extends javax.swing.JPanel {
         Produckte.setActionCommand("Producktpanel");
         Produckte.addActionListener(guiEmployee);
 
+        Events.setActionCommand("Eventpanel");
+        Events.addActionListener(guiEmployee);
 
         Logout.addActionListener((e)->{
             guiEmployee.dispose();

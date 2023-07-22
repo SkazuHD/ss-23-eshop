@@ -5,6 +5,7 @@ import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updateEventListener;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
+import org.eshop.ui.gui.tables.tabel.EventTable;
 
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
     org.eshop.ui.gui.panels.addProductPanel addProductPanel;
     org.eshop.ui.gui.panels.editProductPanel editProductPanel;
     org.eshop.ui.gui.panels.registerEmployeePanel registerEmployeePanel;
+    JScrollPane eventPanel;
 
     /**
      * Der Konstruktor.
@@ -38,10 +40,12 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
 
         productPanel = new EmployeeCenterPanel(shop, editProductPanel, loggedInUser);
 
-
+        eventPanel = new JScrollPane(new EventTable(shop));
+        eventPanel.setVisible(false);
         JPanel paneelcenter = new JPanel();
         jPanel1.add(new JScrollPane(paneelcenter), BorderLayout.CENTER);
         paneelcenter.add(productPanel);
+        paneelcenter.add(eventPanel);
         paneelcenter.setLayout(new BoxLayout(paneelcenter, BoxLayout.PAGE_AXIS));
 
 
@@ -55,7 +59,6 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
         editProductPanel.setVisible(false);
         registerEmployeePanel.setVisible(false);
 
-        //jPanel1.add(sidePanel);
 
         jPanel1.add(sidePanel, BorderLayout.EAST);
 
@@ -90,6 +93,8 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
                 addProductPanel.setVisible(true);
                 editProductPanel.setVisible(false);
                 registerEmployeePanel.setVisible(false);
+                eventPanel.setVisible(false);
+
             }
             case "Mitarbeiterpanel" -> {
                 mitarbeiterPanel.setVisible(true);
@@ -97,6 +102,16 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
                 registerEmployeePanel.setVisible(true);
                 addProductPanel.setVisible(false);
                 editProductPanel.setVisible(false);
+                eventPanel.setVisible(false);
+
+            }
+            case "Eventpanel" -> {
+                mitarbeiterPanel.setVisible(false);
+                productPanel.setVisible(false);
+                registerEmployeePanel.setVisible(false);
+                addProductPanel.setVisible(false);
+                editProductPanel.setVisible(false);
+                eventPanel.setVisible(true);
             }
         }
 
