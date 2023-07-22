@@ -1,9 +1,8 @@
 package org.eshop.network;
 
 
-import com.sun.net.httpserver.Authenticator;
-import org.eshop.exceptions.*;
 import org.eshop.entities.*;
+import org.eshop.exceptions.*;
 import org.eshop.shop.Shop;
 
 import java.io.BufferedReader;
@@ -12,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 class ClientRequestProcessor implements Runnable{
@@ -32,7 +30,7 @@ class ClientRequestProcessor implements Runnable{
         } catch (IOException var6) {
             try {
                 this.clientSocket.close();
-            } catch (IOException var5) {
+            } catch (IOException ignore) {
             }
 
             System.err.println("Ausnahme bei Bereitstellung des Streams: " + var6);
@@ -63,91 +61,88 @@ class ClientRequestProcessor implements Runnable{
             }
             System.out.println("Request: " + input);
             switch (input) {
-                case "registerUser":
+                case "registerUser" -> {
                     regiserUser();
                     System.out.println("Success");
-                    break;
-                case "regEmp":
+                }
+                case "regEmp" -> {
                     regiserEmployee();
                     System.out.println("Success");
-                    break;
-                case "login":
+                }
+                case "login" -> {
                     login();
                     System.out.println("Success");
-                    break;
-                case "logout":
+                }
+                case "logout" -> {
                     logout();
                     System.out.println("Success");
-                    break;
-                case "createProd":
+                }
+                case "createProd" -> {
                     createProduct();
                     System.out.println("Success");
-                    break;
-                case "createMProd":
+                }
+                case "createMProd" -> {
                     createMProduct();
                     System.out.println("Success");
-                    break;
-                case "editProd":
+                }
+                case "editProd" -> {
                     editProduct();
                     System.out.println("Success");
-                    break;
-                case "editMProd":
+                }
+                case "editMProd" -> {
                     editMProduct();
                     System.out.println("Success");
-                    break;
-                case "changeQuant":
+                }
+                case "changeQuant" -> {
                     changeQuantity();
                     System.out.println("Success");
-                    break;
-                case "getAll":
+                }
+                case "getAll" -> {
                     getAll();
                     System.out.println("Success");
-                    break;
-                case "findName":
+                }
+                case "findName" -> {
                     findName();
                     System.out.println("Success");
-                    break;
-                case "findId":
+                }
+                case "findId" -> {
                     findId();
                     System.out.println("Success");
-                    break;
-                case "prodHistory":
+                }
+                case "prodHistory" -> {
                     getProdHistory();
                     System.out.println("Success");
-                    break;
-                case "getUser":
+                }
+                case "getUser" -> {
                     getUser();
                     System.out.println("Success");
-                    break;
-                case "getInvoice":
+                }
+                case "getInvoice" -> {
                     getInvoice();
                     System.out.println("Success");
-                    break;
-                case "checkout":
+                }
+                case "checkout" -> {
                     checkout();
                     System.out.println("Success");
-                    break;
-                case "getCart":
+                }
+                case "getCart" -> {
                     getCart();
                     System.out.println("Success");
-                    break;
-                case "addToCart":
+                }
+                case "addToCart" -> {
                     addToCart();
                     System.out.println("Success");
-                    break;
-                case "removeFromCart":
+                }
+                case "removeFromCart" -> {
                     removeFromCart();
                     System.out.println("Success");
-                    break;
-                case "getAllEmp":
+                }
+                case "getAllEmp" -> {
                     getAllEmp();
                     System.out.println("Success");
-                    break;
-                case "save":
-                    server.save();
-                    break;
-                default:
-                    System.out.println("Not valid " + input);
+                }
+                case "save" -> server.save();
+                default -> System.out.println("Not valid " + input);
             }
         } while (!input.equals("Logout"));
 
@@ -157,7 +152,7 @@ class ClientRequestProcessor implements Runnable{
 
         try {
             this.clientSocket.close();
-        } catch (IOException var4) {
+        } catch (IOException ignore) {
         }
 
     }
@@ -176,9 +171,9 @@ class ClientRequestProcessor implements Runnable{
     }
     public void regiserUser() {
         String username = null;
-        String password = null;
-        String name = null;
-        String address = null;
+        String password;
+        String name;
+        String address;
         try {
             username = this.in.readLine();
             password = this.in.readLine();
@@ -196,10 +191,10 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void regiserEmployee() {
-        int id = 0;
+        int id;
         String username = null;
-        String password = null;
-        String name = null;
+        String password;
+        String name;
 
         try {
             id = Integer.parseInt(this.in.readLine());
@@ -219,7 +214,7 @@ class ClientRequestProcessor implements Runnable{
 
     public void login() {
         String username = null;
-        String password = null;
+        String password;
         try {
             username = in.readLine();
             password = in.readLine();
@@ -227,17 +222,10 @@ class ClientRequestProcessor implements Runnable{
             out.println(200);
             if (user instanceof Customer c) {
                 out.println("customer");
-                out.println(c.getID());
-                out.println(c.getUsername());
-                out.println(c.getPassword());
-                out.println(c.getName());
-                out.println(c.getAddress());
+                returnCustomer(c);
             } else if (user instanceof Employee e) {
                 out.println("employee");
-                out.println(e.getID());
-                out.println(e.getUsername());
-                out.println(e.getPassword());
-                out.println(e.getName());
+                returnEmployee(e);
             }
         } catch (IOException ignore) {
 
@@ -248,7 +236,7 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void logout() {
-        String username = null;
+        String username;
         try {
             username = in.readLine();
             User user = server.getUser(username);
@@ -262,10 +250,10 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void createProduct() {
-        String name = null;
-        Double price = null;
-        int quantity = 0;
-        User user = null;
+        String name;
+        double price;
+        int quantity;
+        User user;
         try {
             name = in.readLine();
             price = Double.parseDouble(in.readLine());
@@ -280,11 +268,11 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void createMProduct() {
-        String name = null;
-        Double price = null;
-        int quantity = 0;
+        String name;
+        double price;
+        int quantity;
         int packSize = 0;
-        User user = null;
+        User user;
         try {
             name = in.readLine();
             price = Double.parseDouble(in.readLine());
@@ -302,9 +290,9 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void editProduct() {
-        int id = 0;
+        int id;
         String name = null;
-        Double price = null;
+        double price;
 
         try {
             id = Integer.parseInt(in.readLine());
@@ -322,10 +310,10 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void editMProduct() {
-        int id = 0;
+        int id;
         String name = null;
-        Double price = null;
-        int packSize = 0;
+        double price;
+        int packSize;
 
         try {
             id = Integer.parseInt(in.readLine());
@@ -346,8 +334,8 @@ class ClientRequestProcessor implements Runnable{
 
     public void changeQuantity() {
         int id = 0;
-        int quantity = 0;
-        User user = null;
+        int quantity;
+        User user;
         try {
             id = Integer.parseInt(in.readLine());
             quantity = Integer.parseInt(in.readLine());
@@ -379,7 +367,7 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void findName() {
-        String query = null;
+        String query;
         try {
             query = in.readLine();
             Collection<Product> products = server.findProducts(query);
@@ -435,9 +423,7 @@ class ClientRequestProcessor implements Runnable{
             Map<Product, Integer> cart = server.getCart(c);
             out.println(200);
             out.println(cart.size());
-            Iterator<Product> it = cart.keySet().iterator();
-            while (it.hasNext()) {
-                Product p = it.next();
+            for (Product p : cart.keySet()) {
                 int quantity = cart.get(p);
                 returnProd(p);
                 out.println(quantity);
@@ -537,17 +523,19 @@ class ClientRequestProcessor implements Runnable{
     }
 
     private void returnCustomer(Customer c) {
+        out.println(c.getID());
         out.println(c.getUsername());
         out.println(c.getPassword());
+        out.println(c.getName());
         out.println(c.getAddress());
-        out.println(c.getID());
+
     }
 
     private void returnEmployee(Employee e) {
         out.println(e.getID());
-        out.println(e.getName());
         out.println(e.getUsername());
         out.println(e.getPassword());
+        out.println(e.getName());
     }
 
     private void returnCart(String username) {
@@ -555,9 +543,7 @@ class ClientRequestProcessor implements Runnable{
             Customer c = (Customer) server.getUser(username);
             Map<Product, Integer> cart = server.getCart(c);
             out.println(cart.size());
-            Iterator<Product> it = cart.keySet().iterator();
-            while (it.hasNext()) {
-                Product p = it.next();
+            for (Product p : cart.keySet()) {
                 int quantity = cart.get(p);
                 returnProd(p);
                 out.println(quantity);
