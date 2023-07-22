@@ -68,13 +68,11 @@ public class Client implements ShopFacade {
             if (status.equals("400")) {
                 String ans = this.in.readLine();
                 throw new UserExistsException(ans);
-
             }
 
         } catch (IOException ignore) {
 
         }
-
 
     }
 
@@ -90,7 +88,6 @@ public class Client implements ShopFacade {
             if (status.equals("400")) {
                 String ans = this.in.readLine();
                 throw new UserExistsException(ans);
-
             }
 
         } catch (IOException ignore) {
@@ -110,7 +107,6 @@ public class Client implements ShopFacade {
 
             } else if (status.equals("200")) {
                 String type = in.readLine();
-
                 if (type.equals("customer")) {
                     String id = in.readLine();
                     username = in.readLine();
@@ -118,17 +114,13 @@ public class Client implements ShopFacade {
                     String name = in.readLine();
                     String adress = in.readLine();
                     return new Customer(username, password, name, adress, id);
-
                 } else {
                     int id = Integer.parseInt(in.readLine());
                     username = in.readLine();
                     password = in.readLine();
                     String name = in.readLine();
                     return new Employee(id, name, username, password);
-
                 }
-
-
             }
 
         } catch (IOException ignore) {
@@ -540,22 +532,10 @@ public class Client implements ShopFacade {
         try {
             count = Integer.parseInt(in.readLine());
             for (int i = 0; i < count; i++) {
-                String type = in.readLine();
-                if (type.equals("p")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    products.add(new Product(id, price, name, quantity));
-                } else if (type.equals("mp")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    int packsize = Integer.parseInt(this.in.readLine());
-                    products.add(new MassProduct(id, price, name, quantity, packsize));
+                    Product p = readProduct();
+                    products.add(p);
                 }
-            }
+
         } catch (IOException ignore) {
 
         }

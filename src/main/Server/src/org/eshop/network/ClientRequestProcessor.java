@@ -1,8 +1,8 @@
 package org.eshop.network;
 
 
-import org.eshop.exceptions.*;
 import org.eshop.entities.*;
+import org.eshop.exceptions.*;
 import org.eshop.shop.Shop;
 
 import java.io.BufferedReader;
@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 class ClientRequestProcessor implements Runnable{
@@ -223,17 +222,10 @@ class ClientRequestProcessor implements Runnable{
             out.println(200);
             if (user instanceof Customer c) {
                 out.println("customer");
-                out.println(c.getID());
-                out.println(c.getUsername());
-                out.println(c.getPassword());
-                out.println(c.getName());
-                out.println(c.getAddress());
+                returnCustomer(c);
             } else if (user instanceof Employee e) {
                 out.println("employee");
-                out.println(e.getID());
-                out.println(e.getUsername());
-                out.println(e.getPassword());
-                out.println(e.getName());
+                returnEmployee(e);
             }
         } catch (IOException ignore) {
 
@@ -244,7 +236,7 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void logout() {
-        String username = null;
+        String username;
         try {
             username = in.readLine();
             User user = server.getUser(username);
@@ -259,7 +251,7 @@ class ClientRequestProcessor implements Runnable{
 
     public void createProduct() {
         String name;
-        Double price;
+        double price;
         int quantity;
         User user;
         try {
@@ -276,11 +268,11 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void createMProduct() {
-        String name = null;
-        Double price = null;
-        int quantity = 0;
+        String name;
+        double price;
+        int quantity;
         int packSize = 0;
-        User user = null;
+        User user;
         try {
             name = in.readLine();
             price = Double.parseDouble(in.readLine());
@@ -298,9 +290,9 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void editProduct() {
-        int id = 0;
+        int id;
         String name = null;
-        Double price = null;
+        double price;
 
         try {
             id = Integer.parseInt(in.readLine());
@@ -318,10 +310,10 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void editMProduct() {
-        int id = 0;
+        int id;
         String name = null;
-        Double price = null;
-        int packSize = 0;
+        double price;
+        int packSize;
 
         try {
             id = Integer.parseInt(in.readLine());
@@ -342,8 +334,8 @@ class ClientRequestProcessor implements Runnable{
 
     public void changeQuantity() {
         int id = 0;
-        int quantity = 0;
-        User user = null;
+        int quantity;
+        User user;
         try {
             id = Integer.parseInt(in.readLine());
             quantity = Integer.parseInt(in.readLine());
@@ -375,7 +367,7 @@ class ClientRequestProcessor implements Runnable{
     }
 
     public void findName() {
-        String query = null;
+        String query;
         try {
             query = in.readLine();
             Collection<Product> products = server.findProducts(query);
@@ -431,9 +423,7 @@ class ClientRequestProcessor implements Runnable{
             Map<Product, Integer> cart = server.getCart(c);
             out.println(200);
             out.println(cart.size());
-            Iterator<Product> it = cart.keySet().iterator();
-            while (it.hasNext()) {
-                Product p = it.next();
+            for (Product p : cart.keySet()) {
                 int quantity = cart.get(p);
                 returnProd(p);
                 out.println(quantity);
@@ -533,17 +523,19 @@ class ClientRequestProcessor implements Runnable{
     }
 
     private void returnCustomer(Customer c) {
+        out.println(c.getID());
         out.println(c.getUsername());
         out.println(c.getPassword());
+        out.println(c.getName());
         out.println(c.getAddress());
-        out.println(c.getID());
+
     }
 
     private void returnEmployee(Employee e) {
         out.println(e.getID());
-        out.println(e.getName());
         out.println(e.getUsername());
         out.println(e.getPassword());
+        out.println(e.getName());
     }
 
     private void returnCart(String username) {
@@ -551,9 +543,7 @@ class ClientRequestProcessor implements Runnable{
             Customer c = (Customer) server.getUser(username);
             Map<Product, Integer> cart = server.getCart(c);
             out.println(cart.size());
-            Iterator<Product> it = cart.keySet().iterator();
-            while (it.hasNext()) {
-                Product p = it.next();
+            for (Product p : cart.keySet()) {
                 int quantity = cart.get(p);
                 returnProd(p);
                 out.println(quantity);
