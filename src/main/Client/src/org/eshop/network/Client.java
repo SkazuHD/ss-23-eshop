@@ -228,14 +228,7 @@ public class Client implements ShopFacade {
                 throw new ProductNotFound(ans);
 
             } else if (status.equals("200")) {
-                id = Integer.parseInt(in.readLine());
-                name = in.readLine();
-                price = Double.parseDouble(in.readLine());
-                int quantity = Integer.parseInt(in.readLine());
-                packSize = Integer.parseInt(in.readLine());
-
-
-                return new Product(id, price, name, packSize);
+                return readProduct();
 
 
             }
