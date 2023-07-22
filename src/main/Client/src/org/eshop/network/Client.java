@@ -457,9 +457,8 @@ public class Client implements ShopFacade {
         out.println(id);
         out.println(quantity);
         out.println(c.getUsername());
-        String status;
         try {
-             status = this.in.readLine();
+            String status = this.in.readLine();
             switch (status) {
                 case "400": {
                     String ans = this.in.readLine();
@@ -480,9 +479,6 @@ public class Client implements ShopFacade {
         } catch (IOException ignore) {
 
         }
-
-
-
     }
 
     @Override

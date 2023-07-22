@@ -131,7 +131,7 @@ public class LoginFrame extends JFrame {
         loginButton.addActionListener((e) -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            User u = null;
+            User u;
             try {
                 u = server.logIn(username, password);
                 listener.onLogin(u);
