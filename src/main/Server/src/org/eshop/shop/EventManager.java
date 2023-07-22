@@ -6,11 +6,9 @@ import org.eshop.entities.User;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -133,8 +131,12 @@ public class EventManager {
             history[i] = history[i-1] - sum;
             System.out.println(currentDayToLookAt+ " Sum:" + sum);
         }
-
-        return history;
+        //REVERSE THE ORDER
+        int[] reversed = new int[history.length];
+        for(int i = 0; i<history.length; i++){
+            reversed[history.length-1-i] = history[i];
+        }
+        return reversed;
     }
 
 
