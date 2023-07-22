@@ -18,22 +18,31 @@ public class Client implements ShopFacade {
     private PrintStream out;
 
     public Client(String host, int port) {
-        try {
-            this.socket = new Socket(host, port);
-            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.out = new PrintStream(this.socket.getOutputStream());
-        } catch (IOException var7) {
-            System.err.println("Fehler beim Öffnen des Sockets/Streams: " + var7);
-            if (this.socket != null) {
-                try {
-                    this.socket.close();
-                    System.err.println("Socket geschlossen");
-                } catch (IOException var6) {
+        while (this.socket == null){
+            try {
+                this.socket = new Socket(host, port);
+                this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+                this.out = new PrintStream(this.socket.getOutputStream());
+            } catch (IOException var7) {
+                System.err.println("Fehler beim Öffnen des Sockets/Streams: " + var7);
+                if (this.socket != null) {
+                    try {
+                        this.socket.close();
+                        System.err.println("Socket geschlossen");
+                    } catch (IOException var6) {
+                    }
                 }
-            }
+                try {
+                    Thread.sleep(1000);
 
-            System.exit(1);
+                }catch (InterruptedException e){
+
+                }
+
+
+            }
         }
+
 
         PrintStream var10000 = System.err;
         String var10001 = String.valueOf(this.socket.getInetAddress());
