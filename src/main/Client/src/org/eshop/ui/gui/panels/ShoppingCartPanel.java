@@ -48,7 +48,6 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
 
     private void setupEvents() {
         checkoutButton.addActionListener((actionEvent) -> {
-            IOException ignoreln("Checkout");
             try {
                 Invoice i = server.getInvoice((Customer) loggedInUser);
                 server.checkout((Customer) loggedInUser);

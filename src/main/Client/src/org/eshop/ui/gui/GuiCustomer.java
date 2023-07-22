@@ -2,10 +2,8 @@ package org.eshop.ui.gui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
-import org.eshop.ui.gui.CustomerMenu;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
-import org.eshop.ui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,17 +50,14 @@ public class GuiCustomer extends javax.swing.JFrame implements ActionListener {
         shoppingCart.setVisible(false);
         checkoutPanel.setVisible(false);
         switch (e.getActionCommand()) {
-            case "shoppingCart":
+            case "shoppingCart" -> {
                 shoppingCart.setVisible(true);
                 checkoutPanel.setVisible(false);
-
-                break;
-            case "checkoutPanel":
+            }
+            case "checkoutPanel" -> {
                 checkoutPanel.setVisible(true);
                 shoppingCart.setVisible(false);
-
-                break;
-
+            }
         }
 
 

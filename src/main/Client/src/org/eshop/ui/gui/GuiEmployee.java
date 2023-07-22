@@ -5,7 +5,7 @@ import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updateEventListener;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
-import org.eshop.ui.panels.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +14,6 @@ import java.awt.event.ActionListener;
 
 
 public class GuiEmployee extends javax.swing.JFrame implements ActionListener, updateEventListener {
-    private final javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
-    private final javax.swing.JScrollPane scrollPane =
-            new javax.swing.JScrollPane();
-    private final javax.swing.JPanel Paneelcenter =
-            new javax.swing.JPanel();
     ShopFacade shop;
     MenuePanel menuePanel;
     SidePanel sidePanel;
@@ -33,6 +28,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
      */
     public GuiEmployee(ShopFacade shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
+        JPanel jPanel1 = new JPanel();
         jPanel1.setLayout(new BorderLayout());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new ShopCloseListener(shop));
@@ -43,9 +39,10 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
         productPanel = new EmployeeCenterPanel(shop, editProductPanel, loggedInUser);
 
 
-        jPanel1.add(new JScrollPane(Paneelcenter), BorderLayout.CENTER);
-        Paneelcenter.add(productPanel);
-        Paneelcenter.setLayout(new BoxLayout(Paneelcenter, BoxLayout.PAGE_AXIS));
+        JPanel paneelcenter = new JPanel();
+        jPanel1.add(new JScrollPane(paneelcenter), BorderLayout.CENTER);
+        paneelcenter.add(productPanel);
+        paneelcenter.setLayout(new BoxLayout(paneelcenter, BoxLayout.PAGE_AXIS));
 
 
         mitarbeiterPanel = new MitarbeiterPanel(shop, this);
@@ -67,7 +64,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
 
         jPanel1.add(menuePanel, BorderLayout.PAGE_START);
 
-        Paneelcenter.add(mitarbeiterPanel);
+        paneelcenter.add(mitarbeiterPanel);
         mitarbeiterPanel.setVisible(false);
 
 
@@ -87,25 +84,20 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
         productPanel.setVisible(false);
         mitarbeiterPanel.setVisible(false);
         switch (e.getActionCommand()) {
-            case "Producktpanel":
+            case "Producktpanel" -> {
                 productPanel.setVisible(true);
                 mitarbeiterPanel.setVisible(false);
                 addProductPanel.setVisible(true);
                 editProductPanel.setVisible(false);
                 registerEmployeePanel.setVisible(false);
-
-
-                break;
-            case "Mitarbeiterpanel":
+            }
+            case "Mitarbeiterpanel" -> {
                 mitarbeiterPanel.setVisible(true);
                 productPanel.setVisible(false);
                 registerEmployeePanel.setVisible(true);
                 addProductPanel.setVisible(false);
                 editProductPanel.setVisible(false);
-
-
-                break;
-
+            }
         }
 
 

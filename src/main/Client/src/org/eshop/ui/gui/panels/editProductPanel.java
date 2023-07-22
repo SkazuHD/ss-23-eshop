@@ -102,9 +102,6 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        //* DEBUG STUFF
-        System.out.println(productName.getText());
-
 
         if (e.getSource().equals(massProduct)) {
             if (massProduct.isSelected()) {
@@ -114,9 +111,8 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
                 productPacksize.setText("");
             }
         } else if (e.getSource().equals(deleteBtn)) {
-            //Todo add method to remove Product
+            //TODO QOL add method to remove Product
         } else if (e.getSource().equals(saveBtn)) {
-            System.out.println("SAVING PROD FROM EDIT");
             int quantityDiffrence = -currentProduct.getQuantity() + Integer.parseInt(productQuantity.getText());
             Product p;
             try {
@@ -147,7 +143,6 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
 
     @Override
     public void editProduct(Product p) {
-        System.out.println("EDITING PRODUCT FROM EDIT");
         onChange(p);
         addProductPanel.setVisible(false);
         this.setVisible(true);
