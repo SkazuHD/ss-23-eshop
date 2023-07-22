@@ -114,24 +114,26 @@ public class EventManager {
         //TODO BUG CURRENT DAY IS NOT REFLECTED IN HISTORY
 
         //Filter Events by Date
-        allEvents.removeIf(event -> event.getDayInYear() < (LocalDate.now().getDayOfYear() - days));
+        allEvents.removeIf(event -> event.getDayInYear() <= (LocalDate.now().getDayOfYear() - days));
+        System.out.println(allEvents);
+
         //Create Array with size of days
         int[] history = new int[days];
+
         history[0] = currentStock;
         System.out.println("Day 0 " + history[0]);
-        for (int i = 1; i < days; i++) {
-
-            //Get All Events for the day
-            AtomicInteger sum = new AtomicInteger();
-            int finalI = i;
-            allEvents.forEach(event -> {
-                //Check if Date Matches;
-                if (LocalDate.now().getDayOfYear() - finalI == event.getDayInYear()) {
-                    sum.addAndGet(event.getQuantity());
+        System.out.println(LocalDate.now().getDayOfYear());
+        //Iterate over Events and add or subtract quantity
+        for(int i = 1; i < days; i++){
+            int sum = 0;
+            int currentDayToLookAt = LocalDate.now().getDayOfYear() + 1 - i;
+            for (Event event : allEvents){
+                if (event.getDayInYear() == currentDayToLookAt){
+                    sum += event.getQuantity();
                 }
-            });
-            history[i] = history[i-1] - sum.get();
-            System.out.println("Day " + i + " " + history[i]);
+            }
+            history[i] = history[i-1] - sum;
+            System.out.println(currentDayToLookAt+ " Sum:" + sum);
         }
 
         return history;
