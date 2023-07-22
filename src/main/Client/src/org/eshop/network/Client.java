@@ -18,54 +18,39 @@ public class Client implements ShopFacade {
     private PrintStream out;
 
     public Client(String host, int port) {
-        try {
-            this.socket = new Socket(host, port);
-            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.out = new PrintStream(this.socket.getOutputStream());
-        } catch (IOException var7) {
-            System.err.println("Fehler beim Öffnen des Sockets/Streams: " + var7);
-            if (this.socket != null) {
-                try {
-                    this.socket.close();
-                    System.err.println("Socket geschlossen");
-                } catch (IOException var6) {
+        while (this.socket == null){
+            try {
+                this.socket = new Socket(host, port);
+                this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+                this.out = new PrintStream(this.socket.getOutputStream());
+            } catch (IOException var7) {
+                System.err.println("Fehler beim Öffnen des Sockets/Streams: " + var7);
+                if (this.socket != null) {
+                    try {
+                        this.socket.close();
+                        System.err.println("Socket geschlossen");
+                    } catch (IOException ignore) {
+                    }
                 }
-            }
+                try {
+                    Thread.sleep(3000);
+                }catch (InterruptedException ignore){
 
-            System.exit(1);
+                }
+
+
+            }
         }
 
-        PrintStream var10000 = System.err;
-        String var10001 = String.valueOf(this.socket.getInetAddress());
-        var10000.println("Verbunden mit Server " + var10001 + ":" + this.socket.getPort());
+        String server = String.valueOf(this.socket.getInetAddress());
+        System.out.println("Verbunden mit Server " + server + ":" + this.socket.getPort());
 
         try {
             String message = this.in.readLine();
             System.out.println(message);
-        } catch (IOException var5) {
-
+        } catch (IOException ignore) {
         }
-
     }
-
-
-    public static void main(String[] args) {
-        String host = "localhost";
-        int port = 6789;
-        if (args.length == 2) {
-            host = args[0];
-
-            try {
-                port = Integer.parseInt(args[1]);
-            } catch (NumberFormatException var6) {
-                port = 0;
-            }
-        }
-
-        Client client = new Client(host, port);
-
-    }
-
     @Override
     public void registerUser(String username, String password, String name, String address) throws UserExistsException {
         out.println("registerUser");
@@ -100,10 +85,8 @@ public class Client implements ShopFacade {
             if (status.equals("400")) {
                 String ans = this.in.readLine();
                 throw new UserExistsException(ans);
-
             }
-
-        } catch (IOException e) {
+        } catch (IOException ignore) {
         }
     }
 
@@ -141,7 +124,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
         }
         return null;
     }
@@ -152,18 +135,10 @@ public class Client implements ShopFacade {
         out.println(user.getUsername());
         try {
             String status = this.in.readLine();
-            if (status.equals("400")) {
-                String ans = this.in.readLine();
-                throw new UserExistsException(ans);
-
-            } else if (status.equals("200")) {
-                return status.equals("200");
-            }
-
-        } catch (IOException | UserExistsException e) {
+            return status.equals("200");
+        } catch (IOException ignore) {
+            return false;
         }
-
-        return false;
     }
 
     @Override
@@ -176,12 +151,10 @@ public class Client implements ShopFacade {
         try {
             String status = this.in.readLine();
             if (status.equals("400")) {
-                String ans = this.in.readLine();
-                throw new UserExistsException(ans);
-
+                throw new IllegalArgumentException("Invalid Arguments");
             }
 
-        } catch (IOException | UserExistsException e) {
+        } catch (IOException ignore) {
         }
 
 
@@ -199,13 +172,9 @@ public class Client implements ShopFacade {
             String status = this.in.readLine();
             if (status.equals("400")) {
                 int ans = Integer.parseInt(this.in.readLine());
-
                 throw new PacksizeNotMatching(ans);
-
-
             }
-
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
     }
@@ -226,16 +195,13 @@ public class Client implements ShopFacade {
             if (status.equals("400")) {
                 String ans = this.in.readLine();
                 throw new ProductNotFound(ans);
-
             } else if (status.equals("200")) {
-                Product p = prod();
-                return p;
+                return readProduct();
             }
-
         } catch (IOException ignored) {
 
         }
-        return null;
+        return new Product(0,0, "ERROR", 0);
     }
 
 
@@ -246,26 +212,15 @@ public class Client implements ShopFacade {
         out.println(name);
         out.println(price);
         out.println(packSize);
-        try {
+        try{
             String status = this.in.readLine();
             if (status.equals("400")) {
                 String ans = this.in.readLine();
                 throw new ProductNotFound(ans);
-
             } else if (status.equals("200")) {
-                id = Integer.parseInt(in.readLine());
-                name = in.readLine();
-                price = Double.parseDouble(in.readLine());
-                int quantity = Integer.parseInt(in.readLine());
-                packSize = Integer.parseInt(in.readLine());
-
-
-                return new Product(id, price, name, packSize);
-
-
+                return readProduct();
             }
-
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return null;
@@ -307,13 +262,11 @@ public class Client implements ShopFacade {
         } catch (IOException ignore) {
         }
 
-        if (status.equals("400")) {
-            IOException IOException;
-
-        } else if (status.equals("200")) {
+         if (status.equals("200")) {
            return readProducktList();
-        }
-        return new ArrayList<Product>();
+        }else {
+             return new ArrayList<Product>();
+         }
     }
 
     @Override
@@ -322,17 +275,13 @@ public class Client implements ShopFacade {
         out.println(name);
         try {
             String status = this.in.readLine();
-            if (status.equals("400")) {
-
-            } else if (status.equals("200")) {
+             if (status.equals("200")) {
                 return readProducktList();
-
             }
-
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
-        return null;
+        return new ArrayList<Product>();
     }
 
     @Override
@@ -346,26 +295,11 @@ public class Client implements ShopFacade {
 
             } else if (status.equals("200")) {
                 String type = in.readLine();
-                if (type.equals("p")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.valueOf(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    return new Product(id, price, name, quantity);
-                } else if (type.equals("mp")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.valueOf(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    int packsize = Integer.parseInt(this.in.readLine());
-                    return new MassProduct(id, price, name, quantity, packsize);
-                }
-
-
+                return readProduct();
             }
 
 
-        } catch (Exception e) {
+        } catch (IOException ignore) {
 
 
         }
@@ -392,7 +326,7 @@ public class Client implements ShopFacade {
                }
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return zahlen;
@@ -421,7 +355,7 @@ public class Client implements ShopFacade {
                 }
                 return employees;
 
-            }catch (IOException e){
+            }catch (IOException ignore){
 
             }
 
@@ -443,14 +377,13 @@ public class Client implements ShopFacade {
                 c.clearCart();
                 int size = Integer.parseInt(in.readLine());
                 for (int i = 0; i < size; i++) {
-                    Product p = prod();
+                    Product p = readProduct();
                     int quantity = Integer.parseInt(in.readLine());
                     c.addToCart(p, quantity);
                 }
-
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return new Invoice(c);
@@ -468,7 +401,7 @@ public class Client implements ShopFacade {
             if (status.equals("400")) {
                 int size = Integer.parseInt(in.readLine());
                 for (int i = 0; i < size; i++) {
-                    Product p = prod();
+                    Product p = readProduct();
                     prod.add(p);
                 }
                 throw new CheckoutFailed(prod);
@@ -480,9 +413,9 @@ public class Client implements ShopFacade {
 
 
         }
-        catch(IOException e){
+        catch(IOException ignore){
 
-            }
+        }
 
     }
     @Override
@@ -498,14 +431,14 @@ public class Client implements ShopFacade {
             } else if (status.equals("200")) {
                 int size = Integer.parseInt(in.readLine());
                 for (int i = 0; i < size; i++) {
-                    Product p = prod();
+                    Product p = readProduct();
                     int quantity = Integer.parseInt(in.readLine());
                     cart.put(p, quantity);
 
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return cart;
@@ -532,10 +465,9 @@ public class Client implements ShopFacade {
 
             } else if (status.equals("200")) {
 
-
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
@@ -559,12 +491,8 @@ public class Client implements ShopFacade {
                 int ans = Integer.parseInt(this.in.readLine());
                 throw new PacksizeNotMatching(ans);
             } else if (status.equals("200")) {
-
-
             }
-
-        } catch (IOException e) {
-
+        } catch (IOException ignore) {
         }
 
 
@@ -588,23 +516,10 @@ public class Client implements ShopFacade {
         try {
             count = Integer.parseInt(in.readLine());
             for (int i = 0; i < count; i++) {
-                String type = in.readLine();
-                if (type.equals("p")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.valueOf(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    products.add(new Product(id, price, name, quantity));
-                } else if (type.equals("mp")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.valueOf(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    int packsize = Integer.parseInt(this.in.readLine());
-                    products.add(new MassProduct(id, price, name, quantity, packsize));
-                }
+                Product p = readProduct();
+                products.add(p);
             }
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return products;
@@ -623,21 +538,19 @@ public class Client implements ShopFacade {
     }
 
     public User getUser(String username) {
+        //NOT NEEDED FOR COMMUNICATION
         return null;
     }
 
-    private Product prod (){
-        String status;
+    private Product readProduct(){
         try {
             String type = in.readLine();
-
                 if (type.equals("p")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
                     double price = Double.valueOf(this.in.readLine());
                     int quantity = Integer.parseInt(this.in.readLine());
                     return new Product(id,price, name, quantity);
-
                 } else if (type.equals("mp")) {
                     int id = Integer.parseInt(in.readLine());
                     String name = this.in.readLine();
@@ -646,10 +559,10 @@ public class Client implements ShopFacade {
                     int packsize = Integer.parseInt(this.in.readLine());
                     return new MassProduct(id,price,name,quantity, packsize);
                 }
+        } catch (IOException ignore) {
 
-        } catch (IOException e) {
-
-        } return  null;
+        }
+        return new Product(0,0, "ERROR", 0);
     }
 
 }

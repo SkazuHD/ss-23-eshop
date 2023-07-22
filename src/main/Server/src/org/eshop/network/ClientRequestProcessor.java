@@ -1,6 +1,7 @@
 package org.eshop.network;
 
 
+import com.sun.net.httpserver.Authenticator;
 import org.eshop.exceptions.*;
 import org.eshop.entities.*;
 import org.eshop.shop.Shop;
@@ -114,6 +115,10 @@ class ClientRequestProcessor implements Runnable{
                     getProdHistory();
                     System.out.println("Success");
                     break;
+                case "getUser":
+                    getUser();
+                    System.out.println("Success");
+                    break;
                 case "getInvoice":
                     getInvoice();
                     System.out.println("Success");
@@ -166,7 +171,9 @@ class ClientRequestProcessor implements Runnable{
        }
 
     }
-
+    public void getUser(){
+        //NOT NEEDED FOR COMMUNICATION
+    }
     public void regiserUser() {
         String username = null;
         String password = null;
@@ -266,7 +273,7 @@ class ClientRequestProcessor implements Runnable{
             user = server.getUser(in.readLine());
             server.createProduct(name, price, quantity, user);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
