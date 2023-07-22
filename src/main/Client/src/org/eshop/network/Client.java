@@ -23,19 +23,19 @@ public class Client implements ShopFacade {
                 this.socket = new Socket(host, port);
                 this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
                 this.out = new PrintStream(this.socket.getOutputStream());
-            } catch (IOException var7) {
-                System.err.println("Fehler beim Öffnen des Sockets/Streams: " + var7);
+            } catch (IOException e) {
+                System.err.println("Fehler beim Öffnen des Sockets/Streams: " + e);
                 if (this.socket != null) {
                     try {
                         this.socket.close();
                         System.err.println("Socket geschlossen");
-                    } catch (IOException var6) {
+                    } catch (IOException ignore) {
                     }
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
 
-                }catch (InterruptedException e){
+                }catch (InterruptedException ignore){
 
                 }
 
@@ -44,14 +44,14 @@ public class Client implements ShopFacade {
         }
 
 
-        PrintStream var10000 = System.err;
-        String var10001 = String.valueOf(this.socket.getInetAddress());
-        var10000.println("Verbunden mit Server " + var10001 + ":" + this.socket.getPort());
+
+        String server = String.valueOf(this.socket.getInetAddress());
+        System.out.println("Verbunden mit Server " + server + ":" + this.socket.getPort());
 
         try {
             String message = this.in.readLine();
             System.out.println(message);
-        } catch (IOException var5) {
+        } catch (IOException ignore) {
 
         }
 
