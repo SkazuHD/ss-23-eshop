@@ -161,17 +161,9 @@ public class Client implements ShopFacade {
         out.println(user.getUsername());
         try {
             String status = this.in.readLine();
-            if (status.equals("400")) {
-                String ans = this.in.readLine();
-                throw new UserExistsException(ans);
-
-            } else if (status.equals("200")) {
-                return status.equals("200");
-            }
-
-        } catch (IOException | UserExistsException e) {
+            return status.equals("200");
+        } catch (IOException ignore) {
         }
-
         return false;
     }
 
@@ -185,12 +177,9 @@ public class Client implements ShopFacade {
         try {
             String status = this.in.readLine();
             if (status.equals("400")) {
-                String ans = this.in.readLine();
-                throw new UserExistsException(ans);
-
+                throw new IllegalArgumentException("Values not Valid");
             }
-
-        } catch (IOException | UserExistsException e) {
+        } catch (IOException ignore) {
         }
 
 
@@ -208,10 +197,7 @@ public class Client implements ShopFacade {
             String status = this.in.readLine();
             if (status.equals("400")) {
                 int ans = Integer.parseInt(this.in.readLine());
-
                 throw new PacksizeNotMatching(ans);
-
-
             }
 
         } catch (IOException ignore) {
@@ -237,8 +223,7 @@ public class Client implements ShopFacade {
                 throw new ProductNotFound(ans);
 
             } else if (status.equals("200")) {
-                Product p = prod();
-                return p;
+                return prod();
             }
 
         } catch (IOException ignored) {
