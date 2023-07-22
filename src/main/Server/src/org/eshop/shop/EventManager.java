@@ -5,13 +5,8 @@ import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
 /**
  * The type Event manager.
@@ -99,21 +94,22 @@ public class EventManager {
             }
         } while (event != null);
     }
-
+    public Collection<Event> getAllEvents(){
+        List<Event> allEvents = new ArrayList<>();
+        productEvents.forEach((k, v) -> allEvents.addAll(v));
+        return allEvents;
+    }
 
     public int[] getProductHistory(int productId, int days, int currentStock) {
         List<Event> allEvents = productEvents.get(productId);
         //Return current Stock if no Events are found
         if (allEvents == null || allEvents.isEmpty()){
             int[] history = new int[days];
-            for (int i = 0; i < days; i++) {
-                history[i] = currentStock;
-            }
+            Arrays.fill(history, currentStock);
             return history;
         }
         //Filter Events by Date
         allEvents.removeIf(event -> event.getDayInYear() <= (LocalDate.now().getDayOfYear() - days));
-        System.out.println(allEvents);
 
         //Create Array with size of days
         int[] history = new int[days];
@@ -131,10 +127,13 @@ public class EventManager {
                 }
             }
             history[i] = history[i-1] - sum;
-            System.out.println(currentDayToLookAt+ " Sum:" + sum);
         }
-
-        return history;
+        //REVERSE THE ORDER
+        int[] reversed = new int[history.length];
+        for(int i = 0; i<history.length; i++){
+            reversed[history.length-1-i] = history[i];
+        }
+        return reversed;
     }
 
 

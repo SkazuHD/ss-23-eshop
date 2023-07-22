@@ -278,6 +278,32 @@ public class Client implements ShopFacade {
     }
 
     @Override
+    public Collection<Event> getAllEvents() {
+        out.println("getAllEvents");
+        String status = "";
+        try {
+            status = this.in.readLine();
+            if (status.equals("400")) {
+
+            } else if (status.equals("200")) {
+                int size = Integer.parseInt(in.readLine());
+                ArrayList<Event> events = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    int day = Integer.parseInt(in.readLine());
+                    String User = in.readLine();
+                    int productID = Integer.parseInt(in.readLine());
+                    int quantity = Integer.parseInt(in.readLine());
+                    events.add(new Event(day, User, productID, quantity));
+                }
+                return events;
+            }
+        } catch (IOException ignore) {
+
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
     public List<Product> findProducts(String name) {
         out.println("findName");
         out.println(name);
@@ -292,7 +318,7 @@ public class Client implements ShopFacade {
         } catch (IOException ignore) {
 
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

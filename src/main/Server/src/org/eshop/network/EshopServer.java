@@ -1,14 +1,5 @@
 package org.eshop.network;
 
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
-//package de.hsbremen.prog2.net.socket.server;
-
-//import de.hsbremen.prog2.net.socket.Adresse;
-
 import org.eshop.shop.Shop;
 
 import java.io.IOException;
@@ -25,17 +16,16 @@ public class EshopServer {
 
 
     public EshopServer(int optPort) {
-        this.port = optPort == 0 ? 6789 : optPort;
+        this.port = optPort == 0 ? DEFAULT_PORT : optPort;
         this.server = new Shop();
         try {
             this.serverSocket = new ServerSocket(this.port);
             InetAddress ia = InetAddress.getLocalHost();
             System.out.println("Host: " + ia.getHostName());
-            PrintStream var10000 = System.out;
-            String var10001 = ia.getHostAddress();
-            var10000.println("Server *" + var10001 + "* lauscht auf Port " + this.port);
-        } catch (IOException var3) {
-            System.err.println("Eine Ausnahme trat beim Anlegen des Server-Sockets auf: " + var3);
+            String server = ia.getHostAddress();
+            System.out.println("Server *" + server + "* lauscht auf Port " + this.port);
+        } catch (IOException ioException) {
+            System.err.println("Eine Ausnahme trat beim Anlegen des Server-Sockets auf: " + ioException);
             System.exit(1);
         }
 
@@ -65,8 +55,8 @@ public class EshopServer {
                 Thread t = new Thread(c);
                 t.start();
             }
-        } catch (IOException var3) {
-            System.err.println("Fehler während des Wartens auf Verbindungen: " + var3);
+        } catch (IOException ioException) {
+            System.err.println("Fehler während des Wartens auf Verbindungen: " + ioException);
             System.exit(1);
         }
     }

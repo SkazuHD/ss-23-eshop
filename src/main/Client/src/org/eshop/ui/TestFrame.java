@@ -1,19 +1,9 @@
 package org.eshop.ui;
 
-import org.eshop.entities.Employee;
-import org.eshop.entities.MassProduct;
-import org.eshop.entities.Product;
 import org.eshop.exceptions.ProductNotFound;
-
-import org.eshop.ui.components.SearchWidget;
-import org.eshop.ui.frames.GraphFrame;
-import org.eshop.ui.panels.addProductPanel;
-import org.eshop.ui.panels.editProductPanel;
-import org.eshop.ui.panels.registerEmployeePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class TestFrame extends JFrame {
     public TestFrame(Component component) {

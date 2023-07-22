@@ -53,9 +53,7 @@ public class Shop implements ShopFacade {
      */
     public void saveAsync() {
         // Parallel Process
-        new Thread(() -> {
-            saveProducts();
-        }).start();
+        new Thread(() -> saveProducts()).start();
     }
 
     /**
@@ -196,6 +194,11 @@ public class Shop implements ShopFacade {
         return productManager.getProducts();
     }
 
+    @Override
+    public Collection<Event> getAllEvents() {
+        return eventManager.getAllEvents();
+    }
+
     //CUSTOMER ONLY
     public Collection<Employee> getAllEmployees() {
         return employeeManager.getEmployee();
@@ -279,7 +282,7 @@ public class Shop implements ShopFacade {
     }
 
     @Override
-    public void deleteProduct(int id) throws ProductNotFound {
+    public void deleteProduct(int id) {
         //TODO
     }
 
