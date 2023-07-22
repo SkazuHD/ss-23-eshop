@@ -90,7 +90,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
@@ -112,7 +112,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
         }
     }
 
@@ -150,7 +150,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
         }
         return null;
     }
@@ -214,7 +214,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
     }
@@ -274,7 +274,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return null;
@@ -301,7 +301,7 @@ public class Client implements ShopFacade {
             } else if (status.equals("200")) {
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
@@ -338,7 +338,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return null;
@@ -401,7 +401,7 @@ public class Client implements ShopFacade {
                }
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return zahlen;
@@ -430,7 +430,7 @@ public class Client implements ShopFacade {
                 }
                 return employees;
 
-            }catch (IOException e){
+            }catch (IOException ignore){
 
             }
 
@@ -459,7 +459,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return new Invoice(c);
@@ -484,15 +484,13 @@ public class Client implements ShopFacade {
 
                 } else if (status.equals("200")) {
                     c.clearCart();
-
                 }
 
 
         }
-        catch(IOException e){
+        catch(IOException ignore){
 
-            }
-
+        }
     }
     @Override
     public Map<Product, Integer> getCart(Customer c) {
@@ -514,7 +512,7 @@ public class Client implements ShopFacade {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return cart;
@@ -544,7 +542,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
@@ -572,7 +570,7 @@ public class Client implements ShopFacade {
 
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
@@ -613,7 +611,7 @@ public class Client implements ShopFacade {
                     products.add(new MassProduct(id, price, name, quantity, packsize));
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
         return products;
@@ -625,7 +623,7 @@ public class Client implements ShopFacade {
             String username = this.in.readLine();
             String password = this.in.readLine();
             return new Employee(id, name, username, password);
-        }catch (IOException e){
+        }catch (IOException ignore){
 
         }
         return null;
@@ -656,7 +654,7 @@ public class Client implements ShopFacade {
                     return new MassProduct(id,price,name,quantity, packsize);
                 }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } return  null;
     }

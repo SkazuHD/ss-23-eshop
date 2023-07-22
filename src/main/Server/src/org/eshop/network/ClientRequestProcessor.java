@@ -180,7 +180,7 @@ class ClientRequestProcessor implements Runnable{
             server.registerUser(username, password, name, address);
             this.out.println(200);
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
             //Something fucked up
         } catch (UserExistsException e) {
             this.out.println(400);
@@ -201,7 +201,7 @@ class ClientRequestProcessor implements Runnable{
             name = this.in.readLine();
             server.registerEmployee(id, username, password, name);
             this.out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (UserExistsException e) {
             this.out.println(400);
@@ -232,7 +232,7 @@ class ClientRequestProcessor implements Runnable{
                 out.println(e.getPassword());
                 out.println(e.getName());
             }
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (LoginFailed lf) {
             out.println(400);
@@ -247,7 +247,7 @@ class ClientRequestProcessor implements Runnable{
             User user = server.getUser(username);
             server.logOut(user);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (IllegalArgumentException e) {
             out.println(400);
@@ -266,7 +266,7 @@ class ClientRequestProcessor implements Runnable{
             user = server.getUser(in.readLine());
             server.createProduct(name, price, quantity, user);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
 
@@ -286,7 +286,7 @@ class ClientRequestProcessor implements Runnable{
             user = server.getUser(in.readLine());
             server.createProduct(name, price, quantity, packSize, user);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (PacksizeNotMatching e) {
             out.println(400);
@@ -309,7 +309,7 @@ class ClientRequestProcessor implements Runnable{
         } catch (ProductNotFound e) {
             out.println(400);
             out.println(name);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         }
     }
@@ -328,7 +328,7 @@ class ClientRequestProcessor implements Runnable{
             Product p = server.editProductDetails(id, name, price, packSize);
             out.println(200);
             returnProd(p);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (ProductNotFound e) {
             out.println(400);
@@ -347,7 +347,7 @@ class ClientRequestProcessor implements Runnable{
             user = server.getUser(in.readLine());
             server.changeQuantity(id, quantity, user);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (ProductNotFound e) {
             out.println(400);
@@ -382,7 +382,7 @@ class ClientRequestProcessor implements Runnable{
                 returnProd(p);
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignore) {
         }
     }
 
@@ -393,7 +393,7 @@ class ClientRequestProcessor implements Runnable{
             Product p = server.findProduct(id);
             out.println(200);
             returnProd(p);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (ProductNotFound e) {
             out.println(400);
@@ -463,7 +463,7 @@ class ClientRequestProcessor implements Runnable{
             c = (Customer) server.getUser(username);
             server.addToCart(prodId, quantiy, c);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (PacksizeNotMatching e) {
             out.println(401);
@@ -491,7 +491,7 @@ class ClientRequestProcessor implements Runnable{
             c = (Customer) server.getUser(username);
             server.removeFromCart(prodId, quantiy, c);
             out.println(200);
-        } catch (IOException e) {
+        } catch (IOException ignore) {
 
         } catch (PacksizeNotMatching e) {
             out.println(401);
