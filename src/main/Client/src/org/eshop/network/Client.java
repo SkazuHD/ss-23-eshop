@@ -13,15 +13,19 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.*;
 
-public class Client implements ShopFacade, UpdateInterface {
+public class Client implements ShopFacade {
     private Socket socket = null;
+    private ServerRequestProcessor updateSocket = null;
     private BufferedReader in;
     private PrintStream out;
 
     public Client(String host, int port) {
-        while (this.socket == null){
+        while (this.socket == null) {
             try {
                 this.socket = new Socket(host, port);
+                this.updateSocket = new ServerRequestProcessor(new Socket(host, port));
+                Thread t = new Thread(this.updateSocket);
+                t.start();
                 this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
                 this.out = new PrintStream(this.socket.getOutputStream());
             } catch (IOException e) {
@@ -36,7 +40,7 @@ public class Client implements ShopFacade, UpdateInterface {
                 try {
                     Thread.sleep(3000);
 
-                }catch (InterruptedException ignore){
+                } catch (InterruptedException ignore) {
 
                 }
 
@@ -274,7 +278,7 @@ public class Client implements ShopFacade, UpdateInterface {
         if (status.equals("400")) {
 
         } else if (status.equals("200")) {
-           return readProducktList();
+            return readProducktList();
         }
         return new ArrayList<>();
     }
@@ -333,7 +337,7 @@ public class Client implements ShopFacade, UpdateInterface {
                 throw new ProductNotFound(in.readLine());
 
             } else if (status.equals("200")) {
-               return readProduct();
+                return readProduct();
 
             }
         } catch (IOException ignore) {
@@ -355,12 +359,12 @@ public class Client implements ShopFacade, UpdateInterface {
             if (status.equals("400")) {
 
             } else if (status.equals("200")) {
-               int length = Integer.parseInt(in.readLine());
+                int length = Integer.parseInt(in.readLine());
                 zahlen = new int[length];
 
-               for (int i= 0; i <length; i++){
-                     zahlen[i] = Integer.parseInt(in.readLine());
-               }
+                for (int i = 0; i < length; i++) {
+                    zahlen[i] = Integer.parseInt(in.readLine());
+                }
             }
 
         } catch (IOException ignore) {
@@ -370,10 +374,8 @@ public class Client implements ShopFacade, UpdateInterface {
     }
 
 
-
-
     @Override
-    public synchronized  Collection<Employee> getAllEmployees() {
+    public synchronized Collection<Employee> getAllEmployees() {
         out.println("getAllEmp");
         String status = "";
         try {
@@ -392,7 +394,7 @@ public class Client implements ShopFacade, UpdateInterface {
                 }
                 return employees;
 
-            }catch (IOException ignore){
+            } catch (IOException ignore) {
 
             }
 
@@ -406,7 +408,7 @@ public class Client implements ShopFacade, UpdateInterface {
         out.println("getInvoice");
         out.println(c.getUsername());
         String status;
-         try {
+        try {
             status = this.in.readLine();
             if (status.equals("400")) {
 
@@ -444,16 +446,16 @@ public class Client implements ShopFacade, UpdateInterface {
                 }
                 throw new CheckoutFailed(prod);
 
-                } else if (status.equals("200")) {
-                    c.clearCart();
-                }
+            } else if (status.equals("200")) {
+                c.clearCart();
+            }
 
 
-        }
-        catch(IOException ignore){
+        } catch (IOException ignore) {
 
         }
     }
+
     @Override
     public synchronized Map<Product, Integer> getCart(Customer c) {
         out.println("getCart");
@@ -568,23 +570,24 @@ public class Client implements ShopFacade, UpdateInterface {
         try {
             count = Integer.parseInt(in.readLine());
             for (int i = 0; i < count; i++) {
-                    Product p = readProduct();
-                    products.add(p);
-                }
+                Product p = readProduct();
+                products.add(p);
+            }
 
         } catch (IOException ignore) {
 
         }
         return products;
     }
-    private synchronized Employee readEmployee(){
+
+    private synchronized Employee readEmployee() {
         try {
             int id = Integer.parseInt(in.readLine());
             String name = this.in.readLine();
             String username = this.in.readLine();
             String password = this.in.readLine();
             return new Employee(id, name, username, password);
-        }catch (IOException ignore){
+        } catch (IOException ignore) {
 
         }
         return null;
@@ -594,44 +597,35 @@ public class Client implements ShopFacade, UpdateInterface {
         return null;
     }
 
-    private synchronized Product readProduct (){
+    private synchronized Product readProduct() {
         try {
             String type = in.readLine();
 
-                if (type.equals("p")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    return new Product(id,price, name, quantity);
+            if (type.equals("p")) {
+                int id = Integer.parseInt(in.readLine());
+                String name = this.in.readLine();
+                double price = Double.parseDouble(this.in.readLine());
+                int quantity = Integer.parseInt(this.in.readLine());
+                return new Product(id, price, name, quantity);
 
-                } else if (type.equals("mp")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    int packsize = Integer.parseInt(this.in.readLine());
-                    return new MassProduct(id,price,name,quantity, packsize);
-                }
+            } else if (type.equals("mp")) {
+                int id = Integer.parseInt(in.readLine());
+                String name = this.in.readLine();
+                double price = Double.parseDouble(this.in.readLine());
+                int quantity = Integer.parseInt(this.in.readLine());
+                int packsize = Integer.parseInt(this.in.readLine());
+                return new MassProduct(id, price, name, quantity, packsize);
+            }
 
         } catch (IOException ignore) {
 
-        } return  null;
+        }
+        return null;
     }
-
-    @Override
-    public void addClient(updatable client) {
-
-    }
-
-    @Override
-    public void removeClient(updatable client) {
-
-    }
-
-    @Override
-    public void notifyClients() {
-
+    public UpdateInterface getUpdateInterface(){
+        return updateSocket;
     }
 }
+
+
 

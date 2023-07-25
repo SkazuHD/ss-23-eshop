@@ -38,8 +38,6 @@ public class Shop implements ShopFacade {
      */
     ShopPersistence persistence = new FileManager();
 
-    List<updateEventListener> listeners = new ArrayList<>();
-
 
     /**
      * Instantiates a new Shop.

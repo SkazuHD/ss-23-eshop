@@ -66,19 +66,22 @@ public class EshopServer implements UpdateInterface {
     }
 
     @Override
-    public void addClient(updatable client) {
+    public void addClient(updatable client, String keyword) {
         activeClients.add(client);
+        System.out.println(activeClients.size());
     }
 
     @Override
     public void removeClient(updatable client) {
+
         activeClients.remove(client);
     }
 
     @Override
-    public void notifyClients() {
+    public void notifyClients(String keyword) {
+        System.out.println("Notifying clients: "+keyword);
         for (updatable client : activeClients) {
-            client.update();
+            client.update(keyword);
         }
     }
 }

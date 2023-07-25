@@ -46,7 +46,6 @@ class ClientRequestProcessor implements Runnable, updatable {
 
         String address = String.valueOf(this.clientSocket.getInetAddress());
         System.out.println("Verbunden mit Client " + address + ":" + this.clientSocket.getPort());
-        eshopServer.addClient(this);
     }
 
     public void run() {
@@ -75,7 +74,8 @@ class ClientRequestProcessor implements Runnable, updatable {
                 case "regEmp" -> {
                     regiserEmployee();
                     System.out.println("Success");
-                    eshopServer.notifyClients();
+                    eshopServer.notifyClients("employee");
+
                 }
                 case "login" -> {
                     login();
@@ -88,23 +88,27 @@ class ClientRequestProcessor implements Runnable, updatable {
                 case "createProd" -> {
                     createProduct();
                     System.out.println("Success");
+                    eshopServer.notifyClients("products");
                 }
                 case "createMProd" -> {
                     createMProduct();
                     System.out.println("Success");
+                    eshopServer.notifyClients("products");
                 }
                 case "editProd" -> {
                     editProduct();
                     System.out.println("Success");
+                    eshopServer.notifyClients("products");
                 }
                 case "editMProd" -> {
                     editMProduct();
                     System.out.println("Success");
+                    eshopServer.notifyClients("products");
                 }
                 case "changeQuant" -> {
                     changeQuantity();
                     System.out.println("Success");
-                    eshopServer.notifyClients();
+                    eshopServer.notifyClients("products");
                 }
                 case "getAll" -> {
                     getAll();
@@ -133,7 +137,7 @@ class ClientRequestProcessor implements Runnable, updatable {
                 case "checkout" -> {
                     checkout();
                     System.out.println("Success");
-                    eshopServer.notifyClients();
+                    eshopServer.notifyClients("products");
                 }
                 case "getCart" -> {
                     getCart();
@@ -158,22 +162,23 @@ class ClientRequestProcessor implements Runnable, updatable {
                 case "clearCart" ->{
                     clearCart();
                     System.out.println("Success");
-                }case "update" ->{
-                    eshopServer.notifyClients();
+                }
+                case "listen" ->{
+                    eshopServer.addClient(this, "init");
+                }
+                case "update" ->{
+                    eshopServer.notifyClients("update");
                 }
                 case "save" -> server.save();
                 default -> System.out.println("Not valid " + input);
             }
         } while (!input.equals("Logout"));
 
-        PrintStream var10000 = System.out;
-        String var10001 = String.valueOf(this.clientSocket.getInetAddress());
-        var10000.println("Verbindung zu " + var10001 + ":" + this.clientSocket.getPort() + " durch Client abgebrochen");
+        System.out.println("Verbindung zu " + this.clientSocket.getInetAddress() + ":" + this.clientSocket.getPort() + " durch Client abgebrochen");
         try {
             this.clientSocket.close();
         } catch (IOException ignore) {
         }
-        eshopServer.removeClient(this);
     }
 
     private void getAllEmp() {
@@ -393,13 +398,6 @@ class ClientRequestProcessor implements Runnable, updatable {
         }
     }
 
-    private void returnEvent(Event e) {
-        out.println(e.getDayInYear());
-        out.println(e.getUserId());
-        out.println(e.getProductId());
-        out.println(e.getQuantity());
-    }
-
     public void findName() {
         String query;
         try {
@@ -553,7 +551,6 @@ class ClientRequestProcessor implements Runnable, updatable {
 
     }
 
-    // UTIL
     private void returnProd(Product p) {
         out.println(p instanceof MassProduct ? "mp" : "p");
         out.println(p.getId());
@@ -573,7 +570,12 @@ class ClientRequestProcessor implements Runnable, updatable {
         out.println(c.getAddress());
 
     }
-
+    private void returnEvent(Event e) {
+        out.println(e.getDayInYear());
+        out.println(e.getUserId());
+        out.println(e.getProductId());
+        out.println(e.getQuantity());
+    }
     private void returnEmployee(Employee e) {
         out.println(e.getID());
         out.println(e.getUsername());
@@ -598,8 +600,8 @@ class ClientRequestProcessor implements Runnable, updatable {
 
 
     @Override
-    public void update() {
+    public void update(String keyword) {
         System.out.println("Update "+ clientSocket.getPort());
-        out.println("300");
+        out.println(keyword);
     }
 }
