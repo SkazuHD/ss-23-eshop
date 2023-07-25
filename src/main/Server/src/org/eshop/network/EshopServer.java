@@ -1,18 +1,22 @@
 package org.eshop.network;
 
 import org.eshop.shop.Shop;
+import org.eshop.shop.UpdateInterface;
+import org.eshop.shop.updatable;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EshopServer {
+public class EshopServer implements UpdateInterface {
     public static final int DEFAULT_PORT = 6789;
     private final int port;
     private final Shop server;
     private ServerSocket serverSocket;
+    private List<updatable> activeClients = new ArrayList<>();
 
 
     public EshopServer(int optPort) {
@@ -51,13 +55,30 @@ public class EshopServer {
         try {
             while (true) {
                 Socket clientSocket = this.serverSocket.accept();
-                ClientRequestProcessor c = new ClientRequestProcessor(clientSocket, this.server);
+                ClientRequestProcessor c = new ClientRequestProcessor(clientSocket, this.server, this);
                 Thread t = new Thread(c);
                 t.start();
             }
         } catch (IOException ioException) {
             System.err.println("Fehler während des Wartens auf Verbindungen: " + ioException);
             System.exit(1);
+        }
+    }
+
+    @Override
+    public void addClient(updatable client) {
+        activeClients.add(client);
+    }
+
+    @Override
+    public void removeClient(updatable client) {
+        activeClients.remove(client);
+    }
+
+    @Override
+    public void notifyClients() {
+        for (updatable client : activeClients) {
+            client.update();
         }
     }
 }

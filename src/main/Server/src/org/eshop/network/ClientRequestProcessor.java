@@ -4,6 +4,8 @@ package org.eshop.network;
 import org.eshop.entities.*;
 import org.eshop.exceptions.*;
 import org.eshop.shop.Shop;
+import org.eshop.shop.UpdateInterface;
+import org.eshop.shop.updatable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,16 +16,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-class ClientRequestProcessor implements Runnable{
+class ClientRequestProcessor implements Runnable, updatable {
 
     private final Shop server;
     private final Socket clientSocket;
     private BufferedReader in;
     private PrintStream out;
+    private UpdateInterface eshopServer;
 
-    public ClientRequestProcessor(Socket socket, Shop server) {
+
+    public ClientRequestProcessor(Socket socket, Shop server, UpdateInterface eshopServer) {
         this.clientSocket = socket;
         this.server = server;
+        this.eshopServer = eshopServer;
 
         try {
             this.in = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
@@ -38,9 +43,10 @@ class ClientRequestProcessor implements Runnable{
             return;
         }
 
-        PrintStream var10000 = System.out;
-        String var10001 = String.valueOf(this.clientSocket.getInetAddress());
-        var10000.println("Verbunden mit Client " + var10001 + ":" + this.clientSocket.getPort());
+
+        String address = String.valueOf(this.clientSocket.getInetAddress());
+        System.out.println("Verbunden mit Client " + address + ":" + this.clientSocket.getPort());
+        eshopServer.addClient(this);
     }
 
     public void run() {
@@ -69,6 +75,7 @@ class ClientRequestProcessor implements Runnable{
                 case "regEmp" -> {
                     regiserEmployee();
                     System.out.println("Success");
+                    eshopServer.notifyClients();
                 }
                 case "login" -> {
                     login();
@@ -97,6 +104,7 @@ class ClientRequestProcessor implements Runnable{
                 case "changeQuant" -> {
                     changeQuantity();
                     System.out.println("Success");
+                    eshopServer.notifyClients();
                 }
                 case "getAll" -> {
                     getAll();
@@ -125,6 +133,7 @@ class ClientRequestProcessor implements Runnable{
                 case "checkout" -> {
                     checkout();
                     System.out.println("Success");
+                    eshopServer.notifyClients();
                 }
                 case "getCart" -> {
                     getCart();
@@ -158,12 +167,11 @@ class ClientRequestProcessor implements Runnable{
         PrintStream var10000 = System.out;
         String var10001 = String.valueOf(this.clientSocket.getInetAddress());
         var10000.println("Verbindung zu " + var10001 + ":" + this.clientSocket.getPort() + " durch Client abgebrochen");
-
         try {
             this.clientSocket.close();
         } catch (IOException ignore) {
         }
-
+        eshopServer.removeClient(this);
     }
 
     private void getAllEmp() {
@@ -587,4 +595,9 @@ class ClientRequestProcessor implements Runnable{
     }
 
 
+    @Override
+    public void update() {
+        System.out.println("Update "+ clientSocket.getPort());
+        //out.println("update");
+    }
 }

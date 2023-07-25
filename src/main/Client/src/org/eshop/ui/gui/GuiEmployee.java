@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class GuiEmployee extends javax.swing.JFrame implements ActionListener, updateEventListener {
+public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     ShopFacade shop;
     MenuePanel menuePanel;
     SidePanel sidePanel;
@@ -118,11 +118,6 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
 
     }
 
-
-    @Override
-    public void handleUpdate() {
-        System.out.println("UPDATE!!!");
-    }
 }
 
 

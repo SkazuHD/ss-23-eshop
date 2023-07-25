@@ -3,7 +3,8 @@ package org.eshop.network;
 import org.eshop.exceptions.*;
 import org.eshop.entities.*;
 import org.eshop.shop.ShopFacade;
-import org.eshop.shop.updateEventListener;
+import org.eshop.shop.UpdateInterface;
+import org.eshop.shop.updatable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.*;
 
-public class Client implements ShopFacade {
+public class Client implements ShopFacade, UpdateInterface {
     private Socket socket = null;
     private BufferedReader in;
     private PrintStream out;
@@ -44,7 +45,6 @@ public class Client implements ShopFacade {
         }
 
 
-
         String server = String.valueOf(this.socket.getInetAddress());
         System.out.println("Verbunden mit Server " + server + ":" + this.socket.getPort());
 
@@ -56,8 +56,10 @@ public class Client implements ShopFacade {
         }
 
     }
+
+
     @Override
-    public void registerUser(String username, String password, String name, String address) throws UserExistsException {
+    public synchronized void registerUser(String username, String password, String name, String address) throws UserExistsException {
         out.println("registerUser");
         out.println(username);
         out.println(password);
@@ -77,7 +79,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void registerEmployee(int id, String username, String password, String name) throws UserExistsException {
+    public synchronized void registerEmployee(int id, String username, String password, String name) throws UserExistsException {
         out.println("regEmp");
         out.println(id);
         out.println(username);
@@ -95,7 +97,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public User logIn(String username, String password) throws LoginFailed {
+    public synchronized User logIn(String username, String password) throws LoginFailed {
         out.println("login");
         out.println(username);
         out.println(password);
@@ -129,7 +131,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public boolean logOut(User user) {
+    public synchronized boolean logOut(User user) {
         out.println("logout");
         out.println(user.getUsername());
         try {
@@ -141,7 +143,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void createProduct(String name, double price, int quantity, User user) {
+    public synchronized void createProduct(String name, double price, int quantity, User user) {
         out.println("createProd");
         out.println(name);
         out.println(price);
@@ -159,7 +161,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void createProduct(String name, double price, int quantity, int packSize, User user) throws PacksizeNotMatching {
+    public synchronized void createProduct(String name, double price, int quantity, int packSize, User user) throws PacksizeNotMatching {
         out.println("createMProd");
         out.println(name);
         out.println(price);
@@ -179,12 +181,12 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void deleteProduct(int id) {
+    public synchronized void deleteProduct(int id) {
 
     }
 
     @Override
-    public Product editProductDetails(int id, String name, double price) throws ProductNotFound {
+    public synchronized Product editProductDetails(int id, String name, double price) throws ProductNotFound {
         out.println("editProd");
         out.println(id);
         out.println(name);
@@ -207,7 +209,7 @@ public class Client implements ShopFacade {
 
 
     @Override
-    public Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
+    public synchronized Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
         out.println("editMProd");
         out.println(id);
         out.println(name);
@@ -230,7 +232,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
+    public synchronized void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         out.println("changeQuant");
         out.println(id);
         out.println(quantity);
@@ -261,7 +263,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Collection<Product> getAllProducts() {
+    public synchronized Collection<Product> getAllProducts() {
         out.println("getAll");
         String status = "";
         try {
@@ -278,7 +280,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Collection<Event> getAllEvents() {
+    public synchronized Collection<Event> getAllEvents() {
         out.println("getAllEvents");
         String status = "";
         try {
@@ -304,7 +306,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public List<Product> findProducts(String name) {
+    public synchronized List<Product> findProducts(String name) {
         out.println("findName");
         out.println(name);
         try {
@@ -322,7 +324,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Product findProduct(int ID) throws ProductNotFound {
+    public synchronized Product findProduct(int ID) throws ProductNotFound {
         out.println("findId");
         out.println(ID);
         try {
@@ -342,7 +344,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public int[] getProductHistory(int productId, int days) {
+    public synchronized int[] getProductHistory(int productId, int days) {
         out.println("prodHistory");
         out.println(productId);
         out.println(days);
@@ -371,7 +373,7 @@ public class Client implements ShopFacade {
 
 
     @Override
-    public Collection<Employee> getAllEmployees() {
+    public synchronized  Collection<Employee> getAllEmployees() {
         out.println("getAllEmp");
         String status = "";
         try {
@@ -400,7 +402,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Invoice getInvoice(Customer c) {
+    public synchronized Invoice getInvoice(Customer c) {
         out.println("getInvoice");
         out.println(c.getUsername());
         String status;
@@ -427,7 +429,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void checkout(Customer c) throws CheckoutFailed {
+    public synchronized void checkout(Customer c) throws CheckoutFailed {
         out.println("checkout");
         out.println(c.getUsername());
         String status;
@@ -453,7 +455,7 @@ public class Client implements ShopFacade {
         }
     }
     @Override
-    public Map<Product, Integer> getCart(Customer c) {
+    public synchronized Map<Product, Integer> getCart(Customer c) {
         out.println("getCart");
         out.println(c.getUsername());
         Map<Product, Integer> cart = new HashMap<>();
@@ -478,7 +480,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound {
+    public synchronized void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound {
         out.println("addToCart");
         out.println(id);
         out.println(quantity);
@@ -508,7 +510,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound {
+    public synchronized void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound {
         out.println("removeFromCart");
         out.println(id);
         out.println(quantity);
@@ -537,7 +539,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void clearCart(Customer c) {
+    public synchronized void clearCart(Customer c) {
         out.println("clearCart");
         out.println(c.getUsername());
         try {
@@ -558,13 +560,8 @@ public class Client implements ShopFacade {
         out.println("save");
     }
 
-    @Override
-    public void addUpdateListener(updateEventListener listener) {
 
-    }
-
-
-    private List<Product> readProducktList() {
+    private synchronized List<Product> readProducktList() {
 
         List<Product> products = new ArrayList<>();
         int count;
@@ -580,7 +577,7 @@ public class Client implements ShopFacade {
         }
         return products;
     }
-    private Employee readEmployee(){
+    private synchronized Employee readEmployee(){
         try {
             int id = Integer.parseInt(in.readLine());
             String name = this.in.readLine();
@@ -593,11 +590,11 @@ public class Client implements ShopFacade {
         return null;
     }
 
-    public User getUser(String username) {
+    public synchronized User getUser(String username) {
         return null;
     }
 
-    private Product readProduct (){
+    private synchronized Product readProduct (){
         try {
             String type = in.readLine();
 
@@ -622,5 +619,19 @@ public class Client implements ShopFacade {
         } return  null;
     }
 
+    @Override
+    public void addClient(updatable client) {
+
+    }
+
+    @Override
+    public void removeClient(updatable client) {
+
+    }
+
+    @Override
+    public void notifyClients() {
+
+    }
 }
 
