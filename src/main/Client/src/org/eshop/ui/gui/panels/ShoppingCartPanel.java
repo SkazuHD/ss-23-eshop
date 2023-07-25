@@ -42,8 +42,11 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
         this.add(shoppingCart);
         this.add(totalprice);
         this.add(Box.createVerticalGlue());
-        this.add(checkoutButton);
-        this.add(clearButton);
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+        buttons.add(checkoutButton);
+        buttons.add(clearButton);
+        this.add(buttons);
         this.add(Box.createRigidArea(new Dimension(5, 20)));
         updateCart();
     }
