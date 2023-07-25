@@ -1,7 +1,9 @@
 package org.eshop.ui.gui.components;
 
 import org.eshop.entities.Product;
+import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
+import org.eshop.shop.updatable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -12,18 +14,20 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
 
-public class SearchWidget extends JPanel implements ActionListener {
+public class SearchWidget extends JPanel implements ActionListener, updatable {
 
-    private final ShopFacade server;
+    private final ShopFacade shop;
     private final SearchListener listener;
     private final JLabel searchLabel = new JLabel("Search");
     private final JTextField searchField = new JTextField();
     private final JButton searchButton = new JButton("Search");
 
-    public SearchWidget(ShopFacade server, SearchListener listener) {
+    public SearchWidget(ShopFacade shop, SearchListener listener) {
         super();
-        this.server = server;
+        this.shop = shop;
         this.listener = listener;
+        Client server = (Client) shop;
+        server.getUpdateInterface().addClient(this, "products");
         setupUI();
         setupEvents();
     }
@@ -37,6 +41,8 @@ public class SearchWidget extends JPanel implements ActionListener {
         this.add(searchField);
         this.setMaximumSize(new Dimension(500, 30));
         this.add(searchButton);
+
+        
     }
 
     private void setupEvents() {
@@ -49,10 +55,10 @@ public class SearchWidget extends JPanel implements ActionListener {
     private void search() {
         String query = searchField.getText();
         if (query.isEmpty() || query.isBlank() || query.length() < 3) {
-            Collection<Product> result = server.getAllProducts();
+            Collection<Product> result = shop.getAllProducts();
             listener.onSearch(result.stream().toList());
         } else {
-            List<Product> result = server.findProducts(query);
+            List<Product> result = shop.findProducts(query);
             listener.onSearch(result);
         }
     }
@@ -61,6 +67,13 @@ public class SearchWidget extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //On click of search button
         search();
+    }
+
+    @Override
+    public void update(String keyword) {
+        if (keyword.equals("products")) {
+            search();
+        }
     }
 
     public interface SearchListener {
