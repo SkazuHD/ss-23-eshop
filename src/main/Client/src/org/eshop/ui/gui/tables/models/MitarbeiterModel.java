@@ -25,8 +25,6 @@ import java.util.Vector;
         };
 
 
-
-
         public MitarbeiterModel(List<Employee> employeeList, String[] columns){
             super();
             this.columns = columns;
@@ -51,7 +49,10 @@ import java.util.Vector;
         public int getColumnCount() {
             return columns.length;
         }
-
+        @Override
+        public String getColumnName(int col) {
+            return columns[col];
+        }
         @Override
         public Object getValueAt(int row, int col) {
             Employee employee = employeeList.get(row);
@@ -66,8 +67,6 @@ import java.util.Vector;
                     return null;
             }
         }
-
-
 
 
     }

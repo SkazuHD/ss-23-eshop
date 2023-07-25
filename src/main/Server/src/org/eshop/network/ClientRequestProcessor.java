@@ -22,7 +22,7 @@ class ClientRequestProcessor implements Runnable, updatable {
     private final Socket clientSocket;
     private BufferedReader in;
     private PrintStream out;
-    private UpdateInterface eshopServer;
+    private final UpdateInterface eshopServer;
 
 
     public ClientRequestProcessor(Socket socket, Shop server, UpdateInterface eshopServer) {
@@ -109,6 +109,7 @@ class ClientRequestProcessor implements Runnable, updatable {
                     changeQuantity();
                     System.out.println("Success");
                     eshopServer.notifyClients("products");
+                    eshopServer.notifyClients("event");
                 }
                 case "getAll" -> {
                     getAll();
@@ -138,6 +139,7 @@ class ClientRequestProcessor implements Runnable, updatable {
                     checkout();
                     System.out.println("Success");
                     eshopServer.notifyClients("products");
+                    eshopServer.notifyClients("event");
                 }
                 case "getCart" -> {
                     getCart();
@@ -473,7 +475,8 @@ class ClientRequestProcessor implements Runnable, updatable {
         Customer c = (Customer) server.getUser(username);
         server.clearCart(c);
         out.println(200);
-    };
+    }
+
     public void getInvoice() {
         String username = "";
         try {

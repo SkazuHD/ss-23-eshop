@@ -7,7 +7,9 @@ import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.entities.User;
+import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
+import org.eshop.shop.updatable;
 import org.eshop.ui.gui.tables.components.TableButtonRender;
 import org.eshop.ui.gui.tables.components.TableCellEditor;
 import org.eshop.ui.gui.tables.models.productTabelModel;
@@ -17,7 +19,7 @@ import org.eshop.ui.gui.tables.TableListener;
 import javax.swing.*;
 import java.util.List;
 
-public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener {
+public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener, updatable {
     ShopFacade shop;
     TableListener listener;
     User user;
@@ -33,7 +35,8 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
         this.setAutoCreateRowSorter(true);
-
+        Client server = (Client) shop;
+        server.getUpdateInterface().addClient(this, "products");
         updateProducts(productList);
     }
 
@@ -87,4 +90,10 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         System.out.println("VIEW");
     }
 
+    @Override
+    public void update(String keyword) {
+        if (keyword.equals("products")) {
+            updateProducts(shop.getAllProducts().stream().toList());
+        }
+    }
 }

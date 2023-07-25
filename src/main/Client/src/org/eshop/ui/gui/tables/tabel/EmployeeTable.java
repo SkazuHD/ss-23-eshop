@@ -1,22 +1,17 @@
 package org.eshop.ui.gui.tables.tabel;
 
 import org.eshop.entities.Employee;
-import org.eshop.entities.Product;
 import org.eshop.entities.User;
-import org.eshop.shop.Shop;
+
+import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
+import org.eshop.shop.updatable;
 import org.eshop.ui.gui.GuiEmployee;
-import org.eshop.ui.gui.tables.TableListener;
-import org.eshop.ui.gui.tables.TableButtonEventListener;
-import org.eshop.ui.gui.tables.components.TableButtonRenderEmployee;
-import org.eshop.ui.gui.tables.components.TableCellEditorEmployee;
 import org.eshop.ui.gui.tables.models.MitarbeiterModel;
-import org.eshop.ui.gui.tables.models.productEmployeeModel;
 import javax.swing.*;
 import java.util.List;
-import java.util.Vector;
 
-public class EmployeeTable extends JTable  {
+public class EmployeeTable extends JTable implements updatable {
     ShopFacade shop;
     User user;
 
@@ -32,7 +27,10 @@ public class EmployeeTable extends JTable  {
         this.setModel(tabelModel1);
         this.setRowHeight(40);
 
-        //TableRowSorter<productEmployeeModel> sorter = new TableRowSorter<>();
+        //Register for live updates
+        Client server = (Client) shop;
+        server.getUpdateInterface().addClient(this, "employee");
+
         this.setAutoCreateRowSorter(true);
 
         updateEmployee(employeeList);
@@ -42,11 +40,15 @@ public class EmployeeTable extends JTable  {
 
 
     public void updateEmployee(List<Employee> employeeList) {
-
-        //TODO sort here
         MitarbeiterModel tabelModel1 = (MitarbeiterModel) getModel();
         tabelModel1.setEmployeeList(employeeList);
     }
 
+    @Override
+    public void update(String keyword) {
+        System.out.println("Employee update");
+        if (keyword.equals("employee"))
+            updateEmployee(shop.getAllEmployees().stream().toList());
+    }
 }
 

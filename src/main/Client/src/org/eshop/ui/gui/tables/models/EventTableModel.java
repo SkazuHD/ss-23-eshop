@@ -7,8 +7,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class EventTableModel extends AbstractTableModel {
-    private List<Event> eventList;
-    private String[] columns;
+    private final List<Event> eventList;
+    private final String[] columns;
     private final ShopFacade shop;
     public EventTableModel(ShopFacade shop) {
         super();
