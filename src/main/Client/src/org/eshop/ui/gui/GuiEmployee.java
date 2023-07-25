@@ -2,7 +2,6 @@ package org.eshop.ui.gui;
 
 import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
-import org.eshop.shop.updateEventListener;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
 import org.eshop.ui.gui.tables.tabel.EventTable;
@@ -14,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class GuiEmployee extends javax.swing.JFrame implements ActionListener, updateEventListener {
+public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     ShopFacade shop;
     MenuePanel menuePanel;
     SidePanel sidePanel;
@@ -118,11 +117,6 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
 
     }
 
-
-    @Override
-    public void handleUpdate() {
-        System.out.println("UPDATE!!!");
-    }
 }
 
 

@@ -3,7 +3,10 @@ package org.eshop.ui.gui.tables.tabel;
 import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.exceptions.ProductNotFound;
+import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
+import org.eshop.shop.UpdateInterface;
+import org.eshop.shop.updatable;
 import org.eshop.ui.gui.frames.frames.GraphFrame;
 import org.eshop.ui.gui.tables.components.TableButtonRenderEmployee;
 import org.eshop.ui.gui.tables.components.TableCellEditorEmployee;
@@ -14,7 +17,7 @@ import org.eshop.ui.gui.tables.TableListener;
 import javax.swing.*;
 import java.util.List;
 
-public class EmployeeProductTable extends JTable implements TableButtonEventListener {
+public class EmployeeProductTable extends JTable implements TableButtonEventListener, updatable {
 
     ShopFacade shop;
     TableListener listener;
@@ -32,7 +35,8 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditorEmployee(this));
         //TableRowSorter<productEmployeeModel> sorter = new TableRowSorter<>();
         this.setAutoCreateRowSorter(true);
-
+        Client server = (Client) shop;
+        server.getUpdateInterface().addClient(this, "products");
         updateProducts(productList);
     }
 
@@ -75,4 +79,11 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         new GraphFrame(shop, (int) getValueAt(row, 0), 30);
     }
 
+    @Override
+    public void update(String keyword) {
+        System.err.println("Update EmployeeProductTable");
+        if (keyword.equals("products")) {
+            updateProducts(shop.getAllProducts().stream().toList());
+        }
+    }
 }

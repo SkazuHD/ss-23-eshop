@@ -135,6 +135,7 @@ public class LoginFrame extends JFrame {
             try {
                 u = server.logIn(username, password);
                 listener.onLogin(u);
+                this.dispose();
             } catch (LoginFailed exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage(), "Login failed!",
                         JOptionPane.ERROR_MESSAGE);

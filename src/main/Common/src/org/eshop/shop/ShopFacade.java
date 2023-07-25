@@ -202,6 +202,6 @@ public interface ShopFacade {
 //PERSISTENCE API
     void save();
 
-    void addUpdateListener(updateEventListener listener);
+
 
 }
