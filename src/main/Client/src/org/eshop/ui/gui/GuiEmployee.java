@@ -50,7 +50,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         paneelcenter.setLayout(new BoxLayout(paneelcenter, BoxLayout.PAGE_AXIS));
 
 
-        String[] columns = {"ID", "Name", "Username", ""};
+        String[] columns = {"ID", "Name", "Username", "Password"};
         mitarbeiterPanel = new MitarbeiterPanel(this.shop,loggedInUser,columns);
         sidePanel = new SidePanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
