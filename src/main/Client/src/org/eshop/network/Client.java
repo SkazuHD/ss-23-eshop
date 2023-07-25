@@ -537,6 +537,23 @@ public class Client implements ShopFacade {
     }
 
     @Override
+    public void clearCart(Customer c) {
+        out.println("clearCart");
+        out.println(c.getUsername());
+        try {
+            String status = this.in.readLine();
+            if (status.equals("400")) {
+
+            } else if (status.equals("200")) {
+                c.clearCart();
+            }
+
+        } catch (IOException ignore) {
+
+        }
+    }
+
+    @Override
     public void save() {
         out.println("save");
     }

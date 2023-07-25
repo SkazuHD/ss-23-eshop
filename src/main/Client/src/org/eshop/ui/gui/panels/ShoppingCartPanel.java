@@ -18,6 +18,7 @@ import java.util.Map;
 public class ShoppingCartPanel extends JPanel implements TableListener {
 
     private final JButton checkoutButton = new JButton("Checkout");
+    private final JButton clearButton = new JButton("Clear");
     private final ShopFacade server;
     private final User loggedInUser;
     private final JTable shoppingCart = new JTable();
@@ -41,7 +42,11 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
         this.add(shoppingCart);
         this.add(totalprice);
         this.add(Box.createVerticalGlue());
-        this.add(checkoutButton);
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+        buttons.add(checkoutButton);
+        buttons.add(clearButton);
+        this.add(buttons);
         this.add(Box.createRigidArea(new Dimension(5, 20)));
         updateCart();
     }
@@ -56,6 +61,10 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
             } catch (CheckoutFailed e) {
                 JOptionPane.showMessageDialog(new JFrame(), e.getMessage());
             }
+        });
+        clearButton.addActionListener((actionEvent) -> {
+            server.clearCart((Customer) loggedInUser);
+            updateCart();
         });
 
     }

@@ -228,6 +228,11 @@ public class Shop implements ShopFacade {
         }
     }
 
+    @Override
+    public void clearCart(Customer c) {
+        c.clearCart();
+    }
+
 
     public Map<Product, Integer> getCart(Customer c) {
         return customerManager.getCart(c);
