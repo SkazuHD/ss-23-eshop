@@ -23,20 +23,18 @@ import java.util.List;
         protected User user;
         protected ShopFacade shop;
         protected EmployeeTable employeeTable;
-         GuiEmployee guiEmployee;
 
 
-        public MitarbeiterPanel (ShopFacade shop, GuiEmployee guiEmployee, User user, String[] coulumns) {
+        public MitarbeiterPanel (ShopFacade shop, User user, String[] coulumns) {
             this.shop = shop;
             List<Employee> employeeList = shop.getAllEmployees().stream().toList();
             employeeTable = new EmployeeTable( employeeList, coulumns,user, shop);
 
-            this.listener = listener;
-
             this.user = user;
             setupUI();
 
-            this.add(employeeTable);
+            this.add(new JScrollPane(employeeTable));
+
             employeeTable.updateEmployee(employeeList);
 
 

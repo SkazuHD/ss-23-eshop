@@ -32,8 +32,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
      */
     public GuiEmployee(ShopFacade shop, User loggedInUser, CustomerMenu.addLogoutListener logoutListener) {
         this.shop = shop;
-        JPanel jPanel1 = new JPanel();
-        jPanel1.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new ShopCloseListener(shop));
         addProductPanel = new addProductPanel(shop, loggedInUser);
@@ -45,14 +44,14 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         eventPanel = new JScrollPane(new EventTable(shop));
         eventPanel.setVisible(false);
         JPanel paneelcenter = new JPanel();
-        jPanel1.add(new JScrollPane(paneelcenter), BorderLayout.CENTER);
+        this.add(new JScrollPane(paneelcenter), BorderLayout.CENTER);
         paneelcenter.add(productPanel);
         paneelcenter.add(eventPanel);
         paneelcenter.setLayout(new BoxLayout(paneelcenter, BoxLayout.PAGE_AXIS));
 
 
         String[] columns = {"ID", "Name", "Username", ""};
-        mitarbeiterPanel = new MitarbeiterPanel(this.shop, this,   loggedInUser,columns);
+        mitarbeiterPanel = new MitarbeiterPanel(this.shop,loggedInUser,columns);
         sidePanel = new SidePanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
         sidePanel.add(addProductPanel);
@@ -63,19 +62,19 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
         registerEmployeePanel.setVisible(false);
 
 
-        jPanel1.add(sidePanel, BorderLayout.EAST);
+        this.add(sidePanel, BorderLayout.EAST);
 
 
         menuePanel = new MenuePanel(shop, productPanel, this, logoutListener, loggedInUser);
 
-        jPanel1.add(menuePanel, BorderLayout.PAGE_START);
+        this.add(menuePanel, BorderLayout.PAGE_START);
 
         paneelcenter.add(mitarbeiterPanel);
         mitarbeiterPanel.setVisible(false);
 
 
         // Das Panel zum aktiven, sichtbaren Inhalt des JFrame machen:
-        this.getContentPane().add(jPanel1);
+
         // Alle Elemente auf kleinstmögliche Größe bringen
         pack();
 
