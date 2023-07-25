@@ -195,7 +195,7 @@ public interface ShopFacade {
      * @throws ProductNotFound     the product not found
      */
     void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound;
-
+    void clearCart(Customer c);
     /**
      * Save.
      */

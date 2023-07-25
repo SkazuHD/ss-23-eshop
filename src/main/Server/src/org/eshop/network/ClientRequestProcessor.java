@@ -146,6 +146,10 @@ class ClientRequestProcessor implements Runnable{
                     getAllEvents();
                     System.out.println("Success");
                 }
+                case "clearCart" ->{
+                    clearCart();
+                    System.out.println("Success");
+                }
                 case "save" -> server.save();
                 default -> System.out.println("Not valid " + input);
             }
@@ -452,7 +456,16 @@ class ClientRequestProcessor implements Runnable{
             out.println(400);
         }
     }
-
+    public void clearCart(){
+        String username = "";
+        try {
+            username = in.readLine();
+        } catch (IOException ignore) {
+        }
+        Customer c = (Customer) server.getUser(username);
+        server.clearCart(c);
+        out.println(200);
+    };
     public void getInvoice() {
         String username = "";
         try {
