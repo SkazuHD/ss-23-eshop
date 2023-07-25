@@ -4,7 +4,7 @@ package org.eshop.ui.gui.panels;
 import org.eshop.entities.Employee;
 import org.eshop.entities.Product;
 import org.eshop.entities.User;
-import org.eshop.shop.Shop;
+
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.components.SearchWidget;
 import org.eshop.ui.gui.GuiEmployee;
@@ -23,20 +23,18 @@ import java.util.List;
         protected User user;
         protected ShopFacade shop;
         protected EmployeeTable employeeTable;
-         GuiEmployee guiEmployee;
 
 
-        public MitarbeiterPanel (ShopFacade shop, GuiEmployee guiEmployee, User user, String[] coulumns) {
+        public MitarbeiterPanel (ShopFacade shop, User user, String[] coulumns) {
             this.shop = shop;
             List<Employee> employeeList = shop.getAllEmployees().stream().toList();
             employeeTable = new EmployeeTable( employeeList, coulumns,user, shop);
 
-            this.listener = listener;
-
             this.user = user;
             setupUI();
 
-            this.add(employeeTable);
+            this.add(new JScrollPane(employeeTable));
+
             employeeTable.updateEmployee(employeeList);
 
 

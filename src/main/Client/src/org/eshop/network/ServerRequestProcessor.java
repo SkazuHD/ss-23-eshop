@@ -16,7 +16,7 @@ import java.util.Map;
 public class ServerRequestProcessor implements Runnable, UpdateInterface {
     private BufferedReader in;
     private PrintStream out;
-    private Socket socket;
+    private final Socket socket;
     private final Map<String, List<updatable>> listeners;
 
     public ServerRequestProcessor(Socket socket) {
