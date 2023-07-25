@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.util.List;
 
 
-
     public class MitarbeiterPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
 
         public TableListener listener;
@@ -23,7 +22,7 @@ import java.util.List;
         protected User user;
         protected ShopFacade shop;
         protected EmployeeTable employeeTable;
-         GuiEmployee guiEmployee;
+
 
 
         public MitarbeiterPanel (ShopFacade shop, GuiEmployee guiEmployee, User user, String[] coulumns) {
