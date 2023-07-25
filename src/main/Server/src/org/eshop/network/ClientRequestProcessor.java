@@ -158,6 +158,8 @@ class ClientRequestProcessor implements Runnable, updatable {
                 case "clearCart" ->{
                     clearCart();
                     System.out.println("Success");
+                }case "update" ->{
+                    eshopServer.notifyClients();
                 }
                 case "save" -> server.save();
                 default -> System.out.println("Not valid " + input);
@@ -598,6 +600,6 @@ class ClientRequestProcessor implements Runnable, updatable {
     @Override
     public void update() {
         System.out.println("Update "+ clientSocket.getPort());
-        //out.println("update");
+        out.println("300");
     }
 }
