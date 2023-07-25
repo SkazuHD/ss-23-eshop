@@ -3,7 +3,8 @@ package org.eshop.network;
 import org.eshop.exceptions.*;
 import org.eshop.entities.*;
 import org.eshop.shop.ShopFacade;
-import org.eshop.shop.updateEventListener;
+import org.eshop.shop.UpdateInterface;
+import org.eshop.shop.updatable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,13 +15,17 @@ import java.util.*;
 
 public class Client implements ShopFacade {
     private Socket socket = null;
+    private ServerRequestProcessor updateSocket = null;
     private BufferedReader in;
     private PrintStream out;
 
     public Client(String host, int port) {
-        while (this.socket == null){
+        while (this.socket == null) {
             try {
                 this.socket = new Socket(host, port);
+                this.updateSocket = new ServerRequestProcessor(new Socket(host, port));
+                Thread t = new Thread(this.updateSocket);
+                t.start();
                 this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
                 this.out = new PrintStream(this.socket.getOutputStream());
             } catch (IOException e) {
@@ -35,14 +40,13 @@ public class Client implements ShopFacade {
                 try {
                     Thread.sleep(3000);
 
-                }catch (InterruptedException ignore){
+                } catch (InterruptedException ignore) {
 
                 }
 
 
             }
         }
-
 
 
         String server = String.valueOf(this.socket.getInetAddress());
@@ -56,8 +60,10 @@ public class Client implements ShopFacade {
         }
 
     }
+
+
     @Override
-    public void registerUser(String username, String password, String name, String address) throws UserExistsException {
+    public synchronized void registerUser(String username, String password, String name, String address) throws UserExistsException {
         out.println("registerUser");
         out.println(username);
         out.println(password);
@@ -77,7 +83,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void registerEmployee(int id, String username, String password, String name) throws UserExistsException {
+    public synchronized void registerEmployee(int id, String username, String password, String name) throws UserExistsException {
         out.println("regEmp");
         out.println(id);
         out.println(username);
@@ -95,7 +101,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public User logIn(String username, String password) throws LoginFailed {
+    public synchronized User logIn(String username, String password) throws LoginFailed {
         out.println("login");
         out.println(username);
         out.println(password);
@@ -129,7 +135,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public boolean logOut(User user) {
+    public synchronized boolean logOut(User user) {
         out.println("logout");
         out.println(user.getUsername());
         try {
@@ -141,7 +147,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void createProduct(String name, double price, int quantity, User user) {
+    public synchronized void createProduct(String name, double price, int quantity, User user) {
         out.println("createProd");
         out.println(name);
         out.println(price);
@@ -159,7 +165,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void createProduct(String name, double price, int quantity, int packSize, User user) throws PacksizeNotMatching {
+    public synchronized void createProduct(String name, double price, int quantity, int packSize, User user) throws PacksizeNotMatching {
         out.println("createMProd");
         out.println(name);
         out.println(price);
@@ -179,12 +185,12 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void deleteProduct(int id) {
+    public synchronized void deleteProduct(int id) {
 
     }
 
     @Override
-    public Product editProductDetails(int id, String name, double price) throws ProductNotFound {
+    public synchronized Product editProductDetails(int id, String name, double price) throws ProductNotFound {
         out.println("editProd");
         out.println(id);
         out.println(name);
@@ -207,7 +213,7 @@ public class Client implements ShopFacade {
 
 
     @Override
-    public Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
+    public synchronized Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
         out.println("editMProd");
         out.println(id);
         out.println(name);
@@ -230,7 +236,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
+    public synchronized void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
         out.println("changeQuant");
         out.println(id);
         out.println(quantity);
@@ -261,7 +267,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Collection<Product> getAllProducts() {
+    public synchronized Collection<Product> getAllProducts() {
         out.println("getAll");
         String status = "";
         try {
@@ -272,13 +278,13 @@ public class Client implements ShopFacade {
         if (status.equals("400")) {
 
         } else if (status.equals("200")) {
-           return readProducktList();
+            return readProducktList();
         }
         return new ArrayList<>();
     }
 
     @Override
-    public Collection<Event> getAllEvents() {
+    public synchronized Collection<Event> getAllEvents() {
         out.println("getAllEvents");
         String status = "";
         try {
@@ -304,7 +310,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public List<Product> findProducts(String name) {
+    public synchronized List<Product> findProducts(String name) {
         out.println("findName");
         out.println(name);
         try {
@@ -322,7 +328,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Product findProduct(int ID) throws ProductNotFound {
+    public synchronized Product findProduct(int ID) throws ProductNotFound {
         out.println("findId");
         out.println(ID);
         try {
@@ -331,7 +337,7 @@ public class Client implements ShopFacade {
                 throw new ProductNotFound(in.readLine());
 
             } else if (status.equals("200")) {
-               return readProduct();
+                return readProduct();
 
             }
         } catch (IOException ignore) {
@@ -342,7 +348,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public int[] getProductHistory(int productId, int days) {
+    public synchronized int[] getProductHistory(int productId, int days) {
         out.println("prodHistory");
         out.println(productId);
         out.println(days);
@@ -353,12 +359,12 @@ public class Client implements ShopFacade {
             if (status.equals("400")) {
 
             } else if (status.equals("200")) {
-               int length = Integer.parseInt(in.readLine());
+                int length = Integer.parseInt(in.readLine());
                 zahlen = new int[length];
 
-               for (int i= 0; i <length; i++){
-                     zahlen[i] = Integer.parseInt(in.readLine());
-               }
+                for (int i = 0; i < length; i++) {
+                    zahlen[i] = Integer.parseInt(in.readLine());
+                }
             }
 
         } catch (IOException ignore) {
@@ -368,10 +374,8 @@ public class Client implements ShopFacade {
     }
 
 
-
-
     @Override
-    public Collection<Employee> getAllEmployees() {
+    public synchronized Collection<Employee> getAllEmployees() {
         out.println("getAllEmp");
         String status = "";
         try {
@@ -390,7 +394,7 @@ public class Client implements ShopFacade {
                 }
                 return employees;
 
-            }catch (IOException ignore){
+            } catch (IOException ignore) {
 
             }
 
@@ -400,11 +404,11 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public Invoice getInvoice(Customer c) {
+    public synchronized Invoice getInvoice(Customer c) {
         out.println("getInvoice");
         out.println(c.getUsername());
         String status;
-         try {
+        try {
             status = this.in.readLine();
             if (status.equals("400")) {
 
@@ -427,7 +431,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void checkout(Customer c) throws CheckoutFailed {
+    public synchronized void checkout(Customer c) throws CheckoutFailed {
         out.println("checkout");
         out.println(c.getUsername());
         String status;
@@ -442,18 +446,18 @@ public class Client implements ShopFacade {
                 }
                 throw new CheckoutFailed(prod);
 
-                } else if (status.equals("200")) {
-                    c.clearCart();
-                }
+            } else if (status.equals("200")) {
+                c.clearCart();
+            }
 
 
-        }
-        catch(IOException ignore){
+        } catch (IOException ignore) {
 
         }
     }
+
     @Override
-    public Map<Product, Integer> getCart(Customer c) {
+    public synchronized Map<Product, Integer> getCart(Customer c) {
         out.println("getCart");
         out.println(c.getUsername());
         Map<Product, Integer> cart = new HashMap<>();
@@ -478,7 +482,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound {
+    public synchronized void addToCart(int id, int quantity, Customer c) throws PacksizeNotMatching, NotInStockException, ProductNotFound {
         out.println("addToCart");
         out.println(id);
         out.println(quantity);
@@ -508,7 +512,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound {
+    public synchronized void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound {
         out.println("removeFromCart");
         out.println(id);
         out.println(quantity);
@@ -537,7 +541,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public void clearCart(Customer c) {
+    public synchronized void clearCart(Customer c) {
         out.println("clearCart");
         out.println(c.getUsername());
         try {
@@ -558,69 +562,70 @@ public class Client implements ShopFacade {
         out.println("save");
     }
 
-    @Override
-    public void addUpdateListener(updateEventListener listener) {
 
-    }
-
-
-    private List<Product> readProducktList() {
+    private synchronized List<Product> readProducktList() {
 
         List<Product> products = new ArrayList<>();
         int count;
         try {
             count = Integer.parseInt(in.readLine());
             for (int i = 0; i < count; i++) {
-                    Product p = readProduct();
-                    products.add(p);
-                }
+                Product p = readProduct();
+                products.add(p);
+            }
 
         } catch (IOException ignore) {
 
         }
         return products;
     }
-    private Employee readEmployee(){
+
+    private synchronized Employee readEmployee() {
         try {
             int id = Integer.parseInt(in.readLine());
             String name = this.in.readLine();
             String username = this.in.readLine();
             String password = this.in.readLine();
             return new Employee(id, name, username, password);
-        }catch (IOException ignore){
+        } catch (IOException ignore) {
 
         }
         return null;
     }
 
-    public User getUser(String username) {
+    public synchronized User getUser(String username) {
         return null;
     }
 
-    private Product readProduct (){
+    private synchronized Product readProduct() {
         try {
             String type = in.readLine();
 
-                if (type.equals("p")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    return new Product(id,price, name, quantity);
+            if (type.equals("p")) {
+                int id = Integer.parseInt(in.readLine());
+                String name = this.in.readLine();
+                double price = Double.parseDouble(this.in.readLine());
+                int quantity = Integer.parseInt(this.in.readLine());
+                return new Product(id, price, name, quantity);
 
-                } else if (type.equals("mp")) {
-                    int id = Integer.parseInt(in.readLine());
-                    String name = this.in.readLine();
-                    double price = Double.parseDouble(this.in.readLine());
-                    int quantity = Integer.parseInt(this.in.readLine());
-                    int packsize = Integer.parseInt(this.in.readLine());
-                    return new MassProduct(id,price,name,quantity, packsize);
-                }
+            } else if (type.equals("mp")) {
+                int id = Integer.parseInt(in.readLine());
+                String name = this.in.readLine();
+                double price = Double.parseDouble(this.in.readLine());
+                int quantity = Integer.parseInt(this.in.readLine());
+                int packsize = Integer.parseInt(this.in.readLine());
+                return new MassProduct(id, price, name, quantity, packsize);
+            }
 
         } catch (IOException ignore) {
 
-        } return  null;
+        }
+        return null;
     }
-
+    public UpdateInterface getUpdateInterface(){
+        return updateSocket;
+    }
 }
+
+
 

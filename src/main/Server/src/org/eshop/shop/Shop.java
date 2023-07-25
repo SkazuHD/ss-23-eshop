@@ -38,8 +38,6 @@ public class Shop implements ShopFacade {
      */
     ShopPersistence persistence = new FileManager();
 
-    List<updateEventListener> listeners = new ArrayList<>();
-
 
     /**
      * Instantiates a new Shop.
@@ -85,15 +83,7 @@ public class Shop implements ShopFacade {
         saveProducts();
     }
 
-    @Override
-    public void addUpdateListener(updateEventListener listener) {
-        this.listeners.add(listener);
-    }
-    private void notifyListeners(){
-        for(updateEventListener listener : listeners){
-            listener.handleUpdate();
-        }
-    }
+
 
     public void load() {
         try {
@@ -261,7 +251,6 @@ public class Shop implements ShopFacade {
         }
         saveAsync();
         cart.clear();
-        notifyListeners();
     }
 
     public Invoice getInvoice(Customer c) {
