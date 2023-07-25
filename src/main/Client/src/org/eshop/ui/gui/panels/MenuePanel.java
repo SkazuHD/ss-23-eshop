@@ -5,7 +5,7 @@ import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.CustomerMenu;
 import org.eshop.ui.gui.GuiEmployee;
-import org.eshop.ui.gui.MitarbeiterPanel;
+import org.eshop.ui.gui.panels.MitarbeiterPanel;
 import org.eshop.ui.gui.components.SearchWidget;
 
 import javax.swing.*;

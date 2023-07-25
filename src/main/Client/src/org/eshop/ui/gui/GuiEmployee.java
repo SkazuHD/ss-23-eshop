@@ -1,12 +1,14 @@
 package org.eshop.ui.gui;
 
 import org.eshop.entities.User;
+import org.eshop.shop.Shop;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updateEventListener;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
 import org.eshop.ui.gui.tables.tabel.EventTable;
-
+import org.eshop.ui.gui.panels.MitarbeiterPanel;
+import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,11 +21,13 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
     MenuePanel menuePanel;
     SidePanel sidePanel;
     ProductPanel productPanel;
-    MitarbeiterPanel mitarbeiterPanel;
+    org.eshop.ui.gui.panels.MitarbeiterPanel mitarbeiterPanel;
     org.eshop.ui.gui.panels.addProductPanel addProductPanel;
     org.eshop.ui.gui.panels.editProductPanel editProductPanel;
     org.eshop.ui.gui.panels.registerEmployeePanel registerEmployeePanel;
     JScrollPane eventPanel;
+
+
 
     /**
      * Der Konstruktor.
@@ -49,7 +53,8 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener, u
         paneelcenter.setLayout(new BoxLayout(paneelcenter, BoxLayout.PAGE_AXIS));
 
 
-        mitarbeiterPanel = new MitarbeiterPanel(shop, this);
+        String[] columns = {"ID", "Name", "Username", ""};
+        mitarbeiterPanel = new MitarbeiterPanel(this.shop, this,   loggedInUser,columns);
         sidePanel = new SidePanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
         sidePanel.add(addProductPanel);
