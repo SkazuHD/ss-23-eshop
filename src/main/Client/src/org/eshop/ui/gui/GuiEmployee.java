@@ -1,13 +1,12 @@
 package org.eshop.ui.gui;
 
 import org.eshop.entities.User;
-import org.eshop.shop.Shop;
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
 import org.eshop.ui.gui.tables.tabel.EventTable;
 import org.eshop.ui.gui.panels.MitarbeiterPanel;
-import java.util.List;
+
 
 import javax.swing.*;
 import java.awt.*;

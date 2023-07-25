@@ -33,8 +33,8 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         this.setRowHeight(40);
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRenderEmployee());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditorEmployee(this));
-        //TableRowSorter<productEmployeeModel> sorter = new TableRowSorter<>();
         this.setAutoCreateRowSorter(true);
+        //Register for live updates
         Client server = (Client) shop;
         server.getUpdateInterface().addClient(this, "products");
         updateProducts(productList);
@@ -42,7 +42,7 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
 
     public void updateProducts(List<Product> productList) {
 
-        //TODO sort here
+
         productEmployeeModel tabelModel = (productEmployeeModel) getModel();
         tabelModel.setProductsList(productList);
     }
@@ -81,7 +81,6 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
 
     @Override
     public void update(String keyword) {
-        System.err.println("Update EmployeeProductTable");
         if (keyword.equals("products")) {
             updateProducts(shop.getAllProducts().stream().toList());
         }

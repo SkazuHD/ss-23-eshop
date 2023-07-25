@@ -16,7 +16,7 @@ public class EshopServer implements UpdateInterface {
     private final int port;
     private final Shop server;
     private ServerSocket serverSocket;
-    private List<updatable> activeClients = new ArrayList<>();
+    private final List<updatable> activeClients = new ArrayList<>();
 
 
     public EshopServer(int optPort) {
