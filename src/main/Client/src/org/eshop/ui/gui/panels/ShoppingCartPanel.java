@@ -37,10 +37,8 @@ public class ShoppingCartPanel extends JPanel implements TableListener {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setPreferredSize(new Dimension(200, 500));
         JLabel title = new JLabel("Warenkorb");
-
-
-
         title.setFont(new Font("Arial", Font.PLAIN, 24));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(title);
         this.add(shoppingCart);
         this.add(totalprice);
