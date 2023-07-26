@@ -5,8 +5,6 @@ import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
 import org.eshop.ui.gui.tables.tabel.EventTable;
-import org.eshop.ui.gui.panels.MitarbeiterPanel;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +22,6 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     org.eshop.ui.gui.panels.editProductPanel editProductPanel;
     org.eshop.ui.gui.panels.registerEmployeePanel registerEmployeePanel;
     JScrollPane eventPanel;
-
 
 
     /**
@@ -51,9 +48,9 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
 
         String[] columns = {"ID", "Name", "Username"};
-        mitarbeiterPanel = new MitarbeiterPanel(this.shop,loggedInUser,columns);
-        sidePanel = new SidePanel(shop, loggedInUser);
-        registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
+        mitarbeiterPanel = new MitarbeiterPanel(this.shop, loggedInUser, columns);
+        sidePanel = new SidePanel();
+        registerEmployeePanel = new registerEmployeePanel(shop);
         sidePanel.add(addProductPanel);
         sidePanel.add(editProductPanel);
         sidePanel.add(registerEmployeePanel);

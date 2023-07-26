@@ -31,7 +31,7 @@ public class EmployeeCenterPanel extends ProductPanel {
     }
 
     public void onSearch(List<Product> result) {
-        if(result == null) result = new ArrayList<Product>();
+        if (result == null) result = new ArrayList<>();
         employeeProductTable.updateProducts(result);
     }
 }

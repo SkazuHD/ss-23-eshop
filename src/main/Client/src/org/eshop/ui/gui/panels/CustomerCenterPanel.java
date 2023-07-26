@@ -7,8 +7,6 @@ import org.eshop.ui.gui.tables.TableListener;
 import org.eshop.ui.gui.tables.tabel.CustomerProductTable;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class CustomerCenterPanel extends ProductPanel {
@@ -24,11 +22,7 @@ public class CustomerCenterPanel extends ProductPanel {
         //Setup Column names and get all products
         String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Packsize", ""};
 
-        Collection<Product> productCollection = shop.getAllProducts();
-        List<Product> products = productCollection != null ? productCollection.stream().toList() : new ArrayList<>();
-
-        //TODO SERVER RETURNS ALL
-        products = shop.getAllProducts().stream().toList();
+        List<Product> products = shop.getAllProducts().stream().toList();
         //Create Table
         customerProductTable = new CustomerProductTable(products, columns, listener, user, shop);
         this.add(new JScrollPane(customerProductTable));

@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Customer extends User {
     private final Map<Product, Integer> cart = new HashMap<>();
     private String name;
-    private String address;
+    private final String address;
 
     /**
      * Constructor for Customer
@@ -93,16 +93,6 @@ public class Customer extends User {
     }
 
     /**
-     * Sets address.
-     *
-     * @param address the address
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
-    /**
      * Gets cart.
      *
      * @return the cart
@@ -146,7 +136,7 @@ public class Customer extends User {
      * @param quantity the quantity
      */
     public void removeFromCart(Product product, int quantity) {
-        if(cart.get(product) == null) return;
+        if (cart.get(product) == null) return;
 
         if (quantity >= cart.get(product)) {
             cart.remove(product);
@@ -154,7 +144,8 @@ public class Customer extends User {
             cart.put(product, cart.get(product) - quantity);
         }
     }
-    public void clearCart(){
+
+    public void clearCart() {
         cart.clear();
     }
 }

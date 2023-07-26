@@ -51,17 +51,12 @@ public class productTabelModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         Product product = productList.get(row);
-        switch (col) {
-            case 0:
-                return product.getId();
-            case 1:
-                return product.getName();
-            case 2:
-                return product.getPrice();
-            case 3:
-                return product instanceof MassProduct mp ? mp.getPacksize() : 1;
-            default:
-                return null;
-        }
+        return switch (col) {
+            case 0 -> product.getId();
+            case 1 -> product.getName();
+            case 2 -> product.getPrice();
+            case 3 -> product instanceof MassProduct mp ? mp.getPacksize() : 1;
+            default -> null;
+        };
     }
 }

@@ -2,24 +2,19 @@ package org.eshop.ui.gui.tables.tabel;
 
 import org.eshop.entities.Employee;
 import org.eshop.entities.User;
-
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updatable;
-import org.eshop.ui.gui.GuiEmployee;
 import org.eshop.ui.gui.tables.models.MitarbeiterModel;
+
 import javax.swing.*;
 import java.util.List;
 
 public class EmployeeTable extends JTable implements updatable {
     ShopFacade shop;
     User user;
-
-    GuiEmployee guiEmployee;
-
-
-
-    public EmployeeTable(List<Employee> employeeList, String[] coulumns, User user, ShopFacade shop){
+    
+    public EmployeeTable(List<Employee> employeeList, String[] coulumns, User user, ShopFacade shop) {
         super();
         this.user = user;
         this.shop = shop;
@@ -35,8 +30,6 @@ public class EmployeeTable extends JTable implements updatable {
 
         updateEmployee(employeeList);
     }
-
-
 
 
     public void updateEmployee(List<Employee> employeeList) {

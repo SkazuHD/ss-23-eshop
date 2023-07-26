@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerRequestProcessor implements Runnable, UpdateInterface {
-    private BufferedReader in;
-    private PrintStream out;
     private final Socket socket;
     private final Map<String, List<updatable>> listeners;
+    private BufferedReader in;
+    private PrintStream out;
 
     public ServerRequestProcessor(Socket socket) {
         this.listeners = new HashMap<>();
@@ -26,16 +26,17 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
             this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.out = new PrintStream(this.socket.getOutputStream());
             this.out.println("listen");
-        }catch (IOException e){
+        } catch (IOException e) {
             System.err.println("ERROR: " + e.getMessage());
             System.exit(1);
         }
 
     }
+
     @Override
     public void run() {
         String input;
-        do{
+        do {
             input = null;
             try {
                 input = this.in.readLine();
@@ -47,8 +48,10 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
                 break;
             }
             System.out.println("Server: " + input);
-            switch (input){
-                case "init" -> {System.out.println("Server Active and running | waiting for keywords");}
+            switch (input) {
+                case "init" -> {
+                    System.out.println("Server Active and running | waiting for keywords");
+                }
                 case "products" -> {
                     notifyClients("products");
                 }
@@ -69,7 +72,7 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
                     System.out.println("ERROR: Unknown command: " + input);
                 }
             }
-        }while (true);
+        } while (true);
     }
 
     @Override
@@ -95,10 +98,10 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
 
         if (list != null) {
             System.out.println("Server: Notifying " + list.size() + " clients with keyword " + keyword);
-            for(updatable client : list){
+            for (updatable client : list) {
                 client.update(keyword);
             }
-        }else {
+        } else {
             System.out.println("Server: No clients with keyword " + keyword);
         }
     }
