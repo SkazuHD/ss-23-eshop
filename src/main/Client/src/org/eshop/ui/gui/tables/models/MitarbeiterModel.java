@@ -6,86 +6,59 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.Vector;
 
-import org.eshop.entities.Employee;
-import org.eshop.entities.MassProduct;
-import org.eshop.entities.Product;
-import org.eshop.entities.User;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.List;
-import java.util.Vector;
-
-
-//Wofür die Models also was machen die???
-    public class MitarbeiterModel extends AbstractTableModel {
-        private final List<Employee> employeeList;
-        private final String[] columns;
-        boolean[] canEdit = new boolean[]{
-                false, false, false, false, true
-        };
+public class MitarbeiterModel extends AbstractTableModel {
+    private final List<Employee> employeeList;
+    private final String[] columns;
+    boolean[] canEdit = new boolean[]{
+            false, false, false, false, true
+    };
 
 
-        public MitarbeiterModel(List<Employee> employeeList, String[] columns) {
-            super();
-            this.columns = columns;
-            this.employeeList = new Vector<>();
-            this.employeeList.addAll(employeeList);
-        }
-
-        public void setEmployeeList(List<Employee> employeeList) {
-            this.employeeList.clear();
-            this.employeeList.addAll(employeeList);
-            fireTableDataChanged();
-        }
-
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit[columnIndex];
-        }
-
-        @Override
-        public int getRowCount() {
-            return this.employeeList.size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return columns.length;
-        }
-
-        @Override
-        public String getColumnName(int col) {
-            return columns[col];
-        }
-
-        @Override
-        public Object getValueAt(int row, int col) {
-            Employee employee = employeeList.get(row);
-            switch (col) {
-                case 0:
-                    return employee.getID();
-                case 1:
-                    return employee.getName();
-                case 2:
-                    return employee.getUsername();
-                default:
-                    return null;
-            }
-        }
-
-        public Class getColumnClass(int column) {
-            Class returnValue;
-            if ((column >= 0) && (column < getColumnCount())) {
-                returnValue = getValueAt(0, column).getClass();
-            } else {
-                returnValue = Object.class;
-            }
-            return returnValue;
-        }
-
-
-
-
-
+    public MitarbeiterModel(List<Employee> employeeList, String[] columns) {
+        super();
+        this.columns = columns;
+        this.employeeList = new Vector<>();
+        this.employeeList.addAll(employeeList);
     }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList.clear();
+        this.employeeList.addAll(employeeList);
+        fireTableDataChanged();
+    }
+
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return canEdit[columnIndex];
+    }
+
+    @Override
+    public int getRowCount() {
+        return this.employeeList.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return columns.length;
+    }
+
+    @Override
+    public String getColumnName(int col) {
+        return columns[col];
+    }
+
+    @Override
+    public Object getValueAt(int row, int col) {
+        Employee employee = employeeList.get(row);
+        return switch (col) {
+            case 0 -> employee.getID();
+            case 1 -> employee.getName();
+            case 2 -> employee.getUsername();
+            default -> null;
+        };
+    }
+
+
+}
 
 

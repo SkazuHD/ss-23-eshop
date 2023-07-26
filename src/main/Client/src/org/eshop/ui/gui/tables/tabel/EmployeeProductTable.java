@@ -5,7 +5,6 @@ import org.eshop.entities.User;
 import org.eshop.exceptions.ProductNotFound;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
-import org.eshop.shop.UpdateInterface;
 import org.eshop.shop.updatable;
 import org.eshop.ui.gui.frames.frames.GraphFrame;
 import org.eshop.ui.gui.tables.components.TableButtonRenderEmployee;

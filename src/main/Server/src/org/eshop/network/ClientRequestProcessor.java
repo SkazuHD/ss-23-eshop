@@ -69,11 +69,11 @@ class ClientRequestProcessor implements Runnable, updatable {
             System.out.println("Request: " + input);
             switch (input) {
                 case "registerUser" -> {
-                    regiserUser();
+                    registerUser();
                     System.out.println("Success");
                 }
                 case "regEmp" -> {
-                    regiserEmployee();
+                    registerEmployee();
                     System.out.println("Success");
                     eshopServer.notifyClients("employee");
 
@@ -162,16 +162,12 @@ class ClientRequestProcessor implements Runnable, updatable {
                     getAllEvents();
                     System.out.println("Success");
                 }
-                case "clearCart" ->{
+                case "clearCart" -> {
                     clearCart();
                     System.out.println("Success");
                 }
-                case "listen" ->{
-                    eshopServer.addClient(this, "init");
-                }
-                case "update" ->{
-                    eshopServer.notifyClients("update");
-                }
+                case "listen" -> eshopServer.addClient(this, "init");
+                case "update" -> eshopServer.notifyClients("update");
                 case "save" -> server.save();
                 default -> System.out.println("Not valid " + input);
             }
@@ -182,21 +178,24 @@ class ClientRequestProcessor implements Runnable, updatable {
             this.clientSocket.close();
         } catch (IOException ignore) {
         }
+        eshopServer.removeClient(this);
     }
 
     private void getAllEmp() {
-       Collection<Employee> employees = server.getAllEmployees();
-       this.out.println(200);
-       this.out.println(employees.size());
-       for(Employee e : employees){
-           returnEmployee(e);
-       }
+        Collection<Employee> employees = server.getAllEmployees();
+        this.out.println(200);
+        this.out.println(employees.size());
+        for (Employee e : employees) {
+            returnEmployee(e);
+        }
 
     }
-    public void getUser(){
+
+    public void getUser() {
         //NOT NEEDED FOR COMMUNICATION
     }
-    public void regiserUser() {
+
+    public void registerUser() {
         String username = null;
         String password;
         String name;
@@ -217,7 +216,7 @@ class ClientRequestProcessor implements Runnable, updatable {
         }
     }
 
-    public void regiserEmployee() {
+    public void registerEmployee() {
         int id;
         String username = null;
         String password;
@@ -392,11 +391,12 @@ class ClientRequestProcessor implements Runnable, updatable {
         }
 
     }
-    public void getAllEvents(){
+
+    public void getAllEvents() {
         List<Event> events = server.getAllEvents().stream().toList();
         out.println(200);
         out.println(events.size());
-        for(Event e : events){
+        for (Event e : events) {
             returnEvent(e);
         }
     }
@@ -467,7 +467,8 @@ class ClientRequestProcessor implements Runnable, updatable {
             out.println(400);
         }
     }
-    public void clearCart(){
+
+    public void clearCart() {
         String username = "";
         try {
             username = in.readLine();
@@ -574,12 +575,14 @@ class ClientRequestProcessor implements Runnable, updatable {
         out.println(c.getAddress());
 
     }
+
     private void returnEvent(Event e) {
         out.println(e.getDayInYear());
         out.println(e.getUserId());
         out.println(e.getProductId());
         out.println(e.getQuantity());
     }
+
     private void returnEmployee(Employee e) {
         out.println(e.getID());
         out.println(e.getUsername());
@@ -605,7 +608,7 @@ class ClientRequestProcessor implements Runnable, updatable {
 
     @Override
     public void update(String keyword) {
-        System.out.println("Update "+ clientSocket.getPort());
+        System.out.println("Update " + clientSocket.getPort());
         out.println(keyword);
     }
 }

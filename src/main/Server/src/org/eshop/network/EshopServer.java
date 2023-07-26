@@ -15,8 +15,8 @@ public class EshopServer implements UpdateInterface {
     public static final int DEFAULT_PORT = 6789;
     private final int port;
     private final Shop server;
-    private ServerSocket serverSocket;
     private final List<updatable> activeClients = new ArrayList<>();
+    private ServerSocket serverSocket;
 
 
     public EshopServer(int optPort) {
@@ -41,13 +41,12 @@ public class EshopServer implements UpdateInterface {
         if (args.length == 1) {
             try {
                 port = Integer.parseInt(args[0]);
-            } catch (NumberFormatException var3) {
-                port = 0;
+            } catch (NumberFormatException ignore) {
+
             }
         }
         EshopServer server = new EshopServer(port);
         server.acceptClientConnectRequests();
-
 
     }
 
@@ -79,7 +78,7 @@ public class EshopServer implements UpdateInterface {
 
     @Override
     public void notifyClients(String keyword) {
-        System.out.println("Notifying clients: "+keyword);
+        System.out.println("Notifying clients: " + keyword);
         for (updatable client : activeClients) {
             client.update(keyword);
         }

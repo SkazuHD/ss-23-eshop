@@ -3,12 +3,9 @@ package org.eshop.ui.gui.tables.components;
 import org.eshop.ui.gui.tables.TableButtonEventListener;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TableButtonPanel extends JPanel {
 
-    private TabelButton viewButton;
     private TabelButton addButton;
     private TabelButton removeButton;
 
@@ -17,18 +14,8 @@ public class TableButtonPanel extends JPanel {
     }
 
     public void initEvents(TableButtonEventListener listener, int row) {
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                listener.onAdd(row);
-            }
-        });
-        removeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                listener.onRemove(row);
-            }
-        });
+        addButton.addActionListener(actionEvent -> listener.onAdd(row));
+        removeButton.addActionListener(actionEvent -> listener.onRemove(row));
     }
 
     private void initComponents() {

@@ -38,20 +38,14 @@ public class CartModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         Product p = prods.get(row);
-        switch (col) {
-            case 0:
-                return p.getId();
-            case 1:
-                return p.getName();
-            case 2:
-                return p.getPrice();
-            case 3:
-                return cart.get(p);
-            case 4:
-                return null;
-            default:
-                return null;
-        }
+        return switch (col) {
+            case 0 -> p.getId();
+            case 1 -> p.getName();
+            case 2 -> p.getPrice();
+            case 3 -> cart.get(p);
+            
+            default -> null;
+        };
     }
 }
 

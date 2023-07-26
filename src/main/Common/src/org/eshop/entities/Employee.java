@@ -45,11 +45,6 @@ public class Employee extends User {
     public void setName(String name) {
         this.name = name;
     }
-    /**
-     * Gets perso nr.
-     *
-     * @return the perso nr
-     */
 
 
 }

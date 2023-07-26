@@ -8,33 +8,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class CustomerMenu extends javax.swing.JPanel {
-    private final javax.swing.JMenuBar jMenuBar =
-            new javax.swing.JMenuBar();
-    private final javax.swing.JButton User =
-            new javax.swing.JButton("User");
-    private final javax.swing.JFormattedTextField Search =
-            new javax.swing.JFormattedTextField("Search");
-    private final javax.swing.JMenuBar Menu =
-            new javax.swing.JMenuBar();
+public class CustomerMenu extends JPanel {
+    private final JMenuBar jMenuBar =
+            new JMenuBar();
+    private final JFormattedTextField Search = new JFormattedTextField("Search");
+    private final JMenuBar Menu = new JMenuBar();
 
-    private final javax.swing.JButton Produkte =
-            new javax.swing.JButton("Produkte");
-
-    private final javax.swing.JButton Warenkorb =
-            new javax.swing.JButton("Warenkorb");
-
-    private final JButton checkoutButton =
-            new JButton("Checkout");
-
-    private final javax.swing.JButton Logout =
-            new javax.swing.JButton("Logout");
-
-    ShopFacade shop;
+    private final JButton Logout = new JButton("Logout");
+    
     GuiCustomer guiCustomer;
     addLogoutListener listener;
 
-    public CustomerMenu(ShopFacade shop, SearchWidget.SearchListener searchListener, GuiCustomer guiCustomer, addLogoutListener LogoutListener , User loggedInUSer) {
+    public CustomerMenu(ShopFacade shop, SearchWidget.SearchListener searchListener, GuiCustomer guiCustomer, addLogoutListener LogoutListener, User loggedInUSer) {
         this.guiCustomer = guiCustomer;
         this.add(jMenuBar);
         this.setBackground(new Color(50));
@@ -53,10 +38,8 @@ public class CustomerMenu extends javax.swing.JPanel {
         Menu.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 
-
-
         Menu.add(Logout);
-        Logout.addActionListener((e)->{
+        Logout.addActionListener((e) -> {
             guiCustomer.dispose();
             listener.onLogout(loggedInUSer);
         });
@@ -64,7 +47,7 @@ public class CustomerMenu extends javax.swing.JPanel {
         Search.setPreferredSize(new Dimension(300, 10));
     }
 
-    public interface addLogoutListener{
+    public interface addLogoutListener {
         void onLogout(User user);
     }
 }

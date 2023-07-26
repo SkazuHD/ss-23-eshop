@@ -3,8 +3,6 @@ package org.eshop.ui.gui.tables.components;
 import org.eshop.ui.gui.tables.TableButtonEventListener;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TableButtonPanelEmployee extends JPanel {
 
@@ -17,18 +15,8 @@ public class TableButtonPanelEmployee extends JPanel {
     }
 
     public void initEvents(TableButtonEventListener listener, int row) {
-        viewButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                listener.onView(row);
-            }
-        });
-        editButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                listener.onEdit(row);
-            }
-        });
+        viewButton.addActionListener(actionEvent -> listener.onView(row));
+        editButton.addActionListener(actionEvent -> listener.onEdit(row));
     }
 
     private void initComponents() {
@@ -36,7 +24,6 @@ public class TableButtonPanelEmployee extends JPanel {
         viewButton.setText("V");
         editButton = new TabelButton();
         editButton.setText("E");
-        //viewButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/eshop/ui/components/view.png")));
         //TODO SET ICON
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);

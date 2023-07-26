@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.Date;
 
 public class CheckOutFrame extends JFrame {
-    private final javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+    private final JPanel jPanel1 = new javax.swing.JPanel();
     private final JTable Cart = new JTable();
     private final JLabel Date2 = new JLabel();
     private final JLabel price2 = new JLabel();
@@ -23,10 +23,6 @@ public class CheckOutFrame extends JFrame {
         jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
 
         cartModel = new CartModel(invoice.getCart());
-        invoice.getCart();
-        invoice.getDate();
-        invoice.getTotalPrice();
-        invoice.getCustomer();
 
         //getDate = new Date(invoice.getDate());
         Date date = invoice.getDate();
