@@ -111,7 +111,7 @@ public abstract class User {
     /**
      * Logout.
      */
-    public void logout() {
+    public void logout() { //setzt logIn auf False
         this.loggedIn = false;
     }
 }

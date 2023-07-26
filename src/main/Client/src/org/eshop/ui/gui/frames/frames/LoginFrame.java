@@ -130,22 +130,23 @@ public class LoginFrame extends JFrame {
         //LOGIN Button
         loginButton.addActionListener((e) -> {
             String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
+            String password = new String(passwordField.getPassword());// username und passsowrt wird vom server geprüft
             User u;
             try {
-                u = server.logIn(username, password);
-                listener.onLogin(u);
-                this.dispose();
-            } catch (LoginFailed exp) {
+                u = server.logIn(username, password); // Wenn das oben geklappt hat bekommt man einen user zurück
+                listener.onLogin(u);//schaut ob employee oder Customer
+                this.dispose();//Schlißt das Frame
+            } catch (LoginFailed exp) { //exeption
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage(), "Login failed!",
                         JOptionPane.ERROR_MESSAGE);
             }
         });
         registerButton.addActionListener((e -> {
+            //der input wird betrachtet
             String username = registerUsernameField.getText();
             String password = new String(registerPasswordField.getPassword());
-            String password2 = new String(registerPasswordField2.getPassword());
-            if (!password.equals(password2)) {
+            String password2 = new String(registerPasswordField2.getPassword());//Bis hier
+            if (!password.equals(password2)) { //öffnet fehler dialog wenn passwörter nicht übereinstimmen
                 JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match!", "Registration failed!",
                         JOptionPane.ERROR_MESSAGE);
                 registerPasswordField.setText("");
@@ -155,7 +156,8 @@ public class LoginFrame extends JFrame {
             String name = registerNameField.getText();
             String address = registerAddressField.getText();
             try {
-                server.registerUser(username, password, name, address);
+                server.registerUser(username, password, name, address);/*User wird versucht zu registrieren/
+                 wird geprüft ob es schon gibt*/
                 JOptionPane.showMessageDialog(new JFrame(), "Registration successful!", "Registration successful!",
                         JOptionPane.INFORMATION_MESSAGE);
                 //Clear fields

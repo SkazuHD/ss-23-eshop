@@ -110,21 +110,22 @@ public class Customer extends User {
      */
     public int addToCart(Product product, int quantity) {
         //Check if product is in stock
-        if (cart.containsKey(product)) {
-            if (quantity + cart.get(product) >= product.getQuantity()) {
+        if (cart.containsKey(product)) { //iST produkt schon im warenkop wird geprüft/ addiert auf
+            if (quantity + cart.get(product) >= product.getQuantity()) { // Passt die Quantity / ist genug im Lager
+                //Differenz wird berechnet Wichtig/ Wird geschaut wie viel man dem Korb noch hinzufügen kann
                 int difference = product.getQuantity() - cart.get(product);
-                cart.put(product, product.getQuantity());
+                cart.put(product, product.getQuantity());//Die maximal verfügbare menge des Prod. wird in den Korb getan
                 return difference;
             } else {
                 cart.put(product, quantity + cart.get(product));
-                return quantity;
+                return quantity; //Wenn genug im Lager ist wird hinzugefügt wie viel man will
             }
         } else if (quantity >= product.getQuantity()) {
-            cart.put(product, product.getQuantity());
-            return product.getQuantity();
+            cart.put(product, product.getQuantity());//Prod wird in den Warenkob gelegt
+            return product.getQuantity();// Maximale anzahl wird hinzugefügt
         } else {
             cart.put(product, quantity);
-            return quantity;
+            return quantity;//Wenn genug im Lager ist wird hinzugefügt wie viel man will
         }
 
     }

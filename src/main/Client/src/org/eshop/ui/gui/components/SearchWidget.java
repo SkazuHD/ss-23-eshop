@@ -1,5 +1,6 @@
 package org.eshop.ui.gui.components;
 
+import org.eshop.entities.Employee;
 import org.eshop.entities.Product;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
@@ -15,6 +16,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class SearchWidget extends JPanel implements ActionListener, updatable {
+
+
 
     private final ShopFacade shop;
     private final SearchListener listener;
@@ -52,6 +55,8 @@ public class SearchWidget extends JPanel implements ActionListener, updatable {
 
     }
 
+    /* Input aus dem Feld wird betrachtete
+    *  Ist der Input  kleiner 3 oder leer = ja = alle Produkte werden gezeigt / Ansosnten wird nach dem Prod. gesucht */
     private void search() {
         String query = searchField.getText();
         if (query.isEmpty() || query.isBlank() || query.length() < 3) {

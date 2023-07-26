@@ -1,6 +1,7 @@
 package org.eshop.ui.gui.tables;
 
 public interface TableButtonEventListener {
+    //Hören auf events wenn der Button gedrückt wird.
 
     void onAdd(int row);
 

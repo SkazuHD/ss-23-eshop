@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GraphPanel extends JPanel {
+    //Daten kommen vom evenManager
 
     int[] data;
     int max;

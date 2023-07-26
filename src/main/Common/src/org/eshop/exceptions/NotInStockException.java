@@ -4,6 +4,7 @@ package org.eshop.exceptions;
  * The type Not in stock exception.
  */
 public class NotInStockException extends Exception {
+    //unterschied zwischen Blitz Klasse und C?? also zwischen exeption class und nur Java??
 
     int quantity;
 

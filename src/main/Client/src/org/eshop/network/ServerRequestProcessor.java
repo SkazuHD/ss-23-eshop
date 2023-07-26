@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerRequestProcessor implements Runnable, UpdateInterface {
+    //zweite verbindung die Aufgebaut wird die auf Updates wartet vom Server
     private final Socket socket;
     private final Map<String, List<updatable>> listeners;
     private BufferedReader in;
@@ -34,7 +35,7 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
     }
 
     @Override
-    public void run() {
+    public void run() { // Wartet auf die Keywords die der Server schickt
         String input;
         do {
             input = null;
@@ -48,12 +49,13 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
                 break;
             }
             System.out.println("Server: " + input);
-            switch (input) {
+            switch (input) {//Keyword ist angekommen und es wird geschaut welche Tabelle dazugehört
                 case "init" -> {
                     System.out.println("Server Active and running | waiting for keywords");
                 }
                 case "products" -> {
                     notifyClients("products");
+
                 }
                 case "employee" -> {
                     notifyClients("employee");
@@ -77,6 +79,8 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
 
     @Override
     public void addClient(updatable client, String keyword) {
+        //HashMap = Es wird geschaut ob ein Client das Keyword schon nutzt = wenn ja dann wird der neue Client der vorhanden Liste hinzugefügt
+        //Ansonsten wird ein neuer eintrag in der Hashmap mit einer neuen Array Liste zu dem Keyword erstellt
         List<updatable> list = this.listeners.get(keyword);
         if (list != null) {
             list.add(client);
@@ -91,11 +95,12 @@ public class ServerRequestProcessor implements Runnable, UpdateInterface {
     public void removeClient(updatable client) {
         this.listeners.values().forEach(list -> list.remove(client));
     }
+    //Jede Liste wird geprüft ob der Client da drinn ist und dann wird der Client von jeder Liste entfernt
 
     @Override
     public void notifyClients(String keyword) {
         List<updatable> list = this.listeners.get(keyword);
-
+      // Array Liste die zu dem Keyword passt wird genommen und alle Clients die in der Lste stehen werden benachrichtig
         if (list != null) {
             System.out.println("Server: Notifying " + list.size() + " clients with keyword " + keyword);
             for (updatable client : list) {
