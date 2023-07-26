@@ -7,16 +7,18 @@ import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updatable;
 import org.eshop.ui.gui.frames.frames.GraphFrame;
+import org.eshop.ui.gui.tables.Filterable;
+import org.eshop.ui.gui.tables.TableButtonEventListener;
+import org.eshop.ui.gui.tables.TableListener;
 import org.eshop.ui.gui.tables.components.TableButtonRenderEmployee;
 import org.eshop.ui.gui.tables.components.TableCellEditorEmployee;
 import org.eshop.ui.gui.tables.models.productEmployeeModel;
-import org.eshop.ui.gui.tables.TableButtonEventListener;
-import org.eshop.ui.gui.tables.TableListener;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 
-public class EmployeeProductTable extends JTable implements TableButtonEventListener, updatable {
+public class EmployeeProductTable extends JTable implements TableButtonEventListener, updatable, Filterable {
 
     ShopFacade shop;
     TableListener listener;
@@ -83,5 +85,15 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         if (keyword.equals("products")) {
             updateProducts(shop.getAllProducts().stream().toList());
         }
+    }
+
+    @Override
+    public void filter(String keyword) {
+        TableRowSorter<productEmployeeModel> sorter = (TableRowSorter<productEmployeeModel>) this.getRowSorter();
+        try {
+            sorter.setRowFilter(RowFilter.regexFilter(keyword));
+        } catch (Exception e) {
+        }
+
     }
 }

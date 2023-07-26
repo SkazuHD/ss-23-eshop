@@ -3,12 +3,13 @@ package org.eshop.ui.gui.tables.tabel;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updatable;
+import org.eshop.ui.gui.tables.Filterable;
 import org.eshop.ui.gui.tables.models.EventTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
 
-public class EventTable extends JTable implements updatable {
+public class EventTable extends JTable implements updatable, Filterable {
 
     public EventTable(ShopFacade shop) {
         super();

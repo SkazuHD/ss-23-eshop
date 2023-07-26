@@ -35,6 +35,7 @@ public abstract class ProductPanel extends javax.swing.JPanel implements SearchW
     }
 
     public void onSearch(List<Product> result) {
+
         customerProductTable.updateProducts(result);
     }
 

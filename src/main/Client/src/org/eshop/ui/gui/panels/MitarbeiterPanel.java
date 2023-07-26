@@ -2,7 +2,6 @@ package org.eshop.ui.gui.panels;
 
 
 import org.eshop.entities.Employee;
-import org.eshop.entities.Product;
 import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.components.SearchWidget;
@@ -43,8 +42,10 @@ public class MitarbeiterPanel extends javax.swing.JPanel implements SearchWidget
 
 
     @Override
-    public void onSearch(List<Product> result) {
-
+    public void onSearch(String filter) {
+        // employeeTable.filter(filter);
     }
+
+
 }
 
