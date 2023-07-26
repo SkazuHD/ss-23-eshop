@@ -7,12 +7,10 @@ import org.eshop.ui.gui.tables.models.EventTableModel;
 
 import javax.swing.*;
 
-
 public class EventTable extends JTable implements updatable {
-    private final ShopFacade shop;
+
     public EventTable(ShopFacade shop) {
         super();
-        this.shop = shop;
         EventTableModel model = new EventTableModel(shop);
         this.setModel(model);
         this.setRowHeight(40);
@@ -27,6 +25,6 @@ public class EventTable extends JTable implements updatable {
     public void update(String keyword) {
         System.out.println("EventTable update");
         if (keyword.equals("event"))
-            this.setModel(new EventTableModel(shop));
+            ((EventTableModel) this.getModel()).update();
     }
 }

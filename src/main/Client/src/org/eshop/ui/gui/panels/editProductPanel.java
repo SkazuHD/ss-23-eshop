@@ -27,9 +27,8 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
 
     private final JCheckBox massProduct = new JCheckBox("Mass Product");
     private final JTextField productPacksize = new JTextField();
-    private Product currentProduct;
-
     private final addProductPanel addProductPanel;
+    private Product currentProduct;
 
     public editProductPanel(ShopFacade shop, User loggedInUser, addProductPanel addProductPanel) {
         this.server = shop;

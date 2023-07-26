@@ -1,6 +1,5 @@
 package org.eshop.ui.gui.panels;
 
-import org.eshop.entities.User;
 import org.eshop.exceptions.UserExistsException;
 import org.eshop.shop.ShopFacade;
 
@@ -10,7 +9,6 @@ import java.awt.*;
 public class registerEmployeePanel extends JPanel {
 
     private final ShopFacade server;
-    private final User loggedInUser;
     private JButton registerButton;
     private JTextField registerUsernameField;
     private JPasswordField registerPasswordField;
@@ -18,9 +16,8 @@ public class registerEmployeePanel extends JPanel {
     private JTextField registerNameField;
     private JTextField registerIDField;
 
-    public registerEmployeePanel(ShopFacade shop, User loggedInUser) {
+    public registerEmployeePanel(ShopFacade shop) {
         this.server = shop;
-        this.loggedInUser = loggedInUser;
         setupUI();
         setupEvents();
 

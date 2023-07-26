@@ -1,10 +1,9 @@
 package org.eshop.network;
 
-import org.eshop.exceptions.*;
 import org.eshop.entities.*;
+import org.eshop.exceptions.*;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.UpdateInterface;
-import org.eshop.shop.updatable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -286,7 +285,7 @@ public class Client implements ShopFacade {
     @Override
     public synchronized Collection<Event> getAllEvents() {
         out.println("getAllEvents");
-        String status = "";
+        String status;
         try {
             status = this.in.readLine();
             if (status.equals("400")) {
@@ -622,7 +621,8 @@ public class Client implements ShopFacade {
         }
         return null;
     }
-    public UpdateInterface getUpdateInterface(){
+
+    public UpdateInterface getUpdateInterface() {
         return updateSocket;
     }
 }

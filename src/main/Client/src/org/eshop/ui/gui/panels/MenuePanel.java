@@ -5,33 +5,22 @@ import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.CustomerMenu;
 import org.eshop.ui.gui.GuiEmployee;
-import org.eshop.ui.gui.panels.MitarbeiterPanel;
 import org.eshop.ui.gui.components.SearchWidget;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class MenuePanel extends javax.swing.JPanel {
+public class MenuePanel extends JPanel {
 
 
-    private final javax.swing.JMenuBar jMenuBar =
-            new javax.swing.JMenuBar();
-    private final javax.swing.JButton Mitarbeiter =
-            new javax.swing.JButton("Mitarbeiter");
-    private final javax.swing.JFormattedTextField Search =
-            new javax.swing.JFormattedTextField("Search");
-    private final javax.swing.JMenuBar menu =
-            new javax.swing.JMenuBar();
-    private final javax.swing.JButton Produckte =
-            new javax.swing.JButton("Produckte");
-    private final JButton Events =
-            new JButton("Events");
-    private final javax.swing.JButton Logout =
-            new javax.swing.JButton("Logout");
-    ShopFacade shop;
-    ProductPanel productPanel;
-    MitarbeiterPanel mitarbeiterPanel;
+    private final JMenuBar jMenuBar = new JMenuBar();
+    private final JButton Mitarbeiter = new JButton("Mitarbeiter");
+    private final JFormattedTextField Search = new JFormattedTextField("Search");
+    private final JMenuBar menu = new JMenuBar();
+    private final JButton Produckte = new JButton("Produckte");
+    private final JButton Events = new JButton("Events");
+    private final JButton Logout = new JButton("Logout");
     GuiEmployee guiEmployee;
     CustomerMenu.addLogoutListener listener;
     User loggedInUser;
@@ -70,7 +59,7 @@ public class MenuePanel extends javax.swing.JPanel {
         Events.setActionCommand("Eventpanel");
         Events.addActionListener(guiEmployee);
 
-        Logout.addActionListener((e)->{
+        Logout.addActionListener((e) -> {
             guiEmployee.dispose();
             listener.onLogout(loggedInUSer);
         });
