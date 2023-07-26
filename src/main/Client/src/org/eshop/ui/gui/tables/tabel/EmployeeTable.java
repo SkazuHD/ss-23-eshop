@@ -5,15 +5,17 @@ import org.eshop.entities.User;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updatable;
+import org.eshop.ui.gui.tables.Filterable;
 import org.eshop.ui.gui.tables.models.MitarbeiterModel;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 
-public class EmployeeTable extends JTable implements updatable {
+public class EmployeeTable extends JTable implements updatable, Filterable {
     ShopFacade shop;
     User user;
-    
+
     public EmployeeTable(List<Employee> employeeList, String[] coulumns, User user, ShopFacade shop) {
         super();
         this.user = user;
@@ -42,6 +44,17 @@ public class EmployeeTable extends JTable implements updatable {
         System.out.println("Employee update");
         if (keyword.equals("employee"))
             updateEmployee(shop.getAllEmployees().stream().toList());
+    }
+
+    @Override
+    public void filter(String keyword) {
+        TableRowSorter<MitarbeiterModel> sorter = (TableRowSorter<MitarbeiterModel>) this.getRowSorter();
+        try {
+            RowFilter.regexFilter(keyword);
+        } catch (Exception e) {
+            return;
+        }
+        sorter.setRowFilter(RowFilter.regexFilter(keyword));
     }
 }
 

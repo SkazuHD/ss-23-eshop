@@ -29,7 +29,8 @@ public class CustomerCenterPanel extends ProductPanel {
 
     }
 
-    public void onSearch(List<Product> result) {
-        customerProductTable.updateProducts(result);
+    public void onSearch(String query) {
+        //customerProductTable.updateProducts(result);
+        customerProductTable.filter(query);
     }
 }

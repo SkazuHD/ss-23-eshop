@@ -1,7 +1,5 @@
 package org.eshop.ui.gui.components;
 
-import org.eshop.entities.Employee;
-import org.eshop.entities.Product;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updatable;
@@ -12,11 +10,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
-import java.util.List;
 
 public class SearchWidget extends JPanel implements ActionListener, updatable {
-
 
 
     private final ShopFacade shop;
@@ -45,7 +40,7 @@ public class SearchWidget extends JPanel implements ActionListener, updatable {
         this.setMaximumSize(new Dimension(500, 30));
         this.add(searchButton);
 
-        
+
     }
 
     private void setupEvents() {
@@ -56,15 +51,15 @@ public class SearchWidget extends JPanel implements ActionListener, updatable {
     }
 
     /* Input aus dem Feld wird betrachtete
-    *  Ist der Input  kleiner 3 oder leer = ja = alle Produkte werden gezeigt / Ansosnten wird nach dem Prod. gesucht */
+     *  Ist der Input  kleiner 3 oder leer = ja = alle Produkte werden gezeigt / Ansosnten wird nach dem Prod. gesucht */
     private void search() {
         String query = searchField.getText();
-        if (query.isEmpty() || query.isBlank() || query.length() < 3) {
-            Collection<Product> result = shop.getAllProducts();
-            listener.onSearch(result.stream().toList());
+        if (query.isEmpty() || query.isBlank()) {
+
+            listener.onSearch("");
         } else {
-            List<Product> result = shop.findProducts(query);
-            listener.onSearch(result);
+
+            listener.onSearch(query);
         }
     }
 
@@ -82,7 +77,7 @@ public class SearchWidget extends JPanel implements ActionListener, updatable {
     }
 
     public interface SearchListener {
-        void onSearch(List<Product> result);
+        void onSearch(String filter);
 
     }
 

@@ -4,7 +4,6 @@ import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
-import org.eshop.ui.gui.tables.tabel.EventTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,7 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     org.eshop.ui.gui.panels.addProductPanel addProductPanel;
     org.eshop.ui.gui.panels.editProductPanel editProductPanel;
     org.eshop.ui.gui.panels.registerEmployeePanel registerEmployeePanel;
-    JScrollPane eventPanel;
+    JPanel eventPanel;
 
 
     /**
@@ -38,10 +37,10 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
         productPanel = new EmployeeCenterPanel(shop, editProductPanel, loggedInUser);
 
-        eventPanel = new JScrollPane(new EventTable(shop));
+        eventPanel = new eventPanel(shop);
         eventPanel.setVisible(false);
         JPanel paneelcenter = new JPanel();
-        this.add(new JScrollPane(paneelcenter), BorderLayout.CENTER);
+        this.add(paneelcenter, BorderLayout.CENTER);
         paneelcenter.add(productPanel);
         paneelcenter.add(eventPanel);
         paneelcenter.setLayout(new BoxLayout(paneelcenter, BoxLayout.PAGE_AXIS));

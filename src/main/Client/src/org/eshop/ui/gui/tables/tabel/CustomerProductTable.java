@@ -3,23 +3,25 @@ package org.eshop.ui.gui.tables.tabel;
 import org.eshop.entities.Customer;
 import org.eshop.entities.MassProduct;
 import org.eshop.entities.Product;
+import org.eshop.entities.User;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
-import org.eshop.entities.User;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.shop.updatable;
+import org.eshop.ui.gui.tables.Filterable;
+import org.eshop.ui.gui.tables.TableButtonEventListener;
+import org.eshop.ui.gui.tables.TableListener;
 import org.eshop.ui.gui.tables.components.TableButtonRender;
 import org.eshop.ui.gui.tables.components.TableCellEditor;
 import org.eshop.ui.gui.tables.models.productTabelModel;
-import org.eshop.ui.gui.tables.TableButtonEventListener;
-import org.eshop.ui.gui.tables.TableListener;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 
-public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener, updatable {
+public class CustomerProductTable extends javax.swing.JTable implements TableButtonEventListener, updatable, Filterable {
     ShopFacade shop;
     TableListener listener;
     User user;
@@ -34,7 +36,8 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         this.setRowHeight(40);
         this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRender());
         this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditor(this));
-        this.setAutoCreateRowSorter(true);
+        TableRowSorter<productTabelModel> sorter = new TableRowSorter<>(tableModel);
+        this.setRowSorter(sorter);
         Client server = (Client) shop;
         server.getUpdateInterface().addClient(this, "products");
         updateProducts(productList);
@@ -95,5 +98,16 @@ public class CustomerProductTable extends javax.swing.JTable implements TableBut
         if (keyword.equals("products")) {
             updateProducts(shop.getAllProducts().stream().toList());
         }
+    }
+
+    @Override
+    public void filter(String keyword) {
+        TableRowSorter<productTabelModel> sorter = (TableRowSorter<productTabelModel>) this.getRowSorter();
+        try {
+            RowFilter.regexFilter(keyword);
+        } catch (Exception e) {
+            return;
+        }
+        sorter.setRowFilter(RowFilter.regexFilter(keyword));
     }
 }
