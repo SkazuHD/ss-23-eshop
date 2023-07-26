@@ -20,7 +20,7 @@ public class Gui extends JFrame implements LoginFrame.addLoginListener, Customer
     User loggedInUser;
     LoginFrame loginFrame;
 
-    //TODO LIVE UPDATES FOR TABLES
+
     public Gui() {
         server = new Client("localhost", 6789);
         //server = new Shop();

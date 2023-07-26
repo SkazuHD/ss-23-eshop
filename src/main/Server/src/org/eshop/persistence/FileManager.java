@@ -29,6 +29,7 @@ public class FileManager implements ShopPersistence {
     }
 
     public void openForWriting(String datei, boolean append) throws IOException {
+        /*bereitet Datei vor damit da rein geschrieben werden kann*/
         writer = new PrintWriter(new BufferedWriter(new FileWriter(datei, append)));
     }
 
@@ -45,7 +46,7 @@ public class FileManager implements ShopPersistence {
         }
     }
 
-    @Override
+    @Override //Customer wird in die Datei reingeschrieben ! Reinfolge ist wichtig> muss im weiteren Code beachtet werden
     public void writeCustomer(Customer customer) {
         writer.print(customer.getUsername() + ";");
         writer.print(customer.getPassword() + ";");
@@ -55,7 +56,7 @@ public class FileManager implements ShopPersistence {
         writer.println();
     }
 
-    @Override
+    @Override // ließt eine Zeile und erstellt Customer Objekt
     public Customer readCustomer() {
         String serial = readLine();
         if (serial == null) {
@@ -126,7 +127,7 @@ public class FileManager implements ShopPersistence {
         return new Event(Integer.parseInt(parts[0]), parts[1], Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
     }
 
-    public void close() {
+    public void close() {//schließt reader und Writer damit die Datei wieder Freigegeben werden kann
         try {
             if (reader != null) {
                 reader.close();

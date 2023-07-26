@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CartModel extends AbstractTableModel {
-
+  // Modelirt die Tabel / wie sehen  die Daten in der Tabelle aus / Was ist drinn String? Values? / wie viele Zeilen
     Map<Product, Integer> cart;
     List<Product> prods;
 

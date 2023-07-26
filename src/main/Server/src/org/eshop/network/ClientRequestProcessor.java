@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 class ClientRequestProcessor implements Runnable, updatable {
-//Wie funktioniert der Client Request Processor nochmal also warum sind hier die sachen die geschikt werden und die antworten dirnn??
+//Server der Antwortet = Streams werden verarbeitet
+// Socket = Transportlayer = reine verbindung > damit die Server reden können/ Stream > für austausch= applycation layer
     private final Shop server;
     private final Socket clientSocket;// Socket classe von Java nochmal erklären was der Macht und wo sind die Streams???
     private BufferedReader in;      /*Reads text from a character-input stream, buffering
@@ -31,7 +32,7 @@ class ClientRequestProcessor implements Runnable, updatable {
         this.server = server;
         this.eshopServer = eshopServer;
 
-        try {
+        try { // Streams werden geöffnet/ InputStreamReader = bekommt Input / OutputStream = gibt Antworten
             this.in = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.out = new PrintStream(this.clientSocket.getOutputStream());
         } catch (IOException var6) {
@@ -49,7 +50,7 @@ class ClientRequestProcessor implements Runnable, updatable {
         System.out.println("Verbunden mit Client " + address + ":" + this.clientSocket.getPort());
     }
 
-    public void run() {
+    public void run() {//Wartet auf Input vom Client / Wenn Input da dann macht der das
         String input;
         this.out.println("Server bereit");
 
@@ -76,7 +77,7 @@ class ClientRequestProcessor implements Runnable, updatable {
                     registerEmployee();
                     System.out.println("Success");
                     eshopServer.notifyClients("employee");
-
+                    // notifyClients alle Guis  bekommen ein Update/Gui endscheidet selber ob es das Update umsetzen kann
                 }
                 case "login" -> {
                     login();
@@ -90,11 +91,14 @@ class ClientRequestProcessor implements Runnable, updatable {
                     createProduct();
                     System.out.println("Success");
                     eshopServer.notifyClients("products");
+                    eshopServer.notifyClients("event");
                 }
                 case "createMProd" -> {
                     createMProduct();
                     System.out.println("Success");
                     eshopServer.notifyClients("products");
+                    eshopServer.notifyClients("event");
+                    //Event damit sich die event tabele updatet
                 }
                 case "editProd" -> {
                     editProduct();
@@ -179,8 +183,10 @@ class ClientRequestProcessor implements Runnable, updatable {
         } catch (IOException ignore) {
         }
         eshopServer.removeClient(this);
+        //Client wird aus der Liste entfernt
     }
 
+    //Methoden die Antworten geben
     private void getAllEmp() {
         Collection<Employee> employees = server.getAllEmployees();
         this.out.println(200);
@@ -543,10 +549,10 @@ class ClientRequestProcessor implements Runnable, updatable {
 
     public void checkout() {
         try {
-            String username = in.readLine();
-            Customer c = (Customer) server.getUser(username);
-            server.checkout(c);
-            out.println(200);
+            String username = in.readLine();//ReadLine nimmt das nächste Packet vom Stream / hier der username > wird zugewiesen
+            Customer c = (Customer) server.getUser(username);//Packet wird geprüft = gibt es den user
+            server.checkout(c);//checkout Methode wird ausgeführt wenn alles stimmt
+            out.println(200);// Der erfolg wird mit 200 verkündet
         } catch (IOException ignore) {
 
         } catch (CheckoutFailed checkoutFailed) {
@@ -595,8 +601,8 @@ class ClientRequestProcessor implements Runnable, updatable {
             Customer c = (Customer) server.getUser(username);
             Map<Product, Integer> cart = server.getCart(c);
             out.println(cart.size());
-            for (Product p : cart.keySet()) {
-                int quantity = cart.get(p);
+            for (Product p : cart.keySet()) {//  Für jedes Produk im Keyset
+                int quantity = cart.get(p);// zwischenspeicher bevor es auf den Stream kommt
                 returnProd(p);
                 out.println(quantity);
             }
@@ -607,7 +613,7 @@ class ClientRequestProcessor implements Runnable, updatable {
 
 
     @Override
-    public void update(String keyword) {
+    public void update(String keyword) {//Schickt das Keyword an die Guis
         System.out.println("Update " + clientSocket.getPort());
         out.println(keyword);
     }

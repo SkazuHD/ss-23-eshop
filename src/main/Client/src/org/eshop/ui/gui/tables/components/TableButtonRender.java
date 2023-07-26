@@ -8,6 +8,7 @@ public class TableButtonRender extends DefaultTableCellRenderer {
     public TableButtonRender() {
         super();
     }
+   // Wegen den verschiedenen Buttons / employe hat einen Button Renderer und Customer auch
 
     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean isSeleted, boolean bln1, int row, int column) {
         Component com = super.getTableCellRendererComponent(jtable, o, isSeleted, bln1, row, column);

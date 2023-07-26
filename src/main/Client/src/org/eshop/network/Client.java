@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.util.*;
 
 public class Client implements ShopFacade {
+    //Client schickt anfragen an Server und bekommt dann antworten wieder
     private Socket socket = null;
     private ServerRequestProcessor updateSocket = null;
     private BufferedReader in;
@@ -22,6 +23,7 @@ public class Client implements ShopFacade {
         while (this.socket == null) {
             try {
                 this.socket = new Socket(host, port);
+                //Zweiter Socke = Update Socket wird mit geöffnet an dieser Stelle für Updates
                 this.updateSocket = new ServerRequestProcessor(new Socket(host, port));
                 Thread t = new Thread(this.updateSocket);
                 t.start();
@@ -61,7 +63,7 @@ public class Client implements ShopFacade {
     }
 
 
-    @Override
+    @Override  // Methoden vom Shop werden in den Stream geworfen damit der Server sich diese Angeln kann.
     public synchronized void registerUser(String username, String password, String name, String address) throws UserExistsException {
         out.println("registerUser");
         out.println(username);

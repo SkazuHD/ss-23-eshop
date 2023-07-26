@@ -156,7 +156,7 @@ public class Shop implements ShopFacade {
         //Try Saving to File
         try {
             persistence.openForWriting("customers.csv", true);
-            Customer c = customerManager.getCustomer(username);
+            Customer c = customerManager.getCustomer(username);//Costumer holt den neu angelegten Customer
             persistence.writeCustomer(c);
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,7 +204,7 @@ public class Shop implements ShopFacade {
             }
         }
         if (p != null) {
-            customerManager.buyProduct(p, quantity, c);
+            customerManager.buyProduct(p, quantity, c);//Wird geprüft ob Produkt vohanden und
         } else {
             throw new ProductNotFound(id);
         }

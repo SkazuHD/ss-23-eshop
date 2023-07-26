@@ -40,10 +40,11 @@ public class CustomerManager {
      * @return the boolean
      */
     public boolean register(String username, String password, String name, String address) {
-        if (customer.containsKey(username)) {
+        if (customer.containsKey(username)) {  // Wird geschaut ob der Customer schon in HashMap ist
             return false;
         } else {
-            Customer c = new Customer(username, password, name, address, "C" + id++);
+            Customer c = new Customer(username, password, name, address, "C" + id++); /*Wenn nicht dann wird ein
+            neuer Customer erstellt*/
             customer.put(username, c);
             return true;
         }
@@ -71,6 +72,8 @@ public class CustomerManager {
      * @return User customer
      * @throws LoginFailed the customer logIn failed
      */
+    /*schaut ob der Customer existiert = JA = prüft passswort > richtig = User wird zurückgegeben
+    * Ansonsten exeption*/
     public User login(String username, String password) throws LoginFailed {
         //Find User in Set
         User u = customer.get(username);

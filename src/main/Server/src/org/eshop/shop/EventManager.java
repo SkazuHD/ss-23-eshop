@@ -12,6 +12,7 @@ import java.util.*;
  * The type Event manager.
  */
 public class EventManager {
+    //Events werden in der event Datei gespeichert
 
     /**
      * The Product events.
@@ -44,11 +45,10 @@ public class EventManager {
             persistence.openForWriting("events.csv", true);
 
         } catch (Exception e) {
-            //TODO handle exception
             return;
         }
-        persistence.writeEvent(event);
-        persistence.close();
+        persistence.writeEvent(event);//schreibt in die datei
+        persistence.close();//schließt die datei
 
         //Show all Events for Debugging
         //productEvents.forEach((k, v) -> v.forEach(System.out::println));
@@ -101,35 +101,34 @@ public class EventManager {
     }
 
     public int[] getProductHistory(int productId, int days, int currentStock) {
-        List<Event> allEvents = productEvents.get(productId);
+        List<Event> allEvents = productEvents.get(productId);// nehmen die Id und gucken in die HashMap
         //Return current Stock if no Events are found
         if (allEvents == null || allEvents.isEmpty()){
-            int[] history = new int[days];
+            int[] history = new int[days];//Array gemacht mit aktuellem wert/Bestand
             Arrays.fill(history, currentStock);
             return history;
         }
-        //Filter Events by Date
+        //Filter Events by Date  //schaut ob es im Zeitraum liegt >wird sonst entfernt
         allEvents.removeIf(event -> event.getDayInYear() <= (LocalDate.now().getDayOfYear() - days));
 
         //Create Array with size of days
         int[] history = new int[days];
 
         history[0] = currentStock;
-        System.out.println("Day 0 " + history[0]);
-        System.out.println(LocalDate.now().getDayOfYear());
+
         //Iterate over Events and add or subtract quantity
         for(int i = 1; i < days; i++){
             int sum = 0;
             int currentDayToLookAt = LocalDate.now().getDayOfYear() + 1 - i;
-            for (Event event : allEvents){
-                if (event.getDayInYear() == currentDayToLookAt){
+            for (Event event : allEvents){//gehen alle events durch und schauen ob der Tag passt
+                if (event.getDayInYear() == currentDayToLookAt){//wenn der Tag passt addieren wir die Events drauf
                     sum += event.getQuantity();
                 }
             }
-            history[i] = history[i-1] - sum;
+            history[i] = history[i-1] - sum;//Bestand vom Tag wird durch den Vorletzten Tag berechnet
         }
         //REVERSE THE ORDER
-        int[] reversed = new int[history.length];
+        int[] reversed = new int[history.length];//Array wird umgedreht damit der neue Tag ganz rechts ist
         for(int i = 0; i<history.length; i++){
             reversed[history.length-1-i] = history[i];
         }

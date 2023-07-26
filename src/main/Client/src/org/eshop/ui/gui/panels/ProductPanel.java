@@ -12,8 +12,8 @@ import javax.swing.*;
 import java.util.List;
 
 public abstract class ProductPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
-    //Warum habe wir hier eine abstracte klasse?????
-
+    /*ist abstract damit set up usw schon gesetzt sind / Arbeitsvermeidung /
+    Nur der Tabellen inhalt ändert sich gerüst bleibt gleich*/
     protected TableListener listener;
     protected User user;
     protected ShopFacade shop;

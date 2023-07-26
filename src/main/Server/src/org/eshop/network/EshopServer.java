@@ -20,11 +20,11 @@ public class EshopServer implements UpdateInterface {
 
 
     public EshopServer(int optPort) {
-        this.port = optPort == 0 ? DEFAULT_PORT : optPort;
+        this.port = optPort == 0 ? DEFAULT_PORT : optPort;//Auf welchem port er anfragen entgegen nimmt
         this.server = new Shop();
         try {
-            this.serverSocket = new ServerSocket(this.port);
-            InetAddress ia = InetAddress.getLocalHost();
+            this.serverSocket = new ServerSocket(this.port);//Socket wird erstellt die verbindung verwaltet
+            InetAddress ia = InetAddress.getLocalHost();//Printed den Staus
             System.out.println("Host: " + ia.getHostName());
             String server = ia.getHostAddress();
             System.out.println("Server *" + server + "* lauscht auf Port " + this.port);
@@ -50,7 +50,8 @@ public class EshopServer implements UpdateInterface {
 
     }
 
-    public void acceptClientConnectRequests() {
+    public void acceptClientConnectRequests() {//Thread = Ein Nebe/Hintergrund Prozess
+        //Warten auf Verbindungsanfragen> dann wird eine requestProzessor erstellt und in einem neuen Thread gestartet
         try {
             while (true) {
                 Socket clientSocket = this.serverSocket.accept();
@@ -66,18 +67,21 @@ public class EshopServer implements UpdateInterface {
 
     @Override
     public void addClient(updatable client, String keyword) {
+        //Registrierung eines Sockets als Kandidat um Updates vom Server zu erhalten/ werden der Liste activeClients hinzugefügt
         activeClients.add(client);
         System.out.println(activeClients.size());
     }
 
+
     @Override
     public void removeClient(updatable client) {
-
+   //Sockets werden aus der Liste Herausgenommen (activeClients)
         activeClients.remove(client);
     }
 
     @Override
     public void notifyClients(String keyword) {
+        //Keyword wird in den Stream geschrieben = Update von Clients
         System.out.println("Notifying clients: " + keyword);
         for (updatable client : activeClients) {
             client.update(keyword);

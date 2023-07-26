@@ -1,7 +1,7 @@
 package org.eshop.ui.gui.tables;
 
 public interface TableButtonEventListener {
-    //Kurz erklären warim das Grün ist und was ein Listener tut
+    //Hören auf events wenn der Button gedrückt wird.
 
     void onAdd(int row);
 
