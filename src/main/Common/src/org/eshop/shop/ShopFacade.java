@@ -11,6 +11,8 @@ import java.util.Map;
  * The interface Shop facade.
  */
 public interface ShopFacade {
+    //unterschied zwischen interface und classe????
+    //was war super nochmal??
     /**
      * Register user.
      *

@@ -14,6 +14,7 @@ import java.util.Map;
 /**
  * The type Shop.
  */
+// Wenn ich nach login gefragt werde wo fange ich dann am besten an im Shop oder in der Gui???
 public class Shop implements ShopFacade {
 
     /**

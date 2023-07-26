@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.util.List;
 
 public abstract class ProductPanel extends javax.swing.JPanel implements SearchWidget.SearchListener {
+    //Warum habe wir hier eine abstracte klasse?????
 
     protected TableListener listener;
     protected User user;

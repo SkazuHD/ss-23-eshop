@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Vector;
 
 
-
+//Wofür die Models also was machen die???
     public class MitarbeiterModel extends AbstractTableModel {
         private final List<Employee> employeeList;
         private final String[] columns;
@@ -25,12 +25,13 @@ import java.util.Vector;
         };
 
 
-        public MitarbeiterModel(List<Employee> employeeList, String[] columns){
+        public MitarbeiterModel(List<Employee> employeeList, String[] columns) {
             super();
             this.columns = columns;
             this.employeeList = new Vector<>();
             this.employeeList.addAll(employeeList);
         }
+
         public void setEmployeeList(List<Employee> employeeList) {
             this.employeeList.clear();
             this.employeeList.addAll(employeeList);
@@ -40,6 +41,7 @@ import java.util.Vector;
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return canEdit[columnIndex];
         }
+
         @Override
         public int getRowCount() {
             return this.employeeList.size();
@@ -49,10 +51,12 @@ import java.util.Vector;
         public int getColumnCount() {
             return columns.length;
         }
+
         @Override
         public String getColumnName(int col) {
             return columns[col];
         }
+
         @Override
         public Object getValueAt(int row, int col) {
             Employee employee = employeeList.get(row);
@@ -67,6 +71,19 @@ import java.util.Vector;
                     return null;
             }
         }
+
+        public Class getColumnClass(int column) {
+            Class returnValue;
+            if ((column >= 0) && (column < getColumnCount())) {
+                returnValue = getValueAt(0, column).getClass();
+            } else {
+                returnValue = Object.class;
+            }
+            return returnValue;
+        }
+
+
+
 
 
     }

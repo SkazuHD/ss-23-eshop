@@ -11,6 +11,8 @@ import java.io.IOException;
 /**
  * The interface Shop persistence.
  */
+
+// Wofür ist die Shop persistence????
 public interface ShopPersistence {
 
     /**

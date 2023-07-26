@@ -17,10 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 class ClientRequestProcessor implements Runnable, updatable {
-
+//Wie funktioniert der Client Request Processor nochmal also warum sind hier die sachen die geschikt werden und die antworten dirnn??
     private final Shop server;
-    private final Socket clientSocket;
-    private BufferedReader in;
+    private final Socket clientSocket;// Socket classe von Java nochmal erklären was der Macht und wo sind die Streams???
+    private BufferedReader in;      /*Reads text from a character-input stream, buffering
+    characters so as to provide for the efficient reading of characters, arrays, and lines. */
     private PrintStream out;
     private final UpdateInterface eshopServer;
 

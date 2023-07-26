@@ -4,11 +4,15 @@ import org.eshop.entities.User;
 import org.eshop.shop.ShopFacade;
 import org.eshop.ui.gui.listener.ShopCloseListener;
 import org.eshop.ui.gui.panels.*;
+import org.eshop.ui.gui.tables.models.MitarbeiterModel;
+import org.eshop.ui.gui.tables.tabel.EmployeeTable;
 import org.eshop.ui.gui.tables.tabel.EventTable;
 import org.eshop.ui.gui.panels.MitarbeiterPanel;
 
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,8 +28,8 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
     org.eshop.ui.gui.panels.editProductPanel editProductPanel;
     org.eshop.ui.gui.panels.registerEmployeePanel registerEmployeePanel;
     JScrollPane eventPanel;
-
-
+    MitarbeiterModel mitarbeiterModel;
+    EmployeeTable table;
 
     /**
      * Der Konstruktor.
@@ -52,6 +56,9 @@ public class GuiEmployee extends javax.swing.JFrame implements ActionListener {
 
         String[] columns = {"ID", "Name", "Username"};
         mitarbeiterPanel = new MitarbeiterPanel(this.shop,loggedInUser,columns);
+
+
+
         sidePanel = new SidePanel(shop, loggedInUser);
         registerEmployeePanel = new registerEmployeePanel(shop, loggedInUser);
         sidePanel.add(addProductPanel);

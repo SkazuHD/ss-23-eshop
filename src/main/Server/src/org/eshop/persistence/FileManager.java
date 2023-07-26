@@ -7,6 +7,7 @@ import java.io.*;
 /**
  * The type File manager.
  */
+// Was macht der File manager????
 public class FileManager implements ShopPersistence {
     /**
      * The Reader.
