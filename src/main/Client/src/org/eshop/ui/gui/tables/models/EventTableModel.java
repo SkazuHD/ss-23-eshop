@@ -52,4 +52,5 @@ public class EventTableModel extends AbstractTableModel {
         };
     }
 
+
 }
