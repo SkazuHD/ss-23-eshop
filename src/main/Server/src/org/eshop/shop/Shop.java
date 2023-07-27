@@ -1,7 +1,7 @@
 package org.eshop.shop;
 
-import org.eshop.exceptions.*;
 import org.eshop.entities.*;
+import org.eshop.exceptions.*;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
@@ -83,7 +83,6 @@ public class Shop implements ShopFacade {
     public void save() {
         saveProducts();
     }
-
 
 
     public void load() {
@@ -233,18 +232,18 @@ public class Shop implements ShopFacade {
         Map<Product, Integer> cart = c.getCart();
         List<Product> productToBeFixed = new ArrayList<>();
         for (Product key : cart.keySet()) {
-            if(key.getQuantity() < cart.get(key)){
+            if (key.getQuantity() < cart.get(key)) {
                 productToBeFixed.add(key);
             }
         }
-        if(productToBeFixed.size() > 0){
+        if (productToBeFixed.size() > 0) {
             throw new CheckoutFailed(productToBeFixed);
         }
         for (Product key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
                 productManager.decreaseQuantity(key, -cart.get(key));
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
 
@@ -318,7 +317,7 @@ public class Shop implements ShopFacade {
     }
 
 
-    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
+    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException, NegativeQuantityException {
         if (quantity > 0) {
             productManager.increaseQuantity(id, quantity);
         } else if (quantity < 0) {

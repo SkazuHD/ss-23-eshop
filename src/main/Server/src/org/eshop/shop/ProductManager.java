@@ -2,6 +2,7 @@ package org.eshop.shop;
 
 import org.eshop.entities.MassProduct;
 import org.eshop.entities.Product;
+import org.eshop.exceptions.NegativeQuantityException;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
@@ -61,33 +62,31 @@ public class ProductManager {
      * @param quantity the quantity
      * @throws ProductNotFound the product not found
      */
-    public void decreaseQuantity(int id, int quantity) throws ProductNotFound, NotInStockException, PacksizeNotMatching {
+    public void decreaseQuantity(int id, int quantity) throws ProductNotFound, NotInStockException, PacksizeNotMatching, NegativeQuantityException {
         Product p = getProductById(id);
         //Check if enough Product are in Stock
-        if(p instanceof MassProduct mp){
-            if(Math.abs(quantity) % mp.getPacksize() != 0)
-                throw new PacksizeNotMatching(mp.getPacksize());
-        }
-        if (p.getQuantity() >= quantity)
-            p.setQuantity(p.getQuantity() + quantity);
-        else throw new NotInStockException(quantity);
-
+        decreaseQuantity(p, quantity);
 
     }
-    public void decreaseQuantity(Product p, int quantity) throws NotInStockException, PacksizeNotMatching {
+
+    public void decreaseQuantity(Product p, int quantity) throws NotInStockException, PacksizeNotMatching, NegativeQuantityException {
         //Check if enough Product are in Stock
-        if(p instanceof MassProduct mp){
-            if(quantity % mp.getPacksize() != 0)
+        if (p instanceof MassProduct mp) {
+            if (quantity % mp.getPacksize() != 0)
                 throw new PacksizeNotMatching(mp.getPacksize());
         }
-        if (p.getQuantity() >= quantity)
+        if (Math.abs(quantity) > p.getQuantity()) {
+            p.setQuantity(0);
+            throw new NegativeQuantityException(p.getQuantity());
+        } else if (p.getQuantity() >= quantity)
             p.setQuantity(p.getQuantity() + quantity);
         else throw new NotInStockException(quantity);
 
 
     }
+
     /**
-     * Get products set set.
+     * Get products set.
      *
      * @return the set
      */
@@ -146,9 +145,9 @@ public class ProductManager {
         }
         Product p;
 
-        if(packsize != 0){
+        if (packsize != 0) {
             p = new MassProduct(id, price, name, quantity, packsize);
-        }else {
+        } else {
             p = new Product(id, price, name, quantity);
         }
 
@@ -175,8 +174,8 @@ public class ProductManager {
      */
     public void increaseQuantity(int id, int quantity) throws ProductNotFound, PacksizeNotMatching {
         Product p = getProductById(id);
-        if (p instanceof MassProduct mp){
-            if (quantity % mp.getPacksize()  != 0){
+        if (p instanceof MassProduct mp) {
+            if (quantity % mp.getPacksize() != 0) {
                 throw new PacksizeNotMatching(mp.getPacksize());
             }
         }

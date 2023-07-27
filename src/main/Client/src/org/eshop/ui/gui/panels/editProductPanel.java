@@ -3,6 +3,7 @@ package org.eshop.ui.gui.panels;
 import org.eshop.entities.MassProduct;
 import org.eshop.entities.Product;
 import org.eshop.entities.User;
+import org.eshop.exceptions.NegativeQuantityException;
 import org.eshop.exceptions.NotInStockException;
 import org.eshop.exceptions.PacksizeNotMatching;
 import org.eshop.exceptions.ProductNotFound;
@@ -124,7 +125,7 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
                 } else {
                     //TODO QOL CAST NORMAL TO MASS etc
                 }
-            } catch (PacksizeNotMatching | NotInStockException | ProductNotFound exp) {
+            } catch (PacksizeNotMatching | NotInStockException | ProductNotFound | NegativeQuantityException exp) {
                 JOptionPane.showMessageDialog(new JFrame(), exp.getMessage());
             }
             this.setVisible(false);

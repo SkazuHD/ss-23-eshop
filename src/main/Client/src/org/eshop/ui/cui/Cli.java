@@ -2,7 +2,6 @@ package org.eshop.ui.cui;
 
 import org.eshop.entities.*;
 import org.eshop.exceptions.*;
-import org.eshop.entities.*;
 import org.eshop.network.Client;
 import org.eshop.shop.ShopFacade;
 import org.eshop.util.IoReader;
@@ -229,7 +228,7 @@ public class Cli {
 
         try {
             server.changeQuantity(id, quantity, loggedInUser);
-        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
+        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException | NegativeQuantityException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -295,7 +294,7 @@ public class Cli {
         try {
             server.changeQuantity(id, -quantity, loggedInUser);
 
-        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException e) {
+        } catch (ProductNotFound | PacksizeNotMatching | NotInStockException | NegativeQuantityException e) {
             System.err.println(e.getMessage());
             System.err.flush();
         }
