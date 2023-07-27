@@ -1,5 +1,6 @@
 package org.eshop.ui.gui.tables.models;
 
+import org.eshop.entities.MassProduct;
 import org.eshop.entities.Product;
 
 import javax.swing.table.AbstractTableModel;
@@ -10,7 +11,7 @@ public class productEmployeeModel extends AbstractTableModel {
     private final List<Product> productList;
     private final String[] columns;
     boolean[] canEdit = new boolean[]{
-            false, false, false, false, true
+            false, false, false, false, false, true
     };
 
     public productEmployeeModel(List<Product> productList, String[] columns) {
@@ -54,6 +55,7 @@ public class productEmployeeModel extends AbstractTableModel {
             case 1 -> product.getName();
             case 2 -> product.getPrice();
             case 3 -> product.getQuantity();
+            case 4 -> product instanceof MassProduct mp ? mp.getPacksize() : 1;
             default -> null;
         };
     }
