@@ -584,9 +584,9 @@ public class Client implements ShopFacade {
     private synchronized Employee readEmployee() {
         try {
             int id = Integer.parseInt(in.readLine());
-            String name = this.in.readLine();
             String username = this.in.readLine();
             String password = this.in.readLine();
+            String name = this.in.readLine();
             return new Employee(id, name, username, password);
         } catch (IOException ignore) {
 
