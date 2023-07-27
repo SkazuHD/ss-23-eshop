@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 class ClientRequestProcessor implements Runnable, updatable {
-//Server der Antwortet = Streams werden verarbeitet
+    //Server der Antwortet = Streams werden verarbeitet
 // Socket = Transportlayer = reine verbindung > damit die Server reden können/ Stream > für austausch= applycation layer
     private final Shop server;
     private final Socket clientSocket;// Socket classe von Java nochmal erklären was der Macht und wo sind die Streams???
+    private final UpdateInterface eshopServer;
     private BufferedReader in;      /*Reads text from a character-input stream, buffering
     characters so as to provide for the efficient reading of characters, arrays, and lines. */
     private PrintStream out;
-    private final UpdateInterface eshopServer;
 
 
     public ClientRequestProcessor(Socket socket, Shop server, UpdateInterface eshopServer) {
@@ -384,6 +384,9 @@ class ClientRequestProcessor implements Runnable, updatable {
             out.println(e.getPacksize());
         } catch (NotInStockException e) {
             out.println(402);
+            out.println(e.getQuantity());
+        } catch (NegativeQuantityException e) {
+            out.println(403);
             out.println(e.getQuantity());
         }
     }

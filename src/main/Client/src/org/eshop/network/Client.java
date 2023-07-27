@@ -237,7 +237,7 @@ public class Client implements ShopFacade {
     }
 
     @Override
-    public synchronized void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
+    public synchronized void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException, NegativeQuantityException {
         out.println("changeQuant");
         out.println(id);
         out.println(quantity);
@@ -256,6 +256,10 @@ public class Client implements ShopFacade {
                 case "402": {
                     int ans = Integer.parseInt(this.in.readLine());
                     throw new NotInStockException(ans);
+                }
+                case "403": {
+                    int ans = Integer.parseInt(this.in.readLine());
+                    throw new NegativeQuantityException(ans);
                 }
                 case "200":
                     break;

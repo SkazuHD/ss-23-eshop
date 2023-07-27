@@ -1,7 +1,7 @@
 package org.eshop.shop;
 
-import org.eshop.exceptions.*;
 import org.eshop.entities.*;
+import org.eshop.exceptions.*;
 import org.eshop.persistence.FileManager;
 import org.eshop.persistence.ShopPersistence;
 
@@ -50,7 +50,7 @@ public class Shop implements ShopFacade {
     /**
      * Save async.
      */
-    public void saveAsync() {
+    public synchronized void saveAsync() {
         // Parallel Process
         new Thread(() -> saveProducts()).start();
     }
@@ -58,7 +58,7 @@ public class Shop implements ShopFacade {
     /**
      * Save products.
      */
-    public void saveProducts() {
+    public synchronized void saveProducts() {
         //Test if file is in use
         File file = new File("products.csv");
         while (!file.renameTo(file)) {
@@ -83,7 +83,6 @@ public class Shop implements ShopFacade {
     public void save() {
         saveProducts();
     }
-
 
 
     public void load() {
@@ -145,7 +144,7 @@ public class Shop implements ShopFacade {
         return u;
     }
 
-    public void registerUser(String username, String password, String name, String address) throws UserExistsException {
+    public synchronized void registerUser(String username, String password, String name, String address) throws UserExistsException {
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || address.isEmpty()) {
             throw new IllegalArgumentException("Empty Fields");
         }
@@ -229,22 +228,22 @@ public class Shop implements ShopFacade {
         return customerManager.getCart(c);
     }
 
-    public void checkout(Customer c) throws CheckoutFailed {
+    public synchronized void checkout(Customer c) throws CheckoutFailed {
         Map<Product, Integer> cart = c.getCart();
         List<Product> productToBeFixed = new ArrayList<>();
         for (Product key : cart.keySet()) {
-            if(key.getQuantity() < cart.get(key)){
+            if (key.getQuantity() < cart.get(key)) {
                 productToBeFixed.add(key);
             }
         }
-        if(productToBeFixed.size() > 0){
+        if (productToBeFixed.size() > 0) {
             throw new CheckoutFailed(productToBeFixed);
         }
         for (Product key : cart.keySet()) {
             try {
                 eventManager.addEvent(c, key, -cart.get(key));
                 productManager.decreaseQuantity(key, -cart.get(key));
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
 
@@ -260,14 +259,14 @@ public class Shop implements ShopFacade {
     //EMPLOYEE ONLY
 
 
-    public void createProduct(String name, double price, int quantity, User u) {
+    public synchronized void createProduct(String name, double price, int quantity, User u) {
         Product p = productManager.createProduct(name, price, quantity, 0);
         saveAsync();
         eventManager.addEvent(u, p, quantity);
 
     }
 
-    public void createProduct(String name, double price, int quantity, int packsize, User u) throws PacksizeNotMatching {
+    public synchronized void createProduct(String name, double price, int quantity, int packsize, User u) throws PacksizeNotMatching {
         if (quantity % packsize != 0) {
             throw new PacksizeNotMatching(packsize);
         }
@@ -278,11 +277,11 @@ public class Shop implements ShopFacade {
 
     @Override
     public void deleteProduct(int id) {
-        //TODO
+        //QOL add method to remove Product
     }
 
     @Override
-    public Product editProductDetails(int id, String name, double price) throws ProductNotFound {
+    public synchronized Product editProductDetails(int id, String name, double price) throws ProductNotFound {
         Product p = productManager.getProductById(id);
         p.setName(name);
         p.setPrice(price);
@@ -291,7 +290,7 @@ public class Shop implements ShopFacade {
     }
 
     @Override
-    public Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
+    public synchronized Product editProductDetails(int id, String name, double price, int packSize) throws ProductNotFound {
         MassProduct mp = (MassProduct) productManager.getProductById(id);
         mp.setName(name);
         mp.setPrice(price);
@@ -318,7 +317,7 @@ public class Shop implements ShopFacade {
     }
 
 
-    public void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException {
+    public synchronized void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException, NegativeQuantityException {
         if (quantity > 0) {
             productManager.increaseQuantity(id, quantity);
         } else if (quantity < 0) {
@@ -333,7 +332,7 @@ public class Shop implements ShopFacade {
     }
 
     //Employees
-    public void registerEmployee(int id, String name, String username, String password) throws UserExistsException {
+    public synchronized void registerEmployee(int id, String name, String username, String password) throws UserExistsException {
         if (!employeeManager.register(id, name, username, password)) {
             throw new UserExistsException(username);
         }

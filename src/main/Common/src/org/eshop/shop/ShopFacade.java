@@ -1,7 +1,7 @@
 package org.eshop.shop;
 
-import org.eshop.exceptions.*;
 import org.eshop.entities.*;
+import org.eshop.exceptions.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +12,8 @@ import java.util.Map;
  */
 public interface ShopFacade {
     //Interface definiert wie die Methode aussieht. /Klasse = Logik  der Methoden
-       //mit super ruft man  die Klasse von der geerbt wurde
+    //mit super ruft man  die Klasse von der geerbt wurde
+
     /**
      * Register user.
      *
@@ -120,7 +121,7 @@ public interface ShopFacade {
      * @throws PacksizeNotMatching the packsize not matching
      * @throws NotInStockException the not in stock exception
      */
-    void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException;
+    void changeQuantity(int id, int quantity, User u) throws ProductNotFound, PacksizeNotMatching, NotInStockException, NegativeQuantityException;
 
     /**
      * Gets all products.
@@ -128,6 +129,7 @@ public interface ShopFacade {
      * @return the all products
      */
     Collection<Product> getAllProducts();
+
     Collection<Event> getAllEvents();
 
     Collection<Employee> getAllEmployees();
@@ -197,13 +199,14 @@ public interface ShopFacade {
      * @throws ProductNotFound     the product not found
      */
     void removeFromCart(int id, int quantity, Customer c) throws PacksizeNotMatching, ProductNotFound;
+
     void clearCart(Customer c);
+
     /**
      * Save.
      */
 //PERSISTENCE API
     void save();
-
 
 
 }
