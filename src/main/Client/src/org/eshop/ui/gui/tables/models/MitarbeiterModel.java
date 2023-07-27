@@ -11,7 +11,7 @@ public class MitarbeiterModel extends AbstractTableModel {
     private final List<Employee> employeeList;
     private final String[] columns;
     boolean[] canEdit = new boolean[]{
-            false, false, false, false, true
+            false, false, false, false, false
     };
 
 
