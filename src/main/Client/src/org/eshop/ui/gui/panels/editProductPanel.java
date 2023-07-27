@@ -80,7 +80,6 @@ public class editProductPanel extends JPanel implements ActionListener, TableLis
 
     public void onChange(Product p) {
         currentProduct = p;
-        //TODO Create Eventlistener that passes the selected product
         productId.setText(String.valueOf(p.getId()));
         productName.setText(p.getName());
         productQuantity.setText(String.valueOf(p.getQuantity()));

@@ -21,7 +21,7 @@ public class EmployeeCenterPanel extends ProductPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         //Setup Column names and get all products
-        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Quantity", " "};
+        String[] columns = {"Artikelnummer", "Beschreibung", "Preis", "Quantity", "Packsize", " "};
         List<Product> products = shop.getAllProducts().stream().toList();
         //Create Table
         employeeProductTable = new EmployeeProductTable(products, columns, listener, user, shop);

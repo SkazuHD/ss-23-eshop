@@ -32,8 +32,8 @@ public class EmployeeProductTable extends JTable implements TableButtonEventList
         productEmployeeModel tabelModel = new productEmployeeModel(productList, coulumns);
         this.setModel(tabelModel);
         this.setRowHeight(40);
-        this.getColumnModel().getColumn(4).setCellRenderer(new TableButtonRenderEmployee());
-        this.getColumnModel().getColumn(4).setCellEditor(new TableCellEditorEmployee(this));
+        this.getColumnModel().getColumn(5).setCellRenderer(new TableButtonRenderEmployee());
+        this.getColumnModel().getColumn(5).setCellEditor(new TableCellEditorEmployee(this));
         this.setAutoCreateRowSorter(true);
         //Register for live updates
         Client server = (Client) shop;
